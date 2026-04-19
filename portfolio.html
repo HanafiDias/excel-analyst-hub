@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portofolio — Excel Analyst Hub</title>
+  <meta name="description" content="Contoh proyek Excel yang dibuat dengan keahlian yang diajarkan di Excel Analyst Hub — dashboard, analisis PivotTable, alat otomasi, dan laporan keuangan." />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+</head>
+<body class="page-body">
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon" aria-hidden="true">⊞</div>
+        Excel Analyst Hub
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="learn.html">Belajar</a></li>
+        <li><a href="portfolio.html">Portofolio</a></li>
+        <li><a href="tools.html">Tools</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="learn.html" class="btn-primary btn-sm">Mulai Belajar</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu-port">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-menu-mobile" id="mobile-menu-port">
+    <a href="index.html">Beranda</a>
+    <a href="learn.html">Belajar</a>
+    <a href="portfolio.html">Portofolio</a>
+    <a href="tools.html">Tools</a>
+    <a href="learn.html" class="btn-primary" style="margin-top:8px;">Mulai Belajar</a>
+  </div>
+
+  <main>
+
+    <!-- ============ PAGE HERO ============ -->
+    <section class="page-hero" aria-label="Pengenalan portofolio">
+      <div class="container">
+        <h1 class="fade-in">Contoh Proyek</h1>
+        <p class="fade-in delay-1">Proyek Excel nyata yang dibuat dengan keahlian yang diajarkan di sini. Gunakan sebagai referensi, inspirasi, atau titik awal untuk pekerjaanmu sendiri.</p>
+      </div>
+    </section>
+
+    <div class="container section-sm">
+
+      <!-- Filter bar -->
+      <div class="flex-between" style="margin-bottom:var(--space-5);flex-wrap:wrap;gap:var(--space-3);">
+        <div class="filter-bar" style="margin-bottom:0;" role="group" aria-label="Filter proyek berdasarkan tag">
+          <button class="filter-btn active" data-filter="All" aria-pressed="true">Semua</button>
+          <button class="filter-btn" data-filter="Dashboard" aria-pressed="false">Dashboard</button>
+          <button class="filter-btn" data-filter="VLOOKUP" aria-pressed="false">VLOOKUP</button>
+          <button class="filter-btn" data-filter="PivotTable" aria-pressed="false">PivotTable</button>
+          <button class="filter-btn" data-filter="Power Query" aria-pressed="false">Power Query</button>
+          <button class="filter-btn" data-filter="Automation" aria-pressed="false">Otomasi</button>
+          <button class="filter-btn" data-filter="Finance" aria-pressed="false">Keuangan</button>
+          <button class="filter-btn" data-filter="HR" aria-pressed="false">HR</button>
+        </div>
+        <span id="project-count" style="font-size:0.82rem;color:var(--text-muted);white-space:nowrap;" aria-live="polite">9 proyek</span>
+      </div>
+
+      <!-- Project grid -->
+      <div id="project-grid" class="grid-3" role="list" aria-label="Galeri proyek">
+        <!-- Diisi oleh portfolio.js -->
+        <div style="grid-column:1/-1;text-align:center;padding:var(--space-12);color:var(--text-muted);">
+          <p>Memuat proyek...</p>
+        </div>
+      </div>
+
+      <!-- Context note -->
+      <div class="callout callout-tip" style="margin-top:var(--space-10);max-width:700px;">
+        <p class="callout-title">Ini adalah contoh referensi</p>
+        <p>Setiap proyek di atas mewakili keahlian yang diajarkan di bagian Jalur Belajar. Keahlian yang digunakan adalah nyata — VLOOKUP, PivotTable, Power Query, conditional formatting, dan dynamic arrays. Gunakan sebagai panduan tentang apa yang bisa dicapai setelah kamu menyelesaikan jalur yang relevan.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon" aria-hidden="true">⊞</div>
+            Excel Analyst Hub
+          </a>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Belajar</h4>
+          <ul>
+            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
+            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
+            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tools & Trainer</h4>
+          <ul>
+            <li><a href="tools.html#formula-generator">Formula Generator</a></li>
+            <li><a href="tools.html#daily-challenge-section">Tantangan Harian</a></li>
+            <li><a href="tools.html#quick-ref">Referensi Cepat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Jelajahi</h4>
+          <ul>
+            <li><a href="portfolio.html">Portofolio</a></li>
+            <li><a href="topic.html">Tutorial VLOOKUP</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Dibangun untuk generasi data analyst Indonesia berikutnya.</p>
+        <p>Excel Analyst Hub — Belajar gratis, keahlian nyata.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/portfolio.js"></script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tools Interaktif — Excel Analyst Hub</title>
+  <meta name="description" content="Tools Excel gratis untuk analis: Formula Generator, Tantangan Harian, dan Kartu Referensi Cepat shortcut." />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+</head>
+<body class="page-body">
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon" aria-hidden="true">⊞</div>
+        Excel Analyst Hub
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="learn.html">Belajar</a></li>
+        <li><a href="portfolio.html">Portofolio</a></li>
+        <li><a href="tools.html">Tools</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="learn.html" class="btn-primary btn-sm">Mulai Belajar</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu-tools">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-menu-mobile" id="mobile-menu-tools">
+    <a href="index.html">Beranda</a>
+    <a href="learn.html">Belajar</a>
+    <a href="portfolio.html">Portofolio</a>
+    <a href="tools.html">Tools</a>
+    <a href="learn.html" class="btn-primary" style="margin-top:8px;">Mulai Belajar</a>
+  </div>
+
+  <main>
+
+    <!-- ============ PAGE HERO ============ -->
+    <section class="page-hero" aria-label="Pengenalan tools">
+      <div class="container">
+        <h1 class="fade-in">Tools Interaktif</h1>
+        <p class="fade-in delay-1">Tools praktis yang bisa kamu gunakan selagi belajar — bukan mainan, bukan demo. Setiap tools memecahkan masalah nyata yang dihadapi analis setiap hari.</p>
+      </div>
+    </section>
+
+    <div class="container">
+
+      <!-- ============ TOOL 1: FORMULA GENERATOR ============ -->
+      <section class="tool-section" id="formula-generator" aria-label="Formula Generator">
+        <div class="tool-header">
+          <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2);">
+            <span class="tool-number" aria-hidden="true">1</span>
+            <h2 style="margin:0;">Excel Formula Generator</h2>
+          </div>
+          <p>Deskripsikan apa yang ingin kamu lakukan dalam bahasa Indonesia atau Inggris. Dapatkan formula, sintaks, dan contoh kerja yang siap digunakan.</p>
+        </div>
+
+        <div class="tool-layout">
+          <!-- Input side -->
+          <div>
+            <form id="formula-form" novalidate aria-label="Form formula generator">
+              <div class="form-group">
+                <label class="form-label" for="formula-query">Apa yang ingin kamu lakukan?</label>
+                <input
+                  type="text"
+                  id="formula-query"
+                  class="form-input"
+                  placeholder='contoh: "jumlahkan penjualan region Barat" atau "cari nilai duplikat"'
+                  autocomplete="off"
+                  spellcheck="false"
+                  aria-describedby="formula-query-hint"
+                />
+                <p id="formula-query-hint" style="font-size:0.78rem;color:var(--text-muted);margin-top:var(--space-2);">Coba: "cari nilai di tabel", "hitung berdasarkan kategori", "gabungkan nama depan dan belakang"</p>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="formula-category">Kategori formula</label>
+                <select id="formula-category" class="form-input" aria-label="Pilih kategori formula">
+                  <option value="all">Semua Kategori</option>
+                  <option value="lookup">Lookup (VLOOKUP, INDEX-MATCH)</option>
+                  <option value="math">Matematika & Kondisional (SUMIF, COUNTIF)</option>
+                  <option value="text">Teks (LEFT, MID, TRIM, CONCAT)</option>
+                  <option value="date">Tanggal (TODAY, DATEDIF, EOMONTH)</option>
+                  <option value="logical">Logika (IF, IFS, IFERROR, AND/OR)</option>
+                </select>
+              </div>
+              <button type="submit" class="btn-primary" id="generate-btn">Buat Formula →</button>
+            </form>
+
+            <!-- Suggested prompts -->
+            <div style="margin-top:var(--space-6);">
+              <p style="font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:var(--space-3);">Contoh cepat — klik untuk mencoba</p>
+              <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);">
+                <button class="filter-btn suggestion-btn" data-query="sum sales for West region" data-category="math">Jumlah per region</button>
+                <button class="filter-btn suggestion-btn" data-query="find value in table" data-category="lookup">Cari nilai di tabel</button>
+                <button class="filter-btn suggestion-btn" data-query="count employees by department" data-category="math">Hitung per departemen</button>
+                <button class="filter-btn suggestion-btn" data-query="extract first name" data-category="text">Ambil nama depan</button>
+                <button class="filter-btn suggestion-btn" data-query="calculate age in years" data-category="date">Hitung usia</button>
+                <button class="filter-btn suggestion-btn" data-query="handle #N/A error" data-category="logical">Tangani error</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Output side -->
+          <div>
+            <div id="formula-output" role="region" aria-live="polite" aria-label="Hasil formula">
+              <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--space-8);text-align:center;">
+                <div style="font-size:32px;margin-bottom:var(--space-3);" aria-hidden="true">⟨ƒ⟩</div>
+                <p style="color:var(--text-muted);font-size:0.9rem;">Deskripsikan kebutuhanmu di atas dan klik Buat Formula. Formula, penjelasan sintaks, dan contoh kerja akan muncul di sini.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TOOL 2: DAILY CHALLENGE ============ -->
+      <section class="tool-section" id="daily-challenge-section" aria-label="Tantangan Harian Excel">
+        <div class="tool-header">
+          <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2);">
+            <span class="tool-number" aria-hidden="true">2</span>
+            <h2 style="margin:0;">Tantangan Harian Excel</h2>
+          </div>
+          <p>Satu soal analis nyata per hari. Baca skenarionya, cari formulanya, lalu buka jawaban untuk mengecek. Lacak penyelesaian dengan localStorage — tidak perlu akun.</p>
+        </div>
+
+        <div style="max-width:700px;">
+          <div id="daily-challenge" class="challenge-card" role="region" aria-label="Tantangan hari ini" aria-live="polite">
+            <!-- Diisi oleh quiz.js -->
+            <div class="challenge-day-label">Memuat tantangan hari ini...</div>
+            <div class="challenge-body">
+              <p style="color:var(--text-muted);">Tantangan sedang dimuat...</p>
+            </div>
+          </div>
+
+          <div style="margin-top:var(--space-4);">
+            <p style="font-size:0.8rem;color:var(--text-muted);">Tantangan dirotasi setiap hari dari kumpulan 10 skenario Excel dunia nyata. Kemajuan disimpan di browser-mu.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TOOL 3: QUICK REFERENCE CARD ============ -->
+      <section class="tool-section" id="quick-ref" aria-label="Kartu Referensi Cepat">
+        <div class="tool-header">
+          <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2);">
+            <span class="tool-number" aria-hidden="true">3</span>
+            <h2 style="margin:0;">Kartu Referensi Cepat</h2>
+          </div>
+          <p>28 shortcut Excel penting dalam 4 kategori. Cari berdasarkan shortcut atau deskripsi. Klik shortcut mana saja untuk menyalinnya.</p>
+        </div>
+
+        <div style="margin-bottom:var(--space-5);">
+          <div class="search-input-wrapper" style="max-width:400px;">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input
+              type="search"
+              id="shortcut-search"
+              class="form-input"
+              placeholder="Cari shortcut atau deskripsi..."
+              aria-label="Cari shortcut"
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <div class="ref-table-wrapper">
+          <table class="ref-table" aria-label="Referensi shortcut keyboard Excel">
+            <thead>
+              <tr>
+                <th scope="col" style="width:120px;">Kategori</th>
+                <th scope="col" style="width:200px;">Shortcut</th>
+                <th scope="col">Deskripsi</th>
+              </tr>
+            </thead>
+            <tbody id="shortcut-table-body">
+              <!-- Diisi oleh quiz.js -->
+              <tr>
+                <td colspan="3" style="text-align:center;color:var(--text-muted);padding:var(--space-6);">Memuat shortcut...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:0.78rem;color:var(--text-muted);margin-top:var(--space-3);">Klik tombol shortcut mana saja untuk menyalinnya ke clipboard.</p>
+      </section>
+
+    </div><!-- /container -->
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon" aria-hidden="true">⊞</div>
+            Excel Analyst Hub
+          </a>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Belajar</h4>
+          <ul>
+            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
+            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
+            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="#formula-generator">Formula Generator</a></li>
+            <li><a href="#daily-challenge-section">Tantangan Harian</a></li>
+            <li><a href="#quick-ref">Referensi Cepat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Jelajahi</h4>
+          <ul>
+            <li><a href="portfolio.html">Portofolio</a></li>
+            <li><a href="topic.html">Tutorial VLOOKUP</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Dibangun untuk generasi data analyst Indonesia berikutnya.</p>
+        <p>Excel Analyst Hub — Belajar gratis, keahlian nyata.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/formula-gen.js"></script>
+  <script src="assets/js/quiz.js"></script>
+
+  <script>
+    // Wire up suggestion buttons
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.suggestion-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var queryInput = document.getElementById('formula-query');
+          var categorySelect = document.getElementById('formula-category');
+          if (queryInput) queryInput.value = btn.dataset.query || '';
+          if (categorySelect && btn.dataset.category) categorySelect.value = btn.dataset.category;
+          // Trigger form submit
+          var form = document.getElementById('formula-form');
+          if (form) form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+        });
+      });
+    });
+  </script>
+</body>
+</html>

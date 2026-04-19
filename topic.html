@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial VLOOKUP — Excel Analyst Hub</title>
+  <meta name="description" content="Pelajari VLOOKUP dari nol — sintaks, kesalahan umum, contoh dunia nyata, dan kapan beralih ke INDEX-MATCH. Untuk pengguna Excel tingkat menengah." />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+</head>
+<body class="page-body">
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon" aria-hidden="true">⊞</div>
+        Excel Analyst Hub
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="learn.html">Belajar</a></li>
+        <li><a href="portfolio.html">Portofolio</a></li>
+        <li><a href="tools.html">Tools</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="learn.html" class="btn-primary btn-sm">Mulai Belajar</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu-topic">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-menu-mobile" id="mobile-menu-topic">
+    <a href="index.html">Beranda</a>
+    <a href="learn.html">Belajar</a>
+    <a href="portfolio.html">Portofolio</a>
+    <a href="tools.html">Tools</a>
+  </div>
+
+  <main>
+    <div class="topic-layout">
+
+      <!-- ============ SIDEBAR TOC ============ -->
+      <aside class="toc-sidebar" aria-label="Daftar isi">
+        <p class="toc-title">Di Halaman Ini</p>
+        <a href="#what-is-vlookup">Apa itu VLOOKUP?</a>
+        <a href="#syntax">Penjelasan Sintaks</a>
+        <a href="#first-vlookup">VLOOKUP Pertamamu</a>
+        <a href="#common-errors">Kesalahan Umum & Solusinya</a>
+        <a href="#vs-index-match">vs INDEX-MATCH</a>
+        <a href="#real-world">Contoh Dunia Nyata</a>
+      </aside>
+
+      <!-- ============ MAIN CONTENT ============ -->
+      <article class="topic-content">
+
+        <!-- Topic header -->
+        <header class="topic-header">
+          <nav aria-label="Breadcrumb" style="margin-bottom:var(--space-4);">
+            <a href="learn.html" style="font-size:0.82rem;color:var(--text-muted);">← Kembali ke Jalur Belajar</a>
+          </nav>
+          <div class="topic-meta">
+            <span class="badge badge-intermediate">Menengah</span>
+            <span class="duration">~25 menit</span>
+            <span id="topic-status-header" class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+          </div>
+          <h1>VLOOKUP: Mencari Data di Seluruh Spreadsheet</h1>
+          <p>Formula yang paling sering ditanyakan dalam wawancara Excel. Begini cara kerjanya yang sebenarnya — termasuk bagian yang biasanya dilewati tutorial lain.</p>
+        </header>
+
+        <!-- ====== SECTION 1 ====== -->
+        <section id="what-is-vlookup">
+          <h2>Apa itu VLOOKUP?</h2>
+
+          <p>VLOOKUP adalah singkatan dari <strong>Vertical Lookup</strong> (Pencarian Vertikal). Formula ini mencari ke bawah kolom pertama sebuah tabel untuk nilai yang kamu tentukan, dan ketika menemukannya, mengembalikan nilai dari baris yang sama — hanya dari kolom yang berbeda.</p>
+
+          <p>Bayangkan seperti menggunakan indeks di bagian belakang buku: kamu mencari kata kunci (nilai yang dicari), menemukan nomor halaman (kolom lain), dan pergi ke sana. Bedanya Excel melakukan bagian "pergi ke sana" secara otomatis.</p>
+
+          <p>Batasan utama: VLOOKUP selalu mencari di <em>kolom pertama</em> tabelmu. Jika nilai yang kamu cari tidak ada di kolom paling kiri, VLOOKUP tidak akan bekerja. Inilah alasan paling umum orang menemui jalan buntu — dan salah satu alasan analis akhirnya beralih ke INDEX-MATCH.</p>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Kapan analis benar-benar menggunakan ini?</p>
+            <p>Setiap hari. VLOOKUP adalah cara kamu menggabungkan dua tabel yang berbagi kunci bersama — seperti mencocokkan nama karyawan dengan ID, kode produk dengan harga, atau kode region dengan nama region. Setiap kali kamu punya dua daftar dan ingin menarik data dari satu ke yang lain, itulah pekerjaan VLOOKUP.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 2 ====== -->
+        <section id="syntax">
+          <h2>Penjelasan Sintaks</h2>
+
+          <p>Sintaks lengkapnya:</p>
+          <div class="formula-block">=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</div>
+
+          <table class="syntax-table" aria-label="Deskripsi argumen VLOOKUP">
+            <thead>
+              <tr>
+                <th>Argumen</th>
+                <th>Artinya</th>
+                <th>Wajib?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>lookup_value</td>
+                <td>Nilai yang kamu cari. Biasanya referensi sel seperti A2, atau teks dalam tanda kutip seperti "Budi".</td>
+                <td>Wajib</td>
+              </tr>
+              <tr>
+                <td>table_array</td>
+                <td>Rentang yang akan dicari. Harus dimulai dengan kolom yang berisi lookup_value. Gunakan $ untuk mengunci referensi ini.</td>
+                <td>Wajib</td>
+              </tr>
+              <tr>
+                <td>col_index_num</td>
+                <td>Kolom ke berapa dari table_array yang akan dikembalikan — 1 berarti kolom pertama, 2 berarti kolom kedua, dst.</td>
+                <td>Wajib</td>
+              </tr>
+              <tr>
+                <td>range_lookup</td>
+                <td>TRUE = pencocokan perkiraan (data terurut). FALSE = pencocokan tepat. <strong>Gunakan FALSE hampir selalu.</strong></td>
+                <td>Opsional</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="callout callout-warning">
+            <p class="callout-title">⚠️ Selalu gunakan FALSE untuk pencocokan tepat</p>
+            <p>Jika kamu menghilangkan range_lookup atau menggunakan TRUE, VLOOKUP mengasumsikan datamu terurut dan melakukan pencocokan perkiraan. Pada data yang tidak terurut, ini mengembalikan jawaban yang salah tanpa pesan error apapun. Jika ragu: gunakan FALSE. Kamu hampir selalu menginginkan pencocokan tepat.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 3 ====== -->
+        <section id="first-vlookup">
+          <h2>VLOOKUP Pertamamu</h2>
+
+          <p>Misalkan kamu punya dua sheet. Sheet1 berisi daftar transaksi penjualan:</p>
+
+          <table class="syntax-table" aria-label="Contoh data transaksi">
+            <thead>
+              <tr><th>A — ID Karyawan</th><th>B — Jumlah Penjualan</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>EMP001</td><td>12.500.000</td></tr>
+              <tr><td>EMP003</td><td>8.200.000</td></tr>
+              <tr><td>EMP002</td><td>15.700.000</td></tr>
+            </tbody>
+          </table>
+
+          <p>Dan Sheet2 berisi tabel referensi karyawan:</p>
+
+          <table class="syntax-table" aria-label="Contoh tabel referensi">
+            <thead>
+              <tr><th>A — ID Karyawan</th><th>B — Nama</th><th>C — Departemen</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>EMP001</td><td>Budi Santoso</td><td>Sales</td></tr>
+              <tr><td>EMP002</td><td>Sari Dewi</td><td>Sales</td></tr>
+              <tr><td>EMP003</td><td>Ahmad Fauzi</td><td>Operations</td></tr>
+            </tbody>
+          </table>
+
+          <p>Untuk menarik nama karyawan ke Sheet1 di setiap baris transaksi:</p>
+          <div class="formula-block">=VLOOKUP(A2, Sheet2!$A$2:$C$100, 2, FALSE)</div>
+
+          <p>Memecah ini:</p>
+          <ul>
+            <li><strong>A2</strong> — ID Karyawan yang kamu cari (EMP001)</li>
+            <li><strong>Sheet2!$A$2:$C$100</strong> — tabel referensi, dikunci dengan $ agar tidak bergeser saat kamu menyalin formula ke bawah</li>
+            <li><strong>2</strong> — kembalikan kolom ke-2 dari tabel (Nama)</li>
+            <li><strong>FALSE</strong> — pencocokan tepat</li>
+          </ul>
+
+          <p>Untuk mendapatkan departemen, cukup ubah 2 menjadi 3:</p>
+          <div class="formula-block">=VLOOKUP(A2, Sheet2!$A$2:$C$100, 3, FALSE)</div>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Kunci table_array-mu dengan $</p>
+            <p>Tanpa tanda $, saat kamu menyalin formula ke bawah dari baris 2 ke baris 3, Sheet2!$A$2:$C$100 akan bergeser menjadi Sheet2!A3:C101 — dan hasilnya akan salah. Tekan F4 setelah memilih rentang untuk mengaktifkan tanda $ secara bergantian.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 4 ====== -->
+        <section id="common-errors">
+          <h2>Kesalahan Umum &amp; Solusinya</h2>
+
+          <h3>Error #N/A</h3>
+          <p>Ini berarti VLOOKUP tidak dapat menemukan kecocokan. Penyebab paling umum:</p>
+          <ul>
+            <li><strong>Spasi trailing:</strong> "EMP001" ≠ "EMP001 " (dengan spasi di belakang). Perbaiki dengan TRIM: <code>=VLOOKUP(TRIM(A2), ...)</code></li>
+            <li><strong>Ketidakcocokan angka vs teks:</strong> Nilai lookup adalah angka tetapi tabel menyimpannya sebagai teks (atau sebaliknya). Periksa dengan melihat perataan — rata kiri biasanya berarti teks.</li>
+            <li><strong>Nilai memang tidak ada</strong> di kolom pertama table_array-mu.</li>
+          </ul>
+
+          <p>Untuk menangani #N/A dengan anggun, bungkus dengan IFERROR:</p>
+          <div class="formula-block">=IFERROR(VLOOKUP(A2, Sheet2!$A$2:$C$100, 2, FALSE), "Tidak Ditemukan")</div>
+
+          <h3>Error #REF!</h3>
+          <p>col_index_num-mu lebih besar dari jumlah kolom di table_array. Jika tabelmu adalah kolom A hingga C (3 kolom) dan kamu memasukkan col_index_num = 4, kamu akan mendapatkan #REF!. Hitung kolommu kembali.</p>
+
+          <h3>Nilai salah dikembalikan (tidak ada error)</h3>
+          <p>Hampir selalu disebabkan menggunakan TRUE (atau menghilangkan range_lookup) alih-alih FALSE. Saat data tidak terurut, pencocokan perkiraan mengembalikan hasil yang tidak dapat diprediksi. Selalu periksa ulang bahwa kamu memiliki FALSE sebagai argumen terakhir.</p>
+
+          <div class="callout callout-warning">
+            <p class="callout-title">⚠️ VLOOKUP rapuh saat kolom berubah</p>
+            <p>Jika seseorang menyisipkan kolom di tabel referensimu, setiap VLOOKUP yang mereferensikan col_index_num &gt;= kolom yang disisipkan akan secara diam-diam mengembalikan data yang salah. Ini tidak teoritis — ini terjadi di file nyata. Inilah alasan utama analis berpengalaman beralih ke INDEX-MATCH.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 5 ====== -->
+        <section id="vs-index-match">
+          <h2>Kapan Menggunakan INDEX-MATCH</h2>
+
+          <p>VLOOKUP memiliki tiga keterbatasan nyata yang diselesaikan oleh INDEX-MATCH:</p>
+
+          <table class="syntax-table" aria-label="Perbandingan VLOOKUP vs INDEX-MATCH">
+            <thead>
+              <tr>
+                <th>Situasi</th>
+                <th>VLOOKUP</th>
+                <th>INDEX-MATCH</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Kolom pencarian adalah kolom pertama dalam tabel</td>
+                <td>✅ Bekerja baik</td>
+                <td>✅ Bekerja baik</td>
+              </tr>
+              <tr>
+                <td>Kolom pencarian ada di <em>tengah</em> tabel (lihat ke kiri)</td>
+                <td>❌ Tidak bisa</td>
+                <td>✅ Bekerja baik</td>
+              </tr>
+              <tr>
+                <td>Seseorang menyisipkan kolom di tabel</td>
+                <td>❌ Mengembalikan kolom yang salah secara diam-diam</td>
+                <td>✅ Tidak terpengaruh — mereferensikan kolom secara langsung</td>
+              </tr>
+              <tr>
+                <td>Dataset sangat besar (&gt;100k baris)</td>
+                <td>Lebih lambat</td>
+                <td>Lebih cepat</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>INDEX-MATCH yang setara untuk contoh transaksi di atas:</p>
+          <div class="formula-block">=INDEX(Sheet2!$B$2:$B$100, MATCH(A2, Sheet2!$A$2:$A$100, 0))</div>
+
+          <p>Baca ini sebagai: "Berikan nilai dari kolom B (nama), di baris di mana kolom A cocok dengan A2 (EMP001), dengan pencocokan tepat (0)."</p>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Mana yang harus digunakan?</p>
+            <p>Jika kamu sedang belajar Excel dan perlu pencarian cepat pada tabel sederhana yang kamu kontrol: VLOOKUP tidak masalah. Jika kamu membangun sesuatu yang akan digunakan orang lain, mungkin ada kolom yang ditambahkan, atau kolom pencarian bukan yang pertama: gunakan INDEX-MATCH. Dalam wawancara, mengetahui keduanya — dan kapan menggunakan masing-masing — adalah jawaban yang tepat.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 6 ====== -->
+        <section id="real-world">
+          <h2>Contoh Dunia Nyata</h2>
+
+          <p>Begini cara ini muncul dalam pekerjaan analis. Kamu menerima laporan penjualan bulanan dari tim penjualan — 500 baris data transaksi. Setiap baris memiliki ID pelanggan tetapi tidak ada nama pelanggan atau tier. Ekspor CRM-mu memiliki detail pelanggan.</p>
+
+          <p>Tugasmu: lengkapi laporan dengan nama pelanggan dan tier mereka (Gold / Silver / Regular), lalu hitung rata-rata nilai transaksi per tier.</p>
+
+          <h3>Langkah 1: Tarik nama pelanggan</h3>
+          <p>Laporan penjualan ada di <code>Sheet1</code>, kolom A berisi ID Pelanggan. Data CRM ada di <code>Sheet2</code>, kolom A–C (ID, Nama, Tier).</p>
+          <div class="formula-block">=IFERROR(VLOOKUP(A2, Sheet2!$A:$C, 2, FALSE), "Pelanggan Tidak Dikenal")</div>
+
+          <h3>Langkah 2: Tarik tier pelanggan</h3>
+          <div class="formula-block">=IFERROR(VLOOKUP(A2, Sheet2!$A:$C, 3, FALSE), "Tidak Terklasifikasi")</div>
+
+          <h3>Langkah 3: Rata-rata per tier</h3>
+          <p>Setelah tier terisi (katakanlah kolom D), hitung rata-rata nilai transaksi per tier:</p>
+          <div class="formula-block">=AVERAGEIF($D$2:$D$500, "Gold", $C$2:$C$500)</div>
+
+          <p>Ini adalah alur kerja analis yang khas: impor → perkaya dengan VLOOKUP → agregat dengan SUMIF/AVERAGEIF → presentasikan. Setelah kamu nyaman dengan pola ini, kamu bisa menjalankannya dalam hitungan menit.</p>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Selalu periksa tingkat kecocokanmu</p>
+            <p>Setelah menjalankan VLOOKUP pada data nyata, hitung berapa banyak hasil "Tidak Ditemukan" yang kamu dapatkan: <code>=COUNTIF(D:D, "Pelanggan Tidak Dikenal")</code>. Tingkat ketidakcocokan yang tinggi biasanya berarti ada masalah format data — ID disimpan secara berbeda, spasi ekstra, atau inkonsistensi sistem sumber. Perbaiki datanya, bukan formulanya.</p>
+          </div>
+        </section>
+
+        <!-- ====== PREV / NEXT NAV ====== -->
+        <nav class="topic-nav" aria-label="Navigasi topik">
+          <div class="topic-nav-item" style="opacity:0.4;pointer-events:none;">
+            <span class="topic-nav-direction">← Sebelumnya</span>
+            <span class="topic-nav-title">SUMIF &amp; COUNTIF</span>
+          </div>
+          <a href="topic.html" class="topic-nav-item" style="text-align:right;">
+            <span class="topic-nav-direction">Berikutnya →</span>
+            <span class="topic-nav-title">INDEX-MATCH: Cara yang Lebih Baik</span>
+          </a>
+        </nav>
+
+      </article>
+    </div><!-- /topic-layout -->
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon" aria-hidden="true">⊞</div>
+            Excel Analyst Hub
+          </a>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Belajar</h4>
+          <ul>
+            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
+            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
+            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="tools.html#formula-generator">Formula Generator</a></li>
+            <li><a href="tools.html#daily-challenge-section">Tantangan Harian</a></li>
+            <li><a href="tools.html#quick-ref">Referensi Cepat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Jelajahi</h4>
+          <ul>
+            <li><a href="portfolio.html">Portofolio</a></li>
+            <li><a href="index.html#templates">Template Gratis</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Dibangun untuk generasi data analyst Indonesia berikutnya.</p>
+        <p>Excel Analyst Hub — Belajar gratis, keahlian nyata.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      // Tandai topik VLOOKUP sebagai dikunjungi dalam pelacak kemajuan
+      if (window.EAH && window.EAH.markVisited) {
+        window.EAH.markVisited('vlookup');
+        window.EAH.renderProgress && window.EAH.renderProgress();
+      }
+
+      // Perbarui indikator status header
+      var statusEl = document.getElementById('topic-status-header');
+      if (statusEl && window.EAH) {
+        var p = window.EAH.getProgress();
+        var status = p['vlookup'] || 'in-progress';
+        statusEl.dataset.status = status;
+        statusEl.textContent = status === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
+      }
+
+      // IntersectionObserver — tautan TOC aktif saat digulir
+      var sections = document.querySelectorAll('.topic-content section[id]');
+      var tocLinks = document.querySelectorAll('.toc-sidebar a');
+
+      if (sections.length && tocLinks.length) {
+        var activeSection = null;
+
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              activeSection = entry.target.id;
+              tocLinks.forEach(function (link) {
+                link.classList.remove('active');
+              });
+              var activeLink = document.querySelector('.toc-sidebar a[href="#' + activeSection + '"]');
+              if (activeLink) activeLink.classList.add('active');
+            }
+          });
+        }, {
+          rootMargin: '-80px 0px -60% 0px',
+          threshold: 0
+        });
+
+        sections.forEach(function (section) {
+          observer.observe(section);
+        });
+      }
+
+      // Tombol tandai selesai (ditampilkan di status header)
+      var headerStatus = document.getElementById('topic-status-header');
+      if (headerStatus) {
+        headerStatus.style.cursor = 'pointer';
+        headerStatus.title = 'Klik untuk menandai selesai';
+        headerStatus.addEventListener('click', function () {
+          if (window.EAH) {
+            var current = window.EAH.getProgress()['vlookup'] || 'in-progress';
+            var next = current === 'done' ? 'in-progress' : 'done';
+            window.EAH.setTopicStatus('vlookup', next);
+            headerStatus.dataset.status = next;
+            headerStatus.textContent = next === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
+          }
+        });
+      }
+
+    });
+  </script>
+</body>
+</html>
