@@ -144,8 +144,172 @@
         </div>
       </section>
 
-      <!-- ============ TOOL 3: QUICK REFERENCE CARD ============ -->
+
+      <!-- ============ TOOL 3: DATASET LATIHAN ============ -->
+      <section class="tool-section" id="dataset-latihan" aria-label="Dataset Latihan">
+        <div class="tool-header">
+          <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2);">
+            <span class="tool-number" aria-hidden="true">3</span>
+            <h2 style="margin:0;">📦 Dataset Latihan</h2>
+          </div>
+          <p>Download dataset siap pakai untuk mempraktikkan formula Excel secara langsung dengan data Indonesia yang realistis.</p>
+        </div>
+
+        <div class="dataset-grid">
+
+          <!-- Penjualan Bulanan -->
+          <div class="dataset-card">
+            <div class="dataset-card-header">
+              <span class="dataset-icon">🛒</span>
+              <div>
+                <div class="dataset-card-title">Penjualan Bulanan 2024</div>
+                <div class="dataset-meta">
+                  <span>📄 100 baris</span>
+                  <span>📊 8 kolom</span>
+                </div>
+              </div>
+            </div>
+            <p class="dataset-desc">Data transaksi penjualan produk elektronik Jan–Des 2024 per region dan sales rep. Cocok untuk analisis tren bulanan.</p>
+            <div class="dataset-skills">
+              <span class="dataset-skill-tag">SUMIF</span>
+              <span class="dataset-skill-tag">VLOOKUP</span>
+              <span class="dataset-skill-tag">PivotTable</span>
+              <span class="dataset-skill-tag">Grafik</span>
+            </div>
+            <div class="dataset-card-footer">
+              <button class="btn-ghost btn-sm" id="preview-penjualan" data-preview-csv="data/penjualan-bulanan.csv" data-preview-title="Penjualan Bulanan 2024">👁 Preview</button>
+              <a href="data/penjualan-bulanan.csv" download class="btn-primary btn-sm" id="dl-penjualan">⬇ Download CSV</a>
+            </div>
+          </div>
+
+          <!-- Karyawan HR -->
+          <div class="dataset-card">
+            <div class="dataset-card-header">
+              <span class="dataset-icon">👥</span>
+              <div>
+                <div class="dataset-card-title">Data Karyawan HR</div>
+                <div class="dataset-meta">
+                  <span>📄 50 baris</span>
+                  <span>📊 8 kolom</span>
+                </div>
+              </div>
+            </div>
+            <p class="dataset-desc">Data karyawan lintas departemen dengan gaji, jabatan, status, dan tanggal masuk. Cocok untuk VLOOKUP dan analisis HR.</p>
+            <div class="dataset-skills">
+              <span class="dataset-skill-tag">VLOOKUP</span>
+              <span class="dataset-skill-tag">COUNTIF</span>
+              <span class="dataset-skill-tag">AVERAGEIF</span>
+              <span class="dataset-skill-tag">IF bertingkat</span>
+            </div>
+            <div class="dataset-card-footer">
+              <button class="btn-ghost btn-sm" id="preview-karyawan" data-preview-csv="data/karyawan-hr.csv" data-preview-title="Data Karyawan HR">👁 Preview</button>
+              <a href="data/karyawan-hr.csv" download class="btn-primary btn-sm" id="dl-karyawan">⬇ Download CSV</a>
+            </div>
+          </div>
+
+          <!-- Inventory Toko -->
+          <div class="dataset-card">
+            <div class="dataset-card-header">
+              <span class="dataset-icon">📦</span>
+              <div>
+                <div class="dataset-card-title">Inventory Toko</div>
+                <div class="dataset-meta">
+                  <span>📄 40 baris</span>
+                  <span>📊 10 kolom</span>
+                </div>
+              </div>
+            </div>
+            <p class="dataset-desc">Stok barang dengan data masuk/keluar, harga beli/jual, dan supplier. Beberapa item stok kritis untuk latihan conditional formatting.</p>
+            <div class="dataset-skills">
+              <span class="dataset-skill-tag">SUMIF</span>
+              <span class="dataset-skill-tag">COUNTIF</span>
+              <span class="dataset-skill-tag">Conditional Formatting</span>
+              <span class="dataset-skill-tag">IF</span>
+            </div>
+            <div class="dataset-card-footer">
+              <button class="btn-ghost btn-sm" id="preview-inventory" data-preview-csv="data/inventory-toko.csv" data-preview-title="Inventory Toko">👁 Preview</button>
+              <a href="data/inventory-toko.csv" download class="btn-primary btn-sm" id="dl-inventory">⬇ Download CSV</a>
+            </div>
+          </div>
+
+          <!-- Absensi Karyawan -->
+          <div class="dataset-card">
+            <div class="dataset-card-header">
+              <span class="dataset-icon">🗓️</span>
+              <div>
+                <div class="dataset-card-title">Absensi Karyawan</div>
+                <div class="dataset-meta">
+                  <span>📄 ~120 baris</span>
+                  <span>📊 8 kolom</span>
+                </div>
+              </div>
+            </div>
+            <p class="dataset-desc">Data kehadiran Jan–Mar 2025 dengan jam masuk, keterlambatan, dan overtime. Ada pola yang bisa dianalisis dengan COUNTIF dan PivotTable.</p>
+            <div class="dataset-skills">
+              <span class="dataset-skill-tag">COUNTIF</span>
+              <span class="dataset-skill-tag">AVERAGEIF</span>
+              <span class="dataset-skill-tag">PivotTable</span>
+              <span class="dataset-skill-tag">Text Functions</span>
+            </div>
+            <div class="dataset-card-footer">
+              <button class="btn-ghost btn-sm" id="preview-absensi" data-preview-csv="data/absensi-karyawan.csv" data-preview-title="Absensi Karyawan">👁 Preview</button>
+              <a href="data/absensi-karyawan.csv" download class="btn-primary btn-sm" id="dl-absensi">⬇ Download CSV</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============ TOOL 4: DATASET GENERATOR ============ -->
+      <section class="tool-section" id="dataset-generator" aria-label="Generator Dataset">
+        <div class="tool-header">
+          <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2);">
+            <span class="tool-number" aria-hidden="true">4</span>
+            <h2 style="margin:0;">🎲 Generator Dataset Latihan</h2>
+          </div>
+          <p>Generate dataset custom dengan data Indonesia yang realistis. Pilih jenis, tentukan jumlah baris, lalu download sebagai CSV atau salin sebagai JSON.</p>
+        </div>
+
+        <div class="generator-card">
+          <form id="dataset-gen-form" onsubmit="return false;">
+            <div class="generator-controls">
+              <div>
+                <label for="gen-type" class="form-label">Jenis Dataset</label>
+                <select id="gen-type" class="form-input" aria-label="Pilih jenis dataset">
+                  <option value="penjualan">🛒 Penjualan Bulanan</option>
+                  <option value="karyawan">👥 Karyawan HR</option>
+                  <option value="inventory">📦 Inventory Toko</option>
+                  <option value="absensi">🗓️ Absensi Karyawan</option>
+                </select>
+              </div>
+              <div>
+                <label for="gen-rows" class="form-label">Jumlah Baris</label>
+                <input type="number" id="gen-rows" class="form-input" value="50" min="10" max="500" aria-label="Jumlah baris dataset" />
+              </div>
+            </div>
+
+            <label class="error-checkbox-wrap">
+              <input type="checkbox" id="gen-errors" />
+              Tambahkan data kosong &amp; error untuk latihan <em>data cleaning</em> (duplikat, typo, nilai negatif, format tanggal tidak konsisten)
+            </label>
+
+            <button type="button" id="btn-generate-dataset" class="btn-primary" style="width:100%;justify-content:center;">🎲 Generate Dataset</button>
+          </form>
+
+          <div id="gen-preview-wrap" class="gen-preview-wrap" style="display:none;">
+            <p id="gen-preview-info" class="gen-preview-info">Menampilkan 5 baris pertama:</p>
+            <div id="gen-preview-table"></div>
+            <div class="gen-actions">
+              <button id="btn-download-dataset" class="btn-primary" disabled>⬇ Download CSV</button>
+              <button id="btn-copy-json" class="btn-ghost" disabled>📋 Copy sebagai JSON</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TOOL 5: QUICK REFERENCE CARD ============ -->
       <section class="tool-section" id="quick-ref" aria-label="Kartu Referensi Cepat">
+
         <div class="tool-header">
           <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2);">
             <span class="tool-number" aria-hidden="true">3</span>
@@ -153,6 +317,7 @@
           </div>
           <p>28 shortcut Excel penting dalam 4 kategori. Cari berdasarkan shortcut atau deskripsi. Klik shortcut mana saja untuk menyalinnya.</p>
         </div>
+
 
         <div style="margin-bottom:var(--space-5);">
           <div class="search-input-wrapper" style="max-width:400px;">
@@ -191,6 +356,23 @@
     </div><!-- /container -->
   </main>
 
+  <!-- ============ MODAL PREVIEW DATASET ============ -->
+  <div class="modal-overlay" id="dataset-modal" role="dialog" aria-modal="true" aria-labelledby="modal-dataset-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-dataset-title">Preview Dataset</h2>
+        <button class="modal-close" data-close-modal aria-label="Tutup modal">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-dataset-body">
+        <p style="color:var(--text-muted);">Memuat data...</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary" id="modal-download-btn">⬇ Download CSV</button>
+        <button class="btn-ghost" data-close-modal>Tutup</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ============ FOOTER ============ -->
   <footer class="footer" role="contentinfo">
     <div class="container">
@@ -215,6 +397,7 @@
           <ul>
             <li><a href="#formula-generator">Formula Generator</a></li>
             <li><a href="#daily-challenge-section">Tantangan Harian</a></li>
+            <li><a href="#dataset-latihan">Dataset Latihan</a></li>
             <li><a href="#quick-ref">Referensi Cepat</a></li>
           </ul>
         </div>
@@ -236,6 +419,8 @@
   <script src="assets/js/main.js"></script>
   <script src="assets/js/formula-gen.js"></script>
   <script src="assets/js/quiz.js"></script>
+  <script src="assets/js/dataset-gen.js"></script>
+
 
   <script>
     // Wire up suggestion buttons

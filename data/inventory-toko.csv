@@ -1,0 +1,41 @@
+Kode_Barang;Nama_Barang;Kategori;Stok_Awal;Stok_Masuk;Stok_Keluar;Stok_Akhir;Harga_Beli;Harga_Jual;Supplier
+BRG001;Laptop Asus VivoBook;Elektronik;15;10;22;3;7800000;9500000;PT Asus Indonesia
+BRG002;Mouse Logitech M90;Aksesoris;50;100;148;2;85000;150000;CV Mitra Komputer
+BRG003;Keyboard Logitech K380;Aksesoris;30;50;76;4;220000;350000;CV Mitra Komputer
+BRG004;Monitor Samsung 24 Inch;Elektronik;10;15;21;4;2800000;3500000;PT Samsung Electronic
+BRG005;Headset JBL Tune 500;Elektronik;25;30;52;3;320000;500000;PT JBL Distribusi
+BRG006;Laptop HP 14s;Elektronik;12;8;19;1;7200000;8800000;PT HP Indonesia
+BRG007;Mouse Wireless Rexus;Aksesoris;40;60;95;5;95000;170000;CV Jaya Elektronik
+BRG008;Keyboard Mechanical Rexus;Aksesoris;20;30;41;9;350000;550000;CV Jaya Elektronik
+BRG009;Monitor LG 22 Inch;Elektronik;8;12;16;4;2500000;3200000;PT LG Electronics
+BRG010;Headset Sony WH-1000;Elektronik;6;10;14;2;850000;1200000;PT Sony Indonesia
+BRG011;USB Hub Ugreen 4 Port;Aksesoris;60;80;132;8;70000;120000;CV Ugreen Store
+BRG012;Webcam Logitech C270;Elektronik;15;20;31;4;350000;500000;CV Mitra Komputer
+BRG013;SSD Crucial 500GB;Komponen;20;25;43;2;550000;800000;PT Crucial Distribusi
+BRG014;RAM Kingston 8GB;Komponen;18;20;34;4;380000;580000;PT Kingston Indonesia
+BRG015;Charger Laptop Universal;Aksesoris;25;30;48;7;120000;200000;CV Aksesori Jaya
+BRG016;Laptop Lenovo IdeaPad;Elektronik;10;10;17;3;7500000;9200000;PT Lenovo Indonesia
+BRG017;Mouse Gaming Fantech;Aksesoris;35;50;82;3;110000;195000;CV Gaming Store
+BRG018;Keyboard Compact Fantech;Aksesoris;22;28;46;4;180000;290000;CV Gaming Store
+BRG019;Monitor ASUS 27 Inch;Elektronik;5;10;12;3;4200000;5500000;PT Asus Indonesia
+BRG020;Headset Plantronics;Elektronik;12;15;25;2;280000;420000;CV Audio Indonesia
+BRG021;Kabel HDMI 2M;Aksesoris;80;100;172;8;35000;65000;CV Kabel Jaya
+BRG022;Kabel USB-C 1M;Aksesoris;70;100;168;2;25000;50000;CV Kabel Jaya
+BRG023;Laptop Stand Adjustable;Aksesoris;30;40;66;4;95000;165000;CV Aksesori Jaya
+BRG024;Mouse Pad XL Gaming;Aksesoris;45;50;91;4;55000;95000;CV Gaming Store
+BRG025;Webcam 1080P Generic;Elektronik;10;15;22;3;180000;300000;CV Elektronik Murah
+BRG026;SSD Sandisk 1TB;Komponen;12;15;24;3;950000;1350000;PT Sandisk Indonesia
+BRG027;RAM DDR4 16GB Generic;Komponen;10;10;18;2;550000;800000;CV Komponen PC
+BRG028;Cooling Pad Laptop;Aksesoris;20;25;43;2;85000;145000;CV Aksesori Jaya
+BRG029;Power Bank Xiaomi 10000;Elektronik;25;30;52;3;180000;280000;PT Xiaomi Indonesia
+BRG030;Tinta Printer Canon Black;Habis Pakai;40;60;97;3;75000;125000;CV Tinta Printer
+BRG031;Tinta Printer Canon Color;Habis Pakai;35;50;83;2;85000;140000;CV Tinta Printer
+BRG032;Kertas HVS A4 80gram;Habis Pakai;100;200;295;5;45000;75000;CV Stationery Jaya
+BRG033;Flashdisk Sandisk 32GB;Aksesoris;55;70;123;2;55000;95000;PT Sandisk Indonesia
+BRG034;Flashdisk Kingston 64GB;Aksesoris;40;50;88;2;85000;145000;PT Kingston Indonesia
+BRG035;Printer Canon IP2870;Elektronik;8;5;11;2;850000;1200000;CV Mesin Cetak
+BRG036;Scanner Epson GT-S50;Elektronik;4;3;6;1;2500000;3500000;PT Epson Indonesia
+BRG037;Speaker Bluetooth JBL;Elektronik;15;20;33;2;350000;550000;PT JBL Distribusi
+BRG038;Baterai AA Alkaline (4pcs);Habis Pakai;90;100;186;4;18000;30000;CV Baterai Store
+BRG039;Kunci Kombinasi Brankas;Keamanan;6;4;9;1;280000;450000;CV Keamanan Indo
+BRG040;CCTV Hikvision 2MP;Keamanan;5;3;7;1;450000;750000;PT Hikvision Indonesia

@@ -1,0 +1,51 @@
+ID_Karyawan;Nama;Departemen;Jabatan;Tanggal_Masuk;Gaji;Status;Kota
+EMP001;Budi Santoso;IT;Senior Developer;15/03/2019;14000000;Aktif;Jakarta
+EMP002;Sari Dewi;Marketing;Manager Marketing;20/01/2018;16000000;Aktif;Jakarta
+EMP003;Ahmad Fauzi;Finance;Analis Keuangan;10/07/2020;9500000;Aktif;Surabaya
+EMP004;Rina Kusuma;HR;Manager HR;05/05/2017;14500000;Aktif;Jakarta
+EMP005;Dodi Pratama;Operations;Supervisor Operasional;12/09/2021;10000000;Aktif;Bandung
+EMP006;Fitri Handayani;IT;Junior Developer;03/02/2023;7500000;Aktif;Jakarta
+EMP007;Agus Wijaya;Finance;Staff Keuangan;18/06/2022;6500000;Aktif;Surabaya
+EMP008;Dewi Rahayu;Marketing;Digital Marketing;25/11/2021;8000000;Aktif;Jakarta
+EMP009;Rudi Hermawan;Operations;Staff Operasional;07/04/2022;5500000;Aktif;Bandung
+EMP010;Lina Marlina;HR;Recruiter;14/08/2020;8000000;Aktif;Jakarta
+EMP011;Hendra Kurniawan;IT;IT Manager;20/03/2016;20000000;Aktif;Jakarta
+EMP012;Nisa Pratiwi;Finance;Staff Keuangan;05/01/2023;6200000;Aktif;Surabaya
+EMP013;Yusuf Hakim;Marketing;Staff Marketing;10/09/2022;6000000;Aktif;Bandung
+EMP014;Sri Mulyani;Operations;Manager Operasional;15/02/2015;17000000;Aktif;Jakarta
+EMP015;Bambang Susilo;HR;Staff HR;22/07/2021;6000000;Aktif;Medan
+EMP016;Ayu Lestari;IT;Senior Developer;08/06/2020;13500000;Aktif;Jakarta
+EMP017;Faisal Rahman;Finance;Manager Keuangan;30/04/2014;18000000;Aktif;Jakarta
+EMP018;Mega Putri;Marketing;Digital Marketing;17/10/2022;7500000;Aktif;Surabaya
+EMP019;Tono Setiawan;Operations;Staff Operasional;28/03/2023;5200000;Aktif;Makassar
+EMP020;Indah Permata;HR;Staff HR;11/12/2022;5800000;Aktif;Jakarta
+EMP021;Rizki Hidayat;IT;Junior Developer;04/05/2023;7000000;Aktif;Bandung
+EMP022;Wulan Sari;Finance;Analis Keuangan;19/09/2019;9000000;Aktif;Jakarta
+EMP023;Anton Budiman;Marketing;Manager Marketing;25/06/2016;15500000;Cuti;Jakarta
+EMP024;Ely Susanti;Operations;Supervisor Operasional;08/11/2020;9500000;Aktif;Surabaya
+EMP025;Hadi Purnomo;HR;Manager HR;15/01/2013;16000000;Aktif;Jakarta
+EMP026;Ratna Sari;IT;Senior Developer;20/07/2018;13000000;Aktif;Jakarta
+EMP027;Wahyu Nugroho;Finance;Staff Keuangan;03/03/2022;6000000;Resign;Bandung
+EMP028;Citra Anggraini;Marketing;Staff Marketing;12/08/2022;5800000;Aktif;Medan
+EMP029;Denny Kusuma;Operations;Staff Operasional;25/01/2023;5000000;Aktif;Makassar
+EMP030;Putri Rahayu;HR;Recruiter;17/04/2021;7800000;Aktif;Jakarta
+EMP031;Edo Firmansyah;IT;Junior Developer;09/10/2023;6800000;Aktif;Surabaya
+EMP032;Farida Hanum;Finance;Analis Keuangan;14/02/2021;8800000;Aktif;Jakarta
+EMP033;Galang Ramadhan;Marketing;Digital Marketing;06/06/2022;7200000;Aktif;Bandung
+EMP034;Hesti Wulandari;Operations;Manager Operasional;20/09/2012;18500000;Aktif;Jakarta
+EMP035;Irfan Maulana;HR;Staff HR;15/11/2023;5500000;Aktif;Surabaya
+EMP036;Joko Santoso;IT;IT Manager;10/05/2015;19500000;Aktif;Jakarta
+EMP037;Karina Dewi;Finance;Staff Keuangan;22/03/2023;6100000;Aktif;Medan
+EMP038;Lukman Hakim;Marketing;Staff Marketing;07/07/2022;5700000;Resign;Makassar
+EMP039;Maya Agustina;Operations;Supervisor Operasional;13/12/2019;9200000;Aktif;Jakarta
+EMP040;Nanda Puspita;HR;Recruiter;29/08/2020;7600000;Aktif;Bandung
+EMP041;Oki Setiadi;IT;Senior Developer;04/01/2019;12500000;Aktif;Jakarta
+EMP042;Pita Nurhayati;Finance;Manager Keuangan;18/10/2013;17500000;Aktif;Surabaya
+EMP043;Qori Amalia;Marketing;Digital Marketing;25/05/2023;7300000;Aktif;Jakarta
+EMP044;Rahmat Hidayat;Operations;Staff Operasional;10/02/2024;5100000;Aktif;Bandung
+EMP045;Sinta Maharani;HR;Staff HR;16/03/2023;5600000;Cuti;Jakarta
+EMP046;Teguh Prasetyo;IT;Junior Developer;07/09/2023;7100000;Aktif;Medan
+EMP047;Umi Kalsum;Finance;Analis Keuangan;21/11/2020;8500000;Aktif;Jakarta
+EMP048;Vina Oktavia;Marketing;Manager Marketing;03/04/2017;14800000;Aktif;Surabaya
+EMP049;Wendi Saputra;Operations;Staff Operasional;15/06/2023;5000000;Resign;Makassar
+EMP050;Yeni Fitria;HR;Manager HR;28/07/2016;15000000;Aktif;Jakarta
