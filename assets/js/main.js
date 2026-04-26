@@ -270,9 +270,41 @@
   }
 
   /* ------------------------------------------
-     9. BOOTSTRAP ALL
+     9. THEME TOGGLE (dark/light mode)
+  ------------------------------------------ */
+  var THEME_KEY = 'eah_theme';
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    // Update all toggle button icons
+    document.querySelectorAll('.theme-toggle').forEach(function (btn) {
+      btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+      btn.setAttribute('aria-label', theme === 'dark' ? 'Aktifkan mode terang' : 'Aktifkan mode gelap');
+      btn.setAttribute('title', theme === 'dark' ? 'Mode terang' : 'Mode gelap');
+    });
+  }
+
+  function initThemeToggle() {
+    // Load saved preference; default to dark
+    var saved = 'dark';
+    try { saved = localStorage.getItem(THEME_KEY) || 'dark'; } catch (e) {}
+    applyTheme(saved);
+
+    document.querySelectorAll('.theme-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var current = document.documentElement.getAttribute('data-theme') || 'dark';
+        var next = current === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+      });
+    });
+  }
+
+  /* ------------------------------------------
+     10. BOOTSTRAP ALL
   ------------------------------------------ */
   document.addEventListener('DOMContentLoaded', function () {
+    initThemeToggle(); // must run first so theme is applied before paint
     initActiveNav();
     initMobileMenu();
     initCounters();

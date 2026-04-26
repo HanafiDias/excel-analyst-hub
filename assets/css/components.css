@@ -23,6 +23,11 @@
   transition: background var(--transition);
 }
 
+[data-theme="light"] .nav {
+  background: rgba(255,255,255,0.9);
+}
+
+
 .nav-inner {
   display: flex;
   align-items: center;
@@ -173,8 +178,48 @@
 
 @media (max-width: 768px) {
   .hamburger { display: flex; }
-  .nav-links, .nav-right { display: none; }
+  .nav-links { display: none; }
+  /* Keep "Mulai Belajar" and theme toggle hidden in nav-right on mobile,
+     show only hamburger */
+  .nav-right > .btn-primary { display: none; }
 }
+
+/* ============================================
+   THEME TOGGLE BUTTON
+   ============================================ */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius);
+  background: transparent;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  background: var(--surface);
+  border-color: var(--accent);
+  transform: scale(1.08);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Always visible in nav-right */
+@media (max-width: 768px) {
+  .theme-toggle {
+    display: inline-flex;
+  }
+}
+
 
 /* ============================================
    BUTTONS
@@ -779,7 +824,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: var(--space-3) var(--space-4);
-  color: #93c5fd;
+  color: var(--accent);
   overflow-x: auto;
   white-space: pre-wrap;
   word-break: break-all;
@@ -831,7 +876,7 @@ code {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 1px 6px;
-  color: #93c5fd;
+  color: var(--accent);
 }
 
 /* Shortcut key */
@@ -934,7 +979,10 @@ code {
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   overflow: hidden;
+  overflow-x: auto; /* Fix 1: horizontal scroll on mobile */
+  -webkit-overflow-scrolling: touch;
 }
+
 
 .ref-table {
   width: 100%;
@@ -1252,7 +1300,7 @@ select.form-input {
 
 .syntax-table td:first-child {
   font-family: var(--font-mono);
-  color: #93c5fd;
+  color: var(--accent);
   font-size: 0.82rem;
   white-space: nowrap;
 }

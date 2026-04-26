@@ -24,6 +24,7 @@
         <li><a href="tools.html">Tools</a></li>
       </ul>
       <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle-learn" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
         <a href="learn.html" class="btn-primary btn-sm">Mulai Belajar</a>
         <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu-learn">
           <span></span><span></span><span></span>
@@ -57,7 +58,10 @@
     <div class="container section-sm">
 
       <!-- ====== JALUR PEMULA ====== -->
+      <!-- Alias anchors so both "#beginner" and "#pemula" work -->
+      <span id="pemula" style="position:relative;top:calc(-1 * (var(--nav-height) + 16px));visibility:hidden;"></span>
       <div class="track-section fade-in" id="beginner" data-track="beginner">
+
         <div class="track-section-header" role="button" aria-expanded="true" tabindex="0">
           <div class="track-section-title">
             <span class="badge badge-beginner">Pemula</span>
@@ -165,7 +169,10 @@
       </div>
 
       <!-- ====== JALUR MENENGAH ====== -->
+      <!-- Alias anchors so both "#intermediate" and "#menengah" work -->
+      <span id="menengah" style="position:relative;top:calc(-1 * (var(--nav-height) + 16px));visibility:hidden;"></span>
       <div class="track-section fade-in delay-1" id="intermediate" data-track="intermediate">
+
         <div class="track-section-header" role="button" aria-expanded="true" tabindex="0">
           <div class="track-section-title">
             <span class="badge badge-intermediate">Menengah</span>
@@ -289,7 +296,11 @@
       </div>
 
       <!-- ====== JALUR LANJUTAN ====== -->
+      <!-- Alias anchors so both "#advanced", "#mahir", and "#lanjutan" work -->
+      <span id="mahir" style="position:relative;top:calc(-1 * (var(--nav-height) + 16px));visibility:hidden;"></span>
+      <span id="lanjutan" style="position:relative;top:calc(-1 * (var(--nav-height) + 16px));visibility:hidden;"></span>
       <div class="track-section fade-in delay-2" id="advanced" data-track="advanced">
+
         <div class="track-section-header" role="button" aria-expanded="true" tabindex="0">
           <div class="track-section-title">
             <span class="badge badge-advanced">Lanjutan</span>

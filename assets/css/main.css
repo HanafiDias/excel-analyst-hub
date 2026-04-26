@@ -6,8 +6,9 @@
 /* --- Google Fonts --- */
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-/* --- CSS Variables --- */
-:root {
+/* --- CSS Variables (Dark mode = default) --- */
+:root,
+[data-theme="dark"] {
   /* Colors */
   --bg: #0f1117;
   --surface: #1a1d27;
@@ -62,6 +63,27 @@
   --transition: 200ms ease;
   --transition-slow: 400ms ease;
 }
+
+/* --- Light Mode Variables --- */
+[data-theme="light"] {
+  --bg: #ffffff;
+  --surface: #f5f5f5;
+  --surface-2: #ebebeb;
+  --border: #ddd;
+  --accent: #2563eb;
+  --accent-2: #7c3aed;
+  --text: #1a1a2e;
+  --text-muted: #555;
+  --success: #16a34a;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow: 0 4px 16px rgba(0,0,0,0.1);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  --shadow-accent: 0 4px 24px rgba(37,99,235,0.15);
+  --shadow-hover: 0 8px 32px rgba(0,0,0,0.15);
+}
+
 
 /* --- Reset --- */
 *, *::before, *::after {

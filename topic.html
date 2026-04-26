@@ -24,6 +24,7 @@
         <li><a href="tools.html">Tools</a></li>
       </ul>
       <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle-topic" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
         <a href="learn.html" class="btn-primary btn-sm">Mulai Belajar</a>
         <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu-topic">
           <span></span><span></span><span></span>
@@ -92,6 +93,7 @@
           <p>Sintaks lengkapnya:</p>
           <div class="formula-block">=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</div>
 
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
           <table class="syntax-table" aria-label="Deskripsi argumen VLOOKUP">
             <thead>
               <tr>
@@ -123,6 +125,8 @@
               </tr>
             </tbody>
           </table>
+          </div>
+
 
           <div class="callout callout-warning">
             <p class="callout-title">⚠️ Selalu gunakan FALSE untuk pencocokan tepat</p>
@@ -136,6 +140,7 @@
 
           <p>Misalkan kamu punya dua sheet. Sheet1 berisi daftar transaksi penjualan:</p>
 
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
           <table class="syntax-table" aria-label="Contoh data transaksi">
             <thead>
               <tr><th>A — ID Karyawan</th><th>B — Jumlah Penjualan</th></tr>
@@ -146,9 +151,11 @@
               <tr><td>EMP002</td><td>15.700.000</td></tr>
             </tbody>
           </table>
+          </div>
 
           <p>Dan Sheet2 berisi tabel referensi karyawan:</p>
 
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
           <table class="syntax-table" aria-label="Contoh tabel referensi">
             <thead>
               <tr><th>A — ID Karyawan</th><th>B — Nama</th><th>C — Departemen</th></tr>
@@ -159,6 +166,8 @@
               <tr><td>EMP003</td><td>Ahmad Fauzi</td><td>Operations</td></tr>
             </tbody>
           </table>
+          </div>
+
 
           <p>Untuk menarik nama karyawan ke Sheet1 di setiap baris transaksi:</p>
           <div class="formula-block">=VLOOKUP(A2, Sheet2!$A$2:$C$100, 2, FALSE)</div>
@@ -213,6 +222,7 @@
 
           <p>VLOOKUP memiliki tiga keterbatasan nyata yang diselesaikan oleh INDEX-MATCH:</p>
 
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
           <table class="syntax-table" aria-label="Perbandingan VLOOKUP vs INDEX-MATCH">
             <thead>
               <tr>
@@ -244,6 +254,8 @@
               </tr>
             </tbody>
           </table>
+          </div>
+
 
           <p>INDEX-MATCH yang setara untuk contoh transaksi di atas:</p>
           <div class="formula-block">=INDEX(Sheet2!$B$2:$B$100, MATCH(A2, Sheet2!$A$2:$A$100, 0))</div>
