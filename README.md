@@ -4,6 +4,9 @@
 
 Excel Analyst Hub is an all-in-one platform designed for the next generation of Indonesian data analysts. It bridges the gap between basic spreadsheet knowledge and job-ready analytical skills through structured paths, interactive tools, and realistic practice scenarios.
 
+**Live Demo:** https://hanafidias.github.io/excel-analyst-hub
+
+
 ## Core Features
 
 - **Challenge System**: Interactive daily challenges and scenario-based quizzes that test real-world problem-solving skills.
@@ -45,6 +48,11 @@ This project is optimized for static hosting and is currently deployed via **Git
 - Expanded library of interactive dashboard templates.
 - Community-driven challenge submission system.
 - Enhanced progression badges and automated certificate generation.
+
+## License
+
+This project is created for learning and portfolio purposes.
+
 
 ---
 
