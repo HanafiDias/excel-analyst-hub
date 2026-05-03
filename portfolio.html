@@ -126,6 +126,25 @@
     </div>
   </footer>
 
+  <!-- ============ CASE STUDY MODAL ============ -->
+  <div id="case-modal" class="case-modal-overlay" role="dialog" aria-modal="true"
+       aria-labelledby="modal-project-title" hidden>
+    <div class="case-modal-container">
+      <div class="case-modal-header">
+        <div class="case-modal-header-left">
+          <span id="modal-project-icon" class="case-modal-icon" aria-hidden="true"></span>
+          <div>
+            <h2 id="modal-project-title"></h2>
+            <div id="modal-project-tags" class="case-modal-tags"></div>
+          </div>
+        </div>
+        <button class="modal-close" id="modal-close" aria-label="Tutup modal">✕</button>
+      </div>
+      <div class="case-tabs" id="case-tabs" role="tablist" aria-label="Pilih level case study"></div>
+      <div class="case-modal-body" id="case-modal-body" role="tabpanel"></div>
+    </div>
+  </div>
+
   <script src="assets/js/main.js"></script>
   <script src="assets/js/portfolio.js"></script>
 </body>
