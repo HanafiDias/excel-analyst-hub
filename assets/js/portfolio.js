@@ -13,7 +13,7 @@
     {
       id: 1, title: 'Sales Dashboard Q3',
       desc: 'Analisis penjualan regional dengan grafik interaktif dan kalkulasi KPI otomatis di 8 wilayah.',
-      tags: ['Dashboard', 'Charts'], icon: '📊', difficulty: 'intermediate',
+      tags: ['Dashboard', 'Charts'], icon: '&#128202;', difficulty: 'intermediate',
       cases: [
         {
           level: 'pemula', label: 'Case 1 � Pemula',
@@ -55,7 +55,7 @@
     {
       id: 2, title: 'Analisis Segmentasi Pelanggan',
       desc: 'Segmentasi RFM dari 5.000+ data pelanggan menggunakan PivotTable dan PERCENTRANK. Otomatis menempatkan pelanggan ke tier Champion, Loyal, Berisiko, Hilang.',
-      tags: ['PivotTable', 'Analysis'], icon: '👥', difficulty: 'advanced',
+      tags: ['PivotTable', 'Analysis'], icon: '&#128101;', difficulty: 'advanced',
       cases: [
         {
           level: 'pemula', label: 'Case 1 � Pemula',
@@ -97,7 +97,7 @@
     {
       id: 3, title: 'HR Attendance Tracker',
       desc: 'Pemantauan kehadiran karyawan bulanan untuk 150+ karyawan dengan peringatan conditional formatting. Terhubung ke kalkulasi potongan gaji melalui VLOOKUP.',
-      tags: ['Dashboard', 'HR'], icon: '📅', difficulty: 'intermediate',
+      tags: ['Dashboard', 'HR'], icon: '&#128197;', difficulty: 'intermediate',
       cases: [
         {
           level: 'pemula', label: 'Case 1 � Pemula',
@@ -139,7 +139,7 @@
     {
       id: 4, title: 'Sistem Manajemen Inventaris',
       desc: 'Pelacakan stok real-time untuk 300+ SKU dengan peringatan pemesanan ulang otomatis. Termasuk kalkulasi lead time pemasok dan database kontak berbasis VLOOKUP.',
-      tags: ['Automation', 'Finance'], icon: '📦', difficulty: 'intermediate',
+      tags: ['Automation', 'Finance'], icon: '&#128230;', difficulty: 'intermediate',
       cases: [
         {
           level: 'pemula', label: 'Case 1 � Pemula',
@@ -181,7 +181,7 @@
     {
       id: 5, title: 'Template Laporan Keuangan',
       desc: 'P&L bulanan dengan analisis varians otomatis vs anggaran, total bergulir 12 bulan, dan pemformatan satu klik untuk presentasi manajemen.',
-      tags: ['Finance', 'Template'], icon: '💰', difficulty: 'advanced',
+      tags: ['Finance', 'Template'], icon: '&#128176;', difficulty: 'advanced',
       cases: [
         {
           level: 'pemula', label: 'Case 1 � Pemula',
@@ -223,7 +223,7 @@
     {
       id: 6, title: 'Scorecard Kinerja Karyawan',
       desc: 'Dashboard pelacakan KPI untuk 12 metrik kinerja per karyawan. Penilaian otomatis dengan panah tren dan conditional formatting untuk menyoroti kuartil teratas dan terbawah.',
-      tags: ['Dashboard', 'HR'], icon: '🏆', difficulty: 'advanced',
+      tags: ['Dashboard', 'HR'], icon: '&#127942;', difficulty: 'advanced',
       cases: [
         {
           level: 'pemula', label: 'Case 1 � Pemula',
@@ -265,7 +265,7 @@
     {
       id: 7, title: 'Kalkulator Komisi Penjualan',
       desc: 'Kalkulasi komisi otomatis di 4 tier dengan kemampuan override per deal. Menggunakan nested IFS dan VLOOKUP terhadap tabel tarif � update tabel otomatis hitung ulang semua.',
-      tags: ['Automation', 'Finance'], icon: '💵', difficulty: 'intermediate',
+      tags: ['Automation', 'Finance'], icon: '&#128181;', difficulty: 'intermediate',
       cases: [
         {
           level: 'pemula', label: 'Case 1 � Pemula',
@@ -307,7 +307,7 @@
     {
       id: 8, title: 'Konsolidator Data Power Query',
       desc: 'Menggabungkan 12 file ekspor bulanan dari 3 sistem berbeda menjadi satu dataset bersih otomatis. Power Query menangani inkonsistensi format � satu tombol Refresh.',
-      tags: ['Power Query', 'Automation'], icon: '⚡', difficulty: 'advanced',
+      tags: ['Power Query', 'Automation'], icon: '&#9889;', difficulty: 'advanced',
       cases: [
         {
           level: 'pemula', label: 'Case 1 � Pemula',
@@ -349,7 +349,7 @@
     {
       id: 9, title: 'Alat Audit Formula VLOOKUP',
       desc: 'Template untuk mengaudit spreadsheet dengan VLOOKUP berat � mengidentifikasi referensi rusak, konsentrasi #N/A, dan menyarankan penggantian INDEX-MATCH.',
-      tags: ['VLOOKUP', 'Template'], icon: '🔍', difficulty: 'intermediate',
+      tags: ['VLOOKUP', 'Template'], icon: '&#128269;', difficulty: 'intermediate',
       cases: [
         {
           level: 'pemula', label: 'Case 1 � Pemula',
@@ -430,7 +430,7 @@
     if (!project) return;
     _activeProject = project;
 
-    document.getElementById('modal-project-icon').textContent = project.icon;
+    document.getElementById('modal-project-icon').innerHTML = project.icon;
     document.getElementById('modal-project-title').textContent = project.title;
     document.getElementById('modal-project-tags').innerHTML =
       getTagsHtml(project.tags) + ' ' + getDifficultyBadge(project.difficulty);
@@ -599,7 +599,16 @@
   }
 
   function normFormula(val) {
-    return val.trim().toLowerCase().replace(/^=/, '').replace(/\s+/g, '');
+    return String(val || '')
+      .trim()
+      .toUpperCase()
+      .replace(/^=/, '')           // remove leading =
+      .replace(/\s+/g, '')         // remove ALL whitespace
+      .replace(/,\s*/g, ',')       // normalize comma spacing
+      .replace(/\(\s*/g, '(')      // normalize space after (
+      .replace(/\s*\)/g, ')')      // normalize space before )
+      .replace(/"\s*/g, '"')       // normalize space after "
+      .replace(/\s*"/g, '"');      // normalize space before "
   }
 
   function showInsight(caseKey) {
@@ -654,7 +663,7 @@
           if (attempts >= 2 && expected) {
             hintText += (hintText ? ' � ' : '') + 'Jawaban: ' + expected;
           }
-          hintEl.textContent = '?? ' + hintText;
+          hintEl.innerHTML = '💡 ' + escapeHtml(hintText);
           hintEl.removeAttribute('hidden');
         }
       }
@@ -691,7 +700,7 @@
       var bar = document.getElementById('ms-bar-' + caseKey);
       if (bar) bar.style.width = pct + '%';
       var label = document.getElementById('ms-prog-label-' + caseKey);
-      if (label) label.textContent = completed === total ? 'Semua langkah selesai! ?' : 'Langkah ' + (completed + 1) + ' dari ' + total;
+      if (label) label.textContent = completed === total ? 'Semua langkah selesai! ✅' : 'Langkah ' + (completed + 1) + ' dari ' + total;
       if (si + 1 < total) {
         unlockStep(si + 1);
       } else {
