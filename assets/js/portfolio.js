@@ -473,7 +473,7 @@
   ------------------------------------------ */
   function renderCase(project, caseIndex) {
     var c = project.cases[caseIndex];
-    var caseKey = project.id + '_' + caseIndex;
+    var caseKey = String(project.id) + '-' + String(caseIndex);
     var body = document.getElementById('case-modal-body');
 
     var problemHtml = c.problem.map(function (p) {
