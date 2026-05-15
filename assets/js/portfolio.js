@@ -438,8 +438,8 @@
     var tabsEl = document.getElementById('case-tabs');
     tabsEl.innerHTML = project.cases.map(function (c, idx) {
       return '<button class="case-tab' + (idx === 0 ? ' tab-active' : '') + '" ' +
-             'data-idx="' + idx + '" role="tab" aria-selected="' + (idx === 0) + '">' +
-             escapeHtml(c.label) + '</button>';
+        'data-idx="' + idx + '" role="tab" aria-selected="' + (idx === 0) + '">' +
+        escapeHtml(c.label) + '</button>';
     }).join('');
 
     tabsEl.querySelectorAll('.case-tab').forEach(function (btn) {
@@ -495,28 +495,28 @@
 
     body.innerHTML =
       '<div class="case-section">' +
-        '<div class="case-section-label">📋 Situasi</div>' +
-        '<p class="case-situation">' + escapeHtml(c.situation) + '</p>' +
+      '<div class="case-section-label">📋 Situasi</div>' +
+      '<p class="case-situation">' + escapeHtml(c.situation) + '</p>' +
       '</div>' +
       '<div class="case-section">' +
-        '<div class="case-section-label">🎯 Yang Harus Diselesaikan</div>' +
-        '<ul class="case-bullets">' + problemHtml + '</ul>' +
+      '<div class="case-section-label">🎯 Yang Harus Diselesaikan</div>' +
+      '<ul class="case-bullets">' + problemHtml + '</ul>' +
       '</div>' +
       '<div class="case-section">' +
-        '<div class="case-section-label">🛠️ Langkah Penyelesaian</div>' +
-        '<ol class="case-steps-list">' + stepsHtml + '</ol>' +
+      '<div class="case-section-label">🛠️ Langkah Penyelesaian</div>' +
+      '<ol class="case-steps-list">' + stepsHtml + '</ol>' +
       '</div>' +
       '<div class="case-section">' +
-        '<div class="case-section-label">💬 Sekarang Giliranmu</div>' +
-        '<div class="interactive-section">' +
-          '<p class="case-question-text">' + escapeHtml(c.question) + '</p>' +
-          interactiveHtml +
-        '</div>' +
+      '<div class="case-section-label">💬 Sekarang Giliranmu</div>' +
+      '<div class="interactive-section">' +
+      '<p class="case-question-text">' + escapeHtml(c.question) + '</p>' +
+      interactiveHtml +
+      '</div>' +
       '</div>' +
       '<div class="insight-section" id="insight-' + caseKey + '">' +
-        '<div class="insight-label">💡 Key Insight</div>' +
-        '<p class="insight-text">' + escapeHtml(c.insight) + '</p>' +
-        '<span class="xp-badge">+' + c.xp + ' XP</span>' +
+      '<div class="insight-label">💡 Key Insight</div>' +
+      '<p class="insight-text">' + escapeHtml(c.insight) + '</p>' +
+      '<span class="xp-badge">+' + c.xp + ' XP</span>' +
       '</div>';
 
     attachInteractiveHandlers(c, caseKey);
@@ -539,12 +539,12 @@
   ------------------------------------------ */
   function buildFormulaInput(c, caseKey) {
     return '<div class="formula-input-wrapper" id="fi-wrap-' + caseKey + '">' +
-             '<span class="formula-prefix">=</span>' +
-             '<input type="text" class="formula-input" id="fi-' + caseKey + '" ' +
-                    'placeholder="Tulis formulamu di sini..." autocomplete="off" spellcheck="false">' +
-             '<button class="btn-check" id="fi-btn-' + caseKey + '">Cek Formula</button>' +
-           '</div>' +
-           '<div class="formula-hint" id="fi-hint-' + caseKey + '" hidden></div>';
+      '<span class="formula-prefix">=</span>' +
+      '<input type="text" class="formula-input" id="fi-' + caseKey + '" ' +
+      'placeholder="Tulis formulamu di sini..." autocomplete="off" spellcheck="false">' +
+      '<button class="btn-check" id="fi-btn-' + caseKey + '">Cek Formula</button>' +
+      '</div>' +
+      '<div class="formula-hint" id="fi-hint-' + caseKey + '" hidden></div>';
   }
 
   /* ------------------------------------------
@@ -564,25 +564,25 @@
         inputHtml += '</div>';
       } else {
         inputHtml = '<div class="formula-input-wrapper" id="fi-wrap-' + stepKey + '">' +
-                    '<span class="formula-prefix">=</span>' +
-                    '<input type="text" class="formula-input" id="fi-' + stepKey + '" ' +
-                           'placeholder="Tulis formulamu di sini..." autocomplete="off" spellcheck="false">' +
-                    '<button class="btn-check" id="fi-btn-' + stepKey + '">Cek Formula</button>' +
-                    '</div>' +
-                    '<div class="formula-hint" id="fi-hint-' + stepKey + '" hidden></div>';
+          '<span class="formula-prefix">=</span>' +
+          '<input type="text" class="formula-input" id="fi-' + stepKey + '" ' +
+          'placeholder="Tulis formulamu di sini..." autocomplete="off" spellcheck="false">' +
+          '<button class="btn-check" id="fi-btn-' + stepKey + '">Cek Formula</button>' +
+          '</div>' +
+          '<div class="formula-hint" id="fi-hint-' + stepKey + '" hidden></div>';
       }
       stepsHtml += '<div class="multi-step-item' + (si > 0 ? ' step-locked' : '') + '" id="ms-item-' + stepKey + '">' +
-                   '<p class="multi-step-instruction">' + escapeHtml(step.instruction) + '</p>' +
-                   inputHtml +
-                   '</div>';
+        '<p class="multi-step-instruction">' + escapeHtml(step.instruction) + '</p>' +
+        inputHtml +
+        '</div>';
       if (si < total - 1) {
         stepsHtml += '<div style="height:var(--space-4);"></div>';
       }
     });
 
     return '<div class="multi-step-progress-label" id="ms-prog-label-' + caseKey + '">Langkah 1 dari ' + total + '</div>' +
-           '<div class="multi-step-bar"><div class="multi-step-bar-fill" id="ms-bar-' + caseKey + '" style="width:' + Math.round(100/total) + '%"></div></div>' +
-           stepsHtml;
+      '<div class="multi-step-bar"><div class="multi-step-bar-fill" id="ms-bar-' + caseKey + '" style="width:' + Math.round(100 / total) + '%"></div></div>' +
+      stepsHtml;
   }
 
   /* ------------------------------------------
@@ -731,7 +731,7 @@
     if (state.completedCases.indexOf(caseKey) !== -1) return;
     state.completedCases.push(caseKey);
     state.totalXP = (state.totalXP || 0) + xp;
-    try { localStorage.setItem('eah_state', JSON.stringify(state)); } catch (e) {}
+    try { localStorage.setItem('eah_state', JSON.stringify(state)); } catch (e) { }
     showXPToast(xp);
   }
 
@@ -763,7 +763,7 @@
     if (!filtered.length) {
       grid.innerHTML =
         '<div style="grid-column:1/-1;text-align:center;padding:var(--space-12);color:var(--text-muted);">' +
-          '<p>Belum ada proyek dengan tag "' + escapeHtml(filter) + '".</p>' +
+        '<p>Belum ada proyek dengan tag "' + escapeHtml(filter) + '".</p>' +
         '</div>';
       return;
     }
@@ -771,21 +771,21 @@
     grid.innerHTML = filtered.map(function (p, i) {
       return '<div class="card project-card fade-in" style="transition-delay:' + (i * 0.05) + 's;" data-project-id="' + p.id + '">' +
         '<div class="project-thumb">' +
-          '<span class="project-icon" aria-hidden="true">' + p.icon + '</span>' +
+        '<span class="project-icon" aria-hidden="true">' + p.icon + '</span>' +
         '</div>' +
         '<div class="card-body">' +
-          '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-3);margin-bottom:var(--space-2);">' +
-            '<h3 style="font-size:1rem;">' + escapeHtml(p.title) + '</h3>' +
-            getDifficultyBadge(p.difficulty) +
-          '</div>' +
-          '<p style="font-size:0.85rem;color:var(--text-muted);line-height:1.65;">' + escapeHtml(p.desc) + '</p>' +
-          '<div class="tag-group">' + getTagsHtml(p.tags) + '</div>' +
+        '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-3);margin-bottom:var(--space-2);">' +
+        '<h3 style="font-size:1rem;">' + escapeHtml(p.title) + '</h3>' +
+        getDifficultyBadge(p.difficulty) +
+        '</div>' +
+        '<p style="font-size:0.85rem;color:var(--text-muted);line-height:1.65;">' + escapeHtml(p.desc) + '</p>' +
+        '<div class="tag-group">' + getTagsHtml(p.tags) + '</div>' +
         '</div>' +
         '<div class="card-footer">' +
-          '<button class="btn-ghost btn-sm" data-project-id="' + p.id + '" ' +
-                  'aria-label="Buka case study ' + escapeHtml(p.title) + '">Lihat Case Study →</button>' +
+        '<button class="btn-ghost btn-sm" data-project-id="' + p.id + '" ' +
+        'aria-label="Buka case study ' + escapeHtml(p.title) + '">Lihat Case Study →</button>' +
         '</div>' +
-      '</div>';
+        '</div>';
     }).join('');
 
     requestAnimationFrame(function () {
