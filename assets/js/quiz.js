@@ -225,11 +225,51 @@
   ];
 
   /* ------------------------------------------
-     DATE-BASED DAILY ROTATION (30 challenges pool)
+     DIFFICULTY LEVEL MAP
+  ------------------------------------------ */
+  var CHALLENGE_LEVELS = {
+    beginner:     ['c01','c02','c03','c04','c11','c12','c13','c16','c23','c24'],
+    intermediate: ['c05','c06','c07','c08','c14','c15','c17','c18','c19','c20','c22','c25','c26','c29','c30'],
+    advanced:     ['c09','c10','c21','c27','c28']
+  };
+
+  /* ------------------------------------------
+     DATE-BASED DAILY ROTATION (progressive difficulty)
   ------------------------------------------ */
   function getTodayChallenge() {
-    var dayIndex = Math.floor(Date.now() / 86400000) % CHALLENGES.length;
-    return CHALLENGES[dayIndex];
+    var state;
+    try { state = JSON.parse(localStorage.getItem(CHALLENGE_KEY) || '{}'); } catch (e) { state = {}; }
+
+    var completed = state || {};
+    var completedIds = Object.keys(completed).filter(function (k) {
+      return completed[k] === true;
+    });
+    var completedCount = completedIds.length;
+
+    // Progressive difficulty: expand pool based on experience
+    var pool;
+    if (completedCount < 5) {
+      pool = CHALLENGES.filter(function (c) {
+        return CHALLENGE_LEVELS.beginner.indexOf(c.id) !== -1;
+      });
+    } else if (completedCount < 15) {
+      pool = CHALLENGES.filter(function (c) {
+        return CHALLENGE_LEVELS.beginner.indexOf(c.id) !== -1 ||
+               CHALLENGE_LEVELS.intermediate.indexOf(c.id) !== -1;
+      });
+    } else {
+      pool = CHALLENGES;
+    }
+
+    // Skip already-completed challenges when possible
+    var remaining = pool.filter(function (c) {
+      return completedIds.indexOf(c.id) === -1;
+    });
+    if (!remaining.length) remaining = pool; // all done — cycle again
+
+    // Date-based rotation within the filtered pool
+    var dayIndex = Math.floor(Date.now() / 86400000) % remaining.length;
+    return remaining[dayIndex];
   }
 
   function getCompleted() {
@@ -294,8 +334,15 @@
     // Tombol tandai selesai
     doneBtn.addEventListener('click', function () {
       markCompleted(challenge.id);
-      doneBtn.textContent = '✓ Selesai Hari Ini';
+      doneBtn.textContent = '\u2713 Selesai Hari Ini';
       doneBtn.classList.add('done');
+      if (!document.getElementById('next-challenge-msg')) {
+        var nextMsg = document.createElement('p');
+        nextMsg.id = 'next-challenge-msg';
+        nextMsg.style.cssText = 'font-size:0.78rem;color:var(--text-muted);margin-top:var(--space-2);';
+        nextMsg.textContent = 'Tantangan baru tersedia besok. Terus semangat! \uD83D\uDD25';
+        doneBtn.parentNode.appendChild(nextMsg);
+      }
     });
   }
 
