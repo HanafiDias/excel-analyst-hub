@@ -392,6 +392,8 @@
 
   var currentFilter = 'All';
   var _activeProject = null;
+  var _previousFocus = null;    // element focused before modal opened
+  var _focusTrapHandler = null; // keydown listener reference for cleanup
 
   /* ------------------------------------------
      UTILITIES
@@ -417,6 +419,40 @@
       advanced: '<span class="badge badge-advanced">Lanjutan</span>'
     };
     return map[d] || '';
+  }
+
+  function getFocusableElements(container) {
+    return Array.from(container.querySelectorAll(
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), ' +
+      'textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter(function (el) {
+      return !el.closest('[hidden]') &&
+             getComputedStyle(el).display !== 'none' &&
+             getComputedStyle(el).visibility !== 'hidden';
+    });
+  }
+
+  function enableFocusTrap(modalContainer) {
+    _focusTrapHandler = function (e) {
+      if (e.key !== 'Tab') return;
+      var focusable = getFocusableElements(modalContainer);
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last  = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener('keydown', _focusTrapHandler);
+  }
+
+  function disableFocusTrap() {
+    if (_focusTrapHandler) {
+      document.removeEventListener('keydown', _focusTrapHandler);
+      _focusTrapHandler = null;
+    }
   }
 
   /* ------------------------------------------
@@ -458,7 +494,15 @@
     var modal = document.getElementById('case-modal');
     modal.removeAttribute('hidden');
     document.body.style.overflow = 'hidden';
-    document.getElementById('modal-close').focus();
+
+    // Save focus origin, enable trap, defer focus to close button
+    _previousFocus = document.activeElement;
+    var modalContainer = document.querySelector('.case-modal-container');
+    enableFocusTrap(modalContainer);
+    setTimeout(function () {
+      var closeBtn = document.getElementById('modal-close');
+      if (closeBtn) closeBtn.focus();
+    }, 50);
   }
 
   function closeModal() {
@@ -466,6 +510,11 @@
     modal.setAttribute('hidden', '');
     document.body.style.overflow = '';
     _activeProject = null;
+    disableFocusTrap();
+    if (_previousFocus && typeof _previousFocus.focus === 'function') {
+      _previousFocus.focus();
+    }
+    _previousFocus = null;
   }
 
   /* ------------------------------------------
