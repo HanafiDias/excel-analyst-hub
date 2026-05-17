@@ -273,17 +273,24 @@
   }
 
   function getCompleted() {
-    return window.EAH ? window.EAH.getChallengeState() :
-      (function(){ try { return JSON.parse(localStorage.getItem('eah_challenges') || '{}'); } catch(e) { return {}; } })();
+    // Coba pakai unified state dulu, fallback ke sistem lama
+    if (window.EAH && typeof window.EAH.getChallengeState === 'function') {
+      return window.EAH.getChallengeState();
+    }
+    try {
+      return JSON.parse(localStorage.getItem('eah_challenges') || '{}');
+    } catch (e) {
+      return {};
+    }
   }
 
   function markCompleted(id) {
-    if (window.EAH) {
+    if (window.EAH && typeof window.EAH.markChallengeComplete === 'function') {
       window.EAH.markChallengeComplete(id);
     } else {
       var data = getCompleted();
       data[id] = true;
-      localStorage.setItem('eah_challenges', JSON.stringify(data));
+      try { localStorage.setItem('eah_challenges', JSON.stringify(data)); } catch(e) {}
     }
   }
 
