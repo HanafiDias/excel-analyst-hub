@@ -2470,3 +2470,59 @@ button, a, input, select, textarea, [role="button"] {
   font-size: 0.72rem;
   opacity: 0.8;
 }
+
+/* ============================================
+   TOOLS SUBNAV
+   ============================================ */
+.tools-subnav {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  position: sticky;
+  top: var(--nav-height);
+  z-index: 900;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tools-subnav-inner {
+  display: flex;
+  gap: 0;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.tools-subnav-link {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.tools-subnav-link:hover {
+  color: var(--text);
+  border-bottom-color: var(--border);
+}
+
+.tools-subnav-link.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .tools-subnav-inner {
+    padding: 0 var(--space-4);
+    gap: 0;
+  }
+
+  .tools-subnav-link {
+    padding: var(--space-3) var(--space-3);
+    font-size: 0.78rem;
+  }
+}
