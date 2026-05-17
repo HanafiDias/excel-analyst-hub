@@ -67,7 +67,7 @@
         description: 'Counts the number of cells in a range that meet a single condition. Use it to find how many employees are in a department, how many orders exceeded a threshold, etc.',
         example: '=COUNTIF(A2:A100, "Active")',
         tip: 'You can use wildcards: COUNTIF(A:A, "Budi*") counts all cells starting with "Budi". Use ">100" with quotes to count values greater than 100.',
-        keywords: ['count if', 'conditional count', 'how many', 'count where', 'number of', 'count by', 'tally', 'hitung jika', 'hitung berdasarkan', 'berapa banyak', 'jumlah data', 'hitung data', 'count berdasarkan', 'hitung per', 'berapa jumlah', 'hitung kategori']
+        keywords: ['count if', 'conditional count', 'how many', 'count where', 'number of', 'count by', 'tally', 'hitung jika', 'hitung berdasarkan', 'berapa banyak', 'jumlah data', 'hitung data', 'count berdasarkan', 'hitung per', 'berapa jumlah', 'hitung kategori', 'hitung status', 'hitung karyawan aktif', 'hitung transaksi']
       },
       {
         name: 'AVERAGEIF',
@@ -75,7 +75,7 @@
         description: 'Returns the average of cells that meet a single condition. Useful for calculating average sales by region, average score by department, etc.',
         example: '=AVERAGEIF(B2:B100, "North", C2:C100)',
         tip: 'Like SUMIF, if average_range is omitted, it averages the range itself.',
-        keywords: ['average if', 'conditional average', 'mean by', 'average where', 'average for', 'mean for', 'rata-rata jika', 'rata-rata berdasarkan', 'rata rata per', 'average kondisi']
+        keywords: ['average if', 'conditional average', 'mean by', 'average where', 'average for', 'mean for', 'rata-rata jika', 'rata-rata berdasarkan', 'rata rata per', 'average kondisi', 'rata rata per departemen', 'rata-rata per kategori', 'rata-rata kondisi', 'average per wilayah']
       },
       {
         name: 'LARGE',
@@ -125,7 +125,7 @@
         description: 'Joins two or more text strings into one. The & operator is the simplest approach. TEXTJOIN is better when combining many values with a delimiter.',
         example: '=CONCAT(A2, " ", B2)  or  =A2 & " " & B2',
         tip: 'Use TEXTJOIN(", ", TRUE, A2:A10) to join a range of values with a comma-separator, skipping empty cells.',
-        keywords: ['join', 'combine', 'merge text', 'concatenate', 'connect', 'append', 'combine columns', 'full name', 'gabungkan', 'sambungkan', 'gabung teks', 'sambung teks', 'nama lengkap', 'gabung kolom']
+        keywords: ['join', 'combine', 'merge text', 'concatenate', 'connect', 'append', 'combine columns', 'full name', 'gabungkan', 'sambungkan', 'gabung teks', 'sambung teks', 'nama lengkap', 'gabung kolom', 'satukan teks', 'join teks']
       },
       {
         name: 'TEXT',
@@ -133,7 +133,7 @@
         description: 'Converts a number or date to text with a specific format. Essential for creating readable dates, formatted currency, or percentage text in concatenated strings.',
         example: '=TEXT(A2, "dd mmmm yyyy")',
         tip: 'Common formats: "dd/mm/yyyy" for dates, "#,##0" for numbers with commas, "0.0%" for percentages. The result is text — you can\'t do math with it.',
-        keywords: ['text format', 'number to text', 'date format', 'format date', 'format number', 'display as', 'indonesian date', 'format tanggal', 'format angka', 'ubah format', 'tampilkan sebagai', 'format rupiah', 'format persen']
+        keywords: ['text format', 'number to text', 'date format', 'format date', 'format number', 'display as', 'indonesian date', 'format tanggal', 'format angka', 'ubah format', 'tampilkan sebagai', 'format rupiah', 'format persen', 'angka ke teks', 'tanggal ke teks']
       },
       {
         name: 'TRIM',
@@ -141,7 +141,7 @@
         description: 'Removes all extra spaces from text — leading, trailing, and multiple spaces between words (leaving only single spaces). First thing to run when cleaning imported data.',
         example: '=TRIM(A2)',
         tip: 'TRIM only removes the standard space character (ASCII 32). If data has non-breaking spaces (from web/HTML), use SUBSTITUTE(TRIM(A2), CHAR(160), " ")',
-        keywords: ['trim', 'remove spaces', 'clean text', 'leading spaces', 'trailing spaces', 'extra spaces', 'hapus spasi', 'bersihkan spasi', 'spasi berlebih', 'trim spasi', 'hapus spasi kosong']
+        keywords: ['trim', 'remove spaces', 'clean text', 'leading spaces', 'trailing spaces', 'extra spaces', 'hapus spasi', 'bersihkan spasi', 'spasi berlebih', 'trim spasi', 'hapus spasi kosong', 'data cleaning teks', 'bersihkan data', 'spasi di awal', 'spasi di akhir']
       }
     ],
     date: [
@@ -151,7 +151,7 @@
         description: 'Returns today\'s date, updating automatically every time the worksheet recalculates. Use with no arguments. Perfect for calculating ages, days overdue, or days until a deadline.',
         example: '=TODAY() - A2  →  days since date in A2',
         tip: 'TODAY() returns only the date. Use NOW() if you also need the current time. Both recalculate automatically.',
-        keywords: ['today', 'current date', 'date now', 'todays date', 'this date', 'hari ini', 'tanggal hari ini', 'tanggal sekarang', 'tanggal saat ini']
+        keywords: ['today', 'current date', 'date now', 'todays date', 'this date', 'hari ini', 'tanggal hari ini', 'tanggal sekarang', 'tanggal saat ini', 'hitung umur', 'selisih hari', 'sudah berapa hari']
       },
       {
         name: 'NOW',
@@ -167,7 +167,7 @@
         description: 'Calculates the difference between two dates. Units: "Y" = complete years, "M" = complete months, "D" = days. Use "YM" for months ignoring years. Useful for calculating employee tenure or customer age.',
         example: '=DATEDIF(B2, TODAY(), "Y") & " years"',
         tip: 'DATEDIF is an undocumented but fully functional formula. It won\'t appear in autocomplete, but it works perfectly. Always put the earlier date first.',
-        keywords: ['date difference', 'age', 'years between', 'months between', 'tenure', 'how long', 'duration', 'masa kerja', 'selisih tanggal', 'hitung usia', 'umur', 'lama bekerja', 'berapa tahun', 'berapa bulan', 'durasi']
+        keywords: ['date difference', 'age', 'years between', 'months between', 'tenure', 'how long', 'duration', 'masa kerja', 'selisih tanggal', 'hitung usia', 'umur', 'lama bekerja', 'berapa tahun', 'berapa bulan', 'durasi', 'umur karyawan', 'durasi kerja', 'tenure karyawan', 'hitung masa kerja']
       },
       {
         name: 'EOMONTH',
@@ -183,7 +183,7 @@
         description: 'Calculates the number of working days between two dates, automatically excluding weekends. Pass a range of holiday dates as the optional third argument.',
         example: '=NETWORKDAYS(A2, B2, HolidayList)',
         tip: 'For Indonesian public holidays, maintain a named range "HolidayList" with all holiday dates for the year.',
-        keywords: ['working days', 'business days', 'workdays', 'exclude weekends', 'hari kerja', 'weekdays between', 'hari bisnis', 'kerja', 'tidak termasuk weekend', 'hari weekday']
+        keywords: ['working days', 'business days', 'workdays', 'exclude weekends', 'hari kerja', 'weekdays between', 'hari bisnis', 'kerja', 'tidak termasuk weekend', 'hari weekday', 'hitung hari kerja', 'berapa hari kerja', 'kerja efektif', 'exclude sabtu minggu']
       }
     ],
     logical: [
@@ -193,7 +193,7 @@
         description: 'The most fundamental decision formula in Excel. Returns one value when a condition is true and another when false. Nest IFs for multiple conditions, or use IFS for cleaner syntax.',
         example: '=IF(C2 >= 100, "Target Met", "Below Target")',
         tip: 'Avoid deeply nesting IFs (more than 2 levels). If you need more conditions, IFS is more readable. If the false result doesn\'t matter, use "" (empty string).',
-        keywords: ['if', 'condition', 'check', 'true false', 'when', 'conditional', 'test', 'either or', 'jika', 'kalau', 'kondisi', 'syarat', 'apabila', 'cek kondisi', 'benar salah']
+        keywords: ['if', 'condition', 'check', 'true false', 'when', 'conditional', 'test', 'either or', 'jika', 'kalau', 'kondisi', 'syarat', 'apabila', 'cek kondisi', 'benar salah', 'cek', 'lulus tidak lulus', 'aman kritis', 'status otomatis']
       },
       {
         name: 'IFS',
@@ -201,7 +201,7 @@
         description: 'Checks multiple conditions in order and returns the first matching result. Much cleaner than nested IFs. Always end with TRUE as the last condition to provide a default value.',
         example: '=IFS(A2>=90, "A", A2>=80, "B", A2>=70, "C", TRUE, "D")',
         tip: 'IFS has no built-in "else" — that\'s what the TRUE at the end does. Without it, unmatched conditions return #N/A.',
-        keywords: ['ifs', 'multiple conditions', 'nested if', 'grade', 'multiple if', 'several conditions', 'cascading if', 'jika banyak kondisi', 'banyak syarat', 'beberapa kondisi', 'kategori bertingkat', 'klasifikasi']
+        keywords: ['ifs', 'multiple conditions', 'nested if', 'grade', 'multiple if', 'several conditions', 'cascading if', 'jika banyak kondisi', 'banyak syarat', 'beberapa kondisi', 'kategori bertingkat', 'klasifikasi', 'grade nilai', 'tier performa']
       },
       {
         name: 'IFERROR',
