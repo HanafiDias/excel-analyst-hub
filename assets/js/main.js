@@ -179,7 +179,17 @@
     headers.forEach(function (header) {
       header.addEventListener('click', function () {
         var section = header.closest('.track-section');
-        section.classList.toggle('expanded');
+        var isExpanded = section.classList.toggle('expanded');
+        header.setAttribute('aria-expanded', String(isExpanded));
+      });
+
+      header.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          var section = header.closest('.track-section');
+          var isExpanded = section.classList.toggle('expanded');
+          header.setAttribute('aria-expanded', String(isExpanded));
+        }
       });
     });
 
