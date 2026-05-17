@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('eah_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tutorial VLOOKUP — Excel Analyst Hub</title>
@@ -303,9 +311,9 @@
             <span class="topic-nav-direction">← Sebelumnya</span>
             <span class="topic-nav-title">SUMIF &amp; COUNTIF</span>
           </div>
-          <a href="topic.html" class="topic-nav-item" style="text-align:right;">
+          <a href="topic-sumif.html" class="topic-nav-item" style="text-align:right;">
             <span class="topic-nav-direction">Berikutnya →</span>
-            <span class="topic-nav-title">INDEX-MATCH: Cara yang Lebih Baik</span>
+            <span class="topic-nav-title">SUMIF &amp; COUNTIF</span>
           </a>
         </nav>
 

@@ -298,7 +298,9 @@
     var isDone = !!completed[challenge.id];
 
     container.innerHTML =
-      '<div class="challenge-day-label">Tantangan Hari Ini — ' + getTodayLabel() + '</div>' +
+      '<div class="challenge-day-label">Tantangan Hari Ini — ' + getTodayLabel() +
+      ' &nbsp;·&nbsp; <span class="badge ' + getLevelBadgeClass(challenge.id) +
+      '" style="font-size:0.7rem;">' + getChallengeLevel(challenge.id) + '</span></div>' +
       '<div class="challenge-body">' +
         '<p class="challenge-scenario">' + escapeHtml(challenge.scenario) + '</p>' +
         '<p class="challenge-question"><strong>Soal:</strong> ' + escapeHtml(challenge.question) + '</p>' +
@@ -351,6 +353,20 @@
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
     var d = new Date();
     return days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+  }
+
+  function getChallengeLevel(challengeId) {
+    if (CHALLENGE_LEVELS.beginner.indexOf(challengeId) !== -1) return 'Pemula';
+    if (CHALLENGE_LEVELS.intermediate.indexOf(challengeId) !== -1) return 'Menengah';
+    if (CHALLENGE_LEVELS.advanced.indexOf(challengeId) !== -1) return 'Lanjutan';
+    return 'Pemula';
+  }
+
+  function getLevelBadgeClass(challengeId) {
+    if (CHALLENGE_LEVELS.beginner.indexOf(challengeId) !== -1) return 'badge-beginner';
+    if (CHALLENGE_LEVELS.intermediate.indexOf(challengeId) !== -1) return 'badge-intermediate';
+    if (CHALLENGE_LEVELS.advanced.indexOf(challengeId) !== -1) return 'badge-advanced';
+    return 'badge-beginner';
   }
 
   /* ------------------------------------------

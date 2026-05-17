@@ -2438,3 +2438,35 @@ select.form-input {
 button, a, input, select, textarea, [role="button"] {
   touch-action: manipulation;
 }
+
+/* ============================================
+   TOPIC MARK DONE — MORE PROMINENT
+   ============================================ */
+.topic-status {
+  cursor: pointer;
+  user-select: none;
+  transition: all var(--transition);
+}
+
+.topic-status:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.topic-status[data-status="not-started"]:hover::after {
+  content: ' — Klik untuk tandai selesai';
+  font-size: 0.72rem;
+  opacity: 0.8;
+}
+
+.topic-status[data-status="in-progress"]:hover::after {
+  content: ' — Klik untuk tandai selesai';
+  font-size: 0.72rem;
+  opacity: 0.8;
+}
+
+.topic-status[data-status="done"]:hover::after {
+  content: ' — Klik untuk batalkan';
+  font-size: 0.72rem;
+  opacity: 0.8;
+}
