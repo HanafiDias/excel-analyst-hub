@@ -206,6 +206,54 @@
 
   window.EAH = window.EAH || {};
 
+  /* ------------------------------------------
+     UNIFIED STATE MANAGER
+  ------------------------------------------ */
+  var STATE_KEY = 'eah_unified_state';
+
+  window.EAH.getState = function() {
+    try {
+      return JSON.parse(localStorage.getItem(STATE_KEY) || '{}');
+    } catch(e) {
+      return {};
+    }
+  };
+
+  window.EAH.setState = function(updates) {
+    var current = window.EAH.getState();
+    var merged = Object.assign({}, current, updates);
+    try {
+      localStorage.setItem(STATE_KEY, JSON.stringify(merged));
+    } catch(e) {}
+    return merged;
+  };
+
+  window.EAH.getTotalXP = function() {
+    return window.EAH.getState().totalXP || 0;
+  };
+
+  window.EAH.addXP = function(amount, caseKey) {
+    var state = window.EAH.getState();
+    var completed = state.completedCases || [];
+    if (completed.indexOf(caseKey) !== -1) return false; // already awarded
+    completed.push(caseKey);
+    window.EAH.setState({
+      totalXP: (state.totalXP || 0) + amount,
+      completedCases: completed
+    });
+    return true;
+  };
+
+  window.EAH.getChallengeState = function() {
+    return window.EAH.getState().challenges || {};
+  };
+
+  window.EAH.markChallengeComplete = function(id) {
+    var challenges = window.EAH.getChallengeState();
+    challenges[id] = true;
+    window.EAH.setState({ challenges: challenges });
+  };
+
   window.EAH.getProgress = function () {
     try {
       return JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}');

@@ -774,14 +774,20 @@
      XP SYSTEM
   ------------------------------------------ */
   function awardXP(xp, caseKey) {
-    var state;
-    try { state = JSON.parse(localStorage.getItem('eah_state') || '{}'); } catch (e) { state = {}; }
-    state.completedCases = state.completedCases || [];
-    if (state.completedCases.indexOf(caseKey) !== -1) return;
-    state.completedCases.push(caseKey);
-    state.totalXP = (state.totalXP || 0) + xp;
-    try { localStorage.setItem('eah_state', JSON.stringify(state)); } catch (e) { }
-    showXPToast(xp);
+    if (window.EAH && window.EAH.addXP) {
+      var awarded = window.EAH.addXP(xp, caseKey);
+      if (awarded) showXPToast(xp);
+    } else {
+      // fallback ke sistem lama
+      var state;
+      try { state = JSON.parse(localStorage.getItem('eah_state') || '{}'); } catch(e) { state = {}; }
+      state.completedCases = state.completedCases || [];
+      if (state.completedCases.indexOf(caseKey) !== -1) return;
+      state.completedCases.push(caseKey);
+      state.totalXP = (state.totalXP || 0) + xp;
+      try { localStorage.setItem('eah_state', JSON.stringify(state)); } catch(e) {}
+      showXPToast(xp);
+    }
   }
 
   function showXPToast(xp) {

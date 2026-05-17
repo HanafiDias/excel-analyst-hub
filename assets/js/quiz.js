@@ -273,17 +273,18 @@
   }
 
   function getCompleted() {
-    try {
-      return JSON.parse(localStorage.getItem(CHALLENGE_KEY) || '{}');
-    } catch (e) {
-      return {};
-    }
+    return window.EAH ? window.EAH.getChallengeState() :
+      (function(){ try { return JSON.parse(localStorage.getItem('eah_challenges') || '{}'); } catch(e) { return {}; } })();
   }
 
   function markCompleted(id) {
-    var data = getCompleted();
-    data[id] = true;
-    localStorage.setItem(CHALLENGE_KEY, JSON.stringify(data));
+    if (window.EAH) {
+      window.EAH.markChallengeComplete(id);
+    } else {
+      var data = getCompleted();
+      data[id] = true;
+      localStorage.setItem('eah_challenges', JSON.stringify(data));
+    }
   }
 
   /* ------------------------------------------
