@@ -252,6 +252,15 @@
   transform: scale(0.98);
 }
 
+.btn-primary:disabled,
+.btn-primary[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: var(--text-muted);
+  border-color: var(--text-muted);
+  pointer-events: none;
+}
+
 .btn-primary.done {
   background: var(--success);
   border-color: var(--success);
