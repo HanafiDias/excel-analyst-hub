@@ -287,11 +287,11 @@
       if (!statusEl) return;
       statusEl.dataset.status = status;
       if (status === 'done') {
-        statusEl.textContent = '✓ Done';
+        statusEl.textContent = '✓ Selesai';
       } else if (status === 'in-progress') {
-        statusEl.textContent = '● In Progress';
+        statusEl.textContent = '● Sedang Dipelajari';
       } else {
-        statusEl.textContent = '○ Not Started';
+        statusEl.textContent = '○ Belum Dimulai';
       }
     });
 
@@ -306,7 +306,7 @@
       var fill = track.querySelector('.progress-fill');
       var label = track.querySelector('.progress-label');
       if (fill) fill.style.width = pct + '%';
-      if (label) label.textContent = done + '/' + ids.length + ' completed';
+      if (label) label.textContent = done + '/' + ids.length + ' selesai';
     });
   };
 

@@ -4,7 +4,7 @@
    ============================================ */
 
 /* --- Google Fonts --- */
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap&font-display=swap');
 
 /* --- CSS Variables (Dark mode = default) --- */
 :root,
@@ -301,6 +301,10 @@ code, .formula, kbd {
 /* --- Page scroll offset for fixed nav --- */
 section[id], [id].scroll-target {
   scroll-margin-top: calc(var(--nav-height) + 16px);
+}
+
+.tool-section[id] {
+  scroll-margin-top: calc(var(--nav-height) + 56px);
 }
 
 /* ============================================
