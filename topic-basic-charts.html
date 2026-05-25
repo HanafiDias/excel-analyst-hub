@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('eah_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grafik Dasar &amp; Visualisasi — Excel Analyst Hub</title>
+  <meta name="description" content="Pelajari cara membuat grafik Excel yang profesional — kapan pakai bar chart, line chart, dan cara membersihkan tampilan grafik." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+</head>
+<body class="page-body">
+
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon" aria-hidden="true">⊞</div>
+        Excel Analyst Hub
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="learn.html">Belajar</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="tools.html">Tools</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle-charts" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
+        <a href="learn.html" class="btn-primary btn-sm">Mulai Belajar</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu-charts">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-menu-mobile" id="mobile-menu-charts">
+    <a href="index.html">Beranda</a>
+    <a href="learn.html">Belajar</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="tools.html">Tools</a>
+  </div>
+
+  <main id="main-content">
+    <div class="topic-layout">
+
+      <!-- ============ SIDEBAR TOC ============ -->
+      <aside class="toc-sidebar" aria-label="Daftar isi">
+        <p class="toc-title">Di Halaman Ini</p>
+        <a href="#jenis-grafik">Memilih Jenis Grafik</a>
+        <a href="#buat-grafik">Cara Membuat Grafik</a>
+        <a href="#bar-vs-line">Bar Chart vs Line Chart</a>
+        <a href="#pie-chart">Tentang Pie Chart</a>
+        <a href="#bersihkan-grafik">Membersihkan Tampilan Grafik</a>
+        <a href="#tips-grafik">Tips Profesional</a>
+      </aside>
+
+      <!-- ============ MAIN CONTENT ============ -->
+      <article class="topic-content">
+
+        <!-- Topic header -->
+        <header class="topic-header">
+          <nav aria-label="Breadcrumb" style="margin-bottom:var(--space-4);">
+            <a href="learn.html" style="font-size:0.82rem;color:var(--text-muted);">← Kembali ke Jalur Belajar</a>
+          </nav>
+          <div class="topic-meta">
+            <span class="badge badge-beginner">Pemula</span>
+            <span class="duration">~30 menit</span>
+            <span id="topic-status-header" class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+          </div>
+          <h1>Grafik Dasar &amp; Visualisasi: Dari Angka ke Cerita</h1>
+          <p>Jenis grafik mana untuk data apa — dan mengapa sebagian besar grafik Excel terlihat buruk secara default.</p>
+        </header>
+
+        <!-- ====== SECTION 1 ====== -->
+        <section id="jenis-grafik">
+          <h2>Memilih Jenis Grafik yang Tepat</h2>
+
+          <p>Prinsip utama pemilihan grafik: <strong>jenis grafik ditentukan oleh pertanyaan yang ingin dijawab</strong>, bukan preferensi estetika atau tradisi departemen. Tabel berikut adalah panduan cepat:</p>
+
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+          <table class="syntax-table" aria-label="Panduan pemilihan jenis grafik">
+            <thead>
+              <tr><th>Pertanyaan yang Dijawab</th><th>Jenis Grafik</th><th>Contoh</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Perbandingan antar kategori</td><td>Bar / Column Chart</td><td>Penjualan per region</td></tr>
+              <tr><td>Tren sepanjang waktu</td><td>Line Chart</td><td>Revenue bulanan</td></tr>
+              <tr><td>Proporsi dari keseluruhan</td><td>Pie / Donut Chart</td><td>Market share produk</td></tr>
+              <tr><td>Hubungan dua variabel</td><td>Scatter Plot</td><td>Iklan vs penjualan</td></tr>
+              <tr><td>Distribusi nilai</td><td>Histogram</td><td>Distribusi nilai ujian</td></tr>
+            </tbody>
+          </table>
+          </div>
+
+          <p>Sebelum membuka Excel dan klik Insert Chart, tanyakan dulu: <em>"Apa yang ingin diketahui audiens setelah melihat grafik ini?"</em> Jawaban pertanyaan itu yang menentukan jenis grafiknya.</p>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Kalau ragu, pilih bar chart</p>
+            <p>Bar chart adalah grafik paling universal yang bekerja untuk hampir semua perbandingan dan paling mudah dibaca audiens yang tidak terbiasa dengan data. Mulai dari sini, lalu ganti ke jenis lain hanya jika ada alasan spesifik.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 2 ====== -->
+        <section id="buat-grafik">
+          <h2>Cara Membuat Grafik di Excel</h2>
+
+          <p>Membuat grafik di Excel jauh lebih mudah dari yang dibayangkan. Prosesnya hanya beberapa klik:</p>
+
+          <ol>
+            <li><strong>Pilih data</strong> termasuk header kolom dan label baris — ini penting agar Excel tahu nama sumbu dan legenda</li>
+            <li>Pergi ke tab <strong>Insert</strong> di Ribbon</li>
+            <li>Di grup <strong>Charts</strong>, pilih jenis grafik yang diinginkan, atau klik <strong>Recommended Charts</strong> untuk saran otomatis Excel berdasarkan struktur datamu</li>
+            <li>Grafik muncul di sheet yang sama sebagai objek mengambang — klik dan drag untuk memindahkan ke posisi yang diinginkan</li>
+            <li>Saat grafik dipilih (ada border biru di sekelilingnya), dua tab baru muncul di Ribbon: <strong>Chart Design</strong> dan <strong>Format</strong> — gunakan keduanya untuk kustomisasi</li>
+          </ol>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Gunakan Recommended Charts sebagai titik awal</p>
+            <p>Gunakan <strong>Insert → Recommended Charts</strong> untuk melihat saran Excel berdasarkan struktur datamu. Excel menganalisis pola data dan menyarankan beberapa opsi yang paling cocok. Tidak selalu sempurna, tapi bagus sebagai titik awal — terutama saat kamu belum yakin jenis grafik apa yang tepat.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 3 ====== -->
+        <section id="bar-vs-line">
+          <h2>Bar Chart vs Line Chart — Kapan Masing-Masing</h2>
+
+          <p>Ini adalah dua jenis grafik yang paling sering digunakan — dan paling sering dipilih secara salah. Perbedaannya bukan soal estetika, tapi soal makna yang dikomunikasikan ke audiens.</p>
+
+          <h3>Column/Bar Chart — Untuk perbandingan kategori</h3>
+          <p>Gunakan column atau bar chart ketika kamu membandingkan nilai dari kategori yang <strong>tidak punya urutan alami</strong> — seperti nama produk, nama region, atau nama karyawan. Mata membaca bar sebagai "ini lebih besar dari itu".</p>
+
+          <h3>Line Chart — Untuk tren waktu</h3>
+          <p>Gunakan line chart ketika sumbu X adalah waktu atau ada kontinuitas antar titik data. Garis secara visual mengkomunikasikan <strong>pergerakan dan tren</strong> — mata secara natural mengikuti garis sebagai pergerakan dari kiri ke kanan.</p>
+
+          <h3>Aturan sederhana</h3>
+          <ul>
+            <li>Jika sumbu X adalah <strong>kategori</strong> (nama produk, nama region, nama orang) → <strong>Column/Bar Chart</strong></li>
+            <li>Jika sumbu X adalah <strong>waktu</strong> (Jan, Feb, Mar atau Q1, Q2, Q3) → <strong>Line Chart</strong></li>
+          </ul>
+
+          <div class="callout callout-warning">
+            <p class="callout-title">⚠️ Jangan pakai line chart untuk data kategori</p>
+            <p>Jangan pakai line chart untuk data kategori yang tidak punya urutan alami. Garis antara "Jakarta" dan "Surabaya" tidak bermakna — tidak ada yang "di antara" dua kota. Line chart menyiratkan kontinuitas dan tren; jika tidak ada kontinuitas, jangan gunakan garis.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 4 ====== -->
+        <section id="pie-chart">
+          <h2>Tentang Pie Chart — Gunakan dengan Hati-Hati</h2>
+
+          <p>Pie chart adalah grafik yang paling sering digunakan secara berlebihan dan paling sering disalahgunakan. Ini bukan berarti pie chart selalu salah — ada situasi yang tepat untuknya.</p>
+
+          <h3>Kapan pie chart tepat digunakan</h3>
+          <ul>
+            <li>Ada <strong>maksimal 5 segmen</strong> — lebih dari itu terlalu rumit untuk dibaca</li>
+            <li>Semua segmen punya <strong>perbedaan ukuran yang signifikan</strong> — audiens bisa langsung melihat perbedaannya</li>
+            <li>Total 100% memang <strong>bermakna</strong> — misalnya market share di mana semua pemain dijumlahkan jadi 100%</li>
+          </ul>
+
+          <h3>Masalah utama pie chart</h3>
+          <p>Mata manusia sangat buruk dalam membandingkan luas area. Segmen 23% vs 27% hampir tidak bisa dibedakan secara visual dari pie chart — tapi perbedaan 4 poin persen bisa sangat signifikan secara bisnis. Akibatnya, grafik menyembunyikan informasi penting.</p>
+
+          <h3>Alternatif yang lebih baik</h3>
+          <p>Bar chart horizontal dengan label persentase langsung di sebelah bar hampir selalu lebih komunikatif dari pie chart — audiens bisa langsung membandingkan angka dengan akurat.</p>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Donut chart lebih baik dari pie biasa</p>
+            <p>Donut chart (pie chart dengan lubang di tengah) sedikit lebih mudah dibaca karena mata fokus ke panjang arc bukan luas area. Lubang di tengah juga bisa diisi angka total yang informatif. Tapi bar chart tetap lebih akurat untuk perbandingan yang perlu ketelitian.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 5 ====== -->
+        <section id="bersihkan-grafik">
+          <h2>Membersihkan Tampilan Grafik</h2>
+
+          <p>Default Excel menghasilkan grafik yang terlalu ramai — gridline tebal, border di mana-mana, warna mencolok, dan legend yang tidak selalu perlu. Lima langkah untuk membersihkannya:</p>
+
+          <ol>
+            <li>
+              <strong>Hapus gridline horizontal yang tidak perlu</strong> — klik salah satu gridline di dalam area grafik → tekan <strong>Delete</strong>. Jika nilai sudah ada di data label, gridline tidak menambah informasi apapun.
+            </li>
+            <li>
+              <strong>Hapus border di sekitar plot area</strong> — klik area dalam grafik (plot area) → tab <strong>Format</strong> → <strong>Shape Outline</strong> → <strong>No Outline</strong>. Border kotak menambah visual noise tanpa fungsi.
+            </li>
+            <li>
+              <strong>Kelola legend dengan bijak</strong> — jika grafik hanya punya satu seri data, hapus legend (klik → Delete) karena sudah jelas dari judul. Jika grafik punya banyak seri, pindahkan legend ke atas grafik agar lebih mudah dibaca.
+            </li>
+            <li>
+              <strong>Tambahkan data label langsung di bar atau titik</strong> — klik grafik → <strong>Chart Design</strong> → <strong>Add Chart Element</strong> → <strong>Data Labels</strong>. Ini menghilangkan kebutuhan pembaca untuk memperkirakan nilai dari sumbu.
+            </li>
+            <li>
+              <strong>Gunakan warna yang konsisten dengan keseluruhan laporan</strong> — hindari warna default Excel yang terlalu mencolok. Pilih satu warna utama dan gunakan variasi kecerahan untuk seri yang berbeda.
+            </li>
+          </ol>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Setiap elemen visual harus earn its place</p>
+            <p>Prinsip desain grafik data: setiap elemen visual harus memberikan informasi. Kalau sebuah elemen (gridline, border, shadow, 3D effect) tidak menambah informasi bagi audiens, hapus. Grafik yang lebih simpel hampir selalu lebih komunikatif.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 6 ====== -->
+        <section id="tips-grafik">
+          <h2>Tips Profesional</h2>
+
+          <p>Empat kebiasaan yang membedakan grafik yang komunikatif dari grafik yang sekadar ada:</p>
+
+          <ol>
+            <li>
+              <strong>Beri judul yang informatif, bukan deskriptif</strong> — bukan <em>"Penjualan Q3"</em> tapi <em>"Penjualan Q3 Naik 23% Dibanding Q2"</em>. Judul yang baik menyampaikan insight utama, bukan hanya nama datanya. Audiens seharusnya mengerti pesan utama hanya dari membaca judul.
+            </li>
+            <li>
+              <strong>Format sumbu Y dengan satuan yang jelas</strong> — jangan biarkan sumbu Y menampilkan "5000000" yang sulit dibaca. Gunakan <strong>Custom Number Format</strong> di Format Axis: ketik <code>#,##0 "jt"</code> untuk tampilkan jutaan, atau <code>#,##0,, "M"</code> untuk format standar internasional.
+            </li>
+            <li>
+              <strong>Urutkan bar chart dari besar ke kecil</strong> — klik kanan salah satu sel di kolom nilai data → <strong>Sort</strong> → <strong>Largest to Smallest</strong>. Grafik yang terurut jauh lebih mudah dibaca dan perbandingan menjadi intuitif.
+            </li>
+            <li>
+              <strong>Gunakan secondary axis untuk data dengan skala berbeda</strong> — misalnya revenue (miliaran) dan jumlah transaksi (ratusan) dalam satu grafik. Klik kanan seri data yang ingin dipindah ke axis sekunder → <strong>Format Data Series</strong> → <strong>Secondary Axis</strong>.
+            </li>
+          </ol>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Test dengan orang yang tidak tahu konteksnya</p>
+            <p>Sebelum memasukkan grafik ke laporan atau presentasi, tunjukkan ke seseorang yang tidak tahu konteksnya selama tepat 10 detik. Jika mereka tidak bisa mengerti pesan utamanya dalam waktu itu, grafiknya perlu disederhanakan. Ini adalah ukuran yang lebih berguna dari pendapatmu sendiri tentang grafikmu.</p>
+          </div>
+        </section>
+
+        <!-- ====== PREV / NEXT NAV ====== -->
+        <nav class="topic-nav" aria-label="Navigasi topik">
+          <a href="topic-basic-formulas.html" class="topic-nav-item">
+            <span class="topic-nav-direction">← Sebelumnya</span>
+            <span class="topic-nav-title">Formula Dasar: SUM, AVERAGE, COUNT</span>
+          </a>
+          <a href="topic.html" class="topic-nav-item" style="text-align:right;">
+            <span class="topic-nav-direction">Berikutnya →</span>
+            <span class="topic-nav-title">VLOOKUP &amp; HLOOKUP</span>
+          </a>
+        </nav>
+
+      </article>
+    </div><!-- /topic-layout -->
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon" aria-hidden="true">⊞</div>
+            Excel Analyst Hub
+          </a>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Belajar</h4>
+          <ul>
+            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
+            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
+            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="tools.html#formula-generator">Formula Generator</a></li>
+            <li><a href="tools.html#daily-challenge-section">Tantangan Harian</a></li>
+            <li><a href="tools.html#quick-ref">Referensi Cepat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Jelajahi</h4>
+          <ul>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="topic.html">Tutorial VLOOKUP</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Dibangun untuk generasi data analyst Indonesia berikutnya.</p>
+        <p>Excel Analyst Hub — Belajar gratis, keahlian nyata.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      var TOPIC_ID = 'basic-charts';
+
+      if (window.EAH && window.EAH.markVisited) {
+        window.EAH.markVisited(TOPIC_ID);
+        window.EAH.renderProgress && window.EAH.renderProgress();
+      }
+
+      var statusEl = document.getElementById('topic-status-header');
+      if (statusEl && window.EAH) {
+        var p = window.EAH.getProgress();
+        var status = p[TOPIC_ID] || 'in-progress';
+        statusEl.dataset.status = status;
+        statusEl.textContent = status === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
+      }
+
+      // IntersectionObserver — tautan TOC aktif saat digulir
+      var sections = document.querySelectorAll('.topic-content section[id]');
+      var tocLinks = document.querySelectorAll('.toc-sidebar a');
+
+      if (sections.length && tocLinks.length) {
+        var activeSection = null;
+
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              activeSection = entry.target.id;
+              tocLinks.forEach(function (link) {
+                link.classList.remove('active');
+              });
+              var activeLink = document.querySelector('.toc-sidebar a[href="#' + activeSection + '"]');
+              if (activeLink) activeLink.classList.add('active');
+            }
+          });
+        }, {
+          rootMargin: '-80px 0px -60% 0px',
+          threshold: 0
+        });
+
+        sections.forEach(function (section) {
+          observer.observe(section);
+        });
+      }
+
+      var headerStatus = document.getElementById('topic-status-header');
+      if (headerStatus) {
+        headerStatus.style.cursor = 'pointer';
+        headerStatus.title = 'Klik untuk menandai selesai';
+        headerStatus.addEventListener('click', function () {
+          if (window.EAH) {
+            var current = window.EAH.getProgress()[TOPIC_ID] || 'in-progress';
+            var next = current === 'done' ? 'in-progress' : 'done';
+            window.EAH.setTopicStatus(TOPIC_ID, next);
+            headerStatus.dataset.status = next;
+            headerStatus.textContent = next === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
+          }
+        });
+      }
+
+    });
+  </script>
+</body>
+</html>
