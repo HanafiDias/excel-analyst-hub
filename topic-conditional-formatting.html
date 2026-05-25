@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('eah_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conditional Formatting — Excel Analyst Hub</title>
+  <meta name="description" content="Kuasai Conditional Formatting Excel — color scales, data bars, icon sets, dan aturan berbasis formula untuk laporan yang bicara sendiri." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+</head>
+<body class="page-body">
+
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon" aria-hidden="true">⊞</div>
+        Excel Analyst Hub
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="learn.html">Belajar</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="tools.html">Tools</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle-cf" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
+        <a href="learn.html" class="btn-primary btn-sm">Mulai Belajar</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu-cf">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-menu-mobile" id="mobile-menu-cf">
+    <a href="index.html">Beranda</a>
+    <a href="learn.html">Belajar</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="tools.html">Tools</a>
+  </div>
+
+  <main id="main-content">
+    <div class="topic-layout">
+
+      <!-- ============ SIDEBAR TOC ============ -->
+      <aside class="toc-sidebar" aria-label="Daftar isi">
+        <p class="toc-title">Di Halaman Ini</p>
+        <a href="#apa-itu-cf">Apa itu Conditional Formatting?</a>
+        <a href="#highlight-rules">Highlight Rules Dasar</a>
+        <a href="#color-scales">Color Scales &amp; Data Bars</a>
+        <a href="#icon-sets">Icon Sets</a>
+        <a href="#formula-based">CF Berbasis Formula</a>
+        <a href="#tips-cf">Tips &amp; Jebakan Umum</a>
+      </aside>
+
+      <!-- ============ MAIN CONTENT ============ -->
+      <article class="topic-content">
+
+        <!-- Topic header -->
+        <header class="topic-header">
+          <nav aria-label="Breadcrumb" style="margin-bottom:var(--space-4);">
+            <a href="learn.html" style="font-size:0.82rem;color:var(--text-muted);">← Kembali ke Jalur Belajar</a>
+          </nav>
+          <div class="topic-meta">
+            <span class="badge badge-intermediate">Menengah</span>
+            <span class="duration">~20 menit</span>
+            <span id="topic-status-header" class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+          </div>
+          <h1>Conditional Formatting: Biarkan Data Bicara Sendiri</h1>
+          <p>Cara analis membuat spreadsheet yang langsung komunikasikan masalah tanpa perlu dibaca baris per baris.</p>
+        </header>
+
+        <!-- ====== SECTION 1 ====== -->
+        <section id="apa-itu-cf">
+          <h2>Apa itu Conditional Formatting?</h2>
+
+          <p>Conditional Formatting (CF) adalah fitur Excel yang secara otomatis mengubah tampilan sel — warna latar, warna teks, font, border, atau ikon — berdasarkan nilai atau kondisi tertentu. Tampilan berubah secara dinamis: ketika nilai berubah, formatnya ikut menyesuaikan.</p>
+
+          <p>Tanpa CF, seorang analis harus scroll ratusan baris untuk menemukan nilai yang bermasalah atau tidak sesuai target. Dengan CF, masalah langsung terlihat secara visual hanya dalam hitungan detik.</p>
+
+          <p>Contoh use case nyata yang dipakai analis setiap hari:</p>
+          <ul>
+            <li>Highlight semua transaksi di atas 10 juta dengan warna hijau — langsung terlihat mana yang perlu perhatian khusus</li>
+            <li>Highlight karyawan dengan tingkat kehadiran di bawah 80% dengan warna merah — HR langsung tahu siapa yang perlu ditindaklanjuti</li>
+            <li>Tampilkan tren naik/turun dengan panah ikon — dashboard menjadi self-explanatory tanpa perlu penjelasan tambahan</li>
+            <li>Tandai nilai duplikat di satu kolom — data cleaning menjadi jauh lebih cepat</li>
+          </ul>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 CF tidak mengubah nilai</p>
+            <p>CF tidak mengubah nilai — hanya tampilan. Formula dan kalkulasi tidak terpengaruh sama sekali. Kamu bisa apply CF ke seluruh kolom penjualan tanpa khawatir mengacaukan formula SUM atau AVERAGE di bawahnya.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 2 ====== -->
+        <section id="highlight-rules">
+          <h2>Highlight Rules Dasar</h2>
+
+          <p>Cara mengakses CF: pilih range sel → tab <strong>Home</strong> → <strong>Conditional Formatting</strong> → <strong>Highlight Cells Rules</strong>. Menu ini menampilkan 6 rule dasar yang paling sering digunakan:</p>
+
+          <ul>
+            <li><strong>Greater Than</strong> — highlight sel dengan nilai lebih besar dari angka tertentu</li>
+            <li><strong>Less Than</strong> — highlight sel dengan nilai lebih kecil dari angka tertentu</li>
+            <li><strong>Between</strong> — highlight sel dengan nilai di antara dua angka</li>
+            <li><strong>Equal To</strong> — highlight sel yang nilainya sama persis</li>
+            <li><strong>Text That Contains</strong> — highlight sel teks yang mengandung kata tertentu</li>
+            <li><strong>Duplicate Values</strong> — highlight semua nilai yang muncul lebih dari sekali (atau sebaliknya: nilai unik)</li>
+          </ul>
+
+          <p>Contoh praktis — highlight semua nilai penjualan di atas target 5 juta di kolom C:</p>
+          <ol>
+            <li>Pilih range <strong>C2:C100</strong> (range data penjualan, tidak termasuk header)</li>
+            <li>Home → Conditional Formatting → Highlight Cells Rules → <strong>Greater Than</strong></li>
+            <li>Masukkan nilai: <strong>5000000</strong></li>
+            <li>Pilih format dari dropdown: <strong>Green Fill with Dark Green Text</strong></li>
+            <li>Klik <strong>OK</strong> — semua sel di atas 5 juta langsung berwarna hijau</li>
+          </ol>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Duplicate Values untuk data cleaning</p>
+            <p>Duplicate Values adalah CF paling berguna untuk data cleaning — satu klik langsung highlight semua duplikat di kolom mana saja. Jauh lebih cepat dari formula COUNTIF jika kamu hanya ingin melihat secara visual, bukan menghitungnya.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 3 ====== -->
+        <section id="color-scales">
+          <h2>Color Scales &amp; Data Bars</h2>
+
+          <p>Dua fitur visualisasi yang mengubah kolom angka biasa menjadi heatmap mini langsung di dalam sel spreadsheet.</p>
+
+          <h3>Color Scales</h3>
+          <p>Color Scales menggunakan gradasi warna untuk menunjukkan distribusi nilai secara visual. Sel dengan nilai tertinggi mendapat warna satu ujung (misalnya hijau), sel dengan nilai terendah mendapat warna ujung lain (misalnya merah), dan nilai di tengah mendapat gradasi di antaranya.</p>
+
+          <p><strong>Kapan pakai Color Scales:</strong></p>
+          <ul>
+            <li>Perbandingan performa antar region atau cabang — langsung terlihat mana yang menonjol</li>
+            <li>Distribusi nilai ujian atau skor penilaian kinerja</li>
+            <li>Heatmap penjualan per bulan — polanya langsung terbaca secara visual</li>
+          </ul>
+
+          <h3>Data Bars</h3>
+          <p>Data Bars menambahkan batang horizontal di dalam sel, proporsional dengan nilainya relatif terhadap nilai tertinggi di range. Sel dengan nilai tertinggi mendapat batang penuh, nilai terendah mendapat batang paling pendek.</p>
+
+          <p><strong>Kapan pakai Data Bars:</strong></p>
+          <ul>
+            <li>Ranking sales representative — langsung terlihat siapa yang performanya paling tinggi</li>
+            <li>Perbandingan anggaran vs aktual secara visual</li>
+            <li>Progress tracker yang mudah dibaca sekilas</li>
+          </ul>
+
+          <div class="callout callout-warning">
+            <p class="callout-title">⚠️ Pertimbangkan color blindness</p>
+            <p>Hindari green-red color scale untuk laporan yang mungkin dilihat orang dengan color blindness (sekitar 8% pria). Gunakan <strong>blue-white-orange</strong> sebagai alternatif yang lebih inklusif dan tetap komunikatif.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 4 ====== -->
+        <section id="icon-sets">
+          <h2>Icon Sets</h2>
+
+          <p>Icon Sets menambahkan ikon kecil di sebelah kiri nilai sel — berdasarkan threshold yang bisa dikustomisasi. Excel menyediakan beberapa kategori ikon:</p>
+
+          <ul>
+            <li><strong>Panah (Directional)</strong> — atas, samping, bawah. Paling cocok untuk tren dan perubahan persentase.</li>
+            <li><strong>Lingkaran berwarna (Indicators)</strong> — merah, kuning, hijau. Paling sering untuk status: kritis, perhatian, aman.</li>
+            <li><strong>Bintang atau kotak (Ratings)</strong> — untuk sistem rating atau penilaian bertingkat.</li>
+            <li><strong>Flag</strong> — untuk menandai prioritas atau urgensi.</li>
+          </ul>
+
+          <h3>Kustomisasi threshold</h3>
+          <p>Threshold default Icon Sets menggunakan persentase (33% dan 67%) yang hampir tidak pernah cocok dengan kebutuhan bisnis nyata. Cara mengubahnya:</p>
+          <ol>
+            <li>Setelah apply icon set, klik <strong>Home → Conditional Formatting → Manage Rules</strong></li>
+            <li>Pilih rule icon set → klik <strong>Edit Rule</strong></li>
+            <li>Ubah tipe dari "Percent" ke <strong>"Number"</strong></li>
+            <li>Masukkan nilai threshold yang bermakna secara bisnis</li>
+            <li>Klik OK → Apply</li>
+          </ol>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Selalu gunakan threshold yang bermakna</p>
+            <p>Threshold default CF (33%/67%) jarang cocok dengan kebutuhan bisnis. Selalu edit threshold ke nilai yang bermakna secara konteks — misalnya: hijau ≥ 100% target, kuning 80–99%, merah &lt; 80%. Dengan begitu, ikon berbicara dalam bahasa bisnis, bukan bahasa statistik.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 5 ====== -->
+        <section id="formula-based">
+          <h2>CF Berbasis Formula — Level Berikutnya</h2>
+
+          <p>Formula-based CF memungkinkan kondisi yang jauh lebih kompleks dari rule built-in. Ini adalah fitur yang benar-benar mengangkat CF dari sekadar highlight sederhana menjadi alat analisis yang powerful.</p>
+
+          <p>Cara akses: <strong>Home → Conditional Formatting → New Rule → "Use a formula to determine which cells to format"</strong>.</p>
+
+          <h3>Contoh 1 — Highlight seluruh baris jika kolom status = "Kritis"</h3>
+          <p>Pilih seluruh range data (misalnya A2:E100), lalu masukkan formula:</p>
+          <div class="formula-block">=$D2="Kritis"</div>
+          <p>Tanda <code>$</code> di depan <code>D</code> mengunci kolom (selalu mengecek kolom D), sementara angka <code>2</code> bersifat relatif sehingga bergerak per baris. Hasilnya: seluruh baris yang kolom D-nya berisi "Kritis" akan di-highlight.</p>
+
+          <h3>Contoh 2 — Highlight nilai yang lebih rendah dari rata-rata</h3>
+          <p>Pilih range kolom C (misalnya C2:C100), lalu masukkan formula:</p>
+          <div class="formula-block">=C2&lt;AVERAGE($C$2:$C$100)</div>
+          <p><code>C2</code> relatif (bergerak per sel), <code>$C$2:$C$100</code> absolut (range rata-rata selalu tetap). Semua nilai di bawah rata-rata akan otomatis ter-highlight.</p>
+
+          <h3>Contoh 3 — Highlight baris duplikat berdasarkan kolom A</h3>
+          <p>Pilih range (misalnya A2:A100), lalu masukkan formula:</p>
+          <div class="formula-block">=COUNTIF($A$2:$A2,$A2)&gt;1</div>
+          <p>Perhatikan <code>$A$2:$A2</code> — range ini "mengembang" saat bergerak ke bawah karena baris awal dikunci tapi baris akhir tidak. Ini menghitung secara kumulatif dan hanya highlight baris duplikat kedua, ketiga, dst. — bukan baris pertama.</p>
+
+          <div class="callout callout-warning">
+            <p class="callout-title">⚠️ Referensi sel relatif terhadap sel pertama</p>
+            <p>Referensi sel di formula CF adalah relatif terhadap sel pertama yang dipilih saat membuat rule. Ini sering jadi sumber confusion — selalu test formula di sel pertama range sebelum apply ke seluruh range untuk memastikan hasilnya benar.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 6 ====== -->
+        <section id="tips-cf">
+          <h2>Tips &amp; Jebakan Umum</h2>
+
+          <p>Empat hal yang perlu diketahui agar CF bekerja sesuai harapan:</p>
+
+          <ol>
+            <li>
+              <strong>Urutan rule sangat penting</strong> — CF dievaluasi dari atas ke bawah. Rule pertama yang cocok (match) adalah yang diterapkan. Jika dua rule bertabrakan, yang di atas menang. Gunakan <strong>Home → Conditional Formatting → Manage Rules</strong> untuk melihat semua rule aktif dan mengubah urutannya dengan tombol panah atas/bawah.
+            </li>
+            <li>
+              <strong>Gunakan "Stop If True"</strong> — centang opsi ini di Manage Rules untuk mencegah rule di bawahnya diterapkan jika rule ini sudah match. Berguna ketika ingin memastikan hanya satu format yang aktif di satu waktu tanpa rule yang saling menimpa.
+            </li>
+            <li>
+              <strong>CF memperlambat file besar</strong> — hindari apply CF ke entire column seperti <code>A:A</code>. Excel harus mengevaluasi jutaan sel kosong setiap kali file dibuka atau dihitung ulang. Selalu batasi ke range data aktual, misalnya <code>A2:A1000</code>.
+            </li>
+            <li>
+              <strong>Transfer CF dengan Format Painter</strong> — untuk menyalin CF ke range lain tanpa mengubah nilai: <strong>Ctrl+C</strong> pada sel sumber → pilih range tujuan → <strong>Paste Special (Ctrl+Alt+V) → Formats Only → OK</strong>. Nilai tidak ikut tersalin, hanya formatnya.
+            </li>
+          </ol>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Pastikan CF masuk akal tanpa konteks</p>
+            <p>Sebelum share file ke orang lain, cek apakah CF-mu masih masuk akal tanpa konteks. Sering kali warna yang jelas bagimu membingungkan bagi orang lain yang tidak tahu threshold-nya. Tambahkan legenda kecil di sisi sheet — catatan singkat yang menjelaskan arti setiap warna.</p>
+          </div>
+        </section>
+
+        <!-- ====== PREV / NEXT NAV ====== -->
+        <nav class="topic-nav" aria-label="Navigasi topik">
+          <a href="topic-datacleaning.html" class="topic-nav-item">
+            <span class="topic-nav-direction">← Sebelumnya</span>
+            <span class="topic-nav-title">Teknik Data Cleaning</span>
+          </a>
+          <a href="topic.html" class="topic-nav-item" style="text-align:right;">
+            <span class="topic-nav-direction">Berikutnya →</span>
+            <span class="topic-nav-title">VLOOKUP &amp; HLOOKUP</span>
+          </a>
+        </nav>
+
+      </article>
+    </div><!-- /topic-layout -->
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon" aria-hidden="true">⊞</div>
+            Excel Analyst Hub
+          </a>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Belajar</h4>
+          <ul>
+            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
+            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
+            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="tools.html#formula-generator">Formula Generator</a></li>
+            <li><a href="tools.html#daily-challenge-section">Tantangan Harian</a></li>
+            <li><a href="tools.html#quick-ref">Referensi Cepat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Jelajahi</h4>
+          <ul>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="topic.html">Tutorial VLOOKUP</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Dibangun untuk generasi data analyst Indonesia berikutnya.</p>
+        <p>Excel Analyst Hub — Belajar gratis, keahlian nyata.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      var TOPIC_ID = 'conditional-formatting';
+
+      if (window.EAH && window.EAH.markVisited) {
+        window.EAH.markVisited(TOPIC_ID);
+        window.EAH.renderProgress && window.EAH.renderProgress();
+      }
+
+      var statusEl = document.getElementById('topic-status-header');
+      if (statusEl && window.EAH) {
+        var p = window.EAH.getProgress();
+        var status = p[TOPIC_ID] || 'in-progress';
+        statusEl.dataset.status = status;
+        statusEl.textContent = status === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
+      }
+
+      // IntersectionObserver — tautan TOC aktif saat digulir
+      var sections = document.querySelectorAll('.topic-content section[id]');
+      var tocLinks = document.querySelectorAll('.toc-sidebar a');
+
+      if (sections.length && tocLinks.length) {
+        var activeSection = null;
+
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              activeSection = entry.target.id;
+              tocLinks.forEach(function (link) {
+                link.classList.remove('active');
+              });
+              var activeLink = document.querySelector('.toc-sidebar a[href="#' + activeSection + '"]');
+              if (activeLink) activeLink.classList.add('active');
+            }
+          });
+        }, {
+          rootMargin: '-80px 0px -60% 0px',
+          threshold: 0
+        });
+
+        sections.forEach(function (section) {
+          observer.observe(section);
+        });
+      }
+
+      var headerStatus = document.getElementById('topic-status-header');
+      if (headerStatus) {
+        headerStatus.style.cursor = 'pointer';
+        headerStatus.title = 'Klik untuk menandai selesai';
+        headerStatus.addEventListener('click', function () {
+          if (window.EAH) {
+            var current = window.EAH.getProgress()[TOPIC_ID] || 'in-progress';
+            var next = current === 'done' ? 'in-progress' : 'done';
+            window.EAH.setTopicStatus(TOPIC_ID, next);
+            headerStatus.dataset.status = next;
+            headerStatus.textContent = next === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
+          }
+        });
+      }
+
+    });
+  </script>
+</body>
+</html>

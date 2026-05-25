@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('eah_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INDEX-MATCH: Cara yang Lebih Baik — Excel Analyst Hub</title>
+  <meta name="description" content="Kuasai INDEX-MATCH dari nol — lebih fleksibel dari VLOOKUP, tidak rusak saat kolom berubah, dan lebih cepat di dataset besar." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+</head>
+<body class="page-body">
+
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon" aria-hidden="true">⊞</div>
+        Excel Analyst Hub
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="learn.html">Belajar</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="tools.html">Tools</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle-indexmatch" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
+        <a href="learn.html" class="btn-primary btn-sm">Mulai Belajar</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu-indexmatch">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-menu-mobile" id="mobile-menu-indexmatch">
+    <a href="index.html">Beranda</a>
+    <a href="learn.html">Belajar</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="tools.html">Tools</a>
+  </div>
+
+  <main id="main-content">
+    <div class="topic-layout">
+
+      <!-- ============ SIDEBAR TOC ============ -->
+      <aside class="toc-sidebar" aria-label="Daftar isi">
+        <p class="toc-title">Di Halaman Ini</p>
+        <a href="#mengapa-index-match">Mengapa INDEX-MATCH?</a>
+        <a href="#cara-kerja">Cara Kerja INDEX-MATCH</a>
+        <a href="#vs-vlookup">Perbandingan dengan VLOOKUP</a>
+        <a href="#lookup-kiri">Lookup ke Kiri</a>
+        <a href="#multi-kriteria">Multi-Kriteria dengan INDEX-MATCH</a>
+        <a href="#tips-praktis">Tips Praktis</a>
+      </aside>
+
+      <!-- ============ MAIN CONTENT ============ -->
+      <article class="topic-content">
+
+        <!-- Topic header -->
+        <header class="topic-header">
+          <nav aria-label="Breadcrumb" style="margin-bottom:var(--space-4);">
+            <a href="learn.html" style="font-size:0.82rem;color:var(--text-muted);">← Kembali ke Jalur Belajar</a>
+          </nav>
+          <div class="topic-meta">
+            <span class="badge badge-intermediate">Menengah</span>
+            <span class="duration">~30 menit</span>
+            <span id="topic-status-header" class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+          </div>
+          <h1>INDEX-MATCH: Lookup yang Tidak Bisa Dirusak</h1>
+          <p>Mengapa analis berpengalaman tidak pernah kembali ke VLOOKUP setelah menguasai ini — dan bagaimana cara kerjanya yang sebenarnya.</p>
+        </header>
+
+        <!-- ====== SECTION 1 ====== -->
+        <section id="mengapa-index-match">
+          <h2>Mengapa INDEX-MATCH?</h2>
+
+          <p>VLOOKUP adalah formula lookup yang pertama kali dipelajari hampir semua pengguna Excel. Tapi VLOOKUP punya <strong>tiga kelemahan fatal</strong> yang sering menjadi sumber masalah di dunia kerja nyata:</p>
+
+          <ul>
+            <li><strong>Tidak bisa lookup ke kiri</strong> — VLOOKUP hanya bisa mengambil nilai dari kolom yang ada di <em>sebelah kanan</em> kolom lookup. Jika nilai yang dicari ada di kolom tengah atau kanan, VLOOKUP tidak bisa membantu.</li>
+            <li><strong>Rusak saat kolom disisipkan</strong> — VLOOKUP menggunakan nomor kolom hardcoded (angka ke-2, ke-3, dst.). Jika ada orang lain yang menyisipkan atau menghapus kolom di tabelmu, hasilnya berubah secara diam-diam tanpa pesan error.</li>
+            <li><strong>Lebih lambat di dataset besar</strong> — VLOOKUP memindai seluruh tabel dari kiri ke kanan. INDEX-MATCH bekerja lebih efisien karena hanya memindai satu kolom untuk mencari, satu kolom untuk mengambil nilai.</li>
+          </ul>
+
+          <p>INDEX-MATCH adalah kombinasi dua formula yang menyelesaikan ketiga kelemahan tersebut sekaligus — tanpa kompromi.</p>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Nilai lebih di wawancara kerja</p>
+            <p>Di wawancara kerja data analyst, mengetahui INDEX-MATCH dan kapan memilihnya dibanding VLOOKUP langsung membedakan kandidat junior dari yang lebih berpengalaman.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 2 ====== -->
+        <section id="cara-kerja">
+          <h2>Cara Kerja INDEX-MATCH</h2>
+
+          <p>INDEX-MATCH sebenarnya adalah dua formula berbeda yang bekerja sama. Pahami masing-masing dulu sebelum menggabungkannya.</p>
+
+          <h3>MATCH — Mencari posisi</h3>
+          <p>MATCH mencari nilai tertentu dalam sebuah range dan mengembalikan <strong>nomor posisi (baris ke berapa)</strong> dari nilai yang ditemukan:</p>
+          <div class="formula-block">=MATCH(lookup_value, lookup_array, match_type)</div>
+
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+          <table class="syntax-table" aria-label="Argumen MATCH">
+            <thead>
+              <tr><th>Argumen</th><th>Keterangan</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>lookup_value</code></td><td>Nilai yang ingin dicari</td></tr>
+              <tr><td><code>lookup_array</code></td><td>Range kolom tempat mencari nilai tersebut</td></tr>
+              <tr><td><code>match_type</code></td><td><code>0</code> = exact match, <code>1</code> = ascending (data terurut naik), <code>-1</code> = descending (data terurut turun)</td></tr>
+            </tbody>
+          </table>
+          </div>
+
+          <h3>INDEX — Mengambil nilai</h3>
+          <p>INDEX mengembalikan nilai dari sebuah range berdasarkan nomor baris (dan opsional, nomor kolom) yang diberikan:</p>
+          <div class="formula-block">=INDEX(array, row_num, [col_num])</div>
+
+          <h3>Gabungan INDEX-MATCH</h3>
+          <p>Kita umpan hasil MATCH (nomor posisi) langsung ke dalam INDEX (sebagai nomor baris yang ingin diambil nilainya):</p>
+          <div class="formula-block">=INDEX(return_range, MATCH(lookup_value, lookup_range, 0))</div>
+
+          <h3>Contoh nyata</h3>
+          <p>Data karyawan: ID ada di kolom A (A2:A100), Nama ada di kolom B (B2:B100). Cari nama karyawan dengan ID <strong>EMP042</strong>:</p>
+          <div class="formula-block">=INDEX(B2:B100, MATCH("EMP042", A2:A100, 0))</div>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Cara membaca formula ini</p>
+            <p>Cara baca formula ini: MATCH dulu — "di baris mana EMP042 ada di kolom A?" Jawabannya misalnya baris ke-7. Lalu INDEX — "ambil nilai baris ke-7 dari kolom B." Itulah namanya.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 3 ====== -->
+        <section id="vs-vlookup">
+          <h2>Perbandingan dengan VLOOKUP</h2>
+
+          <p>Berikut dua formula yang menghasilkan output identik, tapi ditulis dengan cara yang sangat berbeda:</p>
+
+          <p><strong>Dengan VLOOKUP:</strong></p>
+          <div class="formula-block">=VLOOKUP("EMP042", A2:C100, 2, FALSE)</div>
+
+          <p><strong>Dengan INDEX-MATCH:</strong></p>
+          <div class="formula-block">=INDEX(B2:B100, MATCH("EMP042", A2:A100, 0))</div>
+
+          <p>Hasilnya sama — tapi kehandalannya sangat berbeda. Lihat perbandingannya:</p>
+
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+          <table class="syntax-table" aria-label="Perbandingan VLOOKUP vs INDEX-MATCH">
+            <thead>
+              <tr><th>Situasi</th><th>VLOOKUP</th><th>INDEX-MATCH</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Kolom lookup di kiri tabel</td><td>✅ Bekerja</td><td>✅ Bekerja</td></tr>
+              <tr><td>Kolom lookup di tengah/kanan</td><td>❌ Tidak bisa</td><td>✅ Bekerja</td></tr>
+              <tr><td>Kolom disisipkan di tabel</td><td>❌ Hasil salah diam-diam</td><td>✅ Tidak terpengaruh</td></tr>
+              <tr><td>Dataset &gt; 100.000 baris</td><td>Lebih lambat</td><td>Lebih cepat</td></tr>
+            </tbody>
+          </table>
+          </div>
+
+          <div class="callout callout-warning">
+            <p class="callout-title">⚠️ Silent failure lebih berbahaya dari error</p>
+            <p>VLOOKUP yang rusak adalah <em>silent failure</em> — tidak ada error, tapi hasilnya salah. Ini lebih berbahaya dari error yang jelas karena kamu tidak tahu ada masalah sampai ada konsekuensi nyata di laporan atau keputusan bisnis.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 4 ====== -->
+        <section id="lookup-kiri">
+          <h2>Lookup ke Kiri — Kelebihan Utama</h2>
+
+          <p>Ini adalah skenario yang paling sering membuat analis frustrasi dengan VLOOKUP. Bayangkan tabel dengan susunan kolom seperti ini:</p>
+
+          <ul>
+            <li>Kolom A: <strong>Nama</strong></li>
+            <li>Kolom B: <strong>ID Karyawan</strong></li>
+            <li>Kolom C: <strong>Departemen</strong></li>
+          </ul>
+
+          <p>Kamu punya ID karyawan dan ingin mencari namanya. Nama ada di kolom A — di <em>sebelah kiri</em> kolom ID. VLOOKUP tidak bisa melakukan ini karena hanya bisa mengambil nilai dari kolom di sebelah kanan kolom lookup.</p>
+
+          <p>INDEX-MATCH bisa:</p>
+          <div class="formula-block">=INDEX(A2:A100, MATCH("EMP042", B2:B100, 0))</div>
+
+          <p>MATCH mencari "EMP042" di kolom B (ID). INDEX mengambil nilai dari kolom A (Nama) di baris yang sama. Arah tidak masalah — kiri, kanan, atau bahkan sheet berbeda.</p>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Solusi untuk data dari sistem eksternal</p>
+            <p>Kalau punya data yang kolomnya tidak bisa kamu ubah urutannya — misalnya ekspor dari sistem HR atau ERP — INDEX-MATCH adalah satu-satunya pilihan yang masuk akal.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 5 ====== -->
+        <section id="multi-kriteria">
+          <h2>Multi-Kriteria dengan INDEX-MATCH</h2>
+
+          <p>INDEX-MATCH bisa dikombinasikan dengan array formula untuk melakukan lookup berdasarkan <strong>dua kriteria sekaligus</strong>. Ini sesuatu yang sama sekali tidak bisa dilakukan VLOOKUP standar.</p>
+
+          <p>Contoh: cari gaji karyawan bernama <strong>"Budi"</strong> yang bekerja di departemen <strong>"IT"</strong>. Nama ada di kolom A, departemen di kolom B, gaji di kolom C:</p>
+          <div class="formula-block">=INDEX(C2:C100, MATCH(1, (A2:A100="Budi")*(B2:B100="IT"), 0))</div>
+
+          <p>Formula ini bekerja dengan logika perkalian array: <code>(A2:A100="Budi")</code> menghasilkan array TRUE/FALSE, begitu juga <code>(B2:B100="IT")</code>. Keduanya dikalikan — hasilnya 1 hanya jika <strong>kedua kondisi</strong> terpenuhi. MATCH mencari posisi angka 1 pertama.</p>
+
+          <p><strong>Cara memasukkan:</strong></p>
+          <ul>
+            <li>Di Excel 2019 ke bawah: tekan <strong>Ctrl+Shift+Enter</strong> (bukan Enter biasa) — Excel akan menambahkan kurung kurawal <code>{ }</code> otomatis</li>
+            <li>Di Excel 365 / Excel 2021: cukup tekan <strong>Enter</strong> biasa</li>
+          </ul>
+
+          <div class="callout callout-warning">
+            <p class="callout-title">⚠️ Perhatikan performa di dataset besar</p>
+            <p>Formula array bisa lambat di dataset yang sangat besar. Untuk data &gt; 50.000 baris dengan multi-kriteria, pertimbangkan SUMPRODUCT atau Power Query sebagai alternatif yang lebih efisien.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 6 ====== -->
+        <section id="tips-praktis">
+          <h2>Tips Praktis dari Analis</h2>
+
+          <p>Empat kebiasaan yang membuat INDEX-MATCH lebih andal dan mudah dirawat:</p>
+
+          <ol>
+            <li>
+              <strong>Lock range dengan tanda $</strong> agar bisa di-copy ke bawah tanpa bergeser:
+              <div class="formula-block">=INDEX($B$2:$B$100, MATCH(A2, $A$2:$A$100, 0))</div>
+              <code>$B$2:$B$100</code> dan <code>$A$2:$A$100</code> terkunci — hanya <code>A2</code> (nilai yang dicari) yang bergerak per baris saat di-copy ke bawah.
+            </li>
+            <li>
+              <strong>Gunakan match_type 0 (exact match) hampir selalu</strong> — nilai 1 dan -1 hanya untuk data yang sudah terurut dan jarang dibutuhkan dalam analisis nyata. Salah menggunakan match_type bisa menghasilkan nilai yang tampak benar tapi sebenarnya salah.
+            </li>
+            <li>
+              <strong>Kombinasikan dengan IFERROR</strong> untuk laporan yang rapi — tampilkan pesan yang informatif saat data tidak ditemukan:
+              <div class="formula-block">=IFERROR(INDEX(B:B, MATCH(A2, A:A, 0)), "Tidak Ditemukan")</div>
+            </li>
+            <li>
+              <strong>XMATCH sebagai alternatif modern</strong> — di Excel 365 kamu bisa menggunakan XMATCH yang sintaksnya lebih bersih:
+              <div class="formula-block">=INDEX(B:B, XMATCH(A2, A:A))</div>
+              XMATCH menggunakan exact match sebagai default (tidak perlu mengetik angka 0), dan mendukung wildcard serta pencarian terbalik.
+            </li>
+          </ol>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Selalu test sebelum copy ke seluruh kolom</p>
+            <p>Setelah menulis INDEX-MATCH, selalu test dengan nilai yang kamu tahu jawabannya. Baru setelah hasilnya benar, copy ke seluruh kolom. Satu formula yang salah di-copy 1000 baris adalah 1000 nilai yang salah.</p>
+          </div>
+        </section>
+
+        <!-- ====== PREV / NEXT NAV ====== -->
+        <nav class="topic-nav" aria-label="Navigasi topik">
+          <a href="topic.html" class="topic-nav-item">
+            <span class="topic-nav-direction">← Sebelumnya</span>
+            <span class="topic-nav-title">VLOOKUP &amp; HLOOKUP</span>
+          </a>
+          <a href="topic-sumif.html" class="topic-nav-item" style="text-align:right;">
+            <span class="topic-nav-direction">Berikutnya →</span>
+            <span class="topic-nav-title">SUMIF &amp; COUNTIF</span>
+          </a>
+        </nav>
+
+      </article>
+    </div><!-- /topic-layout -->
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon" aria-hidden="true">⊞</div>
+            Excel Analyst Hub
+          </a>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Belajar</h4>
+          <ul>
+            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
+            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
+            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="tools.html#formula-generator">Formula Generator</a></li>
+            <li><a href="tools.html#daily-challenge-section">Tantangan Harian</a></li>
+            <li><a href="tools.html#quick-ref">Referensi Cepat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Jelajahi</h4>
+          <ul>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="topic.html">Tutorial VLOOKUP</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Dibangun untuk generasi data analyst Indonesia berikutnya.</p>
+        <p>Excel Analyst Hub — Belajar gratis, keahlian nyata.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      var TOPIC_ID = 'index-match';
+
+      if (window.EAH && window.EAH.markVisited) {
+        window.EAH.markVisited(TOPIC_ID);
+        window.EAH.renderProgress && window.EAH.renderProgress();
+      }
+
+      var statusEl = document.getElementById('topic-status-header');
+      if (statusEl && window.EAH) {
+        var p = window.EAH.getProgress();
+        var status = p[TOPIC_ID] || 'in-progress';
+        statusEl.dataset.status = status;
+        statusEl.textContent = status === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
+      }
+
+      // IntersectionObserver — tautan TOC aktif saat digulir
+      var sections = document.querySelectorAll('.topic-content section[id]');
+      var tocLinks = document.querySelectorAll('.toc-sidebar a');
+
+      if (sections.length && tocLinks.length) {
+        var activeSection = null;
+
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              activeSection = entry.target.id;
+              tocLinks.forEach(function (link) {
+                link.classList.remove('active');
+              });
+              var activeLink = document.querySelector('.toc-sidebar a[href="#' + activeSection + '"]');
+              if (activeLink) activeLink.classList.add('active');
+            }
+          });
+        }, {
+          rootMargin: '-80px 0px -60% 0px',
+          threshold: 0
+        });
+
+        sections.forEach(function (section) {
+          observer.observe(section);
+        });
+      }
+
+      var headerStatus = document.getElementById('topic-status-header');
+      if (headerStatus) {
+        headerStatus.style.cursor = 'pointer';
+        headerStatus.title = 'Klik untuk menandai selesai';
+        headerStatus.addEventListener('click', function () {
+          if (window.EAH) {
+            var current = window.EAH.getProgress()[TOPIC_ID] || 'in-progress';
+            var next = current === 'done' ? 'in-progress' : 'done';
+            window.EAH.setTopicStatus(TOPIC_ID, next);
+            headerStatus.dataset.status = next;
+            headerStatus.textContent = next === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
+          }
+        });
+      }
+
+    });
+  </script>
+</body>
+</html>

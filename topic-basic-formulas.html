@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('eah_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formula Dasar Excel — Excel Analyst Hub</title>
+  <meta name="description" content="Pelajari SUM, AVERAGE, COUNT, MIN, MAX dari nol — formula yang dipakai analis setiap hari beserta referensi sel relatif dan absolut." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+</head>
+<body class="page-body">
+
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon" aria-hidden="true">⊞</div>
+        Excel Analyst Hub
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="learn.html">Belajar</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="tools.html">Tools</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle-basic" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
+        <a href="learn.html" class="btn-primary btn-sm">Mulai Belajar</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu-basic">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-menu-mobile" id="mobile-menu-basic">
+    <a href="index.html">Beranda</a>
+    <a href="learn.html">Belajar</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="tools.html">Tools</a>
+  </div>
+
+  <main id="main-content">
+    <div class="topic-layout">
+
+      <!-- ============ SIDEBAR TOC ============ -->
+      <aside class="toc-sidebar" aria-label="Daftar isi">
+        <p class="toc-title">Di Halaman Ini</p>
+        <a href="#menulis-formula">Cara Menulis Formula</a>
+        <a href="#sum-average">SUM &amp; AVERAGE</a>
+        <a href="#count-counta">COUNT &amp; COUNTA</a>
+        <a href="#min-max">MIN &amp; MAX</a>
+        <a href="#referensi-sel">Referensi Relatif vs Absolut</a>
+        <a href="#kesalahan-umum">Kesalahan Umum</a>
+      </aside>
+
+      <!-- ============ MAIN CONTENT ============ -->
+      <article class="topic-content">
+
+        <!-- Topic header -->
+        <header class="topic-header">
+          <nav aria-label="Breadcrumb" style="margin-bottom:var(--space-4);">
+            <a href="learn.html" style="font-size:0.82rem;color:var(--text-muted);">← Kembali ke Jalur Belajar</a>
+          </nav>
+          <div class="topic-meta">
+            <span class="badge badge-beginner">Pemula</span>
+            <span class="duration">~25 menit</span>
+            <span id="topic-status-header" class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+          </div>
+          <h1>Formula Dasar: SUM, AVERAGE, COUNT, dan Teman-Temannya</h1>
+          <p>Tiga formula pertama yang harus dikuasai — dan cara referensi sel yang membuat formula bisa dipakai ulang tanpa ditulis ulang.</p>
+        </header>
+
+        <!-- ====== SECTION 1 ====== -->
+        <section id="menulis-formula">
+          <h2>Cara Menulis Formula di Excel</h2>
+
+          <p>Setiap formula di Excel dimulai dengan tanda sama dengan (<code>=</code>). Tanpa tanda ini, Excel memperlakukan apapun yang kamu ketik sebagai teks biasa — bukan perintah kalkulasi. Ini adalah aturan pertama dan paling mendasar.</p>
+
+          <p>Cara menulis formula:</p>
+          <ol>
+            <li>Klik sel kosong tempat kamu ingin hasilnya muncul</li>
+            <li>Ketik <code>=</code> untuk memulai</li>
+            <li>Mulai ketik nama formula (misalnya <code>SUM</code>) — Excel menampilkan autocomplete dengan daftar formula yang cocok</li>
+            <li>Gunakan tombol <strong>Tab</strong> untuk memilih formula dari autocomplete, bukan Enter</li>
+            <li>Masukkan argumen (range sel atau nilai), lalu tutup dengan kurung tutup</li>
+            <li>Tekan <strong>Enter</strong> untuk pindah ke baris bawah, atau <strong>Tab</strong> untuk pindah ke kolom kanan</li>
+          </ol>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Klik, jangan ketik alamat sel</p>
+            <p>Biasakan klik sel daripada mengetik alamat sel secara manual. Klik langsung ke C2:C50 jauh lebih cepat dan tidak typo dibanding mengetik "C2:C50". Untuk memilih range, klik sel pertama lalu drag ke sel terakhir sambil menahan tombol mouse.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 2 ====== -->
+        <section id="sum-average">
+          <h2>SUM &amp; AVERAGE</h2>
+
+          <p>Dua formula yang paling sering digunakan oleh siapapun yang bekerja dengan data angka.</p>
+
+          <h3>SUM — Menjumlahkan</h3>
+          <p>SUM menjumlahkan semua angka dalam range yang ditentukan. Mengabaikan sel kosong dan sel teks secara otomatis.</p>
+          <div class="formula-block">=SUM(C2:C50)</div>
+
+          <h3>AVERAGE — Rata-rata</h3>
+          <p>AVERAGE menghitung rata-rata aritmetika dari semua angka dalam range. Sel kosong <em>tidak</em> dihitung sebagai nol — diabaikan sepenuhnya. Ini perbedaan penting dari ekspektasi banyak pengguna baru.</p>
+          <div class="formula-block">=AVERAGE(C2:C50)</div>
+
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+          <table class="syntax-table" aria-label="Syntax SUM dan AVERAGE">
+            <thead>
+              <tr><th>Formula</th><th>Syntax</th><th>Keterangan</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>SUM</code></td><td><code>SUM(number1, [number2], ...)</code></td><td>Menjumlahkan semua angka. Bisa berupa range tunggal atau beberapa range terpisah.</td></tr>
+              <tr><td><code>AVERAGE</code></td><td><code>AVERAGE(number1, [number2], ...)</code></td><td>Rata-rata aritmetika. Sel kosong diabaikan, bukan dihitung sebagai 0.</td></tr>
+            </tbody>
+          </table>
+          </div>
+
+          <p><strong>Contoh nyata:</strong> data penjualan 50 transaksi di kolom C (C2 sampai C51). Untuk menghitung total dan rata-rata:</p>
+          <div class="formula-block">=SUM(C2:C51)</div>
+          <div class="formula-block">=AVERAGE(C2:C51)</div>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Shortcut AutoSum</p>
+            <p>Pilih sel kosong tepat di bawah kolom angka, lalu tekan <strong>Alt+=</strong> (Windows) atau <strong>Command+Shift+T</strong> (Mac). Excel otomatis menulis <code>=SUM()</code> dengan range yang tepat — biasanya benar tanpa perlu diedit. Ini adalah shortcut yang dipakai analis setiap hari.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 3 ====== -->
+        <section id="count-counta">
+          <h2>COUNT &amp; COUNTA</h2>
+
+          <p>Dua formula yang terlihat mirip tapi punya perbedaan kritis yang harus dipahami.</p>
+
+          <h3>COUNT — Menghitung angka</h3>
+          <p>COUNT hanya menghitung sel yang berisi <strong>angka</strong>. Sel berisi teks, sel kosong, atau sel berisi nilai error diabaikan sepenuhnya.</p>
+          <div class="formula-block">=COUNT(B2:B100)</div>
+
+          <h3>COUNTA — Menghitung semua yang tidak kosong</h3>
+          <p>COUNTA menghitung sel yang <strong>tidak kosong</strong> — termasuk sel berisi angka, teks, tanggal, nilai error, atau bahkan teks kosong <code>""</code>. Satu-satunya yang tidak dihitung: sel yang benar-benar kosong.</p>
+          <div class="formula-block">=COUNTA(B2:B100)</div>
+
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+          <table class="syntax-table" aria-label="Perbandingan COUNT, COUNTA, COUNTBLANK">
+            <thead>
+              <tr><th>Formula</th><th>Menghitung</th><th>Mengabaikan</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>COUNT</code></td><td>Angka saja</td><td>Teks, kosong, error</td></tr>
+              <tr><td><code>COUNTA</code></td><td>Angka + teks + error (semua tidak kosong)</td><td>Sel kosong saja</td></tr>
+              <tr><td><code>COUNTBLANK</code></td><td>Sel kosong saja</td><td>Semua sel yang berisi apapun</td></tr>
+            </tbody>
+          </table>
+          </div>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Hitung baris data secara dinamis</p>
+            <p>Gunakan <code>=COUNTA(A:A)-1</code> untuk menghitung jumlah baris data secara dinamis — dikurangi 1 untuk header. Berguna untuk formula yang perlu tahu berapa baris data ada saat ini tanpa perlu diupdate manual setiap data bertambah.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 4 ====== -->
+        <section id="min-max">
+          <h2>MIN &amp; MAX</h2>
+
+          <p>MIN mengembalikan nilai terkecil dari range, MAX mengembalikan nilai terbesar. Sederhana, tapi sangat berguna untuk validasi dan quality check data.</p>
+
+          <div class="formula-block">=MIN(D2:D100)</div>
+          <div class="formula-block">=MAX(D2:D100)</div>
+
+          <p><strong>Use case nyata:</strong></p>
+          <ul>
+            <li><strong>Deteksi anomali data</strong> — jika <code>=MIN(C2:C100)</code> mengembalikan angka negatif pada kolom yang seharusnya hanya berisi nilai positif (misalnya harga atau jumlah stok), berarti ada masalah data yang perlu diperiksa</li>
+            <li><strong>Temukan transaksi terbesar</strong> — <code>=MAX()</code> untuk menemukan nilai tertinggi dalam periode tertentu</li>
+            <li><strong>Validasi rentang nilai</strong> — pastikan semua data berada dalam rentang yang wajar (misalnya skor ujian antara 0 dan 100)</li>
+          </ul>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Kombinasikan dengan IF untuk cek data quality</p>
+            <p>Buat formula alert otomatis untuk mendeteksi anomali:
+            <code>=IF(MIN(C2:C100)&lt;0, "⚠️ Ada nilai negatif!", "✓ Data OK")</code> — langsung memberitahu jika ada anomali tanpa perlu memeriksa ratusan baris secara manual.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 5 ====== -->
+        <section id="referensi-sel">
+          <h2>Referensi Relatif vs Absolut — Konsep Terpenting</h2>
+
+          <p>Ini adalah konsep yang paling sering membingungkan pemula, tapi paling penting dikuasai. Memahami referensi sel adalah kunci untuk membuat formula yang bisa di-copy ke ratusan baris tanpa error.</p>
+
+          <h3>Referensi Relatif (A2)</h3>
+          <p>Referensi relatif <strong>berubah secara otomatis</strong> saat formula di-copy ke sel lain. Jika formula di sel C2 berisi <code>=A2+B2</code>, saat di-copy ke C3 secara otomatis menjadi <code>=A3+B3</code>. Excel "menggeser" referensi mengikuti perpindahan formula — ini yang kita inginkan hampir selalu.</p>
+
+          <h3>Referensi Absolut ($A$2)</h3>
+          <p>Referensi absolut <strong>tidak berubah</strong> saat formula di-copy ke mana pun. Tanda <code>$</code> di depan huruf kolom mengunci kolom, <code>$</code> di depan angka baris mengunci baris. Digunakan untuk sel yang harus selalu mengacu ke lokasi yang sama — misalnya konstanta, total keseluruhan, atau tabel referensi.</p>
+
+          <h3>Referensi Campuran ($A2 atau A$2)</h3>
+          <p>Mengunci hanya salah satu dimensi — sangat berguna untuk tabel perkalian atau matriks.</p>
+
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+          <table class="syntax-table" aria-label="Jenis referensi sel">
+            <thead>
+              <tr><th>Referensi</th><th>Saat di-copy ke bawah</th><th>Saat di-copy ke kanan</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>A2</code></td><td>Baris berubah (A3, A4...)</td><td>Kolom berubah (B2, C2...)</td></tr>
+              <tr><td><code>$A2</code></td><td>Baris berubah (A3, A4...)</td><td>Kolom tetap ($A2)</td></tr>
+              <tr><td><code>A$2</code></td><td>Baris tetap (A$2)</td><td>Kolom berubah (B$2, C$2...)</td></tr>
+              <tr><td><code>$A$2</code></td><td>Tidak berubah</td><td>Tidak berubah</td></tr>
+            </tbody>
+          </table>
+          </div>
+
+          <h3>Contoh nyata — Hitung % kontribusi setiap produk</h3>
+          <p>Total penjualan semua produk ada di sel C51. Ingin menghitung % kontribusi setiap produk (C2 sampai C50) terhadap total tersebut:</p>
+          <div class="formula-block">=C2/$C$51</div>
+          <p><code>C2</code> bersifat relatif — bergerak ke C3, C4, dst. saat di-copy ke bawah. <code>$C$51</code> bersifat absolut — selalu mengacu ke total yang sama, tidak ikut bergeser.</p>
+
+          <p><strong>Shortcut:</strong> saat kursor ada di dalam referensi sel, tekan <strong>F4</strong> berulang kali untuk toggle: <code>A2</code> → <code>$A$2</code> → <code>A$2</code> → <code>$A2</code> → <code>A2</code>.</p>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Aturan sederhana untuk tanda $</p>
+            <p>Aturan sederhana: referensi yang <strong>tidak boleh berubah</strong> saat di-copy → tambahkan <code>$</code>. Biasanya itu adalah: konstanta (tarif pajak, target bulanan), tabel lookup, atau total keseluruhan. Referensi yang boleh bergerak → biarkan tanpa <code>$</code>.</p>
+          </div>
+        </section>
+
+        <!-- ====== SECTION 6 ====== -->
+        <section id="kesalahan-umum">
+          <h2>Kesalahan Umum &amp; Cara Menghindarinya</h2>
+
+          <p>Empat error yang paling sering dialami pemula — dan solusi praktisnya:</p>
+
+          <h3>1. #VALUE! — Tipe data tidak cocok</h3>
+          <p><strong>Penyebab:</strong> formula yang membutuhkan angka menyentuh sel yang berisi teks. Misalnya <code>=SUM(A1:A10)</code> di mana A5 berisi teks "N/A" — padahal SUM seharusnya mengabaikan teks, error #VALUE! muncul jika kamu menjumlahkan atau mengalikan sel teks secara langsung di formula aritmetika.</p>
+          <p><strong>Solusi:</strong> bersihkan data terlebih dahulu dengan TRIM, periksa format sel (Ctrl+1), dan pastikan kolom angka tidak mengandung teks tersembunyi.</p>
+
+          <h3>2. #DIV/0! — Pembagian dengan nol</h3>
+          <p><strong>Penyebab:</strong> <code>=A2/B2</code> di mana B2 berisi 0 atau kosong. Excel tidak bisa membagi dengan nol, secara matematis tidak terdefinisi.</p>
+          <p><strong>Solusi — dua cara:</strong></p>
+          <div class="formula-block">=IFERROR(A2/B2, 0)</div>
+          <div class="formula-block">=IF(B2=0, 0, A2/B2)</div>
+          <p>Pilih cara pertama jika ingin hasil 0 saat terjadi error apapun. Pilih cara kedua jika ingin logika yang lebih eksplisit.</p>
+
+          <h3>3. Lupa tekan Enter setelah selesai menulis</h3>
+          <p>Formula baru berlaku dan disimpan setelah tekan <strong>Enter</strong> atau <strong>Tab</strong>. Jika kamu klik sel lain di tengah penulisan formula (tanpa Enter), Excel mengira kamu ingin memasukkan referensi sel itu ke dalam formula — hasilnya formula menjadi kacau.</p>
+          <p>Jika ingin membatalkan penulisan formula yang belum selesai, tekan <strong>Escape</strong>.</p>
+
+          <h3>4. Range tidak sengaja berisi header</h3>
+          <p>Formula <code>=SUM(C1:C100)</code> di mana C1 adalah teks "Penjualan" (header kolom) — SUM memang mengabaikan teks sehingga tidak ada error. Tapi kebiasaan menyertakan header dalam range bisa bermasalah di formula lain seperti AVERAGE (header teks ikut dihitung oleh COUNTA) atau membingungkan pembaca formula.</p>
+          <p><strong>Aturan yang baik:</strong> selalu mulai range dari baris data pertama, bukan dari header. Gunakan <code>=SUM(C2:C100)</code>, bukan <code>=SUM(C1:C100)</code>.</p>
+
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 F2 untuk melihat range yang digunakan</p>
+            <p>Kalau formula menghasilkan angka yang aneh atau tidak sesuai ekspektasi, klik sel formula tersebut lalu tekan <strong>F2</strong> untuk masuk mode edit. Excel menampilkan warna highlight berbeda untuk setiap range yang digunakan formula itu. Sering kali masalahnya langsung terlihat dari warna highlight — range salah, range kurang, atau ada referensi yang tidak terduga.</p>
+          </div>
+        </section>
+
+        <!-- ====== PREV / NEXT NAV ====== -->
+        <nav class="topic-nav" aria-label="Navigasi topik">
+          <div class="topic-nav-item" style="opacity:0.4;pointer-events:none;cursor:default;">
+            <span class="topic-nav-direction">← Sebelumnya</span>
+            <span class="topic-nav-title">Ini adalah awal jalur pemula</span>
+          </div>
+          <a href="topic.html" class="topic-nav-item" style="text-align:right;">
+            <span class="topic-nav-direction">Berikutnya →</span>
+            <span class="topic-nav-title">VLOOKUP &amp; HLOOKUP</span>
+          </a>
+        </nav>
+
+      </article>
+    </div><!-- /topic-layout -->
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon" aria-hidden="true">⊞</div>
+            Excel Analyst Hub
+          </a>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Belajar</h4>
+          <ul>
+            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
+            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
+            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="tools.html#formula-generator">Formula Generator</a></li>
+            <li><a href="tools.html#daily-challenge-section">Tantangan Harian</a></li>
+            <li><a href="tools.html#quick-ref">Referensi Cepat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Jelajahi</h4>
+          <ul>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="topic.html">Tutorial VLOOKUP</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Dibangun untuk generasi data analyst Indonesia berikutnya.</p>
+        <p>Excel Analyst Hub — Belajar gratis, keahlian nyata.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      var TOPIC_ID = 'basic-formulas';
+
+      if (window.EAH && window.EAH.markVisited) {
+        window.EAH.markVisited(TOPIC_ID);
+        window.EAH.renderProgress && window.EAH.renderProgress();
+      }
+
+      var statusEl = document.getElementById('topic-status-header');
+      if (statusEl && window.EAH) {
+        var p = window.EAH.getProgress();
+        var status = p[TOPIC_ID] || 'in-progress';
+        statusEl.dataset.status = status;
+        statusEl.textContent = status === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
+      }
+
+      // IntersectionObserver — tautan TOC aktif saat digulir
+      var sections = document.querySelectorAll('.topic-content section[id]');
+      var tocLinks = document.querySelectorAll('.toc-sidebar a');
+
+      if (sections.length && tocLinks.length) {
+        var activeSection = null;
+
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              activeSection = entry.target.id;
+              tocLinks.forEach(function (link) {
+                link.classList.remove('active');
+              });
+              var activeLink = document.querySelector('.toc-sidebar a[href="#' + activeSection + '"]');
+              if (activeLink) activeLink.classList.add('active');
+            }
+          });
+        }, {
+          rootMargin: '-80px 0px -60% 0px',
+          threshold: 0
+        });
+
+        sections.forEach(function (section) {
+          observer.observe(section);
+        });
+      }
+
+      var headerStatus = document.getElementById('topic-status-header');
+      if (headerStatus) {
+        headerStatus.style.cursor = 'pointer';
+        headerStatus.title = 'Klik untuk menandai selesai';
+        headerStatus.addEventListener('click', function () {
+          if (window.EAH) {
+            var current = window.EAH.getProgress()[TOPIC_ID] || 'in-progress';
+            var next = current === 'done' ? 'in-progress' : 'done';
+            window.EAH.setTopicStatus(TOPIC_ID, next);
+            headerStatus.dataset.status = next;
+            headerStatus.textContent = next === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
+          }
+        });
+      }
+
+    });
+  </script>
+</body>
+</html>
