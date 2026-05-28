@@ -36,19 +36,24 @@
         <li><a href="tools.html">Tools</a></li>
       </ul>
       <div class="nav-right">
-        <button class="theme-toggle" id="theme-toggle-learn" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
-        <a href="learn.html" class="btn-primary btn-sm">Mulai Belajar</a>
-        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu-learn">
+        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
+        <a href="profile.html" class="btn-ghost btn-sm" style="display:flex; align-items:center; gap:5px; padding:0.4rem 0.8rem; border:1px solid var(--border);" title="Dashboard Profil">
+          <span style="font-size:1.1rem;">👤</span> <span class="hide-mobile">Profil</span>
+        </a>
+        <a href="learn.html" class="btn-primary btn-sm hide-mobile">Mulai Belajar</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
   </nav>
-  <div class="nav-menu-mobile" id="mobile-menu-learn">
+  <div class="nav-menu-mobile" id="mobile-menu" role="navigation" aria-label="Navigasi mobile">
     <a href="index.html">Beranda</a>
     <a href="learn.html">Belajar</a>
     <a href="portfolio.html">Portofolio</a>
     <a href="tools.html">Tools</a>
+    <div style="height:1px; background:var(--border); margin: 8px 0;"></div> 
+    <a href="profile.html" style="color:var(--accent); font-weight:bold;">👤 Profil Saya</a>
     <a href="learn.html" class="btn-primary" style="margin-top:8px;">Mulai Belajar</a>
   </div>
 

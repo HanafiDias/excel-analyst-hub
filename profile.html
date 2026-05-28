@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('eah_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profil Saya — Excel Analyst Hub</title>
+  <meta name="description" content="Pantau progres belajarmu, lihat pencapaian (badges), dan bangun portofoliomu di Excel Analyst Hub." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+</head>
+<body class="page-body">
+
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon" aria-hidden="true">⊞</div>
+        Excel Analyst Hub
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="learn.html">Belajar</a></li>
+        <li><a href="portfolio.html">Portofolio</a></li>
+        <li><a href="tools.html">Tools</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
+        <a href="profile.html" class="btn-ghost btn-sm" style="display:flex; align-items:center; gap:5px; padding:0.4rem 0.8rem; border:1px solid var(--border);" title="Dashboard Profil">
+          <span style="font-size:1.1rem;">👤</span> <span class="hide-mobile">Profil</span>
+        </a>
+        <a href="learn.html" class="btn-primary btn-sm hide-mobile">Mulai Belajar</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-menu-mobile" id="mobile-menu" role="navigation" aria-label="Navigasi mobile">
+    <a href="index.html">Beranda</a>
+    <a href="learn.html">Belajar</a>
+    <a href="portfolio.html">Portofolio</a>
+    <a href="tools.html">Tools</a>
+    <div style="height:1px; background:var(--border); margin: 8px 0;"></div> 
+    <a href="profile.html" style="color:var(--accent); font-weight:bold;">👤 Profil Saya</a>
+    <a href="learn.html" class="btn-primary" style="margin-top:8px;">Mulai Belajar</a>
+  </div>
+
+  <main id="main-content">
+    <section class="section" aria-label="Dashboard Profil">
+      <div class="container">
+        
+        <div class="flex-between" style="margin-bottom:var(--space-6); border-bottom:1px solid var(--border); padding-bottom:var(--space-4); flex-wrap:wrap; gap:var(--space-4);">
+          <h1 style="margin:0;">Dashboard Belajar</h1>
+          <a href="portfolio.html" class="btn-ghost">📁 Lihat Portofolio</a>
+        </div>
+
+        <div class="card" style="display:flex; align-items:center; gap:var(--space-5); padding:var(--space-5); margin-bottom:var(--space-6); flex-wrap:wrap;">
+          <div style="width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg, var(--accent), #8b5cf6); display:flex; align-items:center; justify-content:center; font-size:2rem; font-weight:bold; color:white; flex-shrink:0;">
+            DA
+          </div>
+          <div>
+            <h2 style="margin:0 0 var(--space-2) 0; font-size:1.5rem;">Data Analyst</h2>
+            <p id="user-level" style="margin:0; color:var(--text-muted); font-weight:600;">Level: Menghitung Data...</p>
+            <p style="margin:var(--space-2) 0 0 0; font-size:0.85rem; color:#10b981; display:flex; align-items:center; gap:5px;">
+              <span style="display:inline-block; width:8px; height:8px; background:#10b981; border-radius:50%;"></span>
+              Progres tersimpan aman secara lokal di browser ini
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-bottom:var(--space-6);">
+          <div class="card stat-card" style="text-align:center; padding:var(--space-5);">
+            <div id="stat-completed" style="font-size:3rem; font-weight:bold; color:var(--text); margin-bottom:var(--space-2);">0</div>
+            <div style="color:var(--text-muted); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Topik Selesai</div>
+          </div>
+          <div class="card stat-card" style="text-align:center; padding:var(--space-5);">
+            <div style="font-size:3rem; font-weight:bold; color:#f59e0b; margin-bottom:var(--space-2);">1<span style="font-size:2rem;">🔥</span></div>
+            <div style="color:var(--text-muted); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Hari Beruntun (Streak)</div>
+          </div>
+          <div class="card stat-card" style="text-align:center; padding:var(--space-5);">
+            <div style="font-size:3rem; font-weight:bold; color:var(--accent); margin-bottom:var(--space-2);">3</div>
+            <div style="color:var(--text-muted); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Tools Digunakan</div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:var(--space-6);">
+          <h3 style="margin-top:0; margin-bottom:var(--space-5);">Progres Jalur Belajar</h3>
+          
+          <div style="margin-bottom:var(--space-4);">
+            <div class="flex-between" style="margin-bottom:var(--space-2);">
+              <span style="font-weight:600;">Jalur Pemula</span>
+              <span id="pct-beginner" style="color:var(--text-muted); font-family:monospace;">0%</span>
+            </div>
+            <div style="width:100%; height:8px; background:var(--surface-2); border-radius:4px; overflow:hidden;">
+              <div id="bar-beginner" style="height:100%; background:var(--accent); width:0%; transition:width 0.5s ease;"></div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:var(--space-4);">
+            <div class="flex-between" style="margin-bottom:var(--space-2);">
+              <span style="font-weight:600;">Jalur Menengah</span>
+              <span id="pct-intermediate" style="color:var(--text-muted); font-family:monospace;">0%</span>
+            </div>
+            <div style="width:100%; height:8px; background:var(--surface-2); border-radius:4px; overflow:hidden;">
+              <div id="bar-intermediate" style="height:100%; background:var(--accent); width:0%; transition:width 0.5s ease;"></div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:var(--space-5);">
+            <div class="flex-between" style="margin-bottom:var(--space-2);">
+              <span style="font-weight:600;">Jalur Lanjutan</span>
+              <span id="pct-advanced" style="color:var(--text-muted); font-family:monospace;">0%</span>
+            </div>
+            <div style="width:100%; height:8px; background:var(--surface-2); border-radius:4px; overflow:hidden;">
+              <div id="bar-advanced" style="height:100%; background:var(--accent); width:0%; transition:width 0.5s ease;"></div>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid var(--border); padding-top:var(--space-5);">
+            <h4 style="margin-top:0; margin-bottom:var(--space-4); color:var(--text-muted);">Pencapaian (Badges)</h4>
+            <div style="display:flex; gap:var(--space-3); flex-wrap:wrap;">
+              <div id="badge-1" style="width:50px; height:50px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; font-size:1.5rem; opacity:0.3; filter:grayscale(100%); transition:all 0.3s;" title="Menyelesaikan 1 Topik">🌱</div>
+              <div id="badge-2" style="width:50px; height:50px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; font-size:1.5rem; opacity:0.3; filter:grayscale(100%); transition:all 0.3s;" title="Data Explorer (Selesai > 4 Topik)">🧭</div>
+              <div id="badge-3" style="width:50px; height:50px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; font-size:1.5rem; opacity:0.3; filter:grayscale(100%); transition:all 0.3s;" title="Advanced Modeler (Selesai > 9 Topik)">⚙️</div>
+              <div id="badge-4" style="width:50px; height:50px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; font-size:1.5rem; opacity:0.3; filter:grayscale(100%); transition:all 0.3s;" title="Excel Analyst (Selesai 14+ Topik)">🏆</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon" aria-hidden="true">⊞</div>
+            Excel Analyst Hub
+          </a>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Belajar</h4>
+          <ul>
+            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
+            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
+            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tools & Trainer</h4>
+          <ul>
+            <li><a href="tools.html#formula-generator">Formula Generator</a></li>
+            <li><a href="tools.html#daily-challenge-section">Tantangan Harian</a></li>
+            <li><a href="tools.html#quick-ref">Referensi Cepat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Jelajahi</h4>
+          <ul>
+            <li><a href="portfolio.html">Portofolio</a></li>
+            <li><a href="topic.html">Tutorial VLOOKUP</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Dibangun untuk generasi data analyst Indonesia berikutnya.</p>
+        <p>Excel Analyst Hub — Belajar gratis, keahlian nyata.</p>
+      </div>
+    </div>
+  </footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if(!window.EAH) return;
+    
+    // Ambil data progres dari LocalStorage via API EAH
+    var progress = window.EAH.getProgress() || {};
+    var doneCount = 0;
+    
+    // Total topik estimasi tiap jalur (Sesuaikan jika topik bertambah)
+    var totalBeginner = 5;
+    var totalIntermediate = 6;
+    var totalAdvanced = 5;
+
+    var countBeginner = 0;
+    var countIntermediate = 0;
+    var countAdvanced = 0;
+
+    // ID Topik Aktual di Sistem
+    var beginnerIds = ['excel-interface', 'basic-formulas', 'cell-formatting', 'conditional-formatting', 'basic-charts'];
+    var intermediateIds = ['data-entry', 'datacleaning', 'vlookup-indexmatch', 'sumif', 'pivottable']; // ditambah sesuai kebutuhan
+    var advancedIds = ['power-query', 'advanced-pivot', 'dashboard-design', 'dynamic-arrays', 'data-validation'];
+
+    for(var topicId in progress) {
+      if(progress[topicId] === 'done') {
+        doneCount++;
+        if(beginnerIds.indexOf(topicId) !== -1) countBeginner++;
+        else if(advancedIds.indexOf(topicId) !== -1) countAdvanced++;
+        else countIntermediate++; // Fallback untuk intermediate
+      }
+    }
+
+    // 1. Update Angka Statistik
+    document.getElementById('stat-completed').textContent = doneCount;
+
+    // 2. Update Gelar/Level
+    var levelName = "Newbie Spreadsheet";
+    if(doneCount >= 4) levelName = "Data Explorer";
+    if(doneCount >= 9) levelName = "Advanced Modeler";
+    if(doneCount >= 14) levelName = "Excel Analyst Master";
+    document.getElementById('user-level').textContent = "Level: " + levelName;
+
+    // 3. Update Progress Bars
+    var pctBeg = Math.min(Math.round((countBeginner / totalBeginner) * 100), 100);
+    var pctInt = Math.min(Math.round((countIntermediate / totalIntermediate) * 100), 100);
+    var pctAdv = Math.min(Math.round((countAdvanced / totalAdvanced) * 100), 100);
+
+    document.getElementById('bar-beginner').style.width = pctBeg + '%';
+    document.getElementById('pct-beginner').textContent = pctBeg + '%';
+    if(pctBeg === 100) document.getElementById('bar-beginner').style.background = '#10b981';
+
+    document.getElementById('bar-intermediate').style.width = pctInt + '%';
+    document.getElementById('pct-intermediate').textContent = pctInt + '%';
+    if(pctInt === 100) document.getElementById('bar-intermediate').style.background = '#10b981';
+
+    document.getElementById('bar-advanced').style.width = pctAdv + '%';
+    document.getElementById('pct-advanced').textContent = pctAdv + '%';
+    if(pctAdv === 100) document.getElementById('bar-advanced').style.background = '#10b981';
+
+    // 4. Update Badges
+    var badgeStyle = "opacity:1; filter:none; background:#f59e0b; box-shadow:0 0 15px rgba(245,158,11,0.3);";
+    if(doneCount >= 1) document.getElementById('badge-1').style.cssText += badgeStyle;
+    if(doneCount >= 4) document.getElementById('badge-2').style.cssText += badgeStyle;
+    if(doneCount >= 9) document.getElementById('badge-3').style.cssText += badgeStyle;
+    if(doneCount >= 14) document.getElementById('badge-4').style.cssText += badgeStyle;
+  });
+</script>
+</body>
+</html>
