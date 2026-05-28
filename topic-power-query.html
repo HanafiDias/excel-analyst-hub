@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('eah_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dasar-Dasar Power Query — Excel Analyst Hub</title>
+  <meta name="description" content="Pelajari Power Query dari nol — import, transformasi, dan gabungkan data dari berbagai sumber tanpa formula. Satu klik Refresh untuk update otomatis." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+</head>
+<body class="page-body">
+
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon" aria-hidden="true">⊞</div>
+        Excel Analyst Hub
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="learn.html">Belajar</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="tools.html">Tools</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle-powerquery" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
+        <a href="learn.html" class="btn-primary btn-sm">Mulai Belajar</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu-powerquery">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-menu-mobile" id="mobile-menu-powerquery">
+    <a href="index.html">Beranda</a>
+    <a href="learn.html">Belajar</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="tools.html">Tools</a>
+  </div>
+
+  <main id="main-content">
+    <div class="topic-layout">
+
+      <!-- ============ SIDEBAR TOC ============ -->
+      <aside class="toc-sidebar" aria-label="Daftar isi">
+        <p class="toc-title">Di Halaman Ini</p>
+        <a href="#apa-itu-pq">Apa itu Power Query?</a>
+        <a href="#masuk-pq">Cara Masuk ke Power Query</a>
+        <a href="#import-data">Import Data dari Berbagai Sumber</a>
+        <a href="#transformasi">Transformasi Data Dasar</a>
+        <a href="#append-merge">Append vs Merge Query</a>
+        <a href="#refresh">Load & Refresh Otomatis</a>
+      </aside>
+
+      <!-- ============ MAIN CONTENT ============ -->
+      <article class="topic-content">
+
+        <header class="topic-header">
+          <nav aria-label="Breadcrumb" style="margin-bottom:var(--space-4);">
+            <a href="learn.html" style="font-size:0.82rem;color:var(--text-muted);">← Kembali ke Jalur Belajar</a>
+          </nav>
+          <div class="topic-meta">
+            <span class="badge badge-advanced">Lanjutan</span>
+            <span class="duration">~45 menit</span>
+            <span id="topic-status-header" class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+          </div>
+          <h1>Dasar-Dasar Power Query: Otomasi Data Cleaning Tanpa Formula</h1>
+          <p>Import, transformasi, dan gabungkan data dari berbagai sumber — sekali setup, tinggal klik Refresh setiap bulan. Tidak perlu VBA, tidak perlu formula rumit.</p>
+        </header>
+
+        <section id="apa-itu-pq">
+          <h2>Apa itu Power Query?</h2>
+          <p>Power Query adalah engine transformasi data yang sudah built-in di Excel sejak versi 2016. Fungsi utamanya: mengambil data dari sumber mana saja, membersihkan dan mentransformasinya, lalu memuatnya ke Excel — dan semua langkah yang kamu lakukan direkam secara otomatis sebagai <strong>Applied Steps</strong>.</p>
+          <p>Artinya: bulan pertama kamu setup Power Query untuk mengolah laporan penjualan bulanan — import CSV, bersihkan format tanggal, hapus kolom tidak perlu, gabungkan dengan data karyawan. Bulan kedua, cukup ganti file CSV-nya dan klik <strong>Refresh</strong>. Semua langkah transformasi dijalankan ulang secara otomatis.</p>
+          <p>Ini yang memisahkan analis yang bekerja cerdas dari yang bekerja keras — Power Query mengotomasi pekerjaan yang biasanya dilakukan manual berulang kali.</p>
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Power Query vs Formula vs VBA</p>
+            <p>Formula Excel bekerja di level sel — satu formula, satu hasil. VBA butuh kemampuan programming. Power Query bekerja di level tabel — satu query, seluruh dataset. Untuk transformasi data yang berulang setiap bulan, Power Query adalah pilihan yang paling efisien dan paling mudah di-maintain oleh orang lain.</p>
+          </div>
+        </section>
+
+        <section id="masuk-pq">
+          <h2>Cara Masuk ke Power Query Editor</h2>
+          <p>Ada beberapa cara untuk membuka Power Query tergantung dari mana kamu mulai:</p>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+          <table class="syntax-table" aria-label="Cara membuka Power Query">
+            <thead><tr><th>Situasi</th><th>Cara Masuk</th></tr></thead>
+            <tbody>
+              <tr><td>Mulai dari data baru</td><td>Tab Data → Get Data → pilih sumber</td></tr>
+              <tr><td>Edit query yang sudah ada</td><td>Tab Data → Queries &amp; Connections → klik kanan query → Edit</td></tr>
+              <tr><td>Dari Excel Table</td><td>Klik sel dalam tabel → Tab Data → From Table/Range</td></tr>
+              <tr><td>Buka Power Query Manager</td><td>Tab Data → Get Data → Launch Power Query Editor</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p>Setelah Power Query Editor terbuka, kamu akan melihat tiga area utama: panel <strong>Queries</strong> di kiri (daftar semua query), area <strong>Preview</strong> di tengah (tampilan data), dan panel <strong>Applied Steps</strong> di kanan (rekaman semua langkah transformasi).</p>
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Applied Steps adalah Undo yang Permanen</p>
+            <p>Setiap langkah transformasi yang kamu lakukan di Power Query Editor direkam di Applied Steps. Kamu bisa klik langkah mana saja untuk melihat kondisi data sebelum langkah itu dijalankan — seperti time machine untuk data. Ini juga memudahkan debugging ketika ada transformasi yang menghasilkan hasil yang tidak diharapkan.</p>
+          </div>
+        </section>
+
+        <section id="import-data">
+          <h2>Import Data dari Berbagai Sumber</h2>
+          <p>Power Query bisa mengambil data dari hampir semua sumber. Yang paling sering dipakai analis data Indonesia:</p>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+          <table class="syntax-table" aria-label="Sumber data Power Query">
+            <thead><tr><th>Sumber</th><th>Cara Akses</th><th>Kelebihan</th></tr></thead>
+            <tbody>
+              <tr><td>File CSV/TXT</td><td>Get Data → From File → From Text/CSV</td><td>Paling umum, langsung auto-detect delimiter</td></tr>
+              <tr><td>File Excel lain</td><td>Get Data → From File → From Workbook</td><td>Bisa pilih sheet atau named range tertentu</td></tr>
+              <tr><td>Folder (banyak file)</td><td>Get Data → From File → From Folder</td><td>Gabungkan semua file dalam folder sekaligus</td></tr>
+              <tr><td>Excel Table aktif</td><td>Tab Data → From Table/Range</td><td>Query langsung dari data di sheet yang sama</td></tr>
+              <tr><td>Database (SQL Server, MySQL)</td><td>Get Data → From Database</td><td>Query langsung ke database tanpa export</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p>Yang paling powerful untuk pekerjaan bulanan adalah <strong>From Folder</strong> — misalnya kamu punya folder berisi 12 file laporan bulanan dengan struktur yang sama. Power Query bisa menggabungkan semua file tersebut menjadi satu tabel secara otomatis, termasuk file baru yang ditambahkan ke folder bulan depan.</p>
+          <div class="callout callout-warning">
+            <p class="callout-title">⚠️ Path File Jangan Dipindah</p>
+            <p>Power Query menyimpan path absolut ke file sumber. Jika file sumber dipindah ke folder lain, query akan error saat di-Refresh. Selalu simpan file sumber di lokasi yang stabil, atau gunakan relative path dengan From Folder. Jika terpaksa pindah, update path di Data Source Settings.</p>
+          </div>
+        </section>
+
+        <section id="transformasi">
+          <h2>Transformasi Data Dasar</h2>
+          <p>Ini adalah operasi yang paling sering dilakukan setelah data berhasil di-import. Semuanya bisa dilakukan via klik kanan atau menu Transform tanpa perlu menulis kode apapun.</p>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+          <table class="syntax-table" aria-label="Transformasi Power Query yang sering dipakai">
+            <thead><tr><th>Operasi</th><th>Cara</th><th>Setara dengan</th></tr></thead>
+            <tbody>
+              <tr><td>Hapus kolom tidak perlu</td><td>Klik kanan header kolom → Remove Columns</td><td>Hapus kolom manual</td></tr>
+              <tr><td>Ubah tipe data</td><td>Klik kanan header → Change Type</td><td>Format Cells + konversi manual</td></tr>
+              <tr><td>Hapus baris duplikat</td><td>Home → Remove Rows → Remove Duplicates</td><td>Data → Remove Duplicates</td></tr>
+              <tr><td>Filter baris</td><td>Klik dropdown di header kolom</td><td>AutoFilter</td></tr>
+              <tr><td>Trim spasi</td><td>Transform → Format → Trim</td><td>=TRIM()</td></tr>
+              <tr><td>Split kolom</td><td>Home → Split Column → By Delimiter</td><td>Text to Columns</td></tr>
+              <tr><td>Rename kolom</td><td>Double-click nama kolom</td><td>Ganti header manual</td></tr>
+              <tr><td>Pivot/Unpivot</td><td>Transform → Pivot Column / Unpivot Columns</td><td>Tidak ada padanannya di Excel biasa</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Ubah Tipe Data Selalu Jadi Langkah Pertama</p>
+            <p>Segera setelah import, ubah tipe data setiap kolom ke tipe yang benar — Date untuk tanggal, Whole Number atau Decimal untuk angka, Text untuk kode dan ID. Power Query kadang menebak tipe data secara salah, terutama untuk kolom yang campur angka dan teks. Tipe data yang salah menyebabkan operasi transformasi berikutnya menghasilkan error yang sulit ditelusuri.</p>
+          </div>
+        </section>
+
+        <section id="append-merge">
+          <h2>Append vs Merge Query</h2>
+          <p>Dua operasi penggabungan data yang paling penting di Power Query — dan sering tertukar karena namanya tidak intuitif.</p>
+          <h3>Append — Tumpuk Baris</h3>
+          <p>Append menggabungkan dua atau lebih tabel dengan struktur kolom yang sama menjadi satu tabel yang lebih panjang. Analoginya: seperti copy-paste tabel kedua ke bawah tabel pertama.</p>
+          <p>Kapan dipakai: menggabungkan laporan bulanan yang terpisah (Januari, Februari, Maret) menjadi satu tabel tahunan. Atau menggabungkan data dari beberapa cabang yang punya format kolom sama.</p>
+          <p>Cara akses: <strong>Home → Append Queries</strong> → pilih tabel yang ingin digabungkan.</p>
+          <h3>Merge — Gabungkan Kolom dari Tabel Lain</h3>
+          <p>Merge menggabungkan dua tabel berdasarkan kolom kunci yang sama — persis seperti VLOOKUP tapi lebih powerful. Hasilnya adalah tabel yang lebih lebar, bukan lebih panjang.</p>
+          <p>Kapan dipakai: menambahkan nama karyawan dari tabel HR ke tabel transaksi yang hanya punya ID karyawan. Atau menambahkan nama produk dari tabel master ke tabel penjualan.</p>
+          <p>Cara akses: <strong>Home → Merge Queries</strong> → pilih tabel kedua → pilih kolom kunci dari masing-masing tabel → pilih Join Kind.</p>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+          <table class="syntax-table" aria-label="Perbandingan Append vs Merge">
+            <thead><tr><th>Operasi</th><th>Hasil</th><th>Analogi Excel</th></tr></thead>
+            <tbody>
+              <tr><td>Append</td><td>Tabel lebih panjang (lebih banyak baris)</td><td>Copy-paste ke bawah</td></tr>
+              <tr><td>Merge (Left Join)</td><td>Tabel lebih lebar (lebih banyak kolom)</td><td>VLOOKUP</td></tr>
+              <tr><td>Merge (Inner Join)</td><td>Hanya baris yang ada di kedua tabel</td><td>VLOOKUP tanpa IFERROR</td></tr>
+              <tr><td>Merge (Full Outer)</td><td>Semua baris dari kedua tabel</td><td>Tidak ada padanannya</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </section>
+
+        <section id="refresh">
+          <h2>Load ke Excel &amp; Refresh Otomatis</h2>
+          <p>Setelah semua transformasi selesai, ada dua cara untuk memuat hasil ke Excel:</p>
+          <ul>
+            <li><strong>Close &amp; Load</strong> — muat ke sheet baru sebagai tabel Excel biasa. Ini pilihan paling umum.</li>
+            <li><strong>Close &amp; Load To</strong> — pilih mau dimuat ke mana: sheet baru, sheet yang sudah ada (di sel tertentu), atau hanya sebagai Connection tanpa menampilkan data (berguna jika query ini hanya dipakai sebagai sumber untuk query lain atau PivotTable).</li>
+          </ul>
+          <p>Setelah data dimuat, cara me-Refresh:</p>
+          <ul>
+            <li>Klik kanan tabel hasil → <strong>Refresh</strong></li>
+            <li>Tab Data → <strong>Refresh All</strong> untuk refresh semua query sekaligus</li>
+            <li>Shortcut: <strong>Ctrl+Alt+F5</strong> untuk Refresh All</li>
+          </ul>
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Setup Refresh Otomatis</p>
+            <p>Di tab Data → Queries &amp; Connections → klik kanan query → Properties → centang <strong>"Refresh every X minutes"</strong> atau <strong>"Refresh data when opening the file"</strong>. Dengan opsi kedua, setiap kali file Excel dibuka, data langsung diperbarui dari sumber — ideal untuk dashboard yang dibuka setiap pagi.</p>
+          </div>
+          <div class="callout callout-warning">
+            <p class="callout-title">⚠️ Refresh Membutuhkan Akses ke Sumber Data</p>
+            <p>Jika file Excel dikirim ke orang lain dan mereka mencoba Refresh, Excel akan mencari file sumber di path yang sama di komputer mereka. Jika path tidak ada, Refresh akan error. Untuk file yang dibagikan, pertimbangkan untuk menyertakan file sumber dalam folder yang sama atau gunakan SharePoint/OneDrive sebagai sumber data.</p>
+          </div>
+        </section>
+
+        <!-- ====== PREV / NEXT NAV ====== -->
+        <nav class="topic-nav" aria-label="Navigasi topik">
+          <div class="topic-nav-item" style="opacity:0.4;pointer-events:none;cursor:default;">
+            <span class="topic-nav-direction">← Sebelumnya</span>
+            <span class="topic-nav-title">Ini adalah awal jalur lanjutan</span>
+          </div>
+          <a href="topic-advanced-pivot.html" class="topic-nav-item" style="text-align:right;">
+            <span class="topic-nav-direction">Berikutnya →</span>
+            <span class="topic-nav-title">PivotTable Lanjutan &amp; Slicer</span>
+          </a>
+        </nav>
+
+      </article>
+    </div><!-- /topic-layout -->
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon" aria-hidden="true">⊞</div>
+            Excel Analyst Hub
+          </a>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Belajar</h4>
+          <ul>
+            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
+            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
+            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="tools.html#formula-generator">Formula Generator</a></li>
+            <li><a href="tools.html#daily-challenge-section">Tantangan Harian</a></li>
+            <li><a href="tools.html#quick-ref">Referensi Cepat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Jelajahi</h4>
+          <ul>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="topic.html">Tutorial VLOOKUP</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Dibangun untuk generasi data analyst Indonesia berikutnya.</p>
+        <p>Excel Analyst Hub — Belajar gratis, keahlian nyata.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      var TOPIC_ID = 'power-query';
+
+      if (window.EAH && window.EAH.markVisited) {
+        window.EAH.markVisited(TOPIC_ID);
+        window.EAH.renderProgress && window.EAH.renderProgress();
+      }
+
+      var statusEl = document.getElementById('topic-status-header');
+      if (statusEl && window.EAH) {
+        var p = window.EAH.getProgress();
+        var status = p[TOPIC_ID] || 'in-progress';
+        statusEl.dataset.status = status;
+        statusEl.textContent = status === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
+      }
+
+      var sections = document.querySelectorAll('.topic-content section[id]');
+      var tocLinks = document.querySelectorAll('.toc-sidebar a');
+      if (sections.length && tocLinks.length) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              tocLinks.forEach(function (link) { link.classList.remove('active'); });
+              var activeLink = document.querySelector('.toc-sidebar a[href="#' + entry.target.id + '"]');
+              if (activeLink) activeLink.classList.add('active');
+            }
+          });
+        }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+        sections.forEach(function (section) { observer.observe(section); });
+      }
+
+      var headerStatus = document.getElementById('topic-status-header');
+      if (headerStatus) {
+        headerStatus.style.cursor = 'pointer';
+        headerStatus.title = 'Klik untuk menandai selesai';
+        headerStatus.addEventListener('click', function () {
+          if (window.EAH) {
+            var current = window.EAH.getProgress()[TOPIC_ID] || 'in-progress';
+            var next = current === 'done' ? 'in-progress' : 'done';
+            window.EAH.setTopicStatus(TOPIC_ID, next);
+            headerStatus.dataset.status = next;
+            headerStatus.textContent = next === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
+          }
+        });
+      }
+
+    });
+  </script>
+</body>
+</html>
