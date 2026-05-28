@@ -156,7 +156,7 @@
                 </div>
                 <div style="display:flex;gap:var(--space-2);">
                   <button class="btn-ghost btn-xs btn-mark-done" title="Tandai selesai">✓</button>
-                  <button class="btn-primary btn-sm" disabled title="Segera hadir">Segera Hadir</button>
+                  <a href="topic-cell-formatting.html" class="btn-primary btn-sm">Mulai →</a>
                 </div>
               </div>
             </div>
@@ -568,5 +568,12 @@
   </footer>
 
   <script src="assets/js/main.js"></script>
+  <script>
+    window.addEventListener('pageshow', function(e) {
+      if (window.EAH && window.EAH.renderProgress) {
+        window.EAH.renderProgress();
+      }
+    });
+  </script>
 </body>
 </html>
