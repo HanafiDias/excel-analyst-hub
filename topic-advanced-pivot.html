@@ -166,7 +166,6 @@
           </div>
           <p>Tips Tambahan: Gunakan fitur <strong>Repeat All Item Labels</strong> di menu Report Layout untuk mengisi sel kosong secara otomatis pada Tabular Form, dan matikan Grand Totals jika tidak diperlukan untuk menjaga kebersihan visual laporan Anda.</p>
         </section>
-
         <!-- ====== PREV / NEXT NAV ====== -->
         <nav class="topic-nav" aria-label="Navigasi topik">
           <a href="topic-power-query.html" class="topic-nav-item">
@@ -244,19 +243,32 @@
         statusEl.textContent = status === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
       }
 
+      // IntersectionObserver — tautan TOC aktif saat digulir
       var sections = document.querySelectorAll('.topic-content section[id]');
       var tocLinks = document.querySelectorAll('.toc-sidebar a');
+
       if (sections.length && tocLinks.length) {
+        var activeSection = null;
+
         var observer = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
             if (entry.isIntersecting) {
-              tocLinks.forEach(function (link) { link.classList.remove('active'); });
-              var activeLink = document.querySelector('.toc-sidebar a[href="#' + entry.target.id + '"]');
+              activeSection = entry.target.id;
+              tocLinks.forEach(function (link) {
+                link.classList.remove('active');
+              });
+              var activeLink = document.querySelector('.toc-sidebar a[href="#' + activeSection + '"]');
               if (activeLink) activeLink.classList.add('active');
             }
           });
-        }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
-        sections.forEach(function (section) { observer.observe(section); });
+        }, {
+          rootMargin: '-80px 0px -60% 0px',
+          threshold: 0
+        });
+
+        sections.forEach(function (section) {
+          observer.observe(section);
+        });
       }
 
       var headerStatus = document.getElementById('topic-status-header');
