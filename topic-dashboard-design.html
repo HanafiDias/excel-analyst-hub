@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('eah_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prinsip Desain Dashboard — Excel Analyst Hub</title>
+  <meta name="description" content="Pelajari tata letak, hierarki visual, dan penggunaan warna untuk mengubah data mentah menjadi dashboard eksekutif yang jernih, profesional, dan mudah dipahami." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+</head>
+<body class="page-body">
+
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon" aria-hidden="true">⊞</div>
+        Excel Analyst Hub
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="learn.html">Belajar</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="tools.html">Tools</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle-dashboarddesign" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
+        <a href="learn.html" class="btn-primary btn-sm">Mulai Belajar</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu-dashboarddesign">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-menu-mobile" id="mobile-menu-dashboarddesign">
+    <a href="index.html">Beranda</a>
+    <a href="learn.html">Belajar</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="tools.html">Tools</a>
+  </div>
+
+  <main id="main-content">
+    <div class="topic-layout">
+
+      <!-- ============ SIDEBAR TOC ============ -->
+      <aside class="toc-sidebar" aria-label="Daftar isi">
+        <p class="toc-title">Di Halaman Ini</p>
+        <a href="#mengapa-desain">Mengapa Desain Penting?</a>
+        <a href="#hierarki-visual">Hierarki Visual & Layout</a>
+        <a href="#memilih-grafik">Memilih Grafik yang Tepat</a>
+        <a href="#data-ink-ratio">Prinsip Data-Ink Ratio</a>
+        <a href="#warna-aksentuasi">Warna & Aksentuasi</a>
+        <a href="#whitespace">Ruang Kosong (Whitespace)</a>
+      </aside>
+
+      <!-- ============ MAIN CONTENT ============ -->
+      <article class="topic-content">
+
+        <header class="topic-header">
+          <nav aria-label="Breadcrumb" style="margin-bottom:var(--space-4);">
+            <a href="learn.html" style="font-size:0.82rem;color:var(--text-muted);">← Kembali ke Jalur Belajar</a>
+          </nav>
+          <div class="topic-meta">
+            <span class="badge badge-advanced">Lanjutan</span>
+            <span class="duration">~35 menit</span>
+            <span id="topic-status-header" class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+          </div>
+          <h1>Prinsip Desain Dashboard: Jernih & Profesional</h1>
+          <p>Layout, hierarki, dan warna — tiga hal yang membuat dashboard jernih bukan berantakan. Cara analis menyusun tampilan eksekutif vs tampilan operasional, dan konvensi yang membuat dashboard intuitif tanpa perlu legenda panjang.</p>
+        </header>
+
+        <section id="mengapa-desain">
+          <h2>Mengapa Desain Dashboard Penting?</h2>
+          <p>Sebagai data analyst, tugasmu bukan sekadar memproses data menggunakan rumus, melainkan <strong>menyampaikan insight</strong> kepada pengambil keputusan. Eksekutif dan manajer biasanya hanya memiliki waktu beberapa detik untuk melihat dashboard sebelum mengambil kesimpulan.</p>
+          <p>Dashboard yang dipenuhi terlalu banyak warna, grafik yang tumpang tindih, dan tidak memiliki alur baca akan membuat audiens kebingungan. Desain yang baik memastikan data yang paling penting tersampaikan pertama kali tanpa hambatan visual.</p>
+        </section>
+
+        <section id="hierarki-visual">
+          <h2>Hierarki Visual &amp; Layout Dasar</h2>
+          <p>Manusia membaca layar dari kiri atas ke kanan bawah (sering disebut pola baca F-Pattern atau Z-Pattern). Susun dashboard Excel-mu dengan memanfaatkan sifat alami ini.</p>
+          <ul>
+            <li><strong>Bagian Atas (Top):</strong> Tempatkan <strong>KPI (Key Performance Indicators)</strong> utama. Ini adalah angka-angka ringkasan mutlak (Total Revenue, Total Profit, Pertumbuhan % YoY) dalam bentuk angka besar (Big Numbers/Cards).</li>
+            <li><strong>Bagian Tengah (Middle):</strong> Tampilkan grafik tren (waktu) dan perbandingan kategori (Region/Produk). Di sinilah cerita dari data mulai dijabarkan.</li>
+            <li><strong>Bagian Bawah (Bottom):</strong> Tabel data detail (Data Grids). Berikan rincian transaksi atau top 10/bottom 10 tabel bagi mereka yang butuh melihat data di level baris.</li>
+          </ul>
+          <div class="callout callout-tip">
+            <p class="callout-title">💡 Pisahkan Halaman Dashboard dan Kalkulasi</p>
+            <p>Jangan pernah membangun tampilan dashboard di sheet yang sama dengan data mentah atau PivotTable-mu. Buat satu sheet khusus yang bersih (matikan Gridlines) sebagai kanvas presentasi (Front-End), sementara sheet lain menjadi mesin kalkulasi (Back-End).</p>
+          </div>
+        </section>
+
+        <section id="memilih-grafik">
+          <h2>Memilih Grafik yang Tepat</h2>
+          <p>Kesalahan fatal pemula adalah memaksakan penggunaan semua jenis grafik (termasuk yang 3D) hanya agar dashboard terlihat "canggih". Gunakan standar industri berikut:</p>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+          <table class="syntax-table" aria-label="Panduan memilih grafik">
+            <thead><tr><th>Tujuan Analisis</th><th>Tipe Grafik yang Disarankan</th><th>Tipe Grafik yang Dihindari</th></tr></thead>
+            <tbody>
+              <tr><td>Tren sepanjang waktu (Bulan/Tahun)</td><td>Line Chart atau Column Chart</td><td>Pie Chart, Scatter Plot</td></tr>
+              <tr><td>Perbandingan antar kategori (Region/Produk)</td><td>Bar Chart (Horizontal) atau Column Chart</td><td>Pie Chart dengan >4 kategori</td></tr>
+              <tr><td>Komposisi / Bagian dari keseluruhan</td><td>100% Stacked Bar atau Donut Chart (Max 3-4 item)</td><td>Grafik 3D, Pie Chart bergerigi</td></tr>
+              <tr><td>Hubungan antar variabel (Korelasi)</td><td>Scatter Plot</td><td>Line Chart bertumpuk</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </section>
+
+        <section id="data-ink-ratio">
+          <h2>Prinsip Data-Ink Ratio (Menghindari Clutter)</h2>
+          <p>Diperkenalkan oleh pakar visualisasi data Edward Tufte, <em>Data-Ink Ratio</em> adalah proporsi tinta (atau pixel) yang digunakan untuk menampilkan data inti dibandingkan dengan tinta yang dihabiskan untuk elemen dekoratif.</p>
+          <p><strong>Cara memaksimalkan Data-Ink Ratio di Excel:</strong></p>
+          <ol>
+            <li><strong>Hapus Gridlines:</strong> Matikan garis bantu sel Excel via tab View → uncheck Gridlines.</li>
+            <li><strong>Hapus Chart Borders &amp; Background:</strong> Jadikan background grafik transparan (No Fill) dan hilangkan garis bingkai (No Line).</li>
+            <li><strong>Hapus Legend yang Berulang:</strong> Jika sebuah Bar Chart sudah memiliki label kategori di sumbu Y dan warnanya seragam, hapus legenda.</li>
+            <li><strong>Pindahkan Data Labels Secara Langsung:</strong> Daripada audiens melihat bolak-balik antara ujung grafik dan angka di sumbu Axis, letakkan Data Labels langsung di ujung batang (Bar) grafik, lalu hapus angka di Axis sepenuhnya.</li>
+          </ol>
+        </section>
+
+        <section id="warna-aksentuasi">
+          <h2>Penggunaan Warna &amp; Aksentuasi</h2>
+          <p>Jangan gunakan warna secara acak. Warna dalam dashboard harus difungsikan untuk menarik perhatian (alerting) atau mengelompokkan elemen yang berkaitan, bukan untuk mendekorasi.</p>
+          <ul>
+            <li><strong>Gunakan palet warna netral:</strong> Dominasi dashboard dengan warna abu-abu (Light/Dark Grey), putih, atau warna dasar perusahaan yang redup (Muted Colors).</li>
+            <li><strong>Warna aksen (Accent):</strong> Gunakan warna terang (seperti Biru Tua atau Oranye) <em>hanya</em> untuk menyoroti data spesifik. Misalnya, dari 10 batang dalam Bar Chart, buat semuanya abu-abu, kecuali cabang dengan performa terbaik yang diwarnai biru.</li>
+            <li><strong>Konvensi warna universal:</strong> Hijau = Positif/Target Tercapai, Merah = Negatif/Kritis/Rugi. Jangan menukar logika natural ini. Warna buta (Color Blindness) juga harus dipertimbangkan dengan menghindari paduan merah-hijau berdampingan murni.</li>
+          </ul>
+        </section>
+
+        <section id="whitespace">
+          <h2>Pentingnya Ruang Kosong (Whitespace)</h2>
+          <p>Whitespace bukanlah ruang yang terbuang percuma, melainkan "udara" agar dashboard bisa bernapas. Jika elemen terlalu rapat, dashboard akan terasa mengintimidasi.</p>
+          <p>Biarkan jarak atau batas transparan yang cukup (margin dan padding) di antara setiap widget grafik, kartu metrik (KPI), dan Slicer. Menggunakan jarak yang konsisten antar komponen akan memberikan ilusi susunan kotak tak terlihat (Grid System) yang terlihat profesional dan terstruktur layaknya website modern.</p>
+        </section>
+
+        <!-- ====== PREV / NEXT NAV ====== -->
+        <nav class="topic-nav" aria-label="Navigasi topik">
+          <a href="topic-advanced-pivot.html" class="topic-nav-item">
+            <span class="topic-nav-direction">← Sebelumnya</span>
+            <span class="topic-nav-title">PivotTable Lanjutan &amp; Slicer</span>
+          </a>
+          <a href="topic-dynamic-arrays.html" class="topic-nav-item" style="text-align:right;">
+            <span class="topic-nav-direction">Berikutnya →</span>
+            <span class="topic-nav-title">Dynamic Arrays: FILTER, SORT, UNIQUE</span>
+          </a>
+        </nav>
+
+      </article>
+    </div><!-- /topic-layout -->
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon" aria-hidden="true">⊞</div>
+            Excel Analyst Hub
+          </a>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Belajar</h4>
+          <ul>
+            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
+            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
+            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="tools.html#formula-generator">Formula Generator</a></li>
+            <li><a href="tools.html#daily-challenge-section">Tantangan Harian</a></li>
+            <li><a href="tools.html#quick-ref">Referensi Cepat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Jelajahi</h4>
+          <ul>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="topic.html">Tutorial VLOOKUP</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Dibangun untuk generasi data analyst Indonesia berikutnya.</p>
+        <p>Excel Analyst Hub — Belajar gratis, keahlian nyata.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      var TOPIC_ID = 'dashboard-design';
+
+      if (window.EAH && window.EAH.markVisited) {
+        window.EAH.markVisited(TOPIC_ID);
+        window.EAH.renderProgress && window.EAH.renderProgress();
+      }
+
+      var statusEl = document.getElementById('topic-status-header');
+      if (statusEl && window.EAH) {
+        var p = window.EAH.getProgress();
+        var status = p[TOPIC_ID] || 'in-progress';
+        statusEl.dataset.status = status;
+        statusEl.textContent = status === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
+      }
+
+      var sections = document.querySelectorAll('.topic-content section[id]');
+      var tocLinks = document.querySelectorAll('.toc-sidebar a');
+      if (sections.length && tocLinks.length) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              tocLinks.forEach(function (link) { link.classList.remove('active'); });
+              var activeLink = document.querySelector('.toc-sidebar a[href="#' + entry.target.id + '"]');
+              if (activeLink) activeLink.classList.add('active');
+            }
+          });
+        }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+        sections.forEach(function (section) { observer.observe(section); });
+      }
+
+      var headerStatus = document.getElementById('topic-status-header');
+      if (headerStatus) {
+        headerStatus.style.cursor = 'pointer';
+        headerStatus.title = 'Klik untuk menandai selesai';
+        headerStatus.addEventListener('click', function () {
+          if (window.EAH) {
+            var current = window.EAH.getProgress()[TOPIC_ID] || 'in-progress';
+            var next = current === 'done' ? 'in-progress' : 'done';
+            window.EAH.setTopicStatus(TOPIC_ID, next);
+            headerStatus.dataset.status = next;
+            headerStatus.textContent = next === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
+          }
+        });
+      }
+
+    });
+  </script>
+</body>
+</html>
