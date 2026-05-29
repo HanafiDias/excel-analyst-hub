@@ -149,27 +149,34 @@
       </section>
 
       <!-- ============ TOOL 2: DAILY CHALLENGE ============ -->
-      <span id="daily-challenge" style="position:relative;top:calc(-1*(var(--nav-height)+16px));visibility:hidden;display:block;"></span>
-      <section class="tool-section" id="daily-challenge-section" aria-label="Tantangan Harian Excel">
-        <div class="tool-header">
-          <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2);">
-            <span class="tool-number" aria-hidden="true">2</span>
-            <h2 style="margin:0;">Tantangan Harian Excel</h2>
+      <section id="daily-challenge-section" class="section" aria-label="Tantangan Harian Excel">
+        <div class="container" style="max-width: var(--container-sm);">
+          <div class="text-center" style="margin-bottom: var(--space-5);">
+            <span class="badge badge-advanced">Interactive</span>
+            <h2 style="margin: var(--space-2) 0 0 0;">Tantangan Harian Excel</h2>
+            <p class="text-muted" style="margin-top: var(--space-2); font-size: 0.95rem;">Asah logika analis datamu setiap hari dengan satu skenario kasus nyata.</p>
           </div>
-          <p>Satu soal analis nyata per hari. Baca skenarionya, cari formulanya, lalu buka jawaban untuk mengecek. Lacak penyelesaian dengan localStorage — tidak perlu akun.</p>
-        </div>
 
-        <div style="max-width:700px;">
-          <div id="daily-challenge" class="challenge-card" role="region" aria-label="Tantangan hari ini" aria-live="polite">
-            <!-- Diisi oleh quiz.js -->
-            <div class="challenge-day-label">Memuat tantangan hari ini...</div>
-            <div class="challenge-body">
-              <p style="color:var(--text-muted);">Tantangan sedang dimuat...</p>
+          <div class="card" id="daily-challenge-card" style="padding: var(--space-6); border-left: 4px solid var(--accent);">
+            <div class="flex-between" style="margin-bottom: var(--space-4); font-size: 0.85rem; color: var(--text-muted);">
+              <span id="challenge-date" style="font-family: monospace; font-weight: 600;">📅 LOADING...</span>
+              <span id="challenge-level" class="badge">LEVEL</span>
             </div>
-          </div>
 
-          <div style="margin-top:var(--space-4);">
-            <p style="font-size:0.8rem;color:var(--text-muted);">Tantangan dirotasi setiap hari dari kumpulan 10 skenario Excel dunia nyata. Kemajuan disimpan di browser-mu.</p>
+            <p id="challenge-scenario" style="font-weight: 500; margin-top: 0; margin-bottom: var(--space-3); line-height: 1.5;"></p>
+            <p id="challenge-question" style="margin-bottom: var(--space-4); color: var(--text); font-weight: 600;"></p>
+
+            <form id="challenge-form" style="display: flex; flex-direction: column; gap: var(--space-3);">
+              <div style="position: relative;">
+                <input type="text" id="challenge-input" placeholder="Tulis rumus Excel di sini... (Contoh: =SUM(A1:A10))" autocomplete="off" spellcheck="false" style="width: 100%; padding: var(--space-3) var(--space-4); background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: monospace; font-size: 0.95rem;" />
+              </div>
+              <div style="display: flex; gap: var(--space-2); justify-content: flex-end; margin-top: var(--space-2);">
+                <button type="button" id="challenge-hint-btn" class="btn-ghost btn-sm">💡 Petunjuk</button>
+                <button type="submit" class="btn-primary btn-sm">Kirim Jawaban</button>
+              </div>
+            </form>
+
+            <div id="challenge-feedback" style="margin-top: var(--space-4); padding: var(--space-3); border-radius: 6px; font-weight: 600; display: none; line-height: 1.5;"></div>
           </div>
         </div>
       </section>

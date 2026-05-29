@@ -487,8 +487,16 @@
      INIT
   ------------------------------------------ */
   document.addEventListener('DOMContentLoaded', function () {
-    initDailyChallenge();
-    initQuickRef();
+    try {
+      initDailyChallenge();
+    } catch (e) {
+      console.error("Daily Challenge failed to initialize:", e);
+    }
+    try {
+      initQuickRef();
+    } catch (e) {
+      console.error("Quick Ref failed to initialize:", e);
+    }
   });
 
 })();

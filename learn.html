@@ -591,10 +591,17 @@
 
   <script src="assets/js/main.js"></script>
   <script>
-    window.addEventListener('pageshow', function(e) {
+    document.addEventListener('DOMContentLoaded', function () {
       if (window.EAH && window.EAH.renderProgress) {
         window.EAH.renderProgress();
       }
+
+      // FIX: Trigger re-render whenever the user navigates back via browser history / back button
+      window.addEventListener('pageshow', function(event) {
+        if (window.EAH && window.EAH.renderProgress) {
+          window.EAH.renderProgress();
+        }
+      });
     });
   </script>
 </body>
