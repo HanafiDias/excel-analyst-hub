@@ -380,95 +380,117 @@
   }
 
   /* ------------------------------------------
-     QUICK REFERENCE DATA
+     SHORTCUT FLASHCARDS ENGINE
   ------------------------------------------ */
-  var SHORTCUTS = [
-    // Navigasi
-    { category: 'Navigasi', key: 'Ctrl + Home', desc: 'Pergi ke sel A1' },
-    { category: 'Navigasi', key: 'Ctrl + End', desc: 'Pergi ke sel terakhir yang digunakan di sheet' },
-    { category: 'Navigasi', key: 'Ctrl + Arrow', desc: 'Lompat ke tepi wilayah data yang berkesinambungan' },
-    { category: 'Navigasi', key: 'Ctrl + F', desc: 'Buka dialog Find & Replace' },
-    { category: 'Navigasi', key: 'Ctrl + G / F5', desc: 'Go To (navigasi ke sel atau rentang tertentu)' },
-    { category: 'Navigasi', key: 'Ctrl + Page Up/Down', desc: 'Pindah antar tab worksheet' },
-    { category: 'Navigasi', key: 'Ctrl + Tab', desc: 'Beralih antar workbook Excel yang terbuka' },
-    // Seleksi
-    { category: 'Seleksi', key: 'Ctrl + Shift + End', desc: 'Perluas seleksi ke sel terakhir yang digunakan' },
-    { category: 'Seleksi', key: 'Ctrl + Shift + Arrow', desc: 'Perluas seleksi ke tepi wilayah data' },
-    { category: 'Seleksi', key: 'Ctrl + Space', desc: 'Pilih seluruh kolom' },
-    { category: 'Seleksi', key: 'Shift + Space', desc: 'Pilih seluruh baris' },
-    { category: 'Seleksi', key: 'Ctrl + A', desc: 'Pilih semua (tekan pertama: region aktif; tekan kedua: seluruh sheet)' },
-    { category: 'Seleksi', key: 'Ctrl + Shift + L', desc: 'Aktifkan/nonaktifkan AutoFilter' },
-    // Formula
-    { category: 'Formula', key: 'F2', desc: 'Masuk ke mode edit pada sel aktif' },
-    { category: 'Formula', key: 'Ctrl + `', desc: 'Beralih antara tampilan formula dan tampilan nilai' },
-    { category: 'Formula', key: 'F4', desc: 'Ganti referensi absolut/relatif — bergantian di $A$1, A$1, $A1, A1' },
-    { category: 'Formula', key: 'Ctrl + Shift + Enter', desc: 'Masukkan sebagai formula array (Excel lama; tidak diperlukan di 365)' },
-    { category: 'Formula', key: 'Ctrl + D', desc: 'Fill down — salin sel teratas ke sel yang dipilih di bawah' },
-    { category: 'Formula', key: 'Ctrl + R', desc: 'Fill right — salin sel paling kiri ke sel yang dipilih' },
-    { category: 'Formula', key: 'Alt + =', desc: 'Auto-Sum — sisipkan formula SUM untuk sel di atas' },
-    { category: 'Formula', key: 'F9', desc: 'Hitung ulang semua formula di semua workbook yang terbuka' },
-    // Pemformatan
-    { category: 'Pemformatan', key: 'Ctrl + 1', desc: 'Buka dialog Format Cells (semua opsi pemformatan)' },
-    { category: 'Pemformatan', key: 'Ctrl + B', desc: 'Tebal (Bold)' },
-    { category: 'Pemformatan', key: 'Ctrl + I', desc: 'Miring (Italic)' },
-    { category: 'Pemformatan', key: 'Ctrl + U', desc: 'Garis bawah (Underline)' },
-    { category: 'Pemformatan', key: 'Ctrl + Shift + $', desc: 'Terapkan format mata uang' },
-    { category: 'Pemformatan', key: 'Ctrl + Shift + %', desc: 'Terapkan format persentase' },
-    { category: 'Pemformatan', key: 'Alt + H + H', desc: 'Buka pemilih warna isian (fill color)' },
-    { category: 'Pemformatan', key: 'Ctrl + Shift + ~', desc: 'Terapkan format angka Umum (hapus semua pemformatan)' }
+  var SHORTCUTS_DATA = [
+    // --- NAVIGASI & SELEKSI DATA ---
+    { name: "Pilih Seluruh Tabel/Blok Data", keys: "Ctrl + A", icon: "🔲" },
+    { name: "Lompat ke Ujung Bawah Data", keys: "Ctrl + ↓", icon: "⬇️" },
+    { name: "Lompat ke Ujung Kanan Data", keys: "Ctrl + →", icon: "➡️" },
+    { name: "Blok Data Sampai Bawah", keys: "Ctrl + Shift + ↓", icon: "🔽" },
+    { name: "Pindah Antar Sheet/Tab", keys: "Ctrl + PgUp/PgDn", icon: "📑" },
+
+    // --- FORMATTING & LAYOUT ---
+    { name: "Membuka Jendela Format Cells", keys: "Ctrl + 1", icon: "🎨" },
+    { name: "Format Angka Jadi Mata Uang", keys: "Ctrl + Shift + $", icon: "💰" },
+    { name: "Format Angka Jadi Persentase", keys: "Ctrl + Shift + %", icon: "📈" },
+    { name: "Menyembunyikan Kolom", keys: "Ctrl + 0", icon: "👁️" },
+    { name: "Menyembunyikan Baris", keys: "Ctrl + 9", icon: "👁️🗨️" },
+    { name: "Baris Baru di Dalam Sel Sama", keys: "Alt + Enter", icon: "↩️" },
+
+    // --- MANIPULASI DATA (CRUD) ---
+    { name: "Tambah Baris/Kolom Baru", keys: "Ctrl + Shift + +", icon: "➕" },
+    { name: "Hapus Baris/Kolom", keys: "Ctrl + -", icon: "➖" },
+    { name: "Copy Data dari Sel Atasnya", keys: "Ctrl + D", icon: "⏬" },
+    { name: "Copy Data dari Sel Kirinya", keys: "Ctrl + R", icon: "⏩" },
+    { name: "Membuka Paste Special", keys: "Ctrl + Alt + V", icon: "📋" },
+    { name: "Cari dan Ganti (Find & Replace)", keys: "Ctrl + H", icon: "🔎" },
+
+    // --- ALAT ANALISIS & PIVOT ---
+    { name: "Mengaktifkan/Hapus Filter", keys: "Ctrl + Shift + L", icon: "⚡" },
+    { name: "Membuat Tabel Resmi (Insert Table)", keys: "Ctrl + T", icon: "📊" },
+    { name: "Membuat PivotTable Baru", keys: "Alt + N + V", icon: "⊞" },
+    { name: "Menyisipkan Grafik Instan", keys: "Alt + F1", icon: "📉" },
+    { name: "Membuka Jendela Flash Fill", keys: "Ctrl + E", icon: "✨" },
+
+    // --- RUMUS & AUDITING ---
+    { name: "Membuat AutoSum Otomatis", keys: "Alt + =", icon: "∑" },
+    { name: "Mengunci Sel (Absolute Reference)", keys: "F4", icon: "🔒" },
+    { name: "Tampilkan Semua Rumus di Sheet", keys: "Ctrl + ~", icon: "👓" },
+    { name: "Evaluasi/Hitung Bagian Rumus", keys: "F9", icon: "🧠" },
+    { name: "Membuka Name Manager", keys: "Ctrl + F3", icon: "🏷️" },
+
+    // --- DATA TINGKAT LANJUT ---
+    { name: "Membuka Data Validation", keys: "Alt + A + V + V", icon: "🛡️" },
+    { name: "Menyisipkan Tanggal Hari Ini", keys: "Ctrl + ;", icon: "📅" },
+    { name: "Menyisipkan Waktu Saat Ini", keys: "Ctrl + Shift + :", icon: "⏱️" }
   ];
 
-  /* ------------------------------------------
-     QUICK REFERENCE TABLE
-  ------------------------------------------ */
-  function renderRefTable(filter) {
-    var tbody = document.getElementById('shortcut-table-body');
-    if (!tbody) return;
+  function initQuickRef() {
+    var searchInput = document.getElementById('shortcut-search');
+    var container = document.getElementById('flashcards-container-target');
+    if (!container) return;
 
-    var q = (filter || '').toLowerCase().trim();
-    var filtered = q
-      ? SHORTCUTS.filter(function (s) {
-          return s.key.toLowerCase().includes(q) ||
-                 s.desc.toLowerCase().includes(q) ||
-                 s.category.toLowerCase().includes(q);
-        })
-      : SHORTCUTS;
+    // Initial render
+    renderFlashcards('');
 
-    if (!filtered.length) {
-      tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:var(--space-8);">Tidak ada shortcut yang ditemukan untuk "' + escapeHtml(filter) + '"</td></tr>';
+    // Handle Live Search Input
+    if (searchInput) {
+      searchInput.addEventListener('input', function () {
+        renderFlashcards(this.value);
+      });
+    }
+  }
+
+  function renderFlashcards(filterText) {
+    var container = document.getElementById('flashcards-container-target');
+    if (!container) return;
+
+    container.innerHTML = '';
+    var query = filterText.toLowerCase().trim();
+
+    var filtered = SHORTCUTS_DATA.filter(function (item) {
+      return item.name.toLowerCase().includes(query) || item.keys.toLowerCase().includes(query);
+    });
+
+    if (filtered.length === 0) {
+      container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: var(--space-5);">🔍 Shortcut tidak ditemukan. Coba kata kunci lain!</div>';
       return;
     }
 
-    tbody.innerHTML = filtered.map(function (s) {
-      return '<tr>' +
-        '<td><span class="badge-category">' + escapeHtml(s.category) + '</span></td>' +
-        '<td>' +
-          '<code class="shortcut-key" data-copy="' + escapeAttr(s.key) + '" title="Click to copy">' + escapeHtml(s.key) + '</code>' +
-        '</td>' +
-        '<td>' + escapeHtml(s.desc) + '</td>' +
-      '</tr>';
-    }).join('');
+    filtered.forEach(function (item) {
+      // Create component structure
+      var wrapper = document.createElement('div');
+      wrapper.className = 'flashcard-container';
 
-    // Attach copy handlers
-    tbody.querySelectorAll('.shortcut-key').forEach(function (key) {
-      key.addEventListener('click', function () {
-        window.copyToClipboard(key.dataset.copy, key, '✓ Copied');
+      var flashcard = document.createElement('div');
+      flashcard.className = 'flashcard';
+
+      // Card Front
+      var front = document.createElement('div');
+      front.className = 'card-front';
+      front.innerHTML = '<div class="icon">' + item.icon + '</div>' +
+                        '<div class="action-title">' + item.name + '</div>' +
+                        '<div class="hint-tap">Klik untuk melihat shortcut</div>';
+
+      // Card Back
+      var back = document.createElement('div');
+      back.className = 'card-back';
+      back.innerHTML = '<div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:var(--space-2);">Shortcut:</div>' +
+                       '<kbd>' + item.keys + '</kbd>';
+
+      // Assemble card
+      flashcard.appendChild(front);
+      flashcard.appendChild(back);
+      wrapper.appendChild(flashcard);
+
+      // Click event for 3D flip toggle
+      wrapper.addEventListener('click', function() {
+        flashcard.classList.toggle('is-flipped');
       });
+
+      container.appendChild(wrapper);
     });
-  }
-
-  function initQuickRef() {
-    var search = document.getElementById('shortcut-search');
-    var tbody = document.getElementById('shortcut-table-body');
-    if (!tbody) return;
-
-    renderRefTable('');
-
-    if (search) {
-      search.addEventListener('input', function () {
-        renderRefTable(this.value);
-      });
-    }
   }
 
   /* ------------------------------------------

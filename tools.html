@@ -363,49 +363,21 @@
       </section>
 
       <!-- ============ TOOL 5: QUICK REFERENCE CARD ============ -->
-      <section class="tool-section" id="quick-ref" aria-label="Kartu Referensi Cepat">
-
-        <div class="tool-header">
-          <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2);">
-            <span class="tool-number" aria-hidden="true">5</span>
-            <h2 style="margin:0;">Kartu Referensi Cepat</h2>
+      <section id="quick-ref" class="section" aria-label="Referensi Cepat Shortcut">
+        <div class="container">
+          <div class="text-center" style="margin-bottom: var(--space-5);">
+            <span class="badge badge-advanced">Quick Reference</span>
+            <h2 style="margin: var(--space-2) 0 0 0;">Excel Shortcut Flashcards</h2>
+            <p class="text-muted" style="margin-top: var(--space-2);">Klik kartu untuk melihat kombinasi tombol shortcut Excel secara instan.</p>
           </div>
-          <p>28 shortcut Excel penting dalam 4 kategori. Cari berdasarkan shortcut atau deskripsi. Klik shortcut mana saja untuk menyalinnya.</p>
-        </div>
 
+          <div style="max-width: 500px; margin: 0 auto var(--space-6) auto; position: relative;">
+            <input type="text" id="shortcut-search" placeholder="Cari perintah... (misal: Filter, Pivot, Save)" style="width: 100%; padding: var(--space-3) var(--space-4); background: var(--surface); border: 1px solid var(--border); border-radius: 30px; color: var(--text); font-size: 0.95rem; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05);" />
+          </div>
 
-        <div style="margin-bottom:var(--space-5);">
-          <div class="search-input-wrapper" style="max-width:400px;">
-            <span class="search-icon" aria-hidden="true">🔍</span>
-            <input
-              type="search"
-              id="shortcut-search"
-              class="form-input"
-              placeholder="Cari shortcut atau deskripsi..."
-              aria-label="Cari shortcut"
-              autocomplete="off"
-            />
+          <div class="flashcard-grid" id="flashcards-container-target">
           </div>
         </div>
-
-        <div class="ref-table-wrapper">
-          <table class="ref-table" aria-label="Referensi shortcut keyboard Excel">
-            <thead>
-              <tr>
-                <th scope="col" style="width:120px;">Kategori</th>
-                <th scope="col" style="width:200px;">Shortcut</th>
-                <th scope="col">Deskripsi</th>
-              </tr>
-            </thead>
-            <tbody id="shortcut-table-body">
-              <!-- Diisi oleh quiz.js -->
-              <tr>
-                <td colspan="3" style="text-align:center;color:var(--text-muted);padding:var(--space-6);">Memuat shortcut...</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p style="font-size:0.78rem;color:var(--text-muted);margin-top:var(--space-3);">Klik tombol shortcut mana saja untuk menyalinnya ke clipboard.</p>
       </section>
 
     </div><!-- /container -->
