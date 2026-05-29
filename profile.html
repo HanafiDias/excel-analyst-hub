@@ -194,18 +194,18 @@
     var progress = window.EAH.getProgress() || {};
     var doneCount = 0;
     
-    // Total topik estimasi tiap jalur (Sesuaikan jika topik bertambah)
-    var totalBeginner = 5;
-    var totalIntermediate = 6;
+    // Total topik aktual per jalur = 16
+    var totalBeginner = 4;
+    var totalIntermediate = 7;
     var totalAdvanced = 5;
 
     var countBeginner = 0;
     var countIntermediate = 0;
     var countAdvanced = 0;
 
-    // ID Topik Aktual di Sistem
-    var beginnerIds = ['excel-interface', 'basic-formulas', 'cell-formatting', 'conditional-formatting', 'basic-charts'];
-    var intermediateIds = ['data-entry', 'datacleaning', 'vlookup-indexmatch', 'sumif', 'pivottable']; // ditambah sesuai kebutuhan
+    // ID Topik Sistem Aktual & Terkoreksi
+    var beginnerIds = ['excel-interface', 'basic-formulas', 'cell-formatting', 'basic-charts'];
+    var intermediateIds = ['conditional-formatting', 'data-entry', 'data-cleaning', 'vlookup', 'index-match', 'sumif-countif', 'pivot-tables'];
     var advancedIds = ['power-query', 'advanced-pivot', 'dashboard-design', 'dynamic-arrays', 'data-validation'];
 
     for(var topicId in progress) {

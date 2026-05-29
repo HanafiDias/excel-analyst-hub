@@ -298,62 +298,64 @@
      RENDER DAILY CHALLENGE
   ------------------------------------------ */
   function initDailyChallenge() {
-    var container = document.getElementById('daily-challenge');
-    if (!container) return;
+    var dateEl = document.getElementById('challenge-date');
+    var levelEl = document.getElementById('challenge-level');
+    var scenarioEl = document.getElementById('challenge-scenario');
+    var questionEl = document.getElementById('challenge-question');
+    var formEl = document.getElementById('challenge-form');
+    var inputEl = document.getElementById('challenge-input');
+    var feedbackEl = document.getElementById('challenge-feedback');
+    var hintBtn = document.getElementById('challenge-hint-btn');
 
-    var challenge = getTodayChallenge();
-    var completed = getCompleted();
-    var isDone = !!completed[challenge.id];
+    // Guard clause to ensure we are on tools.html with the new UI
+    if (!dateEl || !scenarioEl || typeof CHALLENGES === 'undefined') return;
 
-    container.innerHTML =
-      '<div class="challenge-day-label">Tantangan Hari Ini — ' + getTodayLabel() +
-      ' &nbsp;·&nbsp; <span class="badge ' + getLevelBadgeClass(challenge.id) +
-      '" style="font-size:0.7rem;">' + getChallengeLevel(challenge.id) + '</span></div>' +
-      '<div class="challenge-body">' +
-        '<p class="challenge-scenario">' + escapeHtml(challenge.scenario) + '</p>' +
-        '<p class="challenge-question"><strong>Soal:</strong> ' + escapeHtml(challenge.question) + '</p>' +
-        '<div class="challenge-answer hidden" id="challenge-answer">' +
-          '<div class="formula-block">' + escapeHtml(challenge.answer) + '</div>' +
-          '<p class="challenge-hint">💡 ' + escapeHtml(challenge.hint) + '</p>' +
-        '</div>' +
-        '<div class="challenge-actions">' +
-          '<button class="btn-ghost btn-sm" id="reveal-btn">Lihat Jawaban</button>' +
-          '<button class="btn-primary btn-sm' + (isDone ? ' done' : '') + '" id="done-btn">' +
-            (isDone ? '✓ Selesai Hari Ini' : 'Tandai Selesai') +
-          '</button>' +
-        '</div>' +
-      '</div>';
+    // Select challenge based on current date
+    var todayIndex = new Date().getDate() % CHALLENGES.length;
+    var challenge = CHALLENGES[todayIndex];
 
-    // Reveal button toggle
-    var answerEl = document.getElementById('challenge-answer');
-    var revealBtn = document.getElementById('reveal-btn');
-    var doneBtn = document.getElementById('done-btn');
+    // Populate UI
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    dateEl.textContent = '📅 ' + new Date().toLocaleDateString('id-ID', options);
+    if (levelEl) levelEl.textContent = 'Day ' + new Date().getDate();
 
-    var showing = false;
-    revealBtn.addEventListener('click', function () {
-      showing = !showing;
-      if (showing) {
-        answerEl.classList.remove('hidden');
-        revealBtn.textContent = 'Sembunyikan Jawaban';
-      } else {
-        answerEl.classList.add('hidden');
-        revealBtn.textContent = 'Lihat Jawaban';
-      }
-    });
+    scenarioEl.textContent = challenge.scenario;
+    questionEl.textContent = challenge.question;
 
-    // Tombol tandai selesai
-    doneBtn.addEventListener('click', function () {
-      markCompleted(challenge.id);
-      doneBtn.textContent = '\u2713 Selesai Hari Ini';
-      doneBtn.classList.add('done');
-      if (!document.getElementById('next-challenge-msg')) {
-        var nextMsg = document.createElement('p');
-        nextMsg.id = 'next-challenge-msg';
-        nextMsg.style.cssText = 'font-size:0.78rem;color:var(--text-muted);margin-top:var(--space-2);';
-        nextMsg.textContent = 'Tantangan baru tersedia besok. Terus semangat! \uD83D\uDD25';
-        doneBtn.parentNode.appendChild(nextMsg);
-      }
-    });
+    // Handle Form Submit
+    if (formEl) {
+      formEl.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var userAns = inputEl.value.trim().toLowerCase().replace(/\s+/g, '');
+        var trueAns = challenge.answer.trim().toLowerCase().replace(/\s+/g, '');
+        
+        feedbackEl.style.display = 'block';
+        
+        // Simple validation: exact match or contains the core formula
+        if (userAns === trueAns || (userAns.length > 5 && trueAns.includes(userAns))) {
+          feedbackEl.style.background = 'rgba(16, 185, 129, 0.1)';
+          feedbackEl.style.color = '#10b981';
+          feedbackEl.innerHTML = '✨ <strong>Benar!</strong> Jawaban yang tepat: <code>' + challenge.answer + '</code>';
+          if (window.EAH && window.EAH.markChallengeComplete) {
+            window.EAH.markChallengeComplete(challenge.id);
+          }
+        } else {
+          feedbackEl.style.background = 'rgba(239, 68, 68, 0.1)';
+          feedbackEl.style.color = '#ef4444';
+          feedbackEl.innerHTML = '❌ <strong>Kurang tepat.</strong> Coba periksa kembali tanda kurung atau argumen rumusnya.';
+        }
+      });
+    }
+
+    // Handle Hint Button
+    if (hintBtn) {
+      hintBtn.addEventListener('click', function() {
+        feedbackEl.style.display = 'block';
+        feedbackEl.style.background = 'rgba(245, 158, 11, 0.1)';
+        feedbackEl.style.color = '#d97706';
+        feedbackEl.innerHTML = '💡 <strong>Petunjuk:</strong> ' + challenge.hint;
+      });
+    }
   }
 
   function getTodayLabel() {
