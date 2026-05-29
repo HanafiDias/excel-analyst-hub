@@ -362,7 +362,68 @@
         </div>
       </section>
 
-      <!-- ============ TOOL 5: QUICK REFERENCE CARD ============ -->
+      <!-- ============ TOOL 5: FORMULA SANDBOX ============ -->
+      <section id="formula-sandbox" class="section" aria-label="Formula Sandbox">
+        <div class="container">
+          <div class="text-center" style="margin-bottom:var(--space-5);">
+            <span class="badge badge-advanced">Interactive Simulator</span>
+            <h2 style="margin:var(--space-2) 0 0 0;">Formula Sandbox</h2>
+            <p class="text-muted" style="margin-top:var(--space-2);">Ketik rumus seperti di Excel sungguhan. Ubah angka di dalam tabel untuk melihat hasil yang dinamis.</p>
+          </div>
+
+          <div class="card" style="max-width: 600px; margin: 0 auto; padding: var(--space-5); border-top: 4px solid var(--accent); box-shadow: 0 8px 30px rgba(0,0,0,0.12);">
+            
+            <table class="sandbox-table" style="width: 100%; border-collapse: collapse; margin-bottom: var(--space-4); text-align: center;">
+              <thead>
+                <tr style="background: var(--surface-2);">
+                  <th style="border: 1px solid var(--border); padding: 8px; width: 40px; color: var(--text-muted);"></th>
+                  <th style="border: 1px solid var(--border); padding: 8px; color: var(--text-muted);">A</th>
+                  <th style="border: 1px solid var(--border); padding: 8px; color: var(--text-muted);">B</th>
+                  <th style="border: 1px solid var(--border); padding: 8px; color: var(--text-muted);">C</th>
+                </tr>
+              </thead>
+              <tbody id="sandbox-grid" style="font-family: monospace; font-size: 1.1rem;">
+                <tr>
+                  <td style="border: 1px solid var(--border); background: var(--surface-2); color: var(--text-muted); font-weight: bold;">1</td>
+                  <td contenteditable="true" id="cell-A1" style="border: 1px solid var(--border); padding: 10px; cursor: text;">10</td>
+                  <td contenteditable="true" id="cell-B1" style="border: 1px solid var(--border); padding: 10px; cursor: text;">20</td>
+                  <td contenteditable="true" id="cell-C1" style="border: 1px solid var(--border); padding: 10px; cursor: text;">30</td>
+                </tr>
+                <tr>
+                  <td style="border: 1px solid var(--border); background: var(--surface-2); color: var(--text-muted); font-weight: bold;">2</td>
+                  <td contenteditable="true" id="cell-A2" style="border: 1px solid var(--border); padding: 10px; cursor: text;">50</td>
+                  <td contenteditable="true" id="cell-B2" style="border: 1px solid var(--border); padding: 10px; cursor: text;">100</td>
+                  <td contenteditable="true" id="cell-C2" style="border: 1px solid var(--border); padding: 10px; cursor: text;">150</td>
+                </tr>
+                <tr>
+                  <td style="border: 1px solid var(--border); background: var(--surface-2); color: var(--text-muted); font-weight: bold;">3</td>
+                  <td contenteditable="true" id="cell-A3" style="border: 1px solid var(--border); padding: 10px; cursor: text;">5</td>
+                  <td contenteditable="true" id="cell-B3" style="border: 1px solid var(--border); padding: 10px; cursor: text;">15</td>
+                  <td contenteditable="true" id="cell-C3" style="border: 1px solid var(--border); padding: 10px; cursor: text;">25</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="display: flex; gap: 10px; align-items: stretch;">
+              <div style="background: var(--surface-2); padding: 0 15px; display: flex; align-items: center; border: 1px solid var(--border); border-radius: 6px; font-weight: bold; color: var(--text-muted);">
+                ƒx
+              </div>
+              <input type="text" id="sandbox-formula" value="=SUM(A1:B2)" placeholder="Ketik rumus (Contoh: =A1+B2 atau =SUM(A1:C1))" style="flex: 1; padding: var(--space-3); background: var(--surface); border: 1px solid var(--accent); border-radius: 6px; color: var(--text); font-family: monospace; font-size: 1.1rem; outline: none; box-shadow: 0 0 0 2px rgba(59,130,246,0.2);" />
+            </div>
+
+            <div style="margin-top: var(--space-4); background: var(--surface-2); padding: var(--space-4); border-radius: 6px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-weight: 600; color: var(--text-muted);">Hasil Kalkulasi:</span>
+              <span id="sandbox-result" style="font-size: 1.5rem; font-weight: bold; color: #10b981; font-family: monospace;">180</span>
+            </div>
+            
+            <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: var(--space-3);">
+              *Mendukung operasi +, -, *, / dan fungsi dasar SUM(), AVERAGE(), MAX(), MIN().
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TOOL 6: QUICK REFERENCE CARD ============ -->
       <section id="quick-ref" class="section" aria-label="Referensi Cepat Shortcut">
         <div class="container">
           <div class="text-center" style="margin-bottom: var(--space-5);">
@@ -445,8 +506,9 @@
 
   <script src="assets/js/main.js"></script>
   <script src="assets/js/formula-gen.js"></script>
-  <script src="assets/js/quiz.js"></script>
   <script src="assets/js/dataset-gen.js"></script>
+  <script src="assets/js/sandbox.js"></script>
+  <script src="assets/js/quiz.js"></script>
 
 
   <script>
