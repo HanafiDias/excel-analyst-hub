@@ -298,48 +298,66 @@
       </section>
 
       <!-- ============ TOOL 4: DATASET GENERATOR ============ -->
-      <section class="tool-section" id="dataset-generator" aria-label="Generator Dataset">
-        <div class="tool-header">
-          <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2);">
-            <span class="tool-number" aria-hidden="true">4</span>
-            <h2 style="margin:0;">🎲 Generator Dataset Latihan</h2>
+      <section id="dataset-generator" class="section" aria-label="Dataset Generator">
+        <div class="container">
+          <div class="text-center" style="margin-bottom:var(--space-5);">
+            <span class="badge badge-advanced">Interactive Tool</span>
+            <h2 style="margin:var(--space-2) 0 0 0;">Dataset Generator</h2>
+            <p class="text-muted" style="margin-top:var(--space-2);">Buat data CSV acak berkualitas untuk latihan PivotTable atau fungsi lanjutanmu.</p>
           </div>
-          <p>Generate dataset custom dengan data Indonesia yang realistis. Pilih jenis, tentukan jumlah baris, lalu download sebagai CSV atau salin sebagai JSON.</p>
-        </div>
-
-        <div class="generator-card">
-          <form id="dataset-gen-form" onsubmit="return false;">
-            <div class="generator-controls">
-              <div>
-                <label for="gen-type" class="form-label">Jenis Dataset</label>
-                <select id="gen-type" class="form-input" aria-label="Pilih jenis dataset">
-                  <option value="penjualan">🛒 Penjualan Bulanan</option>
-                  <option value="karyawan">👥 Karyawan HR</option>
-                  <option value="inventory">📦 Inventory Toko</option>
-                  <option value="absensi">🗓️ Absensi Karyawan</option>
-                </select>
-              </div>
-              <div>
-                <label for="gen-rows" class="form-label">Jumlah Baris</label>
-                <input type="number" id="gen-rows" class="form-input" value="50" min="10" max="500" aria-label="Jumlah baris dataset" />
+          
+          <div class="card" style="padding:var(--space-6); max-width:750px; margin:0 auto; border-top:4px solid var(--accent); box-shadow:0 8px 30px rgba(0,0,0,0.12);">
+            
+            <div style="margin-bottom:var(--space-5);">
+              <label style="font-weight:600; display:block; margin-bottom:var(--space-2);">Jumlah Baris Data:</label>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <input type="number" id="ds-rows" value="500" min="10" max="10000" style="width:100%; max-width:150px; padding:var(--space-3); border:1px solid var(--border); border-radius:6px; background:var(--surface-2); color:var(--text); font-family:monospace; font-size:1.1rem; font-weight:bold;">
+                <span style="color:var(--text-muted); font-size:0.9rem;">(Maksimal 10.000 baris)</span>
               </div>
             </div>
-
-            <label class="error-checkbox-wrap">
-              <input type="checkbox" id="gen-errors" />
-              Tambahkan data kosong &amp; error untuk latihan <em>data cleaning</em> (duplikat, typo, nilai negatif, format tanggal tidak konsisten)
-            </label>
-
-            <button type="button" id="btn-generate-dataset" class="btn-primary" style="width:100%;justify-content:center;">🎲 Generate Dataset</button>
-          </form>
-
-          <div id="gen-preview-wrap" class="gen-preview-wrap" style="display:none;">
-            <p id="gen-preview-info" class="gen-preview-info">Menampilkan 5 baris pertama:</p>
-            <div id="gen-preview-table"></div>
-            <div class="gen-actions">
-              <button id="btn-download-dataset" class="btn-primary" disabled>⬇ Download CSV</button>
-              <button id="btn-copy-json" class="btn-ghost" disabled>📋 Copy sebagai JSON</button>
+            
+            <div style="margin-bottom:var(--space-5);">
+              <label style="font-weight:600; display:block; margin-bottom:var(--space-3);">Pilih Kolom yang Dibutuhkan:</label>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:var(--space-3); background:var(--surface-2); padding:var(--space-4); border-radius:8px; border:1px solid var(--border);">
+                
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Order_ID" checked> Order ID
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Tanggal" checked> Tanggal
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Region" checked> Region
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Nama_Sales" checked> Nama Sales
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Kategori" checked> Kategori Produk
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Produk" checked> Nama Produk
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Harga_Satuan" checked> Harga Satuan
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Kuantitas" checked> Kuantitas
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Total_Penjualan" checked> Total Penjualan
+                </label>
+                
+              </div>
             </div>
+            
+            <button id="btn-generate-csv" class="btn-primary" style="width:100%; font-size:1.1rem; padding:var(--space-3); display:flex; justify-content:center; align-items:center; gap:10px; transition:all 0.3s;">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+              Generate &amp; Download CSV
+            </button>
+            <p style="text-align:center; font-size:0.85rem; color:var(--text-muted); margin-top:var(--space-3);">
+              Data menggunakan pemisah Titik Koma (;) agar langsung rapi (menjadi kolom) saat dibuka di Excel versi Indonesia.
+            </p>
           </div>
         </div>
       </section>
