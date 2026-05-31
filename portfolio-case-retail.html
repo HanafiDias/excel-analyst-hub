@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('eah_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studi Kasus: Optimasi Stok &amp; Distribusi — Excel Analyst Hub</title>
+  <meta name="description" content="Studi kasus lengkap: merancang sistem kendali inventaris cerdas untuk agen ritel lokal menggunakan Excel, Power Query, dan formula dinamis." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+</head>
+<body class="page-body">
+
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon" aria-hidden="true">⊞</div>
+        Excel Analyst Hub
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="learn.html">Belajar</a></li>
+        <li><a href="portfolio.html" class="active">Portofolio</a></li>
+        <li><a href="tools.html">Tools</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
+        <a href="profile.html" class="btn-ghost btn-sm" style="display:flex; align-items:center; gap:5px; padding:0.4rem 0.8rem; border:1px solid var(--border);" title="Dashboard Profil">
+          <span style="font-size:1.1rem;">👤</span> <span class="hide-mobile">Profil</span>
+        </a>
+        <a href="learn.html" class="btn-primary btn-sm hide-mobile">Mulai Belajar</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-menu-mobile" id="mobile-menu" role="navigation" aria-label="Navigasi mobile">
+    <a href="index.html">Beranda</a>
+    <a href="learn.html">Belajar</a>
+    <a href="portfolio.html">Portofolio</a>
+    <a href="tools.html">Tools</a>
+    <div style="height:1px; background:var(--border); margin: 8px 0;"></div>
+    <a href="profile.html" style="color:var(--accent); font-weight:bold;">👤 Profil Saya</a>
+    <a href="learn.html" class="btn-primary" style="margin-top:8px;">Mulai Belajar</a>
+  </div>
+
+  <main id="main-content">
+
+    <!-- ============ CASE STUDY HERO ============ -->
+    <section class="section" style="background: var(--surface-2); border-bottom: 1px solid var(--border); padding-top: var(--space-6); padding-bottom: var(--space-6);">
+      <div class="container" style="max-width: 800px;">
+        <a href="portfolio.html" class="btn-ghost btn-sm" style="margin-bottom: var(--space-4); display: inline-flex; align-items: center; gap: 5px;">
+          ← Kembali ke Portofolio
+        </a>
+        <div style="display: flex; gap: 10px; margin-bottom: var(--space-3);">
+          <span class="badge" style="background: rgba(59, 130, 246, 0.1); color: var(--accent);">Logistics &amp; Inventory</span>
+          <span class="badge" style="background: var(--surface); border: 1px solid var(--border); color: var(--text-muted);">Excel / Power Query</span>
+        </div>
+        <h1 style="margin: 0 0 var(--space-3) 0; font-size: 2.2rem; line-height: 1.3;">Optimasi Stok &amp; Distribusi Agen Ritel (Komoditas &amp; Alas Kaki)</h1>
+        <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6; margin: 0;">
+          Merancang sistem kendali inventaris cerdas untuk memisahkan strategi logistik antara produk fast-moving (Gas LPG) dan produk variatif (Sandal).
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ CASE STUDY BODY ============ -->
+    <section class="section">
+      <div class="container" style="max-width: 800px;">
+
+        <!-- SECTION 1: Background -->
+        <div style="margin-bottom: var(--space-6);">
+          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">1. Latar Belakang &amp; Masalah Bisnis</h2>
+          <p style="color: var(--text); line-height: 1.7;">
+            Dalam operasional agen ritel harian, manajemen menghadapi dua karakteristik produk yang saling bertolak belakang:
+          </p>
+          <ul style="color: var(--text); line-height: 1.7;">
+            <li><strong>Komoditas (Tabung Gas 3kg):</strong> Margin tipis, perputaran sangat cepat, dan kehabisan stok <em>(stockout)</em> berarti hilangnya pelanggan harian.</li>
+            <li><strong>Barang Ritel (Sandal):</strong> Margin lebih besar, memiliki variasi ukuran/warna, berisiko tinggi menjadi stok mati <em>(dead stock)</em> yang mengikat modal usaha.</li>
+          </ul>
+          <p style="color: var(--text); line-height: 1.7;">
+            Sistem pencatatan manual sebelumnya membuat tim admin kesulitan menentukan kapan harus melakukan order ulang ke distributor untuk masing-masing tipe barang.
+          </p>
+        </div>
+
+        <!-- SECTION 2: Data Cleaning -->
+        <div style="margin-bottom: var(--space-6);">
+          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">2. Pembersihan &amp; Pemodelan Data</h2>
+          <p style="color: var(--text); line-height: 1.7;">
+            Data mentah diekstraksi dari sistem Point of Sales (POS) lokal dalam bentuk CSV. Saya menggunakan <strong>Power Query</strong> untuk melakukan transformasi:
+          </p>
+          <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border); margin: var(--space-3) 0;">
+            <code style="display: block; color: var(--accent); margin-bottom: 8px; font-weight: bold;">Langkah Transformasi (Applied Steps):</code>
+            <ol style="margin: 0; padding-left: 20px; color: var(--text-muted); line-height: 1.6;">
+              <li>Menghapus kolom duplikat dan menstandarisasi format teks (TRIM).</li>
+              <li>Menggunakan fitur <em>Conditional Column</em> untuk mengelompokkan Kategori SKU ("GAS", "SNDL-PR", "SNDL-WN").</li>
+              <li>Memuat data bersih ke dalam Data Model (Power Pivot).</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- SECTION 3: Formula Architecture -->
+        <div style="margin-bottom: var(--space-6);">
+          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">3. Arsitektur Formula &amp; Dasbor</h2>
+          <p style="color: var(--text); line-height: 1.7;">
+            Untuk menciptakan peringatan dini (Early Warning System), saya menyusun logika formula dinamis pada kolom Status Re-order:
+          </p>
+          <pre style="background: #0f172a; padding: var(--space-4); border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); margin-bottom: var(--space-4);"><code style="color: #f8fafc; font-family: monospace;">=IF(AND(Kategori="Gas 3kg", Stok_Aktual &lt; 50), "🔴 KRITIS",
+  IF(AND(Kategori="Sandal", Stok_Aktual &gt; 100), "🟡 OVERSTOCK", "🟢 AMAN"))</code></pre>
+
+          <h4 style="margin-bottom: var(--space-3);">Simulasi Cuplikan Dasbor (Live Preview):</h4>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
+              <thead>
+                <tr style="background: var(--surface-2); border-bottom: 2px solid var(--border);">
+                  <th style="padding: 12px;">ID Produk</th>
+                  <th style="padding: 12px;">Nama Produk</th>
+                  <th style="padding: 12px;">Sisa Stok</th>
+                  <th style="padding: 12px;">Kecepatan Jual (Harian)</th>
+                  <th style="padding: 12px;">Status Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 12px; font-family: monospace;">SKU-G01</td>
+                  <td style="padding: 12px;">Refill Gas LPG 3kg</td>
+                  <td style="padding: 12px; font-weight: bold;">12 Tabung</td>
+                  <td style="padding: 12px;">25 Tabung/hari</td>
+                  <td style="padding: 12px;"><span style="background: rgba(239, 68, 68, 0.15); color: #ef4444; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85rem;">🔴 Order Sekarang</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 12px; font-family: monospace;">SKU-S42</td>
+                  <td style="padding: 12px;">Sandal Pria Casual (Size 42)</td>
+                  <td style="padding: 12px; font-weight: bold;">145 Pasang</td>
+                  <td style="padding: 12px;">2 Pasang/hari</td>
+                  <td style="padding: 12px;"><span style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85rem;">🟡 Tahan (Overstock)</span></td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; font-family: monospace;">SKU-S38</td>
+                  <td style="padding: 12px;">Sandal Wanita Jepit (Size 38)</td>
+                  <td style="padding: 12px; font-weight: bold;">45 Pasang</td>
+                  <td style="padding: 12px;">5 Pasang/hari</td>
+                  <td style="padding: 12px;"><span style="background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85rem;">🟢 Aman</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SECTION 4: Results -->
+        <div style="margin-bottom: var(--space-6); background: rgba(59, 130, 246, 0.05); padding: var(--space-5); border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0;">
+          <h2 style="margin-top: 0; margin-bottom: var(--space-3); font-size: 1.4rem;">4. Hasil &amp; Rekomendasi Bisnis</h2>
+          <p style="color: var(--text); line-height: 1.7; margin-bottom: 0;">
+            Pemisahan strategi kontrol inventaris melalui dasbor Excel ini memungkinkan pemilik agen untuk:
+          </p>
+          <ul style="color: var(--text); line-height: 1.7; margin-top: 8px;">
+            <li>Mencegah hilangnya potensi pendapatan dari kelangkaan pasokan Gas 3kg dengan menyetel notifikasi order H-1 sebelum stok habis.</li>
+            <li>Mengidentifikasi Rp 4,5 Juta modal yang tertahan pada stok Sandal pria ukuran besar, yang kemudian dialihkan anggarannya ke varian sandal wanita terlaris.</li>
+          </ul>
+        </div>
+
+        <!-- Back link bottom -->
+        <div style="border-top: 1px solid var(--border); padding-top: var(--space-5);">
+          <a href="portfolio.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px;">
+            ← Kembali ke Semua Portofolio
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon" aria-hidden="true">⊞</div>
+            Excel Analyst Hub
+          </a>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Belajar</h4>
+          <ul>
+            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
+            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
+            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tools &amp; Trainer</h4>
+          <ul>
+            <li><a href="tools.html#formula-generator">Formula Generator</a></li>
+            <li><a href="tools.html#daily-challenge-section">Tantangan Harian</a></li>
+            <li><a href="tools.html#quick-ref">Referensi Cepat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Jelajahi</h4>
+          <ul>
+            <li><a href="portfolio.html">Portofolio</a></li>
+            <li><a href="topic.html">Tutorial VLOOKUP</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Dibangun untuk generasi data analyst Indonesia berikutnya.</p>
+        <p>Excel Analyst Hub — Belajar gratis, keahlian nyata.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

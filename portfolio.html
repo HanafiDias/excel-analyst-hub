@@ -59,46 +59,372 @@
 
   <main id="main-content">
 
-    <!-- ============ PAGE HERO ============ -->
-    <section class="page-hero" aria-label="Pengenalan portofolio">
-      <div class="container">
-        <h1 class="fade-in">Contoh Proyek</h1>
-        <p class="fade-in delay-1">Proyek Excel nyata yang dibuat dengan keahlian yang diajarkan di sini. Gunakan sebagai referensi, inspirasi, atau titik awal untuk pekerjaanmu sendiri.</p>
-      </div>
-    </section>
+  <header class="page-header" style="padding-top: var(--space-6); padding-bottom: var(--space-5);">
+    <div class="container">
+      <span class="badge" style="background: rgba(59, 130, 246, 0.1); color: var(--accent); margin-bottom: var(--space-3); display: inline-block;">Professional Showcase</span>
+      <h1 style="margin-top: 0; margin-bottom: var(--space-2); font-size: 2.5rem; line-height: 1.2;">Portofolio Data</h1>
+      <p class="text-muted text-lg" style="max-width: 800px; margin: 0; font-size: 1.1rem; line-height: 1.6;">
+        Kumpulan studi kasus dunia nyata yang menunjukkan bagaimana saya mengubah data mentah menjadi wawasan bisnis yang dapat ditindaklanjuti (actionable insights).
+      </p>
+    </div>
+  </header>
 
     <div class="container section-sm">
 
-      <!-- Filter bar -->
-      <div class="flex-between" style="margin-bottom:var(--space-5);flex-wrap:wrap;gap:var(--space-3);">
-        <div class="filter-bar" style="margin-bottom:0;" role="group" aria-label="Filter proyek berdasarkan tag">
-          <button class="filter-btn active" data-filter="All" aria-pressed="true">Semua</button>
-          <button class="filter-btn" data-filter="Dashboard" aria-pressed="false">Dashboard</button>
-          <button class="filter-btn" data-filter="VLOOKUP" aria-pressed="false">VLOOKUP</button>
-          <button class="filter-btn" data-filter="PivotTable" aria-pressed="false">PivotTable</button>
-          <button class="filter-btn" data-filter="Power Query" aria-pressed="false">Power Query</button>
-          <button class="filter-btn" data-filter="Automation" aria-pressed="false">Otomasi</button>
-          <button class="filter-btn" data-filter="Finance" aria-pressed="false">Keuangan</button>
-          <button class="filter-btn" data-filter="HR" aria-pressed="false">HR</button>
+
+
+      <div class="card" style="margin-bottom: var(--space-6); padding: var(--space-5); border-top: 4px solid var(--accent); box-shadow: 0 8px 30px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: var(--space-4);">
+        
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <span class="badge" style="background: rgba(59, 130, 246, 0.1); color: var(--accent); margin-bottom: 8px; display: inline-block;">Logistics &amp; Inventory</span>
+            <h2 style="margin: 0; font-size: 1.5rem;">Optimasi Stok &amp; Distribusi Agen Ritel</h2>
+          </div>
+          <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
         </div>
-        <span id="project-count" style="font-size:0.82rem;color:var(--text-muted);white-space:nowrap;" aria-live="polite">9 proyek</span>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+          <div>
+            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">
+              Sebuah bisnis agen ritel lokal (distribusi produk harian, alas kaki, dan agen gas LPG) kesulitan melacak perputaran barang. Sering terjadi penumpukan stok mati di gudang, sementara barang yang cepat laku (fast-moving) justru sering kehabisan stok.
+            </p>
+            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Solusi Analitik</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0;">
+              Membangun Dasbor Manajemen Inventaris yang mampu menghitung <em>Inventory Turnover Ratio</em> secara otomatis, serta memberikan peringatan visual saat stok produk utama mencapai batas minimum (Reorder Point).
+            </p>
+          </div>
+
+          <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border);">
+            <h4 style="margin: 0 0 var(--space-3) 0; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px;">Spesifikasi Teknis</h4>
+            <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">
+              <li><strong>Pembersihan Data:</strong> Power Query (Unpivoting data vendor, membersihkan format tanggal yang rusak).</li>
+              <li><strong>Pemodelan:</strong> Relasi tabel dengan <code>INDEX-MATCH</code> dan <code>XLOOKUP</code>.</li>
+              <li><strong>Otomasi:</strong> Conditional Formatting dinamis untuk status stok.</li>
+              <li><strong>Visualisasi:</strong> Slicer interaktif dan Pivot Chart untuk pantauan mingguan.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="border-top: 1px solid var(--border); padding-top: var(--space-4); display: flex; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="portfolio-case-retail.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px;">
+            📄 Baca Analisis Lengkap
+          </a>
+          <a href="assets/datasets/Case_Study_Retail_Optimization.xlsx" download class="btn-primary btn-sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">📥 Unduh File Excel (.xlsx)</a>
+        </div>
       </div>
 
-      <!-- Project grid -->
-      <div id="project-grid" class="grid-3" role="list" aria-label="Galeri proyek">
-        <!-- Diisi oleh portfolio.js -->
-        <div style="grid-column:1/-1;text-align:center;padding:var(--space-12);color:var(--text-muted);">
-          <p>Memuat proyek...</p>
+      <div class="card" style="margin-bottom: var(--space-6); padding: var(--space-5); border-top: 4px solid #10b981; box-shadow: 0 8px 30px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: var(--space-4);">
+        
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981; margin-bottom: 8px; display: inline-block;">Sales &amp; Financial</span>
+            <h2 style="margin: 0; font-size: 1.5rem;">Analisis Performa Penjualan Multi-Region</h2>
+          </div>
+          <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+          <div>
+            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">
+              Manajemen kesulitan mengidentifikasi profitabilitas bersih dari berbagai wilayah operasional karena data transaksi tersebar di banyak file Excel yang berbeda-beda setiap bulannya.
+            </p>
+            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Solusi Analitik</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0;">
+              Mengonsolidasi seluruh file menggunakan Get &amp; Transform Data, lalu membangun Dasbor Eksekutif yang memungkinkan manajemen memfilter performa gross margin per wilayah dan per kuartal secara instan.
+            </p>
+          </div>
+
+          <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border);">
+            <h4 style="margin: 0 0 var(--space-3) 0; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px;">Spesifikasi Teknis</h4>
+            <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">
+              <li><strong>Data Pipeline:</strong> Power Query (Append Queries dari folder terpisah).</li>
+              <li><strong>Kalkulasi Kompleks:</strong> <code>SUMIFS</code> bersarang dan fungsi agregasi dinamis.</li>
+              <li><strong>Pemodelan:</strong> Data-Ink ratio optimization untuk tampilan dasbor yang bersih tanpa clutter.</li>
+              <li><strong>Visualisasi:</strong> Dynamic Timeline &amp; Bar Charts bersusun.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="border-top: 1px solid var(--border); padding-top: var(--space-4); display: flex; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="portfolio-case-sales.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px; text-decoration: none;">
+            📄 Baca Analisis Lengkap
+          </a>
+          <a href="assets/datasets/Case_Study_Sales_Region.xlsx" download class="btn-primary btn-sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">📥 Unduh File Excel (.xlsx)</a>
         </div>
       </div>
 
-      <!-- Context note -->
-      <div class="callout callout-tip" style="margin-top:var(--space-10);max-width:700px;">
-        <p class="callout-title">Ini adalah contoh referensi</p>
-        <p>Setiap proyek di atas mewakili keahlian yang diajarkan di bagian Jalur Belajar. Keahlian yang digunakan adalah nyata — VLOOKUP, PivotTable, Power Query, conditional formatting, dan dynamic arrays. Gunakan sebagai panduan tentang apa yang bisa dicapai setelah kamu menyelesaikan jalur yang relevan.</p>
+      <div class="card" style="margin-bottom: var(--space-6); padding: var(--space-5); border-top: 4px solid #8b5cf6; box-shadow: 0 8px 30px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: var(--space-4);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <span class="badge" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6; margin-bottom: 8px; display: inline-block;">HR &amp; Operations</span>
+            <h2 style="margin: 0; font-size: 1.5rem;">Otomatisasi Laporan Kehadiran &amp; Kalkulasi Lembur</h2>
+          </div>
+          <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+          <div>
+            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">HRD menghabiskan waktu berhari-hari setiap akhir bulan untuk merekap data mesin absensi (fingerprint) dan menghitung upah lembur karyawan yang aturannya cukup kompleks.</p>
+            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Solusi Analitik</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0;">Membuat sistem template Excel cerdas yang otomatis mengubah data log mesin mentah menjadi laporan kehadiran bulanan, lengkap dengan kalkulasi denda keterlambatan dan bonus lembur.</p>
+          </div>
+          <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border);">
+            <h4 style="margin: 0 0 var(--space-3) 0; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px;">Spesifikasi Teknis</h4>
+            <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">
+              <li><strong>Time Intelligence:</strong> Fungsi Waktu (HOUR, MINUTE, TIMEVALUE).</li>
+              <li><strong>Logika Kompleks:</strong> Nested IF, AND, OR untuk aturan shift.</li>
+              <li><strong>Keamanan Data:</strong> Data Validation &amp; Sheet Protection.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="border-top: 1px solid var(--border); padding-top: var(--space-4); display: flex; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="portfolio-case-hr.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px; text-decoration: none;">
+            📄 Baca Analisis Lengkap
+          </a>
+          <a href="assets/datasets/Case_Study_HR_Overtime.xlsx" download class="btn-primary btn-sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">📥 Unduh File Excel (.xlsx)</a>
+        </div>
+      </div>
+
+      <!-- ============ CASE STUDY 4: AUDIT & RECONCILIATION ============ -->
+      <div class="card" style="margin-bottom: var(--space-6); padding: var(--space-5); border-top: 4px solid #f59e0b; box-shadow: 0 8px 30px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: var(--space-4);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <span class="badge" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; margin-bottom: 8px; display: inline-block;">Audit &amp; Reconciliation</span>
+            <h2 style="margin: 0; font-size: 1.5rem;">Rekonsiliasi Pembayaran Digital (QRIS, Shopee, Tokopedia)</h2>
+          </div>
+          <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+          <div>
+            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">Banyaknya jalur pembayaran digital (QRIS, Virtual Account Tokopedia, ShopeePay) membuat tim keuangan kesulitan melacak selisih pencatatan antara sistem kasir (POS) internal dengan uang yang benar-benar masuk ke rekening bank (Settlement).</p>
+            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Solusi Analitik</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0;">Membangun mesin rekonsiliasi otomatis menggunakan Power Query (Merge Queries) untuk mendeteksi transaksi yang "hilang", selisih potongan biaya admin, dan pembayaran ganda dalam hitungan detik.</p>
+          </div>
+          <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border);">
+            <h4 style="margin: 0 0 var(--space-3) 0; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px;">Spesifikasi Teknis</h4>
+            <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">
+              <li><strong>Data Blending:</strong> Left/Anti-Join via Power Query.</li>
+              <li><strong>Lookup Engine:</strong> <code>XLOOKUP</code> multi-kriteria untuk ID Transaksi.</li>
+              <li><strong>Error Tracking:</strong> Conditional Formatting untuk menandai selisih (Discrepancy).</li>
+            </ul>
+          </div>
+        </div>
+        <div style="border-top: 1px solid var(--border); padding-top: var(--space-4); display: flex; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="portfolio-case-recon.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px; text-decoration: none;">📄 Baca Analisis Lengkap</a>
+          <a href="assets/datasets/Case_Study_Payment_Reconciliation.xlsx" download class="btn-primary btn-sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">📥 Unduh File Excel (.xlsx)</a>
+        </div>
+      </div>
+
+      <!-- ============ CASE STUDY 5: BANKING & CREDIT RISK ============ -->
+      <div class="card" style="margin-bottom: var(--space-6); padding: var(--space-5); border-top: 4px solid #0ea5e9; box-shadow: 0 8px 30px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: var(--space-4);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <span class="badge" style="background: rgba(14, 165, 233, 0.1); color: #0ea5e9; margin-bottom: 8px; display: inline-block;">Banking &amp; Credit Risk</span>
+            <h2 style="margin: 0; font-size: 1.5rem;">Pemodelan Evaluasi Risiko Kredit (Credit Scoring)</h2>
+          </div>
+          <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+          <div>
+            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">Institusi finansial regional lambat dalam memutuskan persetujuan kredit nasabah karena analis harus mengecek riwayat pendapatan, tanggungan, dan rasio hutang secara manual, sehingga kalah cepat dari kompetitor.</p>
+            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Solusi Analitik</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0;">Menciptakan "Scoring Matrix" interaktif. Admin hanya perlu memasukkan data dasar, dan Excel akan otomatis menghitung <em>Debt-to-Income Ratio</em> (DTI) serta memberikan rekomendasi status kelayakan kredit (Approve/Reject).</p>
+          </div>
+          <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border);">
+            <h4 style="margin: 0 0 var(--space-3) 0; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px;">Spesifikasi Teknis</h4>
+            <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">
+              <li><strong>Logical Framework:</strong> <code>IFS</code> bersarang untuk bobot risiko (Low/Medium/High).</li>
+              <li><strong>Financial Function:</strong> Menggunakan <code>PMT</code> untuk simulasi cicilan maksimal.</li>
+              <li><strong>UI/UX:</strong> Dropdown Data Validation yang saling bergantung (Dependent Dropdown).</li>
+            </ul>
+          </div>
+        </div>
+        <div style="border-top: 1px solid var(--border); padding-top: var(--space-4); display: flex; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="portfolio-case-credit.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px; text-decoration: none;">📄 Baca Analisis Lengkap</a>
+          <a href="assets/datasets/Case_Study_Credit_Scoring.xlsx" download class="btn-primary btn-sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">📥 Unduh File Excel (.xlsx)</a>
+        </div>
+      </div>
+
+      <!-- ============ CASE STUDY 6: MARKETING & CRM ============ -->
+      <div class="card" style="margin-bottom: var(--space-6); padding: var(--space-5); border-top: 4px solid #ec4899; box-shadow: 0 8px 30px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: var(--space-4);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <span class="badge" style="background: rgba(236, 72, 153, 0.1); color: #ec4899; margin-bottom: 8px; display: inline-block;">Marketing &amp; CRM</span>
+            <h2 style="margin: 0; font-size: 1.5rem;">Segmentasi Pelanggan RFM (Recency, Frequency, Monetary)</h2>
+          </div>
+          <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+          <div>
+            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">Biaya promosi (diskon/voucher) membengkak karena dibagikan secara merata ke semua pelanggan. Bisnis butuh cara mengidentifikasi siapa "Pelanggan Sultan" dan siapa pelanggan yang "Berisiko Pindah ke Kompetitor".</p>
+            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Solusi Analitik</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0;">Menerapkan analisis RFM standar industri untuk memberi skor (1-5) pada setiap pelanggan berdasarkan transaksi terakhir, frekuensi belanja, dan total uang yang dihabiskan.</p>
+          </div>
+          <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border);">
+            <h4 style="margin: 0 0 var(--space-3) 0; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px;">Spesifikasi Teknis</h4>
+            <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">
+              <li><strong>Statistical Functions:</strong> <code>PERCENTILE.INC</code> untuk membagi kuartil pelanggan.</li>
+              <li><strong>Advanced Charting:</strong> Bubble Chart (Kuadran Segmentasi).</li>
+              <li><strong>Dynamic Array:</strong> Menggunakan <code>FILTER</code> dan <code>SORT</code> untuk memisahkan daftar pelanggan VIP secara otomatis.</li>
+            </ul>
+          </div>
+        </div>
+        <div style="border-top: 1px solid var(--border); padding-top: var(--space-4); display: flex; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="portfolio-case-rfm.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px; text-decoration: none;">📄 Baca Analisis Lengkap</a>
+          <a href="assets/datasets/Case_Study_RFM_Marketing.xlsx" download class="btn-primary btn-sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">📥 Unduh File Excel (.xlsx)</a>
+        </div>
       </div>
 
     </div>
+
+  <section id="practice-lab" class="section" style="background: var(--surface-2); border-top: 1px solid var(--border); margin-top: var(--space-6); padding-top: var(--space-6);">
+    <div class="container">
+
+      <div class="text-center" style="margin-bottom: var(--space-5);">
+        <span class="badge" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">Interactive Practice</span>
+        <h2 style="margin: var(--space-2) 0 0 0;">🧠 Zona Latihan Mandiri</h2>
+        <p class="text-muted" style="max-width: 600px; margin: var(--space-2) auto 0 auto; font-size: 0.95rem;">
+          Jangan cuma membaca! Pilih skenario kasus di bawah ini, uji logika analis datamu, lalu buka "Lihat Solusi" untuk mencocokkan jawaban.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-4); max-width: 900px; margin: 0 auto;">
+
+        <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
+              <span style="color: var(--accent); font-weight: bold;">Level: Menengah</span>
+              <span style="color: var(--text-muted);">Topik: Pembersihan Data</span>
+            </div>
+            <h4 style="margin: 0 0 var(--space-2) 0;">Kasus Spasi Hantu pada ID Produk</h4>
+            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0;">
+              Data penjualan dari cabang gagal di-VLOOKUP karena beberapa kode produk memiliki spasi tak terlihat di awal atau akhir teks (misal: <code>" PROD-01 "</code>). Fungsi apa yang harus disisipkan di kolom pembantu untuk membersihkannya secara massal?
+            </p>
+          </div>
+          <div style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-3);">
+            <button class="btn-ghost btn-sm" style="width: 100%; text-align: center;" onclick="var s = this.nextElementSibling; s.style.display = s.style.display === 'none' ? 'block' : 'none';">💡 Lihat Solusi &amp; Rumus</button>
+            <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
+              <strong>Jawaban:</strong> Gunakan fungsi <code>=TRIM()</code>.<br>
+              <span style="color: var(--text-muted); font-size: 0.8rem;">Contoh: <code>=TRIM(A2)</code> akan menghapus semua spasi di awal/akhir teks dan menyisakan satu spasi antar kata.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
+              <span style="color: #ef4444; font-weight: bold;">Level: Lanjutan</span>
+              <span style="color: var(--text-muted);">Topik: Logika Bisnis</span>
+            </div>
+            <h4 style="margin: 0 0 var(--space-2) 0;">Kalkulasi Komisi Sales Berjenjang</h4>
+            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0;">
+              Perusahaan menetapkan aturan: Jika penjualan Sales mencapai &gt; Rp 50 Juta, komisi 10%. Jika antara Rp 20 Juta - Rp 50 Juta, komisi 5%. Di bawah itu, komisi 0%. Struktur fungsi logika apa yang paling efisien digunakan jika menggunakan Excel modern?
+            </p>
+          </div>
+          <div style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-3);">
+            <button class="btn-ghost btn-sm" style="width: 100%; text-align: center;" onclick="var s = this.nextElementSibling; s.style.display = s.style.display === 'none' ? 'block' : 'none';">💡 Lihat Solusi &amp; Rumus</button>
+            <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
+              <strong>Jawaban:</strong> Gunakan fungsi <code>=IFS()</code>.<br>
+              <span style="color: var(--text-muted); font-size: 0.8rem;">Struktur: <code>=IFS(A2&gt;50000000, A2*10%, A2&gt;=20000000, A2*5%, TRUE, 0)</code>. Fungsi IFS mengevaluasi kondisi secara berurutan tanpa perlu kurung berlapis-lapis.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOAL 3: Lookup Direction -->
+        <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
+              <span style="color: var(--accent); font-weight: bold;">Level: Menengah</span>
+              <span style="color: var(--text-muted);">Topik: Pencarian Data (Lookup)</span>
+            </div>
+            <h4 style="margin: 0 0 var(--space-2) 0;">Limitasi Arah Pencarian</h4>
+            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0;">
+              Anda diminta mencari "Nama Karyawan" berdasarkan "ID Karyawan". Namun di database mentah, kolom "ID Karyawan" berada di paling kanan (Kolom F), sedangkan "Nama Karyawan" ada di Kolom A. Mengapa VLOOKUP standar akan gagal, dan apa solusinya?
+            </p>
+          </div>
+          <div style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-3);">
+            <button class="btn-ghost btn-sm" style="width: 100%; text-align: center;" onclick="var s = this.nextElementSibling; s.style.display = s.style.display === 'none' ? 'block' : 'none';">💡 Lihat Solusi &amp; Rumus</button>
+            <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
+              <strong>Jawaban:</strong> VLOOKUP hanya bisa mencari data dari kiri ke kanan.<br>
+              <span style="color: var(--text-muted); font-size: 0.8rem;">Solusi: Gunakan kombinasi <code>=INDEX(A:A, MATCH(ID, F:F, 0))</code> atau fungsi modern <code>=XLOOKUP()</code> yang bisa mencari ke segala arah.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOAL 4: PivotTable Dynamic Range -->
+        <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
+              <span style="color: var(--accent); font-weight: bold;">Level: Menengah</span>
+              <span style="color: var(--text-muted);">Topik: PivotTable Dinamis</span>
+            </div>
+            <h4 style="margin: 0 0 var(--space-2) 0;">Data Baru Tidak Terbaca Pivot</h4>
+            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0;">
+              Setiap bulan, Anda menambahkan baris data transaksi baru di bagian bawah tabel sumber. Namun saat Anda menekan "Refresh" pada PivotTable, data bulan baru tersebut tidak muncul di laporan. Apa langkah krusial yang terlewat saat pembuatan awal?
+            </p>
+          </div>
+          <div style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-3);">
+            <button class="btn-ghost btn-sm" style="width: 100%; text-align: center;" onclick="var s = this.nextElementSibling; s.style.display = s.style.display === 'none' ? 'block' : 'none';">💡 Lihat Solusi</button>
+            <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
+              <strong>Jawaban:</strong> Rentang data sumber masih statis (misal: A1:D100).<br>
+              <span style="color: var(--text-muted); font-size: 0.8rem;">Solusi: Sebelum membuat PivotTable, ubah selalu data sumber Anda menjadi "Official Excel Table" dengan menekan <code>Ctrl + T</code>. Rentang tabel akan otomatis memanjang saat ada baris baru.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOAL 5: Power Query Unpivot -->
+        <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
+              <span style="color: #ef4444; font-weight: bold;">Level: Lanjutan</span>
+              <span style="color: var(--text-muted);">Topik: Power Query (Transformasi)</span>
+            </div>
+            <h4 style="margin: 0 0 var(--space-2) 0;">Merapikan Tabel "Menyamping"</h4>
+            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0;">
+              Anda menerima laporan penjualan di mana nama bulan (Januari, Februari, Maret) dijadikan sebagai judul kolom yang melebar ke kanan (Format Cross-Tabular). Fitur apa di Power Query yang digunakan untuk "menumpuknya" menjadi data flat (vertikal) agar bisa di-Pivot?
+            </p>
+          </div>
+          <div style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-3);">
+            <button class="btn-ghost btn-sm" style="width: 100%; text-align: center;" onclick="var s = this.nextElementSibling; s.style.display = s.style.display === 'none' ? 'block' : 'none';">💡 Lihat Solusi</button>
+            <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
+              <strong>Jawaban:</strong> Gunakan fitur <strong>Unpivot Columns</strong>.<br>
+              <span style="color: var(--text-muted); font-size: 0.8rem;">Caranya: Blok kolom identitas (misal: Nama Produk), klik kanan, lalu pilih <em>"Unpivot Other Columns"</em>. Data menyamping akan langsung tersusun rapi ke bawah (Attribute &amp; Value).</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOAL 6: Data Validation with TODAY() -->
+        <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
+              <span style="color: #10b981; font-weight: bold;">Level: Pemula</span>
+              <span style="color: var(--text-muted);">Topik: Data Validation</span>
+            </div>
+            <h4 style="margin: 0 0 var(--space-2) 0;">Mencegah Input Tanggal Kadaluarsa</h4>
+            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0;">
+              Anda membuat formulir absensi harian di Excel. Bagaimana cara memastikan admin (pengguna file) tidak bisa tidak sengaja mengetik atau memasukkan tanggal di masa lalu (misalnya tanggal kemarin)?
+            </p>
+          </div>
+          <div style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-3);">
+            <button class="btn-ghost btn-sm" style="width: 100%; text-align: center;" onclick="var s = this.nextElementSibling; s.style.display = s.style.display === 'none' ? 'block' : 'none';">💡 Lihat Solusi &amp; Rumus</button>
+            <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
+              <strong>Jawaban:</strong> Gunakan Data Validation tipe Custom/Date.<br>
+              <span style="color: var(--text-muted); font-size: 0.8rem;">Masuk ke <em>Data Validation</em> &gt; Allow: Date &gt; Data: Greater than or equal to &gt; Ketik <code>=TODAY()</code>. Excel akan otomatis menolak semua tanggal sebelum hari ini.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   </main>
 
   <!-- ============ FOOTER ============ -->

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('eah_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studi Kasus: Rekonsiliasi Pembayaran Digital — Excel Analyst Hub</title>
+  <meta name="description" content="Studi kasus: membangun mesin rekonsiliasi otomatis untuk mencocokkan transaksi QRIS, Shopee, dan Tokopedia dengan data settlement bank menggunakan Power Query dan XLOOKUP." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+</head>
+<body class="page-body">
+
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <nav class="nav" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon" aria-hidden="true">⊞</div>
+        Excel Analyst Hub
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="learn.html">Belajar</a></li>
+        <li><a href="portfolio.html" class="active">Portofolio</a></li>
+        <li><a href="tools.html">Tools</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
+        <a href="profile.html" class="btn-ghost btn-sm" style="display:flex; align-items:center; gap:5px; padding:0.4rem 0.8rem; border:1px solid var(--border);" title="Dashboard Profil">
+          <span style="font-size:1.1rem;">👤</span> <span class="hide-mobile">Profil</span>
+        </a>
+        <a href="learn.html" class="btn-primary btn-sm hide-mobile">Mulai Belajar</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-menu-mobile" id="mobile-menu" role="navigation" aria-label="Navigasi mobile">
+    <a href="index.html">Beranda</a>
+    <a href="learn.html">Belajar</a>
+    <a href="portfolio.html">Portofolio</a>
+    <a href="tools.html">Tools</a>
+    <div style="height:1px; background:var(--border); margin: 8px 0;"></div>
+    <a href="profile.html" style="color:var(--accent); font-weight:bold;">👤 Profil Saya</a>
+    <a href="learn.html" class="btn-primary" style="margin-top:8px;">Mulai Belajar</a>
+  </div>
+
+  <main id="main-content">
+
+    <section class="section" style="background: var(--surface-2); border-bottom: 1px solid var(--border); padding-top: var(--space-6); padding-bottom: var(--space-6);">
+      <div class="container" style="max-width: 800px;">
+        <a href="portfolio.html" class="btn-ghost btn-sm" style="margin-bottom: var(--space-4); display: inline-flex; align-items: center; gap: 5px;">← Kembali ke Portofolio</a>
+        <div style="display: flex; gap: 10px; margin-bottom: var(--space-3);">
+          <span class="badge" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">Audit &amp; Reconciliation</span>
+          <span class="badge" style="background: var(--surface); border: 1px solid var(--border); color: var(--text-muted);">Power Query / XLOOKUP</span>
+        </div>
+        <h1 style="margin: 0 0 var(--space-3) 0; font-size: 2.2rem; line-height: 1.3;">Rekonsiliasi Pembayaran Digital (QRIS, Shopee, Tokopedia)</h1>
+        <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6; margin: 0;">
+          Membangun mesin pendeteksi selisih transaksi otomatis antara catatan kasir internal dan laporan settlement dari platform digital.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container" style="max-width: 800px;">
+
+        <div style="margin-bottom: var(--space-6);">
+          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">1. Latar Belakang &amp; Masalah Bisnis</h2>
+          <p style="color: var(--text); line-height: 1.7;">
+            Bisnis retail modern menggunakan 3–5 channel pembayaran digital secara bersamaan. Setiap platform (QRIS, Tokopedia, ShopeePay) mengirim laporan settlement dengan format yang berbeda-beda, seringkali dengan jeda waktu T+1 atau T+2 dari tanggal transaksi. Akibatnya, tim keuangan menghadapi tiga jenis masalah berulang:
+          </p>
+          <ul style="color: var(--text); line-height: 1.7;">
+            <li><strong>Transaksi "Hilang":</strong> Tercatat di POS, tapi belum ada di laporan settlement bank.</li>
+            <li><strong>Selisih Biaya Admin (MDR):</strong> Potongan Merchant Discount Rate yang berbeda antar platform membuat nilai bersih tidak sesuai perkiraan.</li>
+            <li><strong>Duplikasi Pembayaran:</strong> Transaksi yang di-retry pelanggan tercatat dua kali di sistem POS.</li>
+          </ul>
+        </div>
+
+        <div style="margin-bottom: var(--space-6);">
+          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">2. Arsitektur Rekonsiliasi (Merge Queries)</h2>
+          <p style="color: var(--text); line-height: 1.7;">
+            Saya merancang dua pipeline Power Query yang berjalan paralel, lalu digabungkan dengan teknik <strong>Left Anti-Join</strong> — sebuah teknik yang digunakan untuk menemukan baris yang ada di tabel A tapi tidak ada di tabel B.
+          </p>
+          <pre style="background: #0f172a; padding: var(--space-4); border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); margin: var(--space-3) 0;"><code style="color: #f8fafc; font-family: monospace;">// Logika Anti-Join di Power Query (M Language)
+Table.NestedJoin(
+  POS_Table, "TRX_ID",
+  Settlement_Table, "Reference_No",
+  "Matched", JoinKind.LeftAnti   // Temukan yg ada di POS tapi TIDAK di Settlement
+)</code></pre>
+          <h4 style="margin: var(--space-4) 0 var(--space-3) 0;">Simulasi Output Rekonsiliasi:</h4>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+              <thead>
+                <tr style="background: var(--surface-2); border-bottom: 2px solid var(--border);">
+                  <th style="padding: 10px;">ID Transaksi</th>
+                  <th style="padding: 10px;">Platform</th>
+                  <th style="padding: 10px;">Nominal POS</th>
+                  <th style="padding: 10px;">Nominal Settlement</th>
+                  <th style="padding: 10px;">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px; font-family: monospace;">TRX-00142</td>
+                  <td style="padding: 10px;">QRIS BCA</td>
+                  <td style="padding: 10px;">Rp 150.000</td>
+                  <td style="padding: 10px;">Rp 148.200</td>
+                  <td style="padding: 10px;"><span style="background: rgba(16,185,129,0.12); color: #10b981; padding: 3px 8px; border-radius: 4px; font-size: 0.82rem; font-weight: bold;">✅ Sesuai (MDR)</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px; font-family: monospace;">TRX-00159</td>
+                  <td style="padding: 10px;">ShopeePay</td>
+                  <td style="padding: 10px;">Rp 75.000</td>
+                  <td style="padding: 10px;">—</td>
+                  <td style="padding: 10px;"><span style="background: rgba(239,68,68,0.12); color: #ef4444; padding: 3px 8px; border-radius: 4px; font-size: 0.82rem; font-weight: bold;">🔴 HILANG</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px; font-family: monospace;">TRX-00177</td>
+                  <td style="padding: 10px;">Tokopedia VA</td>
+                  <td style="padding: 10px;">Rp 320.000</td>
+                  <td style="padding: 10px;">Rp 320.000</td>
+                  <td style="padding: 10px;"><span style="background: rgba(245,158,11,0.12); color: #f59e0b; padding: 3px 8px; border-radius: 4px; font-size: 0.82rem; font-weight: bold;">⚠️ DUPLIKASI</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-bottom: var(--space-6); background: rgba(245, 158, 11, 0.05); padding: var(--space-5); border-left: 4px solid #f59e0b; border-radius: 0 8px 8px 0;">
+          <h2 style="margin-top: 0; margin-bottom: var(--space-3); font-size: 1.4rem;">3. Hasil &amp; Dampak Bisnis</h2>
+          <ul style="color: var(--text); line-height: 1.7; margin: 0; padding-left: 20px;">
+            <li>Proses rekonsiliasi bulanan yang sebelumnya memakan <strong>3 hari kerja</strong> berhasil dipangkas menjadi <strong>kurang dari 2 jam</strong>.</li>
+            <li>Ditemukan <strong>Rp 8,3 Juta</strong> transaksi pending settlement yang belum diklaim dari ShopeePay selama 2 bulan terakhir.</li>
+            <li>Terdeteksi 12 transaksi duplikat yang jika tidak ditemukan, akan menyebabkan kerugian keuangan bagi bisnis.</li>
+          </ul>
+        </div>
+
+        <div style="border-top: 1px solid var(--border); padding-top: var(--space-5);">
+          <a href="portfolio.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px;">← Kembali ke Semua Portofolio</a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon" aria-hidden="true">⊞</div>
+            Excel Analyst Hub
+          </a>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Belajar</h4>
+          <ul>
+            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
+            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
+            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tools &amp; Trainer</h4>
+          <ul>
+            <li><a href="tools.html#formula-generator">Formula Generator</a></li>
+            <li><a href="tools.html#daily-challenge-section">Tantangan Harian</a></li>
+            <li><a href="tools.html#quick-ref">Referensi Cepat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Jelajahi</h4>
+          <ul>
+            <li><a href="portfolio.html">Portofolio</a></li>
+            <li><a href="topic.html">Tutorial VLOOKUP</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Dibangun untuk generasi data analyst Indonesia berikutnya.</p>
+        <p>Excel Analyst Hub — Belajar gratis, keahlian nyata.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

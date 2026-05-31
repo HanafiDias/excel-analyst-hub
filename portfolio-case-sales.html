@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('eah_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studi Kasus: Analisis Performa Penjualan Multi-Region — Excel Analyst Hub</title>
+  <meta name="description" content="Studi kasus lengkap: mengonsolidasi data penjualan lintas-cabang dengan Power Query untuk menemukan kebocoran profitabilitas operasional." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+</head>
+<body class="page-body">
+
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon" aria-hidden="true">⊞</div>
+        Excel Analyst Hub
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="learn.html">Belajar</a></li>
+        <li><a href="portfolio.html" class="active">Portofolio</a></li>
+        <li><a href="tools.html">Tools</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
+        <a href="profile.html" class="btn-ghost btn-sm" style="display:flex; align-items:center; gap:5px; padding:0.4rem 0.8rem; border:1px solid var(--border);" title="Dashboard Profil">
+          <span style="font-size:1.1rem;">👤</span> <span class="hide-mobile">Profil</span>
+        </a>
+        <a href="learn.html" class="btn-primary btn-sm hide-mobile">Mulai Belajar</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-menu-mobile" id="mobile-menu" role="navigation" aria-label="Navigasi mobile">
+    <a href="index.html">Beranda</a>
+    <a href="learn.html">Belajar</a>
+    <a href="portfolio.html">Portofolio</a>
+    <a href="tools.html">Tools</a>
+    <div style="height:1px; background:var(--border); margin: 8px 0;"></div>
+    <a href="profile.html" style="color:var(--accent); font-weight:bold;">👤 Profil Saya</a>
+    <a href="learn.html" class="btn-primary" style="margin-top:8px;">Mulai Belajar</a>
+  </div>
+
+  <main id="main-content">
+
+    <!-- ============ CASE STUDY HERO ============ -->
+    <section class="section" style="background: var(--surface-2); border-bottom: 1px solid var(--border); padding-top: var(--space-6); padding-bottom: var(--space-6);">
+      <div class="container" style="max-width: 800px;">
+        <a href="portfolio.html" class="btn-ghost btn-sm" style="margin-bottom: var(--space-4); display: inline-flex; align-items: center; gap: 5px;">
+          ← Kembali ke Portofolio
+        </a>
+        <div style="display: flex; gap: 10px; margin-bottom: var(--space-3);">
+          <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">Sales &amp; Financial</span>
+          <span class="badge" style="background: var(--surface); border: 1px solid var(--border); color: var(--text-muted);">Power Query / PivotTable</span>
+        </div>
+        <h1 style="margin: 0 0 var(--space-3) 0; font-size: 2.2rem; line-height: 1.3;">Analisis Performa Penjualan Multi-Region</h1>
+        <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6; margin: 0;">
+          Mengonsolidasi data lintas-cabang untuk menemukan "bocornya" profitabilitas operasional.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ CASE STUDY BODY ============ -->
+    <section class="section">
+      <div class="container" style="max-width: 800px;">
+
+        <!-- SECTION 1: Background -->
+        <div style="margin-bottom: var(--space-6);">
+          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">1. Latar Belakang &amp; Masalah Bisnis</h2>
+          <p style="color: var(--text); line-height: 1.7;">
+            Bisnis memiliki 4 cabang utama (Jakarta, Bandung, Solo, Semarang). Setiap akhir bulan, manajer kesulitan melihat performa total karena laporan dikirim dalam file Excel terpisah oleh masing-masing admin cabang. Sulit membandingkan cabang mana yang marginnya paling sehat tanpa menghabiskan waktu berjam-jam untuk copy-paste data secara manual.
+          </p>
+        </div>
+
+        <!-- SECTION 2: Data Modeling -->
+        <div style="margin-bottom: var(--space-6);">
+          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">2. Pembersihan &amp; Pemodelan Data</h2>
+          <p style="color: var(--text); line-height: 1.7;">
+            Saya menyelesaikan ini dengan fitur <strong>Get Data from Folder</strong> di Power Query. Setiap kali cabang mengirim file baru, sistem hanya perlu ditekan <em>Refresh</em>.
+          </p>
+          <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border); margin: var(--space-3) 0;">
+            <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); line-height: 1.6;">
+              <li>Menggunakan <strong>Append Queries</strong> untuk menggabungkan struktur 4 tabel menjadi satu Master Table.</li>
+              <li>Membuat Custom Column untuk <code>Net Margin = (Harga Jual - HPP) - Biaya Logistik</code>.</li>
+            </ul>
+          </div>
+          <h4 style="margin: var(--space-4) 0 var(--space-3) 0;">Simulasi Tabel Konsolidasi Antar-Cabang:</h4>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
+              <thead>
+                <tr style="background: var(--surface-2); border-bottom: 2px solid var(--border);">
+                  <th style="padding: 12px;">Cabang</th>
+                  <th style="padding: 12px;">Total Penjualan</th>
+                  <th style="padding: 12px;">HPP</th>
+                  <th style="padding: 12px;">Biaya Logistik</th>
+                  <th style="padding: 12px;">Net Margin</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 12px; font-weight: bold;">Jakarta</td>
+                  <td style="padding: 12px;">Rp 320.000.000</td>
+                  <td style="padding: 12px;">Rp 210.000.000</td>
+                  <td style="padding: 12px;">Rp 28.000.000</td>
+                  <td style="padding: 12px;"><span style="color: #10b981; font-weight: bold;">25.6%</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 12px; font-weight: bold;">Bandung</td>
+                  <td style="padding: 12px;">Rp 185.000.000</td>
+                  <td style="padding: 12px;">Rp 120.000.000</td>
+                  <td style="padding: 12px;">Rp 18.000.000</td>
+                  <td style="padding: 12px;"><span style="color: #10b981; font-weight: bold;">25.4%</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 12px; font-weight: bold;">Solo</td>
+                  <td style="padding: 12px;">Rp 140.000.000</td>
+                  <td style="padding: 12px;">Rp 87.000.000</td>
+                  <td style="padding: 12px;">Rp 8.500.000</td>
+                  <td style="padding: 12px;"><span style="color: #10b981; font-weight: bold; font-size: 1.05rem;">31.8% ⭐</span></td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px; font-weight: bold;">Semarang</td>
+                  <td style="padding: 12px;">Rp 160.000.000</td>
+                  <td style="padding: 12px;">Rp 112.000.000</td>
+                  <td style="padding: 12px;">Rp 22.000.000</td>
+                  <td style="padding: 12px;"><span style="color: #f59e0b; font-weight: bold;">16.3%</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SECTION 3: Results -->
+        <div style="margin-bottom: var(--space-6); background: rgba(16, 185, 129, 0.05); padding: var(--space-5); border-left: 4px solid #10b981; border-radius: 0 8px 8px 0;">
+          <h2 style="margin-top: 0; margin-bottom: var(--space-3); font-size: 1.4rem;">3. Hasil &amp; Rekomendasi Bisnis</h2>
+          <p style="color: var(--text); line-height: 1.7; margin-bottom: 0;">
+            Dari dasbor yang dibangun, ditemukan insight krusial: <strong>Cabang Jakarta</strong> memiliki volume penjualan tertinggi, tetapi <strong>Cabang Solo</strong> memberikan kontribusi margin persentase paling besar karena efisiensi biaya logistik lokal. Strategi marketing bulan berikutnya pun direlokasi dengan fokus penetrasi margin di Jawa Tengah.
+          </p>
+        </div>
+
+        <!-- Back link bottom -->
+        <div style="border-top: 1px solid var(--border); padding-top: var(--space-5);">
+          <a href="portfolio.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px;">
+            ← Kembali ke Semua Portofolio
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon" aria-hidden="true">⊞</div>
+            Excel Analyst Hub
+          </a>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Belajar</h4>
+          <ul>
+            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
+            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
+            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tools &amp; Trainer</h4>
+          <ul>
+            <li><a href="tools.html#formula-generator">Formula Generator</a></li>
+            <li><a href="tools.html#daily-challenge-section">Tantangan Harian</a></li>
+            <li><a href="tools.html#quick-ref">Referensi Cepat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Jelajahi</h4>
+          <ul>
+            <li><a href="portfolio.html">Portofolio</a></li>
+            <li><a href="topic.html">Tutorial VLOOKUP</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Dibangun untuk generasi data analyst Indonesia berikutnya.</p>
+        <p>Excel Analyst Hub — Belajar gratis, keahlian nyata.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

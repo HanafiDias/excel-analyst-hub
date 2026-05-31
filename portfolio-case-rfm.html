@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('eah_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studi Kasus: Segmentasi Pelanggan RFM — Excel Analyst Hub</title>
+  <meta name="description" content="Studi kasus: menerapkan analisis RFM (Recency, Frequency, Monetary) untuk mengidentifikasi segmen pelanggan VIP, at-risk, dan hibernasi menggunakan PERCENTILE.INC dan Dynamic Array Excel." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+</head>
+<body class="page-body">
+
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <nav class="nav" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon" aria-hidden="true">⊞</div>
+        Excel Analyst Hub
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="learn.html">Belajar</a></li>
+        <li><a href="portfolio.html" class="active">Portofolio</a></li>
+        <li><a href="tools.html">Tools</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
+        <a href="profile.html" class="btn-ghost btn-sm" style="display:flex; align-items:center; gap:5px; padding:0.4rem 0.8rem; border:1px solid var(--border);" title="Dashboard Profil">
+          <span style="font-size:1.1rem;">👤</span> <span class="hide-mobile">Profil</span>
+        </a>
+        <a href="learn.html" class="btn-primary btn-sm hide-mobile">Mulai Belajar</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-menu-mobile" id="mobile-menu" role="navigation" aria-label="Navigasi mobile">
+    <a href="index.html">Beranda</a>
+    <a href="learn.html">Belajar</a>
+    <a href="portfolio.html">Portofolio</a>
+    <a href="tools.html">Tools</a>
+    <div style="height:1px; background:var(--border); margin: 8px 0;"></div>
+    <a href="profile.html" style="color:var(--accent); font-weight:bold;">👤 Profil Saya</a>
+    <a href="learn.html" class="btn-primary" style="margin-top:8px;">Mulai Belajar</a>
+  </div>
+
+  <main id="main-content">
+
+    <section class="section" style="background: var(--surface-2); border-bottom: 1px solid var(--border); padding-top: var(--space-6); padding-bottom: var(--space-6);">
+      <div class="container" style="max-width: 800px;">
+        <a href="portfolio.html" class="btn-ghost btn-sm" style="margin-bottom: var(--space-4); display: inline-flex; align-items: center; gap: 5px;">← Kembali ke Portofolio</a>
+        <div style="display: flex; gap: 10px; margin-bottom: var(--space-3);">
+          <span class="badge" style="background: rgba(236, 72, 153, 0.1); color: #ec4899;">Marketing &amp; CRM</span>
+          <span class="badge" style="background: var(--surface); border: 1px solid var(--border); color: var(--text-muted);">PERCENTILE / Dynamic Array</span>
+        </div>
+        <h1 style="margin: 0 0 var(--space-3) 0; font-size: 2.2rem; line-height: 1.3;">Segmentasi Pelanggan RFM (Recency, Frequency, Monetary)</h1>
+        <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6; margin: 0;">
+          Menerapkan framework RFM standar industri untuk mengidentifikasi siapa "Champions", siapa yang "At Risk", dan siapa yang sudah "Hibernasi" — agar anggaran promosi bisa dialokasikan secara presisi.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container" style="max-width: 800px;">
+
+        <div style="margin-bottom: var(--space-6);">
+          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">1. Latar Belakang &amp; Framework RFM</h2>
+          <p style="color: var(--text); line-height: 1.7;">
+            RFM adalah metode segmentasi pelanggan yang sudah terbukti efektif dalam industri retail dan e-commerce. Setiap pelanggan diberi skor 1–5 pada tiga dimensi:
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); margin-top: var(--space-3);">
+            <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border); border-top: 3px solid #ec4899;">
+              <div style="font-size: 1.8rem; margin-bottom: 6px;">📅</div>
+              <strong style="display: block; color: #ec4899; margin-bottom: 4px;">Recency (R)</strong>
+              <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0; line-height: 1.5;">Seberapa baru pelanggan melakukan transaksi terakhir. Skor 5 = beli kemarin, Skor 1 = tidak beli dalam 6 bulan.</p>
+            </div>
+            <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border); border-top: 3px solid #ec4899;">
+              <div style="font-size: 1.8rem; margin-bottom: 6px;">🔄</div>
+              <strong style="display: block; color: #ec4899; margin-bottom: 4px;">Frequency (F)</strong>
+              <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0; line-height: 1.5;">Total frekuensi transaksi dalam periode analisis. Pelanggan yang sering beli mendapat skor lebih tinggi.</p>
+            </div>
+            <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border); border-top: 3px solid #ec4899;">
+              <div style="font-size: 1.8rem; margin-bottom: 6px;">💰</div>
+              <strong style="display: block; color: #ec4899; margin-bottom: 4px;">Monetary (M)</strong>
+              <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0; line-height: 1.5;">Total uang yang dihabiskan. Pelanggan dengan spending lebih tinggi mendapat skor lebih tinggi.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: var(--space-6);">
+          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">2. Implementasi Teknis (PERCENTILE.INC)</h2>
+          <p style="color: var(--text); line-height: 1.7;">
+            Daripada menetapkan batas skor secara manual (yang bisa bias), saya menggunakan fungsi <code>PERCENTILE.INC</code> untuk membagi pelanggan secara adil berdasarkan distribusi data aktual.
+          </p>
+          <pre style="background: #0f172a; padding: var(--space-4); border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); margin: var(--space-3) 0;"><code style="color: #f8fafc; font-family: monospace;">// Memberi Skor Recency (Makin baru = makin baik = skor lebih tinggi)
+=IFS(
+  Hari_Sejak_Beli &lt;= PERCENTILE.INC($C:$C, 0.2), 5,
+  Hari_Sejak_Beli &lt;= PERCENTILE.INC($C:$C, 0.4), 4,
+  Hari_Sejak_Beli &lt;= PERCENTILE.INC($C:$C, 0.6), 3,
+  Hari_Sejak_Beli &lt;= PERCENTILE.INC($C:$C, 0.8), 2,
+  TRUE, 1
+)
+
+// Segmen Final Otomatis berdasarkan Total RFM Score
+=IFS(
+  RFM_Score &gt;= 13, "👑 Champions",
+  RFM_Score &gt;= 10, "💎 Loyal Customers",
+  RFM_Score &gt;= 7,  "⚠️ At Risk",
+  TRUE,             "💤 Hibernating"
+)</code></pre>
+
+          <h4 style="margin: var(--space-4) 0 var(--space-3) 0;">Simulasi Output Segmentasi Pelanggan:</h4>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem;">
+              <thead>
+                <tr style="background: var(--surface-2); border-bottom: 2px solid var(--border);">
+                  <th style="padding: 10px;">ID Pelanggan</th>
+                  <th style="padding: 10px;">R</th>
+                  <th style="padding: 10px;">F</th>
+                  <th style="padding: 10px;">M</th>
+                  <th style="padding: 10px;">Total</th>
+                  <th style="padding: 10px;">Segmen</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px; font-family: monospace;">CUST-0088</td>
+                  <td style="padding: 10px; font-weight: bold; color: #ec4899;">5</td>
+                  <td style="padding: 10px; font-weight: bold; color: #ec4899;">5</td>
+                  <td style="padding: 10px; font-weight: bold; color: #ec4899;">5</td>
+                  <td style="padding: 10px; font-weight: bold;">15</td>
+                  <td style="padding: 10px;"><span style="background: rgba(236,72,153,0.12); color: #ec4899; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 0.82rem;">👑 Champions</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px; font-family: monospace;">CUST-0212</td>
+                  <td style="padding: 10px;">3</td>
+                  <td style="padding: 10px;">4</td>
+                  <td style="padding: 10px;">4</td>
+                  <td style="padding: 10px; font-weight: bold;">11</td>
+                  <td style="padding: 10px;"><span style="background: rgba(139,92,246,0.12); color: #8b5cf6; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 0.82rem;">💎 Loyal</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px; font-family: monospace;">CUST-0047</td>
+                  <td style="padding: 10px;">2</td>
+                  <td style="padding: 10px;">3</td>
+                  <td style="padding: 10px;">3</td>
+                  <td style="padding: 10px; font-weight: bold;">8</td>
+                  <td style="padding: 10px;"><span style="background: rgba(245,158,11,0.12); color: #f59e0b; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 0.82rem;">⚠️ At Risk</span></td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px; font-family: monospace;">CUST-0391</td>
+                  <td style="padding: 10px;">1</td>
+                  <td style="padding: 10px;">1</td>
+                  <td style="padding: 10px;">2</td>
+                  <td style="padding: 10px; font-weight: bold;">4</td>
+                  <td style="padding: 10px;"><span style="background: rgba(100,116,139,0.12); color: var(--text-muted); padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 0.82rem;">💤 Hibernating</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-bottom: var(--space-6); background: rgba(236, 72, 153, 0.05); padding: var(--space-5); border-left: 4px solid #ec4899; border-radius: 0 8px 8px 0;">
+          <h2 style="margin-top: 0; margin-bottom: var(--space-3); font-size: 1.4rem;">3. Rekomendasi Strategi per Segmen</h2>
+          <p style="color: var(--text); line-height: 1.7; margin-bottom: var(--space-3);">
+            Dengan segmentasi yang jelas, tim marketing bisa mengalihkan anggaran dari broadcast semua orang ke pendekatan yang jauh lebih efisien:
+          </p>
+          <ul style="color: var(--text); line-height: 1.8; margin: 0; padding-left: 20px;">
+            <li><strong>👑 Champions:</strong> Berikan akses early access produk baru dan program referral eksklusif.</li>
+            <li><strong>⚠️ At Risk:</strong> Kirim voucher reaktivasi dengan diskon khusus sebelum mereka benar-benar pergi.</li>
+            <li><strong>💤 Hibernating:</strong> Campaign "We Miss You" dengan penawaran paling agresif untuk reaktivasi terakhir.</li>
+          </ul>
+          <p style="color: var(--text); line-height: 1.7; margin-top: var(--space-3); margin-bottom: 0;">
+            Hasilnya: anggaran promosi diredistribusi sehingga <strong>60% difokuskan ke segmen At Risk</strong> (23% dari total pelanggan), menghasilkan peningkatan repeat purchase rate sebesar <strong>+18%</strong> dalam 2 bulan.
+          </p>
+        </div>
+
+        <div style="border-top: 1px solid var(--border); padding-top: var(--space-5);">
+          <a href="portfolio.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px;">← Kembali ke Semua Portofolio</a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon" aria-hidden="true">⊞</div>
+            Excel Analyst Hub
+          </a>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Belajar</h4>
+          <ul>
+            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
+            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
+            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tools &amp; Trainer</h4>
+          <ul>
+            <li><a href="tools.html#formula-generator">Formula Generator</a></li>
+            <li><a href="tools.html#daily-challenge-section">Tantangan Harian</a></li>
+            <li><a href="tools.html#quick-ref">Referensi Cepat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Jelajahi</h4>
+          <ul>
+            <li><a href="portfolio.html">Portofolio</a></li>
+            <li><a href="topic.html">Tutorial VLOOKUP</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Dibangun untuk generasi data analyst Indonesia berikutnya.</p>
+        <p>Excel Analyst Hub — Belajar gratis, keahlian nyata.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
