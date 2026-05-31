@@ -12,11 +12,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studi Kasus: Rekonsiliasi Pembayaran Digital — Excel Analyst Hub</title>
-  <meta name="description" content="Studi kasus: membangun mesin rekonsiliasi otomatis untuk mencocokkan transaksi QRIS, Shopee, dan Tokopedia dengan data settlement bank menggunakan Power Query dan XLOOKUP." />
+  <meta name="description" content="Membangun sistem deteksi selisih otomatis menggunakan Power Query untuk mencocokkan data kasir internal dengan dana yang benar-benar masuk ke rekening bank." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/components.css" />
+  <style>
+    .data-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9rem; }
+    .data-table th, .data-table td { border: 1px solid var(--border); padding: 10px; text-align: left; }
+    .data-table th { background-color: var(--surface-2); color: var(--text); font-weight: 600; }
+    .code-block { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: monospace; overflow-x: auto; margin-top: 10px; }
+  </style>
 </head>
 <body class="page-body">
 
@@ -57,7 +63,6 @@
   </div>
 
   <main id="main-content">
-
     <section class="section" style="background: var(--surface-2); border-bottom: 1px solid var(--border); padding-top: var(--space-6); padding-bottom: var(--space-6);">
       <div class="container" style="max-width: 800px;">
         <a href="portfolio.html" class="btn-ghost btn-sm" style="margin-bottom: var(--space-4); display: inline-flex; align-items: center; gap: 5px;">← Kembali ke Portofolio</a>
@@ -67,7 +72,7 @@
         </div>
         <h1 style="margin: 0 0 var(--space-3) 0; font-size: 2.2rem; line-height: 1.3;">Rekonsiliasi Pembayaran Digital (QRIS, Shopee, Tokopedia)</h1>
         <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6; margin: 0;">
-          Membangun mesin pendeteksi selisih transaksi otomatis antara catatan kasir internal dan laporan settlement dari platform digital.
+          Membangun sistem deteksi selisih otomatis menggunakan Power Query untuk mencocokkan data kasir internal dengan dana yang benar-benar masuk ke rekening bank.
         </p>
       </div>
     </section>
@@ -76,78 +81,77 @@
       <div class="container" style="max-width: 800px;">
 
         <div style="margin-bottom: var(--space-6);">
-          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">1. Latar Belakang &amp; Masalah Bisnis</h2>
+          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">1. Latar Belakang Masalah</h2>
           <p style="color: var(--text); line-height: 1.7;">
-            Bisnis retail modern menggunakan 3–5 channel pembayaran digital secara bersamaan. Setiap platform (QRIS, Tokopedia, ShopeePay) mengirim laporan settlement dengan format yang berbeda-beda, seringkali dengan jeda waktu T+1 atau T+2 dari tanggal transaksi. Akibatnya, tim keuangan menghadapi tiga jenis masalah berulang:
+            Seiring dengan meningkatnya volume transaksi retail harian melalui dompet digital (DANA, ShopeePay) dan <em>marketplace</em> (Tokopedia), tim keuangan mengalami kesulitan melacak arus kas sesungguhnya. Laporan dari sistem POS (kasir) internal seringkali tidak sinkron dengan mutasi bank akibat perbedaan waktu pencairan (<em>settlement delay</em>) dan adanya potongan MDR (<em>Merchant Discount Rate</em>) yang bervariasi di tiap platform.
           </p>
-          <ul style="color: var(--text); line-height: 1.7;">
-            <li><strong>Transaksi "Hilang":</strong> Tercatat di POS, tapi belum ada di laporan settlement bank.</li>
-            <li><strong>Selisih Biaya Admin (MDR):</strong> Potongan Merchant Discount Rate yang berbeda antar platform membuat nilai bersih tidak sesuai perkiraan.</li>
-            <li><strong>Duplikasi Pembayaran:</strong> Transaksi yang di-retry pelanggan tercatat dua kali di sistem POS.</li>
-          </ul>
         </div>
 
         <div style="margin-bottom: var(--space-6);">
-          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">2. Arsitektur Rekonsiliasi (Merge Queries)</h2>
+          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">2. Karakteristik Dataset</h2>
+          <p style="color: var(--text); line-height: 1.7;">Dataset terdiri dari dua sumber yang harus digabungkan:</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 20px;">
+            <div>
+              <h4 style="margin-bottom: 5px; color: var(--text);">Tabel 1: Data POS Internal</h4>
+              <table class="data-table">
+                <tr><th>Trx_ID</th><th>Channel</th><th>Nominal_Kotor</th></tr>
+                <tr><td>TRX-101</td><td>QRIS</td><td>Rp 100.000</td></tr>
+                <tr><td>TRX-102</td><td>Shopee</td><td>Rp 250.000</td></tr>
+                <tr><td>TRX-103</td><td>Tokopedia</td><td>Rp 150.000</td></tr>
+              </table>
+            </div>
+            <div>
+              <h4 style="margin-bottom: 5px; color: var(--text);">Tabel 2: Data Bank (Settlement)</h4>
+              <table class="data-table">
+                <tr><th>Ref_ID</th><th>Dana_Masuk</th><th>Status</th></tr>
+                <tr><td>TRX-101</td><td>Rp 99.300</td><td>Settled</td></tr>
+                <tr><td>TRX-103</td><td>Rp 148.000</td><td>Settled</td></tr>
+                <tr style="background: rgba(239,68,68,0.1);"><td colspan="3" style="color: #ef4444; font-style: italic;">TRX-102 (Missing/Pending)</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: var(--space-6);">
+          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">3. Langkah Analisis &amp; Formula Pendukung</h2>
           <p style="color: var(--text); line-height: 1.7;">
-            Saya merancang dua pipeline Power Query yang berjalan paralel, lalu digabungkan dengan teknik <strong>Left Anti-Join</strong> — sebuah teknik yang digunakan untuk menemukan baris yang ada di tabel A tapi tidak ada di tabel B.
+            Untuk menghindari penggunaan <code>VLOOKUP</code> manual yang rentan <em>crash</em> saat memproses puluhan ribu baris, saya menggunakan <strong>Power Query</strong> dengan alur berikut:
           </p>
-          <pre style="background: #0f172a; padding: var(--space-4); border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); margin: var(--space-3) 0;"><code style="color: #f8fafc; font-family: monospace;">// Logika Anti-Join di Power Query (M Language)
-Table.NestedJoin(
-  POS_Table, "TRX_ID",
-  Settlement_Table, "Reference_No",
-  "Matched", JoinKind.LeftAnti   // Temukan yg ada di POS tapi TIDAK di Settlement
-)</code></pre>
-          <h4 style="margin: var(--space-4) 0 var(--space-3) 0;">Simulasi Output Rekonsiliasi:</h4>
-          <div style="overflow-x: auto;">
-            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
-              <thead>
-                <tr style="background: var(--surface-2); border-bottom: 2px solid var(--border);">
-                  <th style="padding: 10px;">ID Transaksi</th>
-                  <th style="padding: 10px;">Platform</th>
-                  <th style="padding: 10px;">Nominal POS</th>
-                  <th style="padding: 10px;">Nominal Settlement</th>
-                  <th style="padding: 10px;">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px; font-family: monospace;">TRX-00142</td>
-                  <td style="padding: 10px;">QRIS BCA</td>
-                  <td style="padding: 10px;">Rp 150.000</td>
-                  <td style="padding: 10px;">Rp 148.200</td>
-                  <td style="padding: 10px;"><span style="background: rgba(16,185,129,0.12); color: #10b981; padding: 3px 8px; border-radius: 4px; font-size: 0.82rem; font-weight: bold;">✅ Sesuai (MDR)</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px; font-family: monospace;">TRX-00159</td>
-                  <td style="padding: 10px;">ShopeePay</td>
-                  <td style="padding: 10px;">Rp 75.000</td>
-                  <td style="padding: 10px;">—</td>
-                  <td style="padding: 10px;"><span style="background: rgba(239,68,68,0.12); color: #ef4444; padding: 3px 8px; border-radius: 4px; font-size: 0.82rem; font-weight: bold;">🔴 HILANG</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px; font-family: monospace;">TRX-00177</td>
-                  <td style="padding: 10px;">Tokopedia VA</td>
-                  <td style="padding: 10px;">Rp 320.000</td>
-                  <td style="padding: 10px;">Rp 320.000</td>
-                  <td style="padding: 10px;"><span style="background: rgba(245,158,11,0.12); color: #f59e0b; padding: 3px 8px; border-radius: 4px; font-size: 0.82rem; font-weight: bold;">⚠️ DUPLIKASI</span></td>
-                </tr>
-              </tbody>
-            </table>
+          <ul style="color: var(--text); line-height: 1.7; padding-left: 20px;">
+            <li><strong>Koneksi Data:</strong> Mengimpor laporan POS dan CSV Mutasi Bank ke dalam Power Query Editor.</li>
+            <li><strong>Merge Queries (Outer Join):</strong> Menggabungkan kedua tabel berdasarkan kolom <code>Trx_ID</code> untuk mengidentifikasi transaksi yang tidak memiliki pasangan (<em>Orphaned Transactions</em>).</li>
+            <li><strong>Kolom Evaluasi (M-Code):</strong> Membangun logika pengecekan selisih menggunakan formula M-Code kustom untuk menoleransi potongan wajar (misalnya QRIS MDR 0.7%).</li>
+          </ul>
+          <div class="code-block">
+// Logika Pemeriksaan Selisih di Power Query
+if [Dana_Masuk] = null then "PENDING SETTLEMENT"
+else if [Nominal_Kotor] - [Dana_Masuk] > ([Nominal_Kotor] * 0.02) then "ANOMALI POTONGAN"
+else "MATCH"
           </div>
         </div>
 
         <div style="margin-bottom: var(--space-6); background: rgba(245, 158, 11, 0.05); padding: var(--space-5); border-left: 4px solid #f59e0b; border-radius: 0 8px 8px 0;">
-          <h2 style="margin-top: 0; margin-bottom: var(--space-3); font-size: 1.4rem;">3. Hasil &amp; Dampak Bisnis</h2>
-          <ul style="color: var(--text); line-height: 1.7; margin: 0; padding-left: 20px;">
-            <li>Proses rekonsiliasi bulanan yang sebelumnya memakan <strong>3 hari kerja</strong> berhasil dipangkas menjadi <strong>kurang dari 2 jam</strong>.</li>
-            <li>Ditemukan <strong>Rp 8,3 Juta</strong> transaksi pending settlement yang belum diklaim dari ShopeePay selama 2 bulan terakhir.</li>
-            <li>Terdeteksi 12 transaksi duplikat yang jika tidak ditemukan, akan menyebabkan kerugian keuangan bagi bisnis.</li>
-          </ul>
+          <h2 style="margin-top: 0; margin-bottom: var(--space-3); font-size: 1.4rem;">4. Wawasan Bisnis &amp; Dampak (Impact)</h2>
+          <p style="color: var(--text); line-height: 1.7; margin-bottom: var(--space-4);">
+            Dari otomatisasi ini, ditemukan bahwa sekitar 3% transaksi digital mengalami penundaan pencairan (<em>floating</em>) hingga H+2, dan ada beberapa transaksi e-commerce yang terpotong biaya admin lebih besar dari kesepakatan.
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: var(--space-4);">
+            <div style="background: var(--surface); padding: var(--space-4); border-radius: 8px; border-left: 4px solid #10b981; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+              <h2 style="color: #10b981; margin: 0 0 10px 0; font-size: 2rem;">95%</h2>
+              <p style="margin: 0; font-size: 0.95rem; color: var(--text-muted); line-height: 1.5;">Efisiensi waktu. Rekonsiliasi yang sebelumnya memakan waktu 3 jam manual kini diproses di bawah 10 menit hanya dengan menekan "Refresh All".</p>
+            </div>
+            <div style="background: var(--surface); padding: var(--space-4); border-radius: 8px; border-left: 4px solid #f59e0b; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+              <h2 style="color: #f59e0b; margin: 0 0 10px 0; font-size: 2rem;">Rp 12 Jt</h2>
+              <p style="margin: 0; font-size: 0.95rem; color: var(--text-muted); line-height: 1.5;">Dana gantung yang berhasil diidentifikasi dan ditagihkan kembali ke pihak <em>Payment Gateway</em> dalam kuartal pertama implementasi.</p>
+            </div>
+          </div>
         </div>
 
-        <div style="border-top: 1px solid var(--border); padding-top: var(--space-5);">
-          <a href="portfolio.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px;">← Kembali ke Semua Portofolio</a>
+        <div style="border-top: 1px solid var(--border); padding-top: var(--space-5); text-align: center;">
+          <h4 style="margin-bottom: var(--space-3); color: var(--text);">Uji Sendiri Model Rekonsiliasinya</h4>
+          <a href="assets/datasets/Case_Study_Payment_Reconciliation.xlsx" download class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+            📥 Unduh File Excel (.xlsx)
+          </a>
         </div>
 
       </div>

@@ -83,7 +83,7 @@
           <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: var(--space-4);">
           <div>
             <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">
@@ -124,7 +124,7 @@
           <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: var(--space-4);">
           <div>
             <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">
@@ -164,7 +164,7 @@
           <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: var(--space-4);">
           <div>
             <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">HRD menghabiskan waktu berhari-hari setiap akhir bulan untuk merekap data mesin absensi (fingerprint) dan menghitung upah lembur karyawan yang aturannya cukup kompleks.</p>
@@ -198,7 +198,7 @@
           </div>
           <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: var(--space-4);">
           <div>
             <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">Banyaknya jalur pembayaran digital (QRIS, Virtual Account Tokopedia, ShopeePay) membuat tim keuangan kesulitan melacak selisih pencatatan antara sistem kasir (POS) internal dengan uang yang benar-benar masuk ke rekening bank (Settlement).</p>
@@ -229,7 +229,7 @@
           </div>
           <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: var(--space-4);">
           <div>
             <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">Institusi finansial regional lambat dalam memutuskan persetujuan kredit nasabah karena analis harus mengecek riwayat pendapatan, tanggungan, dan rasio hutang secara manual, sehingga kalah cepat dari kompetitor.</p>
@@ -260,7 +260,7 @@
           </div>
           <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: var(--space-4);">
           <div>
             <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">Biaya promosi (diskon/voucher) membengkak karena dibagikan secara merata ke semua pelanggan. Bisnis butuh cara mengidentifikasi siapa "Pelanggan Sultan" dan siapa pelanggan yang "Berisiko Pindah ke Kompetitor".</p>
@@ -295,8 +295,30 @@
         </p>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-4); max-width: 900px; margin: 0 auto;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4); max-width: 900px; margin: 0 auto;">
 
+        <!-- SOAL 1: Mencegah Input Tanggal Kadaluarsa (Pemula) -->
+        <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
+              <span style="color: #10b981; font-weight: bold;">Level: Pemula</span>
+              <span style="color: var(--text-muted);">Topik: Data Validation</span>
+            </div>
+            <h4 style="margin: 0 0 var(--space-2) 0;">Mencegah Input Tanggal Kadaluarsa</h4>
+            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0;">
+              Anda membuat formulir absensi harian di Excel. Bagaimana cara memastikan admin (pengguna file) tidak bisa tidak sengaja mengetik atau memasukkan tanggal di masa lalu (misalnya tanggal kemarin)?
+            </p>
+          </div>
+          <div style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-3);">
+            <button class="btn-ghost btn-sm" style="width: 100%; text-align: center;" onclick="var s = this.nextElementSibling; s.style.display = s.style.display === 'none' ? 'block' : 'none';">💡 Lihat Solusi &amp; Rumus</button>
+            <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
+              <strong>Jawaban:</strong> Gunakan Data Validation tipe Custom/Date.<br>
+              <span style="color: var(--text-muted); font-size: 0.8rem;">Masuk ke <em>Data Validation</em> &gt; Allow: Date &gt; Data: Greater than or equal to &gt; Ketik <code>=TODAY()</code>. Excel akan otomatis menolak semua tanggal sebelum hari ini.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOAL 2: Kasus Spasi Hantu (Menengah) -->
         <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
           <div>
             <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
@@ -317,27 +339,7 @@
           </div>
         </div>
 
-        <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
-          <div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
-              <span style="color: #ef4444; font-weight: bold;">Level: Lanjutan</span>
-              <span style="color: var(--text-muted);">Topik: Logika Bisnis</span>
-            </div>
-            <h4 style="margin: 0 0 var(--space-2) 0;">Kalkulasi Komisi Sales Berjenjang</h4>
-            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0;">
-              Perusahaan menetapkan aturan: Jika penjualan Sales mencapai &gt; Rp 50 Juta, komisi 10%. Jika antara Rp 20 Juta - Rp 50 Juta, komisi 5%. Di bawah itu, komisi 0%. Struktur fungsi logika apa yang paling efisien digunakan jika menggunakan Excel modern?
-            </p>
-          </div>
-          <div style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-3);">
-            <button class="btn-ghost btn-sm" style="width: 100%; text-align: center;" onclick="var s = this.nextElementSibling; s.style.display = s.style.display === 'none' ? 'block' : 'none';">💡 Lihat Solusi &amp; Rumus</button>
-            <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
-              <strong>Jawaban:</strong> Gunakan fungsi <code>=IFS()</code>.<br>
-              <span style="color: var(--text-muted); font-size: 0.8rem;">Struktur: <code>=IFS(A2&gt;50000000, A2*10%, A2&gt;=20000000, A2*5%, TRUE, 0)</code>. Fungsi IFS mengevaluasi kondisi secara berurutan tanpa perlu kurung berlapis-lapis.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- SOAL 3: Lookup Direction -->
+        <!-- SOAL 3: Limitasi Arah Pencarian (Menengah) -->
         <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
           <div>
             <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
@@ -358,7 +360,7 @@
           </div>
         </div>
 
-        <!-- SOAL 4: PivotTable Dynamic Range -->
+        <!-- SOAL 4: PivotTable Dynamic Range (Menengah) -->
         <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
           <div>
             <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
@@ -379,7 +381,28 @@
           </div>
         </div>
 
-        <!-- SOAL 5: Power Query Unpivot -->
+        <!-- SOAL 5: Kalkulasi Komisi Sales Berjenjang (Lanjutan) -->
+        <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
+              <span style="color: #ef4444; font-weight: bold;">Level: Lanjutan</span>
+              <span style="color: var(--text-muted);">Topik: Logika Bisnis</span>
+            </div>
+            <h4 style="margin: 0 0 var(--space-2) 0;">Kalkulasi Komisi Sales Berjenjang</h4>
+            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0;">
+              Perusahaan menetapkan aturan: Jika penjualan Sales mencapai &gt; Rp 50 Juta, komisi 10%. Jika antara Rp 20 Juta - Rp 50 Juta, komisi 5%. Di bawah itu, komisi 0%. Struktur fungsi logika apa yang paling efisien digunakan jika menggunakan Excel modern?
+            </p>
+          </div>
+          <div style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-3);">
+            <button class="btn-ghost btn-sm" style="width: 100%; text-align: center;" onclick="var s = this.nextElementSibling; s.style.display = s.style.display === 'none' ? 'block' : 'none';">💡 Lihat Solusi &amp; Rumus</button>
+            <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
+              <strong>Jawaban:</strong> Gunakan fungsi <code>=IFS()</code>.<br>
+              <span style="color: var(--text-muted); font-size: 0.8rem;">Struktur: <code>=IFS(A2&gt;50000000, A2*10%, A2&gt;=20000000, A2*5%, TRUE, 0)</code>. Fungsi IFS mengevaluasi kondisi secara berurutan tanpa perlu kurung berlapis-lapis.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOAL 6: Power Query Unpivot (Lanjutan) -->
         <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
           <div>
             <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
@@ -396,27 +419,6 @@
             <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
               <strong>Jawaban:</strong> Gunakan fitur <strong>Unpivot Columns</strong>.<br>
               <span style="color: var(--text-muted); font-size: 0.8rem;">Caranya: Blok kolom identitas (misal: Nama Produk), klik kanan, lalu pilih <em>"Unpivot Other Columns"</em>. Data menyamping akan langsung tersusun rapi ke bawah (Attribute &amp; Value).</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- SOAL 6: Data Validation with TODAY() -->
-        <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
-          <div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
-              <span style="color: #10b981; font-weight: bold;">Level: Pemula</span>
-              <span style="color: var(--text-muted);">Topik: Data Validation</span>
-            </div>
-            <h4 style="margin: 0 0 var(--space-2) 0;">Mencegah Input Tanggal Kadaluarsa</h4>
-            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0;">
-              Anda membuat formulir absensi harian di Excel. Bagaimana cara memastikan admin (pengguna file) tidak bisa tidak sengaja mengetik atau memasukkan tanggal di masa lalu (misalnya tanggal kemarin)?
-            </p>
-          </div>
-          <div style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-3);">
-            <button class="btn-ghost btn-sm" style="width: 100%; text-align: center;" onclick="var s = this.nextElementSibling; s.style.display = s.style.display === 'none' ? 'block' : 'none';">💡 Lihat Solusi &amp; Rumus</button>
-            <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
-              <strong>Jawaban:</strong> Gunakan Data Validation tipe Custom/Date.<br>
-              <span style="color: var(--text-muted); font-size: 0.8rem;">Masuk ke <em>Data Validation</em> &gt; Allow: Date &gt; Data: Greater than or equal to &gt; Ketik <code>=TODAY()</code>. Excel akan otomatis menolak semua tanggal sebelum hari ini.</span>
             </div>
           </div>
         </div>

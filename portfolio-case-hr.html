@@ -1,222 +1,196 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-  <script>
-    (function() {
-      try {
-        var t = localStorage.getItem('eah_theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', t);
-      } catch(e) {}
-    })();
-  </script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Studi Kasus: Otomatisasi Laporan Kehadiran & Kalkulasi Lembur — Excel Analyst Hub</title>
-  <meta name="description" content="Studi kasus lengkap: mengubah proses rekapitulasi absensi manual 3 hari menjadi sistem otomatis 15 menit menggunakan Time Intelligence dan formula logika Excel." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="assets/css/main.css" />
-  <link rel="stylesheet" href="assets/css/components.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Otomatisasi HR - Portofolio Data</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body,
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    a,
+    span,
+    td,
+    th {
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      font-size: 0.9rem;
+    }
+
+    .data-table th,
+    .data-table td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background-color: var(--surface-2);
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .code-block {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: monospace;
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+  </style>
 </head>
-<body class="page-body">
 
-  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+<body style="background-color: var(--surface); color: var(--text); font-family: 'Inter', sans-serif; margin: 0;">
 
-  <!-- ============ NAVIGATION ============ -->
-  <nav class="nav" role="navigation" aria-label="Navigasi utama">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <div class="logo-icon" aria-hidden="true">⊞</div>
-        Excel Analyst Hub
-      </a>
-      <ul class="nav-links" role="list">
-        <li><a href="index.html">Beranda</a></li>
-        <li><a href="learn.html">Belajar</a></li>
-        <li><a href="portfolio.html" class="active">Portofolio</a></li>
-        <li><a href="tools.html">Tools</a></li>
-      </ul>
-      <div class="nav-right">
-        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
-        <a href="profile.html" class="btn-ghost btn-sm" style="display:flex; align-items:center; gap:5px; padding:0.4rem 0.8rem; border:1px solid var(--border);" title="Dashboard Profil">
-          <span style="font-size:1.1rem;">👤</span> <span class="hide-mobile">Profil</span>
-        </a>
-        <a href="learn.html" class="btn-primary btn-sm hide-mobile">Mulai Belajar</a>
-        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
-          <span></span><span></span><span></span>
-        </button>
+  <nav class="navbar" style="border-bottom: 1px solid var(--border); padding: 15px 0; background: var(--surface);">
+    <div class="container"
+      style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+      <a href="index.html" class="nav-brand"
+        style="font-weight: 700; font-size: 1.2rem; color: var(--text); text-decoration: none;">Excel Analyst Hub</a>
+      <div class="nav-links" style="display: flex; gap: 20px;">
+        <a href="learn.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">Belajar</a>
+        <a href="tools.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">Tools</a>
+        <a href="portfolio.html" style="text-decoration: none; color: var(--accent); font-weight: 700;">Portofolio</a>
       </div>
     </div>
   </nav>
-  <div class="nav-menu-mobile" id="mobile-menu" role="navigation" aria-label="Navigasi mobile">
-    <a href="index.html">Beranda</a>
-    <a href="learn.html">Belajar</a>
-    <a href="portfolio.html">Portofolio</a>
-    <a href="tools.html">Tools</a>
-    <div style="height:1px; background:var(--border); margin: 8px 0;"></div>
-    <a href="profile.html" style="color:var(--accent); font-weight:bold;">👤 Profil Saya</a>
-    <a href="learn.html" class="btn-primary" style="margin-top:8px;">Mulai Belajar</a>
-  </div>
 
-  <main id="main-content">
+  <header class="page-header" style="padding-top: var(--space-6); padding-bottom: var(--space-5);">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+      <a href="portfolio.html"
+        style="display: inline-block; margin-bottom: var(--space-4); text-decoration: none; color: var(--text-muted); font-size: 0.95rem;">&larr;
+        Kembali ke Portofolio</a><br>
+      <span class="badge"
+        style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6; margin-bottom: var(--space-3); display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">HR
+        & Operations</span>
+      <h1 style="margin-top: 0; margin-bottom: var(--space-2); font-size: 2.5rem; line-height: 1.2;">Automasi Kehadiran
+        & Kalkulasi Lembur</h1>
+      <p class="text-muted text-lg" style="max-width: 800px; margin: 0; font-size: 1.1rem; line-height: 1.6;">
+        Menghilangkan manipulasi manual dalam kalkulasi jam kerja harian karyawan untuk mempercepat proses payroll akhir
+        bulan.</p>
+    </div>
+  </header>
 
-    <!-- ============ CASE STUDY HERO ============ -->
-    <section class="section" style="background: var(--surface-2); border-bottom: 1px solid var(--border); padding-top: var(--space-6); padding-bottom: var(--space-6);">
-      <div class="container" style="max-width: 800px;">
-        <a href="portfolio.html" class="btn-ghost btn-sm" style="margin-bottom: var(--space-4); display: inline-flex; align-items: center; gap: 5px;">
-          ← Kembali ke Portofolio
-        </a>
-        <div style="display: flex; gap: 10px; margin-bottom: var(--space-3);">
-          <span class="badge" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">HR &amp; Operations</span>
-          <span class="badge" style="background: var(--surface); border: 1px solid var(--border); color: var(--text-muted);">Excel / Time Functions</span>
-        </div>
-        <h1 style="margin: 0 0 var(--space-3) 0; font-size: 2.2rem; line-height: 1.3;">Otomatisasi Laporan Kehadiran &amp; Kalkulasi Lembur</h1>
-        <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6; margin: 0;">
-          Mengubah proses manual 3 hari menjadi perhitungan otomatis kurang dari 15 menit menggunakan logika Time Intelligence.
-        </p>
-      </div>
-    </section>
+  <main class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px; padding-bottom: var(--space-6);">
+    <div class="card"
+      style="padding: var(--space-5); border-top: 4px solid #8b5cf6; box-shadow: 0 8px 30px rgba(0,0,0,0.08); background: var(--surface); border-radius: 12px;">
 
-    <!-- ============ CASE STUDY BODY ============ -->
-    <section class="section">
-      <div class="container" style="max-width: 800px;">
+      <h3 style="margin-top: 0; color: var(--text); border-bottom: 2px solid var(--surface-2); padding-bottom: 8px;">1.
+        Latar Belakang Masalah</h3>
+      <p style="color: var(--text-muted); line-height: 1.7; font-size: 1.05rem;">Tim HR seringkali menunda pencairan
+        gaji (<em>payroll</em>) karena harus membersihkan data tarikan mesin absen sidik jari (<em>fingerprint</em>)
+        yang format jamnya sering berupa teks, bukan format waktu valid. Penghitungan jam lembur (di atas jam 17:00)
+        yang dilakukan secara manual rentan terhadap <em>human error</em> dan perselisihan bayaran.</p>
 
-        <!-- SECTION 1: Background -->
-        <div style="margin-bottom: var(--space-6);">
-          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">1. Latar Belakang &amp; Masalah Bisnis</h2>
-          <p style="color: var(--text); line-height: 1.7;">
-            HRD perusahaan manufaktur skala menengah harus merekap log kehadiran dari mesin fingerprint setiap akhir bulan. Proses ini memakan waktu 2–3 hari kerja penuh karena:
-          </p>
-          <ul style="color: var(--text); line-height: 1.7;">
-            <li>Data mesin diekspor dalam format CSV mentah tanpa label nama karyawan.</li>
-            <li>Aturan lembur berbeda antara shift pagi (07.00) dan shift siang (14.00).</li>
-            <li>Denda keterlambatan dihitung progresif (makin terlambat, makin besar dendanya).</li>
-          </ul>
-          <p style="color: var(--text); line-height: 1.7;">
-            Satu kesalahan kecil dalam hitungan manual bisa berujung pada komplain penggajian dari karyawan dan revisi laporan yang menyita waktu manajer.
-          </p>
-        </div>
-
-        <!-- SECTION 2: Formula Architecture -->
-        <div style="margin-bottom: var(--space-6);">
-          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">2. Arsitektur Formula (Time Intelligence)</h2>
-          <p style="color: var(--text); line-height: 1.7;">
-            Menghitung waktu di Excel sangat rawan error karena format sistem 24 jam. Saya merancang sistem yang mendeteksi jam masuk karyawan (In) dan jam pulang (Out) lalu menghitung tiga komponen secara terpisah:
-          </p>
-          <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border); margin: var(--space-3) 0;">
-            <code style="display: block; color: var(--accent); margin-bottom: 8px; font-weight: bold;">Komponen yang Dihitung:</code>
-            <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); line-height: 1.6;">
-              <li><strong>Jam Lembur:</strong> Waktu yang melebihi jam kerja standar (17.00 untuk shift pagi).</li>
-              <li><strong>Denda Keterlambatan:</strong> Setiap kelipatan 30 menit terlambat dikenakan potongan berjenjang.</li>
-              <li><strong>Status Kehadiran:</strong> Hadir, Terlambat, Alpha — ditentukan otomatis tanpa input manual.</li>
-            </ul>
-          </div>
-          <pre style="background: #0f172a; padding: var(--space-4); border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); margin: var(--space-3) 0;"><code style="color: #f8fafc; font-family: monospace;">// Kalkulasi Jam Lembur Otomatis
-=IF(Jam_Keluar &gt; TIME(17,0,0),
-    (Jam_Keluar - TIME(17,0,0)) * 24,
-    0)
-
-// Denda Keterlambatan Progresif
-=IF(Jam_Masuk &lt;= TIME(7,0,0), 0,
-  IF(Jam_Masuk &lt;= TIME(7,30,0), 10000,
-  IF(Jam_Masuk &lt;= TIME(8,0,0),  25000, 50000)))</code></pre>
-        </div>
-
-        <!-- SECTION 3: Security Design -->
-        <div style="margin-bottom: var(--space-6);">
-          <h2 style="border-bottom: 2px solid var(--surface-2); padding-bottom: var(--space-2); margin-bottom: var(--space-4);">3. Desain Keamanan &amp; UX Template</h2>
-          <p style="color: var(--text); line-height: 1.7;">
-            Sebuah sistem otomasi hanya berguna jika tidak mudah dirusak oleh pengguna akhir. Saya menerapkan dua lapisan perlindungan:
-          </p>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-4); margin-top: var(--space-3);">
-            <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border);">
-              <div style="font-size: 1.5rem; margin-bottom: 8px;">🛡️</div>
-              <strong style="display: block; margin-bottom: 6px;">Data Validation</strong>
-              <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0; line-height: 1.5;">Input jam dibatasi hanya menerima format HH:MM. Jika admin memasukkan teks sembarang, sistem akan menolak dan menampilkan pesan error khusus.</p>
-            </div>
-            <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border);">
-              <div style="font-size: 1.5rem; margin-bottom: 8px;">🔐</div>
-              <strong style="display: block; margin-bottom: 6px;">Sheet Protection</strong>
-              <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0; line-height: 1.5;">Seluruh sel yang berisi formula dikunci dengan password. Admin hanya bisa mengedit kolom input, sehingga formula kalkulasi tidak bisa terhapus secara tidak sengaja.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- SECTION 4: Results -->
-        <div style="margin-bottom: var(--space-6); background: rgba(139, 92, 246, 0.05); padding: var(--space-5); border-left: 4px solid #8b5cf6; border-radius: 0 8px 8px 0;">
-          <h2 style="margin-top: 0; margin-bottom: var(--space-3); font-size: 1.4rem;">4. Hasil &amp; Dampak Operasional</h2>
-          <p style="color: var(--text); line-height: 1.7; margin-bottom: var(--space-3);">
-            Template ini dilengkapi <strong>Data Validation</strong> agar admin HR tidak bisa salah input format jam, dan <strong>Sheet Protection</strong> pada sel formula agar tidak tidak sengaja terhapus.
-          </p>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--space-3);">
-            <div style="background: var(--surface); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border); text-align: center;">
-              <div style="font-size: 2rem; font-weight: bold; color: #8b5cf6;">80%</div>
-              <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Penghematan waktu rekonsiliasi bulanan HRD</div>
-            </div>
-            <div style="background: var(--surface); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border); text-align: center;">
-              <div style="font-size: 2rem; font-weight: bold; color: #8b5cf6;">0%</div>
-              <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Human error dalam penggajian setelah implementasi</div>
-            </div>
-            <div style="background: var(--surface); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border); text-align: center;">
-              <div style="font-size: 2rem; font-weight: bold; color: #8b5cf6;">&lt;15 mnt</div>
-              <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Waktu proses dari 2–3 hari kerja penuh</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Back link bottom -->
-        <div style="border-top: 1px solid var(--border); padding-top: var(--space-5);">
-          <a href="portfolio.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px;">
-            ← Kembali ke Semua Portofolio
-          </a>
-        </div>
-
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ============ FOOTER ============ -->
-  <footer class="footer" role="contentinfo">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="index.html" class="nav-logo">
-            <div class="logo-icon" aria-hidden="true">⊞</div>
-            Excel Analyst Hub
-          </a>
-          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Belajar</h4>
-          <ul>
-            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
-            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
-            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Tools &amp; Trainer</h4>
-          <ul>
-            <li><a href="tools.html#formula-generator">Formula Generator</a></li>
-            <li><a href="tools.html#daily-challenge-section">Tantangan Harian</a></li>
-            <li><a href="tools.html#quick-ref">Referensi Cepat</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Jelajahi</h4>
-          <ul>
-            <li><a href="portfolio.html">Portofolio</a></li>
-            <li><a href="topic.html">Tutorial VLOOKUP</a></li>
-          </ul>
+      <h3
+        style="margin-top: var(--space-5); color: var(--text); border-bottom: 2px solid var(--surface-2); padding-bottom: 8px;">
+        2. Preview Anomali Data Absensi</h3>
+      <p style="color: var(--text-muted); line-height: 1.7; font-size: 1.05rem;">Tarikan sistem absensi HRIS sering
+        menghasilkan data kotor (<em>dirty data</em>) yang tidak bisa dikalkulasi langsung oleh Excel:</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 20px;">
+        <div style="grid-column: 1 / -1;">
+          <table class="data-table">
+            <tr>
+              <th>Tanggal</th>
+              <th>ID_Karyawan</th>
+              <th>Jam_Masuk</th>
+              <th>Jam_Keluar (Raw String)</th>
+              <th>Kondisi</th>
+            </tr>
+            <tr>
+              <td>02/05/2026</td>
+              <td>EMP-001</td>
+              <td>08:15</td>
+              <td>17:05</td>
+              <td>Normal</td>
+            </tr>
+            <tr style="background: rgba(139, 92, 246, 0.1);">
+              <td>02/05/2026</td>
+              <td>EMP-002</td>
+              <td>08:00</td>
+              <td>20:30</td>
+              <td><strong>Lembur (Overtime)</strong></td>
+            </tr>
+            <tr style="background: rgba(239, 68, 68, 0.1);">
+              <td>02/05/2026</td>
+              <td>EMP-003</td>
+              <td>08:45</td>
+              <td>' 19:15 '</td>
+              <td><span style="color: #ef4444;">Terdapat spasi hantu / Text Format</span></td>
+            </tr>
+          </table>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>Dibangun untuk generasi data analyst Indonesia berikutnya.</p>
-        <p>Excel Analyst Hub — Belajar gratis, keahlian nyata.</p>
+
+      <h3
+        style="margin-top: var(--space-5); color: var(--text); border-bottom: 2px solid var(--surface-2); padding-bottom: 8px;">
+        3. Langkah Analisis & Formula</h3>
+      <ul style="color: var(--text-muted); line-height: 1.8; font-size: 1.05rem; padding-left: 20px;">
+        <li><strong>Data Cleansing:</strong> Menggunakan <code>TRIM</code> dan <code>TIMEVALUE</code> untuk mengubah
+          string teks yang rusak menjadi angka desimal waktu sejati yang bisa dihitung.</li>
+        <li><strong>Overtime Logic:</strong> Mengurangi jam keluar aktual dengan standar jam pulang kantor, lalu
+          membulatkannya per jam menggunakan fungsi <code>FLOOR</code> agar sesuai dengan kebijakan upah perusahaan.
+        </li>
+      </ul>
+      <div class="code-block">
+        // Formula Ekstraksi Jam Lembur Valid (Diatas Jam 17:00)
+        =IF(
+        TIMEVALUE([@Jam_Keluar]) > TIME(17,0,0),
+        FLOOR((TIMEVALUE([@Jam_Keluar]) - TIME(17,0,0)) * 24, 1),
+        0
+        )
+      </div>
+
+      <h3
+        style="margin-top: var(--space-5); color: var(--text); border-bottom: 2px solid var(--surface-2); padding-bottom: 8px;">
+        4. Dampak Bisnis (Impact)</h3>
+      <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: var(--space-4); margin-top: var(--space-4);">
+        <div
+          style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border-left: 4px solid #8b5cf6;">
+          <h2 style="color: #8b5cf6; margin: 0 0 10px 0; font-size: 2.5rem;">90%</h2>
+          <p style="margin: 0; font-size: 0.95rem; color: var(--text-muted); line-height: 1.5;">Penghematan waktu
+            rekapitulasi data lembur mingguan dari 2 hari menjadi kurang dari 1 jam.</p>
+        </div>
+        <div
+          style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border-left: 4px solid #10b981;">
+          <h2 style="color: #10b981; margin: 0 0 10px 0; font-size: 2.5rem;">0%</h2>
+          <p style="margin: 0; font-size: 0.95rem; color: var(--text-muted); line-height: 1.5;">Tingkat kesalahan
+            pembayaran upah (<em>Zero Payroll Dispute</em>) karena kalkulasi tidak lagi dipengaruhi intervensi manual.
+          </p>
+        </div>
+      </div>
+
+      <div
+        style="margin-top: var(--space-6); border-top: 1px solid var(--border); padding-top: var(--space-5); text-align: center;">
+        <h4 style="margin-bottom: var(--space-3); color: var(--text);">Uji Sistem Automasi HR</h4>
+        <a href="assets/datasets/Case_Study_HR_Overtime.xlsx" download
+          style="background-color: var(--accent); color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem;">📥
+          Unduh File Excel (.xlsx)</a>
       </div>
     </div>
-  </footer>
-
-  <script src="assets/js/main.js"></script>
+  </main>
 </body>
+
 </html>
