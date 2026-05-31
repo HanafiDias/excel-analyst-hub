@@ -71,12 +71,12 @@
 
     <nav class="tools-subnav" aria-label="Navigasi tools">
       <div class="container">
-        <div class="tools-subnav-inner">
+        <div class="tools-subnav-inner" style="justify-content: center; display: flex; flex-wrap: wrap; gap: 10px;">
           <a href="#formula-generator" class="tools-subnav-link">⟨ƒ⟩ Formula Generator</a>
-          <a href="#daily-challenge-section" class="tools-subnav-link">🎯 Tantangan Harian</a>
-          <a href="#dataset-latihan" class="tools-subnav-link">📦 Dataset Latihan</a>
-          <a href="#dataset-generator" class="tools-subnav-link">🎲 Generator</a>
-          <a href="#quick-ref" class="tools-subnav-link">⚡ Referensi Cepat</a>
+          <a href="#daily-challenge-section" class="tools-subnav-link">🎯 Tantangan Harian Excel</a>
+          <a href="#dataset-generator" class="tools-subnav-link">🎲 Dataset Generator</a>
+          <a href="#quick-ref" class="tools-subnav-link">⚡ Excel Shortcut Flashcards</a>
+          <a href="#formula-sandbox" class="tools-subnav-link">🧪 Formula Sandbox</a>
         </div>
       </div>
     </nav>
@@ -251,68 +251,7 @@
         </div>
       </section>
 
-      <!-- ============ TOOL 5: FORMULA SANDBOX ============ -->
-      <section id="formula-sandbox" class="section" aria-label="Formula Sandbox">
-        <div class="container">
-          <div class="text-center" style="margin-bottom:var(--space-5);">
-            <span class="badge badge-advanced">Interactive Simulator</span>
-            <h2 style="margin:var(--space-2) 0 0 0;">Formula Sandbox</h2>
-            <p class="text-muted" style="margin-top:var(--space-2);">Ketik rumus seperti di Excel sungguhan. Ubah angka di dalam tabel untuk melihat hasil yang dinamis.</p>
-          </div>
-
-          <div class="card" style="max-width: 800px; margin: 0 auto; padding: var(--space-5); border-top: 4px solid var(--accent); box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
-            
-            <table class="sandbox-table" style="width: 100%; border-collapse: collapse; margin-bottom: var(--space-4); text-align: center;">
-              <thead>
-                <tr style="background: var(--surface-2);">
-                  <th style="border: 1px solid var(--border); padding: 8px; width: 40px; color: var(--text-muted);"></th>
-                  <th style="border: 1px solid var(--border); padding: 8px; color: var(--text-muted);">A</th>
-                  <th style="border: 1px solid var(--border); padding: 8px; color: var(--text-muted);">B</th>
-                  <th style="border: 1px solid var(--border); padding: 8px; color: var(--text-muted);">C</th>
-                </tr>
-              </thead>
-              <tbody id="sandbox-grid" style="font-family: monospace; font-size: 1.1rem;">
-                <tr>
-                  <td style="border: 1px solid var(--border); background: var(--surface-2); color: var(--text-muted); font-weight: bold;">1</td>
-                  <td contenteditable="true" id="cell-A1" style="border: 1px solid var(--border); padding: 10px; cursor: text;">10</td>
-                  <td contenteditable="true" id="cell-B1" style="border: 1px solid var(--border); padding: 10px; cursor: text;">20</td>
-                  <td contenteditable="true" id="cell-C1" style="border: 1px solid var(--border); padding: 10px; cursor: text;">30</td>
-                </tr>
-                <tr>
-                  <td style="border: 1px solid var(--border); background: var(--surface-2); color: var(--text-muted); font-weight: bold;">2</td>
-                  <td contenteditable="true" id="cell-A2" style="border: 1px solid var(--border); padding: 10px; cursor: text;">50</td>
-                  <td contenteditable="true" id="cell-B2" style="border: 1px solid var(--border); padding: 10px; cursor: text;">100</td>
-                  <td contenteditable="true" id="cell-C2" style="border: 1px solid var(--border); padding: 10px; cursor: text;">150</td>
-                </tr>
-                <tr>
-                  <td style="border: 1px solid var(--border); background: var(--surface-2); color: var(--text-muted); font-weight: bold;">3</td>
-                  <td contenteditable="true" id="cell-A3" style="border: 1px solid var(--border); padding: 10px; cursor: text;">5</td>
-                  <td contenteditable="true" id="cell-B3" style="border: 1px solid var(--border); padding: 10px; cursor: text;">15</td>
-                  <td contenteditable="true" id="cell-C3" style="border: 1px solid var(--border); padding: 10px; cursor: text;">25</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div style="display: flex; gap: 10px; align-items: stretch;">
-              <div style="background: var(--surface-2); padding: 0 15px; display: flex; align-items: center; border: 1px solid var(--border); border-radius: 6px; font-weight: bold; color: var(--text-muted);">
-                ƒx
-              </div>
-              <input type="text" id="sandbox-formula" value="=SUM(A1:B2)" placeholder="Ketik rumus (Contoh: =A1+B2 atau =SUM(A1:C1))" style="flex: 1; padding: var(--space-3); background: var(--surface); border: 1px solid var(--accent); border-radius: 6px; color: var(--text); font-family: monospace; font-size: 1.1rem; outline: none; box-shadow: 0 0 0 2px rgba(59,130,246,0.2);" />
-            </div>
-
-            <div style="margin-top: var(--space-4); background: var(--surface-2); padding: var(--space-4); border-radius: 6px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-weight: 600; color: var(--text-muted);">Hasil Kalkulasi:</span>
-              <span id="sandbox-result" style="font-size: 1.5rem; font-weight: bold; color: #10b981; font-family: monospace;">180</span>
-            </div>
-            
-            <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: var(--space-3);">
-              *Mendukung operasi +, -, *, / dan fungsi dasar SUM(), AVERAGE(), MAX(), MIN().
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ TOOL 6: QUICK REFERENCE CARD ============ -->
+      <!-- ============ TOOL 5: QUICK REFERENCE CARD ============ -->
       <section id="quick-ref" class="section" aria-label="Referensi Cepat Shortcut">
         <div class="container">
           <div class="text-center" style="margin-bottom: var(--space-5);">
@@ -326,6 +265,95 @@
           </div>
 
           <div class="flashcard-grid" id="flashcards-container-target">
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TOOL 6: FORMULA SANDBOX ============ -->
+      <section id="formula-sandbox" class="section" aria-label="Formula Sandbox">
+        <div class="container">
+          <div class="text-center" style="margin-bottom: var(--space-5);">
+            <span class="badge badge-advanced">Interactive Sandbox</span>
+            <h2 style="margin: var(--space-2) 0 0 0;">Formula Sandbox</h2>
+            <p class="text-muted" style="margin-top: var(--space-2); max-width: 700px; margin-left: auto; margin-right: auto;">
+              Simulator Excel mini — isi sel dengan angka, ketik formula di formula bar, dan lihat hasilnya langsung. Cocok untuk memahami cara kerja SUM, AVERAGE, MIN, MAX, dan COUNT.
+            </p>
+          </div>
+
+          <div class="card" style="max-width: 900px; margin: 0 auto; padding: var(--space-5); border-top: 4px solid var(--accent); box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+
+          <!-- Formula Bar -->
+          <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4);">
+            <div style="display:flex;align-items:center;gap:var(--space-2);flex-shrink:0;">
+              <span style="font-size:0.78rem;font-weight:600;color:var(--text-muted);font-family:var(--font-display);text-transform:uppercase;letter-spacing:0.06em;">Sel</span>
+              <span id="sb-active-cell" style="font-size:0.875rem;font-weight:600;color:var(--text);font-family:var(--font-mono);background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:4px 10px;min-width:44px;text-align:center;">A1</span>
+            </div>
+            <span style="font-size:1rem;font-weight:700;color:var(--accent);font-family:var(--font-mono);flex-shrink:0;">fx</span>
+            <input
+              type="text"
+              id="sb-formula-bar"
+              class="form-input"
+              style="font-family:var(--font-mono);font-size:0.875rem;flex:1;"
+              placeholder='Ketik nilai atau formula — contoh: =SUM(A1:A5)'
+              autocomplete="off"
+              spellcheck="false"
+              aria-label="Formula bar"
+            />
+          </div>
+
+          <!-- Grid -->
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:var(--space-4);">
+            <table id="sb-grid" style="border-collapse:collapse;font-size:0.875rem;width:100%;min-width:420px;">
+              <thead>
+                <tr>
+                  <th style="width:36px;padding:4px 8px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-muted);font-size:0.75rem;font-weight:600;text-align:center;"></th>
+                  <th style="padding:4px 12px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-muted);font-size:0.75rem;font-weight:600;text-align:center;min-width:80px;">A</th>
+                  <th style="padding:4px 12px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-muted);font-size:0.75rem;font-weight:600;text-align:center;min-width:80px;">B</th>
+                  <th style="padding:4px 12px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-muted);font-size:0.75rem;font-weight:600;text-align:center;min-width:80px;">C</th>
+                  <th style="padding:4px 12px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-muted);font-size:0.75rem;font-weight:600;text-align:center;min-width:80px;">D</th>
+                  <th style="padding:4px 12px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-muted);font-size:0.75rem;font-weight:600;text-align:center;min-width:80px;">E</th>
+                </tr>
+              </thead>
+              <tbody id="sb-tbody"></tbody>
+            </table>
+          </div>
+
+          <!-- Result + Error display -->
+          <div id="sb-result-wrap" style="display:none;margin-bottom:var(--space-4);">
+            <div id="sb-result-card" style="padding:var(--space-3) var(--space-4);border-radius:var(--radius);border-left:3px solid var(--accent);background:rgba(79,142,247,0.06);display:flex;align-items:center;gap:var(--space-4);flex-wrap:wrap;">
+              <div>
+                <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:2px;">Hasil di sel <span id="sb-res-cell">A1</span></div>
+                <div id="sb-res-value" style="font-size:1.5rem;font-weight:700;color:var(--accent);font-family:var(--font-mono);"></div>
+              </div>
+              <div id="sb-res-detail" style="font-size:0.82rem;color:var(--text-muted);flex:1;"></div>
+            </div>
+          </div>
+
+          <!-- Error display -->
+          <div id="sb-error-wrap" style="display:none;margin-bottom:var(--space-4);">
+            <div style="padding:var(--space-3) var(--space-4);border-radius:var(--radius);border-left:3px solid var(--danger);background:rgba(239,68,68,0.06);">
+              <span style="font-size:0.82rem;font-weight:600;color:var(--danger);" id="sb-error-msg"></span>
+            </div>
+          </div>
+
+          <!-- Quick formula buttons -->
+          <div>
+            <p style="font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:var(--space-3);">Coba formula ini</p>
+            <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);">
+              <button class="filter-btn sb-preset" data-formula="=SUM(A1:A5)">=SUM(A1:A5)</button>
+              <button class="filter-btn sb-preset" data-formula="=AVERAGE(A1:E1)">=AVERAGE(A1:E1)</button>
+              <button class="filter-btn sb-preset" data-formula="=MAX(A1:E5)">=MAX(A1:E5)</button>
+              <button class="filter-btn sb-preset" data-formula="=MIN(A1:E5)">=MIN(A1:E5)</button>
+              <button class="filter-btn sb-preset" data-formula="=COUNT(A1:E5)">=COUNT(A1:E5)</button>
+              <button class="filter-btn sb-preset" data-formula="=SUM(A1:E1)">=SUM(A1:E1)</button>
+            </div>
+          </div>
+
+          <!-- Hint -->
+          <p style="font-size:0.78rem;color:var(--text-muted);margin-top:var(--space-4);">
+            Klik sel untuk memilih → ketik angka langsung atau gunakan formula bar di atas. Formula dimulai dengan <code>=</code>. Range: <code>A1:E5</code>. Formula yang didukung: SUM, AVERAGE, MIN, MAX, COUNT.
+          </p>
+
           </div>
         </div>
       </section>
@@ -396,7 +424,285 @@
   <script src="assets/js/main.js"></script>
   <script src="assets/js/formula-gen.js"></script>
   <script src="assets/js/dataset-gen.js"></script>
-  <script src="assets/js/sandbox.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  var ROWS = 5;
+  var COLS_LABEL = ['A','B','C','D','E'];
+
+  var cellData = {
+    'A1':'10','A2':'20','A3':'30','A4':'40','A5':'50',
+    'B1':'5','B2':'15','B3':'25','B4':'35','B5':'45',
+    'C1':'100','C2':'200','C3':'150','C4':'80','C5':'120',
+    'D1':'','D2':'','D3':'','D4':'','D5':'',
+    'E1':'','E2':'','E3':'','E4':'','E5':''
+  };
+
+  var activeCell = 'A1';
+  var activeInput = null;
+
+  function cellId(row, colIdx) {
+    return COLS_LABEL[colIdx] + row;
+  }
+
+  function getRawValue(id) {
+    return cellData[id] !== undefined ? cellData[id] : '';
+  }
+
+  function getNumericValue(id) {
+    var raw = getRawValue(id);
+    if (raw === '' || raw === undefined) return 0;
+    var n = parseFloat(raw);
+    return isNaN(n) ? 0 : n;
+  }
+
+  function parseRange(rangeStr) {
+    var m = rangeStr.match(/^([A-E])(\d):([A-E])(\d)$/i);
+    if (!m) return null;
+    var c1 = COLS_LABEL.indexOf(m[1].toUpperCase());
+    var r1 = parseInt(m[2]);
+    var c2 = COLS_LABEL.indexOf(m[3].toUpperCase());
+    var r2 = parseInt(m[4]);
+    if (c1 < 0 || c2 < 0 || r1 < 1 || r2 < 1 || r1 > ROWS || r2 > ROWS || c1 > 4 || c2 > 4) return null;
+    var vals = [];
+    for (var r = Math.min(r1,r2); r <= Math.max(r1,r2); r++) {
+      for (var c = Math.min(c1,c2); c <= Math.max(c1,c2); c++) {
+        vals.push(getNumericValue(COLS_LABEL[c] + r));
+      }
+    }
+    return vals;
+  }
+
+  function parseSingleCell(ref) {
+    var m = ref.match(/^([A-E])(\d)$/i);
+    if (!m) return null;
+    var c = COLS_LABEL.indexOf(m[1].toUpperCase());
+    var r = parseInt(m[2]);
+    if (c < 0 || r < 1 || r > ROWS) return null;
+    return [getNumericValue(COLS_LABEL[c] + r)];
+  }
+
+  function evalFormula(formula) {
+    if (!formula || formula[0] !== '=') {
+      var n = parseFloat(formula);
+      return { ok: true, value: isNaN(n) ? (formula || 0) : n };
+    }
+
+    var f = formula.slice(1).trim().toUpperCase();
+
+    var m = f.match(/^(SUM|AVERAGE|AVG|MIN|MAX|COUNT)\(([A-E]\d:[A-E]\d|[A-E]\d)\)$/);
+    if (!m) return { ok: false, error: '#NAME? — Formula tidak dikenali. Coba: =SUM(A1:A5)' };
+
+    var fn = m[1];
+    var arg = m[2];
+    var vals;
+
+    if (arg.indexOf(':') !== -1) {
+      vals = parseRange(arg);
+      if (!vals) return { ok: false, error: '#REF! — Range di luar area A1:E5' };
+    } else {
+      vals = parseSingleCell(arg);
+      if (!vals) return { ok: false, error: '#REF! — Referensi sel tidak valid' };
+    }
+
+    if (vals.length === 0) return { ok: false, error: '#VALUE! — Range kosong' };
+
+    var result;
+    var detail = '';
+
+    if (fn === 'SUM') {
+      result = vals.reduce(function(a,b){ return a+b; }, 0);
+      detail = vals.length + ' nilai dijumlahkan';
+    } else if (fn === 'AVERAGE' || fn === 'AVG') {
+      var nonZero = vals.filter(function(v){ return v !== 0; });
+      result = vals.reduce(function(a,b){ return a+b; }, 0) / vals.length;
+      detail = 'Rata-rata dari ' + vals.length + ' sel';
+    } else if (fn === 'MIN') {
+      result = Math.min.apply(null, vals);
+      detail = 'Nilai terkecil dari ' + vals.length + ' sel';
+    } else if (fn === 'MAX') {
+      result = Math.max.apply(null, vals);
+      detail = 'Nilai terbesar dari ' + vals.length + ' sel';
+    } else if (fn === 'COUNT') {
+      result = vals.filter(function(v){ return !isNaN(v); }).length;
+      detail = 'Jumlah sel berisi angka';
+    }
+
+    var formatted = Number.isInteger(result) ? result : parseFloat(result.toFixed(6));
+    return { ok: true, value: formatted, detail: detail };
+  }
+
+  function formatDisplay(val) {
+    if (typeof val === 'number') {
+      if (Number.isInteger(val)) return val.toLocaleString('id-ID');
+      return parseFloat(val.toFixed(4)).toLocaleString('id-ID');
+    }
+    return String(val);
+  }
+
+  function showResult(cellId, formula) {
+    var resultWrap = document.getElementById('sb-result-wrap');
+    var errorWrap = document.getElementById('sb-error-wrap');
+    resultWrap.style.display = 'none';
+    errorWrap.style.display = 'none';
+
+    if (!formula || formula[0] !== '=') return;
+
+    var result = evalFormula(formula);
+    if (result.ok) {
+      document.getElementById('sb-res-cell').textContent = cellId;
+      document.getElementById('sb-res-value').textContent = formatDisplay(result.value);
+      document.getElementById('sb-res-detail').textContent = result.detail || '';
+      resultWrap.style.display = 'block';
+
+      if (activeInput) {
+        activeInput.value = formatDisplay(result.value);
+      }
+    } else {
+      document.getElementById('sb-error-msg').textContent = result.error;
+      errorWrap.style.display = 'block';
+    }
+  }
+
+  function selectCell(id, inputEl) {
+    activeCell = id;
+    activeInput = inputEl;
+    document.getElementById('sb-active-cell').textContent = id;
+    var raw = getRawValue(id);
+    document.getElementById('sb-formula-bar').value = raw;
+    document.getElementById('sb-result-wrap').style.display = 'none';
+    document.getElementById('sb-error-wrap').style.display = 'none';
+  }
+
+  function buildGrid() {
+    var tbody = document.getElementById('sb-tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+
+    for (var r = 1; r <= ROWS; r++) {
+      var tr = document.createElement('tr');
+
+      var rowHeader = document.createElement('td');
+      rowHeader.textContent = r;
+      rowHeader.style.cssText = 'padding:4px 8px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-muted);font-size:0.75rem;font-weight:600;text-align:center;';
+      tr.appendChild(rowHeader);
+
+      for (var c = 0; c < COLS_LABEL.length; c++) {
+        var id = cellId(r, c);
+        var td = document.createElement('td');
+        td.style.cssText = 'border:1px solid var(--border);padding:0;';
+
+        var inp = document.createElement('input');
+        inp.type = 'text';
+        inp.value = cellData[id] || '';
+        inp.dataset.cell = id;
+        inp.autocomplete = 'off';
+        inp.spellcheck = false;
+        inp.style.cssText = 'width:100%;border:none;background:transparent;font-size:0.875rem;padding:6px 10px;color:var(--text);outline:none;font-family:var(--font-mono);text-align:right;';
+
+        inp.addEventListener('focus', (function(cid, el, tdEl) {
+          return function() {
+            if (activeInput) {
+              var prevTd = activeInput.parentElement;
+              if (prevTd) prevTd.style.background = '';
+              activeInput.style.color = 'var(--text)';
+            }
+            tdEl.style.background = 'rgba(79,142,247,0.08)';
+            el.style.color = 'var(--accent)';
+            selectCell(cid, el);
+          };
+        })(id, inp, td));
+
+        inp.addEventListener('blur', (function(tdEl) {
+          return function() {
+            tdEl.style.background = '';
+          };
+        })(td));
+
+        inp.addEventListener('input', (function(cid, el) {
+          return function() {
+            cellData[cid] = el.value;
+            document.getElementById('sb-formula-bar').value = el.value;
+            if (el.value && el.value[0] === '=') {
+              showResult(cid, el.value);
+            } else {
+              document.getElementById('sb-result-wrap').style.display = 'none';
+              document.getElementById('sb-error-wrap').style.display = 'none';
+            }
+          };
+        })(id, inp));
+
+        inp.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === 'Tab') {
+            e.preventDefault();
+            var allInputs = document.querySelectorAll('#sb-grid input[data-cell]');
+            var arr = Array.from(allInputs);
+            var idx = arr.indexOf(document.activeElement);
+            var next = arr[idx + 1];
+            if (next) next.focus();
+          }
+        });
+
+        td.appendChild(inp);
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
+    }
+  }
+
+  function initFormulaBar() {
+    var bar = document.getElementById('sb-formula-bar');
+    if (!bar) return;
+
+    bar.addEventListener('input', function() {
+      cellData[activeCell] = bar.value;
+      if (bar.value && bar.value[0] === '=') {
+        showResult(activeCell, bar.value);
+      } else {
+        document.getElementById('sb-result-wrap').style.display = 'none';
+        document.getElementById('sb-error-wrap').style.display = 'none';
+        if (activeInput) activeInput.value = bar.value;
+      }
+    });
+
+    bar.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (activeInput) activeInput.focus();
+      }
+    });
+  }
+
+  function initPresets() {
+    document.querySelectorAll('.sb-preset').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var formula = btn.dataset.formula;
+        var bar = document.getElementById('sb-formula-bar');
+        bar.value = formula;
+        cellData[activeCell] = formula;
+        showResult(activeCell, formula);
+        bar.focus();
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    buildGrid();
+    initFormulaBar();
+    initPresets();
+
+    var firstInput = document.querySelector('#sb-grid input[data-cell="A1"]');
+    if (firstInput) {
+      setTimeout(function() {
+        selectCell('A1', firstInput);
+      }, 100);
+    }
+  });
+
+})();
+</script>
+
   <script src="assets/js/quiz.js"></script>
 
 
