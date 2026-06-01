@@ -14,33 +14,33 @@
       {
         name: 'VLOOKUP',
         syntax: '=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])',
-        description: 'Searches the first column of a range for a value and returns a value in the same row from another column. Use FALSE (or 0) for exact match — almost always what you want.',
+        description: 'Mencari nilai di kolom paling kiri sebuah rentang (range) dan mengembalikan nilai di baris yang sama dari kolom lain. Gunakan FALSE (atau 0) untuk pencarian yang persis sama — ini yang paling sering digunakan.',
         example: '=VLOOKUP(A2, $D$2:$F$100, 2, FALSE)',
-        tip: 'Lock the table_array with $ signs so it doesn\'t shift when you copy the formula down.',
+        tip: 'Kunci table_array dengan tanda $ agar tidak bergeser saat Anda menyalin rumus ke bawah.',
         keywords: ['find', 'search', 'lookup', 'match', 'value in table', 'look up', 'find value', 'get value', 'retrieve', 'fetch', 'cari', 'temukan', 'cari nilai', 'cari data', 'ambil data', 'ambil nilai', 'berdasarkan', 'sesuai', 'cocokkan']
       },
       {
         name: 'INDEX-MATCH',
         syntax: '=INDEX(return_range, MATCH(lookup_value, lookup_range, 0))',
-        description: 'More flexible than VLOOKUP — can look left, handles column insertions gracefully, and is faster on large datasets. Preferred by experienced analysts.',
+        description: 'Lebih fleksibel dari VLOOKUP — bisa mencari ke kiri, tidak terpengaruh jika ada penambahan kolom, dan lebih cepat pada dataset yang besar. Lebih disukai oleh analis berpengalaman.',
         example: '=INDEX(C2:C100, MATCH(A2, B2:B100, 0))',
-        tip: 'MATCH finds the row position (as a number), INDEX uses that number to retrieve the value. Think of them as two separate lookups working together.',
+        tip: 'MATCH menemukan posisi baris (dalam bentuk angka), lalu INDEX menggunakan angka tersebut untuk mengambil nilainya. Anggap saja sebagai dua fungsi pencarian terpisah yang bekerja sama.',
         keywords: ['index', 'match', 'flexible lookup', 'look left', 'index match', 'better than vlookup', 'two-way lookup', 'bi-directional', 'cari fleksibel', 'lebih baik dari vlookup', 'cari ke kiri', 'tidak rusak']
       },
       {
         name: 'HLOOKUP',
         syntax: '=HLOOKUP(lookup_value, table_array, row_index_num, [range_lookup])',
-        description: 'Like VLOOKUP but searches horizontally across the first row instead of down the first column. Used when your data headers are in a row rather than a column.',
+        description: 'Seperti VLOOKUP namun mencari secara horizontal di sepanjang baris pertama, bukan ke bawah di kolom pertama. Digunakan ketika header data Anda berada di baris, bukan di kolom.',
         example: '=HLOOKUP("Q3", $B$1:$E$10, 3, FALSE)',
-        tip: 'If your data is in a normal table (headers in row 1, data below), use VLOOKUP. HLOOKUP is for transposed/horizontal layouts.',
+        tip: 'Jika data Anda ada di tabel normal (header di baris 1, data di bawahnya), gunakan VLOOKUP. HLOOKUP digunakan untuk tata letak yang ditranspose/horizontal.',
         keywords: ['hlookup', 'horizontal lookup', 'search row', 'lookup row', 'row lookup', 'cari horizontal', 'cari baris']
       },
       {
         name: 'XMATCH',
         syntax: '=XMATCH(lookup_value, lookup_array, [match_mode], [search_mode])',
-        description: 'The modern replacement for MATCH — supports wildcard search, approximate match, and reverse search. Available in Excel 365 and Excel 2021+.',
+        description: 'Pengganti modern untuk MATCH — mendukung pencarian dengan wildcard, pencarian perkiraan, dan pencarian dari bawah. Tersedia di Excel 365 dan Excel 2021+.',
         example: '=XMATCH(A2, B2:B100, 0)',
-        tip: 'Pair with XLOOKUP or INDEX for even more flexibility than INDEX-MATCH.',
+        tip: 'Gabungkan dengan XLOOKUP atau INDEX untuk fleksibilitas yang lebih dari sekadar INDEX-MATCH.',
         keywords: ['xmatch', 'modern match', '365', 'find position', 'position of', 'posisi', 'temukan posisi']
       }
     ],
@@ -48,49 +48,49 @@
       {
         name: 'SUMIF',
         syntax: '=SUMIF(range, criteria, [sum_range])',
-        description: 'Sums values in a range that meet a single condition. The range is where you check the condition; sum_range is what gets added up.',
+        description: 'Menjumlahkan nilai dalam suatu range yang memenuhi satu kriteria tertentu. Range adalah tempat Anda mengecek kriteria; sum_range adalah nilai yang akan dijumlahkan.',
         example: '=SUMIF(B2:B100, "West", C2:C100)',
-        tip: 'If sum_range is omitted, it sums the range itself. Use double quotes for text criteria: "West", not West.',
+        tip: 'Jika sum_range tidak diisi, maka rumus akan menjumlahkan range kriteria. Gunakan tanda kutip ganda untuk kriteria teks: "West", bukan West.',
         keywords: ['sum if', 'conditional sum', 'total by', 'add if', 'sum where', 'total where', 'sum by region', 'sum by category', 'jumlahkan jika', 'total jika', 'jumlah berdasarkan', 'total berdasarkan', 'jumlahkan berdasarkan', 'hitung total', 'total per kategori', 'total per wilayah', 'total per region', 'jumlah per', 'penjumlahan kondisi', 'sum kondisi']
       },
       {
         name: 'SUMIFS',
         syntax: '=SUMIFS(sum_range, criteria_range1, criteria1, [criteria_range2, criteria2, ...])',
-        description: 'Sums values that meet multiple conditions simultaneously. More flexible than SUMIF — and note that the sum_range comes first.',
+        description: 'Menjumlahkan nilai yang memenuhi beberapa kriteria sekaligus. Lebih fleksibel dari SUMIF — dan perhatikan bahwa sum_range diletakkan paling awal.',
         example: '=SUMIFS(C2:C100, B2:B100, "West", D2:D100, "Q3")',
-        tip: 'SUMIFS always requires the sum_range as the first argument, unlike SUMIF where it\'s optional and at the end.',
+        tip: 'SUMIFS selalu mensyaratkan sum_range sebagai argumen pertama, tidak seperti SUMIF di mana argumen ini opsional dan berada di akhir.',
         keywords: ['sumifs', 'sum multiple conditions', 'sum two criteria', 'sum and', 'total multiple', 'conditional sum multiple', 'jumlahkan beberapa kondisi', 'total dua kriteria', 'jumlah dan', 'total dengan syarat']
       },
       {
         name: 'COUNTIF',
         syntax: '=COUNTIF(range, criteria)',
-        description: 'Counts the number of cells in a range that meet a single condition. Use it to find how many employees are in a department, how many orders exceeded a threshold, etc.',
+        description: 'Menghitung jumlah sel dalam suatu range yang memenuhi satu kondisi tunggal. Gunakan ini untuk mencari tahu berapa banyak karyawan di suatu departemen, berapa banyak pesanan yang melampaui batas tertentu, dll.',
         example: '=COUNTIF(A2:A100, "Active")',
-        tip: 'You can use wildcards: COUNTIF(A:A, "Budi*") counts all cells starting with "Budi". Use ">100" with quotes to count values greater than 100.',
+        tip: 'Anda dapat menggunakan wildcard: COUNTIF(A:A, "Budi*") menghitung semua sel yang diawali dengan "Budi". Gunakan ">100" dengan tanda kutip untuk menghitung nilai lebih dari 100.',
         keywords: ['count if', 'conditional count', 'how many', 'count where', 'number of', 'count by', 'tally', 'hitung jika', 'hitung berdasarkan', 'berapa banyak', 'jumlah data', 'hitung data', 'count berdasarkan', 'hitung per', 'berapa jumlah', 'hitung kategori', 'hitung status', 'hitung karyawan aktif', 'hitung transaksi']
       },
       {
         name: 'AVERAGEIF',
         syntax: '=AVERAGEIF(range, criteria, [average_range])',
-        description: 'Returns the average of cells that meet a single condition. Useful for calculating average sales by region, average score by department, etc.',
+        description: 'Mengembalikan rata-rata sel yang memenuhi satu kondisi. Berguna untuk menghitung rata-rata penjualan per region, rata-rata nilai per departemen, dll.',
         example: '=AVERAGEIF(B2:B100, "North", C2:C100)',
-        tip: 'Like SUMIF, if average_range is omitted, it averages the range itself.',
+        tip: 'Seperti SUMIF, jika average_range tidak diisi, maka rumus akan merata-ratakan range kriteria.',
         keywords: ['average if', 'conditional average', 'mean by', 'average where', 'average for', 'mean for', 'rata-rata jika', 'rata-rata berdasarkan', 'rata rata per', 'average kondisi', 'rata rata per departemen', 'rata-rata per kategori', 'rata-rata kondisi', 'average per wilayah']
       },
       {
         name: 'LARGE',
         syntax: '=LARGE(array, k)',
-        description: 'Returns the k-th largest value in a data set. =LARGE(D1:D50, 1) is the same as MAX. =LARGE(D1:D50, 3) gives the 3rd highest value without sorting.',
+        description: 'Mengembalikan nilai terbesar ke-k dalam sebuah kumpulan data. =LARGE(D1:D50, 1) sama dengan MAX. =LARGE(D1:D50, 3) memberikan nilai tertinggi ketiga tanpa perlu mengurutkan (sorting) data.',
         example: '=LARGE(D1:D50, 3)',
-        tip: 'Use SMALL() for the k-th smallest value. These functions ignore empty cells and text.',
+        tip: 'Gunakan SMALL() untuk nilai terkecil ke-k. Fungsi-fungsi ini mengabaikan sel kosong dan teks.',
         keywords: ['largest', 'top', 'highest', 'kth largest', 'third largest', 'second largest', 'rank', 'nth highest', 'terbesar', 'nilai terbesar', 'tertinggi', 'peringkat atas', 'ranking tertinggi', 'terbesar kedua', 'terbesar ketiga']
       },
       {
         name: 'SUBTOTAL',
         syntax: '=SUBTOTAL(function_num, ref1, [ref2, ...])',
-        description: 'Returns an aggregate result that automatically excludes hidden rows. Use function_num 9 for SUM, 2 for COUNT, 1 for AVERAGE. Ideal for filtered tables.',
+        description: 'Mengembalikan hasil agregat yang secara otomatis mengabaikan baris yang tersembunyi. Gunakan function_num 9 untuk SUM, 2 untuk COUNT, 1 untuk AVERAGE. Sangat cocok untuk tabel yang difilter.',
         example: '=SUBTOTAL(9, C2:C100)',
-        tip: 'Unlike SUM, SUBTOTAL ignores rows hidden by a filter. This makes it the right function for subtotals in filtered tables.',
+        tip: 'Tidak seperti SUM, SUBTOTAL mengabaikan baris yang disembunyikan oleh filter. Ini menjadikannya fungsi yang tepat untuk membuat subtotal pada tabel yang difilter.',
         keywords: ['subtotal', 'filtered sum', 'visible only', 'sum visible', 'filter total', 'exclude hidden', 'jumlah terlihat', 'sum filter', 'total yang difilter']
       }
     ],
@@ -98,49 +98,49 @@
       {
         name: 'LEFT',
         syntax: '=LEFT(text, [num_chars])',
-        description: 'Extracts a specified number of characters from the left side of a text string. Useful for extracting codes, prefixes, or the first part of a name.',
+        description: 'Mengambil sejumlah karakter dari sisi kiri sebuah teks. Berguna untuk mengambil kode, awalan (prefix), atau bagian depan dari suatu nama.',
         example: '=LEFT(A2, 3)',
-        tip: 'To extract up to a dynamic character (like a space), combine with FIND: =LEFT(A2, FIND(" ", A2) - 1)',
+        tip: 'Untuk mengambil teks hingga karakter yang posisinya bisa berubah (seperti spasi), gabungkan dengan FIND: =LEFT(A2, FIND(" ", A2) - 1)',
         keywords: ['left', 'extract', 'first characters', 'first letters', 'prefix', 'starting characters', 'ambil kiri', 'karakter kiri', 'awalan', 'bagian kiri', 'nama depan', 'kode awal']
       },
       {
         name: 'RIGHT',
         syntax: '=RIGHT(text, [num_chars])',
-        description: 'Extracts a specified number of characters from the right side of a text string. Useful for extracting extensions, suffixes, or the last part of a code.',
+        description: 'Mengambil sejumlah karakter dari sisi kanan sebuah teks. Berguna untuk mengekstrak ekstensi, akhiran (suffix), atau bagian terakhir dari sebuah kode.',
         example: '=RIGHT(A2, 4)',
-        tip: 'To extract after a dynamic character, use: =RIGHT(A2, LEN(A2) - FIND("-", A2))',
+        tip: 'Untuk mengekstrak teks setelah karakter tertentu, gunakan: =RIGHT(A2, LEN(A2) - FIND("-", A2))',
         keywords: ['right', 'last characters', 'extract end', 'suffix', 'end of text', 'last letters', 'ambil kanan', 'karakter kanan', 'akhiran', 'bagian kanan']
       },
       {
         name: 'MID',
         syntax: '=MID(text, start_num, num_chars)',
-        description: 'Extracts a substring from the middle of a text string. Specify where to start (1 = first character) and how many characters to take.',
+        description: 'Mengekstrak substring dari bagian tengah sebuah teks. Tentukan posisi awal dimulainya pengambilan (1 = karakter pertama) dan berapa banyak karakter yang ingin diambil.',
         example: '=MID(A2, 5, 8)',
-        tip: 'Count characters carefully: in "EMP-20240315-001", the date starts at position 5 and is 8 characters long.',
+        tip: 'Hitung karakter dengan cermat: dalam teks "EMP-20240315-001", bagian tanggal dimulai pada posisi ke-5 dan panjangnya 8 karakter.',
         keywords: ['mid', 'middle', 'substring', 'extract middle', 'extract from position', 'slice', 'portion of text', 'ambil tengah', 'karakter tengah', 'bagian tengah']
       },
       {
         name: 'CONCATENATE / CONCAT',
-        syntax: '=CONCAT(text1, text2, ...) or =text1 & " " & text2',
-        description: 'Joins two or more text strings into one. The & operator is the simplest approach. TEXTJOIN is better when combining many values with a delimiter.',
-        example: '=CONCAT(A2, " ", B2)  or  =A2 & " " & B2',
-        tip: 'Use TEXTJOIN(", ", TRUE, A2:A10) to join a range of values with a comma-separator, skipping empty cells.',
+        syntax: '=CONCAT(text1, text2, ...) atau =text1 & " " & text2',
+        description: 'Menggabungkan dua atau lebih string teks menjadi satu. Operator & adalah cara yang paling sederhana. TEXTJOIN lebih baik jika menggabungkan banyak nilai dengan sebuah pemisah (delimiter).',
+        example: '=CONCAT(A2, " ", B2)  atau  =A2 & " " & B2',
+        tip: 'Gunakan TEXTJOIN(", ", TRUE, A2:A10) untuk menggabungkan sekumpulan sel (range) dengan pemisah koma, tanpa mengikutsertakan sel yang kosong.',
         keywords: ['join', 'combine', 'merge text', 'concatenate', 'connect', 'append', 'combine columns', 'full name', 'gabungkan', 'sambungkan', 'gabung teks', 'sambung teks', 'nama lengkap', 'gabung kolom', 'satukan teks', 'join teks']
       },
       {
         name: 'TEXT',
         syntax: '=TEXT(value, format_text)',
-        description: 'Converts a number or date to text with a specific format. Essential for creating readable dates, formatted currency, or percentage text in concatenated strings.',
+        description: 'Mengubah format angka atau tanggal menjadi teks dengan format spesifik. Sangat penting untuk membuat tanggal yang mudah dibaca, nilai mata uang (currency) berformat, atau teks persentase dalam kalimat yang digabung.',
         example: '=TEXT(A2, "dd mmmm yyyy")',
-        tip: 'Common formats: "dd/mm/yyyy" for dates, "#,##0" for numbers with commas, "0.0%" for percentages. The result is text — you can\'t do math with it.',
+        tip: 'Format umum: "dd/mm/yyyy" untuk tanggal, "#,##0" untuk angka ribuan dengan koma/titik, "0.0%" untuk persen. Hasilnya berupa teks — Anda tidak bisa menggunakannya untuk operasi hitung matematika.',
         keywords: ['text format', 'number to text', 'date format', 'format date', 'format number', 'display as', 'indonesian date', 'format tanggal', 'format angka', 'ubah format', 'tampilkan sebagai', 'format rupiah', 'format persen', 'angka ke teks', 'tanggal ke teks']
       },
       {
         name: 'TRIM',
         syntax: '=TRIM(text)',
-        description: 'Removes all extra spaces from text — leading, trailing, and multiple spaces between words (leaving only single spaces). First thing to run when cleaning imported data.',
+        description: 'Menghapus semua spasi berlebih dari teks — spasi di awal, di akhir, dan multi-spasi di antara kata (menyisakan hanya satu spasi). Ini adalah hal pertama yang harus dijalankan saat membersihkan data (data cleaning).',
         example: '=TRIM(A2)',
-        tip: 'TRIM only removes the standard space character (ASCII 32). If data has non-breaking spaces (from web/HTML), use SUBSTITUTE(TRIM(A2), CHAR(160), " ")',
+        tip: 'TRIM hanya menghapus karakter spasi standar (ASCII 32). Jika data mengandung non-breaking space (misalnya copas dari web/HTML), gunakan SUBSTITUTE(TRIM(A2), CHAR(160), " ")',
         keywords: ['trim', 'remove spaces', 'clean text', 'leading spaces', 'trailing spaces', 'extra spaces', 'hapus spasi', 'bersihkan spasi', 'spasi berlebih', 'trim spasi', 'hapus spasi kosong', 'data cleaning teks', 'bersihkan data', 'spasi di awal', 'spasi di akhir']
       }
     ],
@@ -148,41 +148,41 @@
       {
         name: 'TODAY',
         syntax: '=TODAY()',
-        description: 'Returns today\'s date, updating automatically every time the worksheet recalculates. Use with no arguments. Perfect for calculating ages, days overdue, or days until a deadline.',
-        example: '=TODAY() - A2  →  days since date in A2',
-        tip: 'TODAY() returns only the date. Use NOW() if you also need the current time. Both recalculate automatically.',
+        description: 'Mengembalikan tanggal hari ini, dan diperbarui secara otomatis setiap kali lembar kerja menghitung ulang kalkulasi. Gunakan tanpa argumen. Sempurna untuk menghitung umur, keterlambatan bayar, atau hari tersisa menuju tenggat waktu.',
+        example: '=TODAY() - A2  →  hari sejak tanggal di sel A2',
+        tip: 'TODAY() hanya menghasilkan tanggal. Gunakan NOW() jika Anda juga membutuhkan waktu saat ini. Keduanya ter-update secara otomatis.',
         keywords: ['today', 'current date', 'date now', 'todays date', 'this date', 'hari ini', 'tanggal hari ini', 'tanggal sekarang', 'tanggal saat ini', 'hitung umur', 'selisih hari', 'sudah berapa hari']
       },
       {
         name: 'NOW',
         syntax: '=NOW()',
-        description: 'Returns the current date and time as a serial number. Useful for timestamping entries or calculating time elapsed. Updates every time the sheet recalculates.',
+        description: 'Mengembalikan tanggal dan waktu saat ini (current date and time). Berguna untuk membuat stempel waktu (timestamp) pada entri data atau menghitung waktu yang berlalu. Diperbarui otomatis.',
         example: '=NOW()',
-        tip: 'To get just the time component of NOW, use =NOW() - TODAY(). Format the cell as "h:mm AM/PM" to display it.',
+        tip: 'Untuk hanya mengambil porsi waktu dari NOW, gunakan =NOW() - TODAY(). Format sel tersebut sebagai "h:mm AM/PM" untuk menampilkannya dengan benar.',
         keywords: ['now', 'current time', 'datetime', 'timestamp', 'current datetime', 'sekarang', 'waktu sekarang', 'tanggal dan waktu']
       },
       {
         name: 'DATEDIF',
         syntax: '=DATEDIF(start_date, end_date, unit)',
-        description: 'Calculates the difference between two dates. Units: "Y" = complete years, "M" = complete months, "D" = days. Use "YM" for months ignoring years. Useful for calculating employee tenure or customer age.',
-        example: '=DATEDIF(B2, TODAY(), "Y") & " years"',
-        tip: 'DATEDIF is an undocumented but fully functional formula. It won\'t appear in autocomplete, but it works perfectly. Always put the earlier date first.',
+        description: 'Menghitung selisih antara dua tanggal. Unit: "Y" = tahun penuh, "M" = bulan penuh, "D" = hari. Gunakan "YM" untuk menghitung bulan namun mengabaikan tahunnya. Sangat berguna untuk menghitung masa kerja (tenure) karyawan atau umur pelanggan.',
+        example: '=DATEDIF(B2, TODAY(), "Y") & " tahun"',
+        tip: 'DATEDIF adalah rumus tersembunyi namun berfungsi penuh (tidak muncul di autocomplete Excel). Pastikan tanggal yang lebih lama dimasukkan terlebih dahulu (di depan).',
         keywords: ['date difference', 'age', 'years between', 'months between', 'tenure', 'how long', 'duration', 'masa kerja', 'selisih tanggal', 'hitung usia', 'umur', 'lama bekerja', 'berapa tahun', 'berapa bulan', 'durasi', 'umur karyawan', 'durasi kerja', 'tenure karyawan', 'hitung masa kerja']
       },
       {
         name: 'EOMONTH',
         syntax: '=EOMONTH(start_date, months)',
-        description: 'Returns the last day of the month, a specified number of months before or after a date. months=0 gives last day of current month; months=1 gives last day of next month.',
+        description: 'Menghasilkan tanggal hari terakhir dalam suatu bulan, berdasarkan jumlah bulan sebelum atau sesudah tanggal tertentu. months=0 memberikan hari terakhir bulan ini; months=1 memberikan hari terakhir bulan depan.',
         example: '=EOMONTH(TODAY(), 0)',
-        tip: 'Add 1 to EOMONTH to get the first day of the next month: =EOMONTH(A2, 0) + 1',
+        tip: 'Tambahkan + 1 pada rumus EOMONTH untuk mendapatkan tanggal 1 (hari pertama) di bulan berikutnya: =EOMONTH(A2, 0) + 1',
         keywords: ['end of month', 'last day', 'month end', 'eomonth', 'last date of month', 'close period', 'akhir bulan', 'tanggal terakhir bulan', 'last day', 'tutup bulan']
       },
       {
         name: 'NETWORKDAYS',
         syntax: '=NETWORKDAYS(start_date, end_date, [holidays])',
-        description: 'Calculates the number of working days between two dates, automatically excluding weekends. Pass a range of holiday dates as the optional third argument.',
+        description: 'Menghitung jumlah hari kerja antara dua tanggal, secara otomatis tidak termasuk hari Sabtu dan Minggu (weekend). Masukkan sekumpulan tanggal libur (holidays) sebagai argumen ketiga opsional.',
         example: '=NETWORKDAYS(A2, B2, HolidayList)',
-        tip: 'For Indonesian public holidays, maintain a named range "HolidayList" with all holiday dates for the year.',
+        tip: 'Untuk libur nasional di Indonesia, buatlah rentang sel (named range) "HolidayList" yang berisi seluruh daftar tanggal merah dalam tahun tersebut.',
         keywords: ['working days', 'business days', 'workdays', 'exclude weekends', 'hari kerja', 'weekdays between', 'hari bisnis', 'kerja', 'tidak termasuk weekend', 'hari weekday', 'hitung hari kerja', 'berapa hari kerja', 'kerja efektif', 'exclude sabtu minggu']
       }
     ],
@@ -190,49 +190,49 @@
       {
         name: 'IF',
         syntax: '=IF(logical_test, value_if_true, value_if_false)',
-        description: 'The most fundamental decision formula in Excel. Returns one value when a condition is true and another when false. Nest IFs for multiple conditions, or use IFS for cleaner syntax.',
-        example: '=IF(C2 >= 100, "Target Met", "Below Target")',
-        tip: 'Avoid deeply nesting IFs (more than 2 levels). If you need more conditions, IFS is more readable. If the false result doesn\'t matter, use "" (empty string).',
+        description: 'Fungsi logika dan pengambilan keputusan paling dasar di Excel. Mengembalikan sebuah nilai jika suatu kondisi benar (true), dan nilai lainnya jika salah (false). Gunakan IF bertumpuk untuk beberapa kondisi, atau gunakan IFS agar lebih rapi.',
+        example: '=IF(C2 >= 100, "Tercapai", "Di Bawah Target")',
+        tip: 'Hindari IF bersarang (nested IF) yang terlalu dalam (lebih dari 2 level). Jika kondisinya banyak, IFS jauh lebih mudah dibaca. Jika hasil untuk kondisi salah (false) tidak diperlukan, gunakan "" (string kosong).',
         keywords: ['if', 'condition', 'check', 'true false', 'when', 'conditional', 'test', 'either or', 'jika', 'kalau', 'kondisi', 'syarat', 'apabila', 'cek kondisi', 'benar salah', 'cek', 'lulus tidak lulus', 'aman kritis', 'status otomatis']
       },
       {
         name: 'IFS',
         syntax: '=IFS(condition1, value1, condition2, value2, ..., TRUE, default)',
-        description: 'Checks multiple conditions in order and returns the first matching result. Much cleaner than nested IFs. Always end with TRUE as the last condition to provide a default value.',
+        description: 'Mengecek banyak kondisi secara berurutan dan mengembalikan hasil dari kondisi pertama yang cocok/terpenuhi. Jauh lebih rapi dibanding IF bertingkat. Selalu akhiri dengan kondisi TRUE sebagai nilai default jika tidak ada kondisi yang terpenuhi.',
         example: '=IFS(A2>=90, "A", A2>=80, "B", A2>=70, "C", TRUE, "D")',
-        tip: 'IFS has no built-in "else" — that\'s what the TRUE at the end does. Without it, unmatched conditions return #N/A.',
+        tip: 'Fungsi IFS tidak memiliki argumen bawaan untuk "jika salah semua (else)" — itulah mengapa Anda harus menggunakan TRUE di akhir rumus. Tanpa TRUE di akhir, nilai yang tidak cocok akan memunculkan error #N/A.',
         keywords: ['ifs', 'multiple conditions', 'nested if', 'grade', 'multiple if', 'several conditions', 'cascading if', 'jika banyak kondisi', 'banyak syarat', 'beberapa kondisi', 'kategori bertingkat', 'klasifikasi', 'grade nilai', 'tier performa']
       },
       {
         name: 'IFERROR',
         syntax: '=IFERROR(value, value_if_error)',
-        description: 'Returns your specified value if the formula produces any error (#N/A, #VALUE!, #DIV/0!, etc.), otherwise returns the formula result. Essential when working with VLOOKUP or any formula that might not find a match.',
-        example: '=IFERROR(VLOOKUP(A2, D:F, 2, FALSE), "Not Found")',
-        tip: 'Don\'t overuse IFERROR to hide real errors during development — it can mask bugs. Use it only in final formulas where errors are expected.',
+        description: 'Mengembalikan nilai kustom jika hasil dari rumus memunculkan pesan error (#N/A, #VALUE!, #DIV/0!, dll.), dan mengembalikan hasil rumusnya sendiri jika tidak error. Sangat penting saat memakai VLOOKUP atau formula yang berpotensi tidak menemukan data.',
+        example: '=IFERROR(VLOOKUP(A2, D:F, 2, FALSE), "Tidak Ditemukan")',
+        tip: 'Jangan gunakan IFERROR terlalu sering untuk menyembunyikan error asli ketika Anda masih dalam tahap membuat dan menyusun rumus — ini bisa menutupi kesalahan logika (bug). Gunakan IFERROR hanya pada hasil akhir.',
         keywords: ['iferror', 'error handling', 'if error', '#n/a', '#value', 'handle error', 'no error', 'suppress error', 'catch error', 'jika error', 'tangani error', 'sembunyikan error', 'ganti error', 'kalau error', 'tidak ada error']
       },
       {
         name: 'AND',
         syntax: '=AND(logical1, logical2, ...)',
-        description: 'Returns TRUE only when all conditions are true. Commonly used inside an IF to combine multiple tests: IF(AND(A>0, B="Active"), "Yes", "No")',
-        example: '=IF(AND(A2 > 0, B2 = "Active"), "Valid", "Invalid")',
-        tip: 'AND evaluates all conditions even if the first one is FALSE (unlike some programming languages). Keep this in mind with large formulas.',
+        description: 'Menghasilkan TRUE (Benar) HANYA JIKA semua kondisinya benar. Umumnya digunakan di dalam fungsi IF untuk menggabungkan beberapa kriteria pengujian: IF(AND(A>0, B="Aktif"), "Ya", "Tidak")',
+        example: '=IF(AND(A2 > 0, B2 = "Active"), "Valid", "Tidak Valid")',
+        tip: 'Fungsi AND selalu mengevaluasi semua kondisi secara berurutan meskipun dari awal kondisi pertama sudah FALSE. Perhatikan hal ini bila menggunakan rumus yang panjang.',
         keywords: ['and', 'all conditions', 'both', 'all true', 'multiple AND', 'all must be true', 'dan', 'keduanya', 'semua kondisi', 'semua benar']
       },
       {
         name: 'OR',
         syntax: '=OR(logical1, logical2, ...)',
-        description: 'Returns TRUE if any one condition is true. Useful when something should happen if a value matches any item in a list.',
+        description: 'Menghasilkan TRUE jika salah satu kondisi saja benar. Sangat membantu ketika suatu langkah perlu dijalankan jika ada nilai yang cocok dengan setidaknya salah satu item dari daftar opsi.',
         example: '=IF(OR(A2="Bandung", A2="Surabaya", A2="Medan"), "Regional", "Jakarta")',
-        tip: 'For long lists, COUNTIF is often cleaner than OR: =IF(COUNTIF({"Bandung","Surabaya","Medan"}, A2) > 0, "Regional", "Jakarta")',
+        tip: 'Untuk daftar yang panjang, menggunakan rumus COUNTIF seringkali lebih praktis dibanding IF OR: =IF(COUNTIF({"Bandung","Surabaya","Medan"}, A2) > 0, "Regional", "Jakarta")',
         keywords: ['or', 'any condition', 'either', 'any of', 'at least one', 'one of these', 'atau', 'salah satu', 'any kondisi', 'minimal satu']
       },
       {
         name: 'NOT',
         syntax: '=NOT(logical)',
-        description: 'Reverses a logical value — TRUE becomes FALSE, FALSE becomes TRUE. Use it when it\'s easier to define what you don\'t want.',
-        example: '=IF(NOT(ISBLANK(A2)), "Has data", "Empty")',
-        tip: 'NOT is often combined with IS functions: NOT(ISERROR()), NOT(ISBLANK()), NOT(ISNUMBER()).',
+        description: 'Membalikkan nilai logika — TRUE (Benar) akan berubah jadi FALSE (Salah), FALSE menjadi TRUE. Gunakan saat lebih mudah merumuskan "apa yang tidak Anda inginkan" ketimbang "apa yang Anda inginkan".',
+        example: '=IF(NOT(ISBLANK(A2)), "Ada isi", "Kosong")',
+        tip: 'Fungsi NOT biasanya digunakan bersamaan dengan fungsi IS: NOT(ISERROR()), NOT(ISBLANK()), NOT(ISNUMBER()).',
         keywords: ['not', 'reverse', 'opposite', 'is not', 'not equal', 'exclude', 'except', 'bukan', 'tidak', 'kebalikan', 'lawan']
       }
     ]
@@ -305,21 +305,21 @@
         '<p class="formula-desc">' + escapeHtml(formula.description) + '</p>' +
         (formula.tip
           ? '<div class="callout callout-tip" style="margin:var(--space-3) 0;">' +
-              '<p class="callout-title">💡 Analyst Tip</p>' +
+              '<p class="callout-title">💡 Tips Analis</p>' +
               '<p>' + escapeHtml(formula.tip) + '</p>' +
             '</div>'
           : '') +
-        '<div class="formula-example-label">Example</div>' +
+        '<div class="formula-example-label">Contoh</div>' +
         '<div class="formula-block formula-example">' + escapeHtml(formula.example) + '</div>' +
         '<div style="margin-top:var(--space-4);">' +
-          '<button class="btn-ghost btn-sm copy-formula-btn" id="copy-formula-btn" data-copy="' + escapeAttr(formula.example) + '">Copy Formula</button>' +
+          '<button class="btn-ghost btn-sm copy-formula-btn" id="copy-formula-btn" data-copy="' + escapeAttr(formula.example) + '">Salin Formula</button>' +
         '</div>' +
       '</div>';
 
     var copyBtn = document.getElementById('copy-formula-btn');
     if (copyBtn) {
       copyBtn.addEventListener('click', function () {
-        window.copyToClipboard(this.dataset.copy, this, '✓ Copied!');
+        window.copyToClipboard(this.dataset.copy, this, '✓ Berhasil disalin!');
       });
     }
 
@@ -331,7 +331,7 @@
     if (!output) return;
     output.innerHTML =
       '<div class="formula-result" style="text-align:center;padding:var(--space-8);">' +
-        '<p style="color:var(--text-muted);font-size:0.9rem;">No match found for that description. Try different keywords, or select a specific category.</p>' +
+        '<p style="color:var(--text-muted);font-size:0.9rem;">Tidak ada kecocokan yang ditemukan untuk deskripsi tersebut. Coba kata kunci lain, atau pilih kategori tertentu.</p>' +
       '</div>';
     output.classList.add('visible');
   }
