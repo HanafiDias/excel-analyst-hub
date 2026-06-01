@@ -71,12 +71,13 @@
 
     <nav class="tools-subnav" aria-label="Navigasi tools">
       <div class="container">
-        <div class="tools-subnav-inner" style="justify-content: center; display: flex; flex-wrap: wrap; gap: 10px;">
+        <div class="tools-subnav-inner" style="display: flex; gap: 15px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; padding-bottom: 5px;">
           <a href="#formula-generator" class="tools-subnav-link">⟨ƒ⟩ Formula Generator</a>
-          <a href="#daily-challenge-section" class="tools-subnav-link">🎯 Tantangan Harian Excel</a>
-          <a href="#dataset-generator" class="tools-subnav-link">🎲 Dataset Generator</a>
-          <a href="#quick-ref" class="tools-subnav-link">⚡ Excel Shortcut Flashcards</a>
+          <a href="#data-visualizer" class="tools-subnav-link">📊 Data Visualizer</a>
           <a href="#formula-sandbox" class="tools-subnav-link">🧪 Formula Sandbox</a>
+          <a href="#daily-challenge-section" class="tools-subnav-link">🎯 Tantangan Harian</a>
+          <a href="#dataset-generator" class="tools-subnav-link">🎲 Dataset Generator</a>
+          <a href="#quick-ref" class="tools-subnav-link">⚡ Flashcards</a>
         </div>
       </div>
     </nav>
@@ -86,11 +87,11 @@
       <!-- ============ TOOL 1: FORMULA GENERATOR ============ -->
       <section id="formula-generator" class="section" aria-label="Formula Generator">
         <div class="container">
-          <div class="text-center" style="margin-bottom: var(--space-5);">
+          <div style="margin-bottom: var(--space-5);">
             <span class="badge" style="background: rgba(59, 130, 246, 0.1); color: var(--accent);">AI Assistant</span>
             <h2 style="margin: var(--space-2) 0 0 0;">Formula Generator</h2>
-            <p class="text-muted" style="max-width: 600px; margin: var(--space-2) auto 0 auto; font-size: 0.95rem;">
-              Jelaskan apa yang ingin kamu hitung dalam bahasa manusia, dan sistem akan merakit rumus Excel yang akurat untukmu.
+            <p class="text-muted" style="max-width: 800px; margin: var(--space-2) 0 0 0; font-size: 0.95rem; line-height: 1.6;">
+              Jelaskan masalah data Anda dalam bahasa sehari-hari, dan biarkan sistem merakit rumus Excel yang tepat secara otomatis. Sangat cocok bagi Anda yang baru belajar Excel dan sering kebingungan saat harus menghafal fungsi rumit seperti VLOOKUP atau IF bertingkat. Cukup ketik apa yang Anda inginkan, dan salin hasilnya!
             </p>
           </div>
 
@@ -151,120 +152,72 @@
         </div>
       </section>
 
-      <!-- ============ TOOL 2: DAILY CHALLENGE ============ -->
-      <section id="daily-challenge-section" class="section" aria-label="Tantangan Harian Excel">
+      <!-- ============ TOOL: DATA VISUALIZER SIMULATOR ============ -->
+      <section id="data-visualizer" class="section" aria-label="Data Visualizer Simulator">
         <div class="container">
-          <div class="text-center" style="margin-bottom: var(--space-5);">
-            <span class="badge badge-advanced">Interactive</span>
-            <h2 style="margin: var(--space-2) 0 0 0;">Tantangan Harian Excel</h2>
-            <p class="text-muted" style="margin-top: var(--space-2); font-size: 0.95rem;">Asah logika analis datamu setiap hari dengan satu skenario kasus nyata.</p>
-          </div>
-
-          <div class="card" id="daily-challenge-card" style="max-width: 800px; margin: 0 auto; padding: var(--space-5); border-top: 4px solid var(--accent); box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
-            <div class="flex-between" style="margin-bottom: var(--space-4); font-size: 0.85rem; color: var(--text-muted);">
-              <span id="challenge-date" style="font-family: monospace; font-weight: 600;">📅 LOADING...</span>
-              <span id="challenge-level" class="badge">LEVEL</span>
+          <div style="margin-bottom: var(--space-5);">
+            <span class="badge badge-advanced">Interactive Chart Tool</span>
+            <h2 style="margin: var(--space-2) 0 0 0;">Data Visualizer Simulator</h2>
+            <div style="max-width: 800px; margin-top: var(--space-2);">
+              <p class="text-muted" style="margin: 0 0 8px 0; font-size: 0.95rem; line-height: 1.6;">
+                Pahami bagaimana deretan angka mentah yang membosankan bisa disulap menjadi grafik yang informatif. Ubah angka pada tabel spreadsheet mini di bawah ini sesuka hati Anda, lalu pilih tipe grafiknya. Anda akan langsung melihat bagaimana perubahan angka memengaruhi bentuk grafik secara instan—tanpa perlu menginstal aplikasi apa pun!
+              </p>
+              <p style="font-size: 0.85rem; color: #f59e0b; margin: 0;">
+                📱 <i>Tip: Putar layar ke mode Landscape jika Anda menggunakan HP untuk visualisasi optimal.</i>
+              </p>
             </div>
-
-            <p id="challenge-scenario" style="font-weight: 500; margin-top: 0; margin-bottom: var(--space-3); line-height: 1.5;"></p>
-            <p id="challenge-question" style="margin-bottom: var(--space-4); color: var(--text); font-weight: 600;"></p>
-
-            <form id="challenge-form" style="display: flex; flex-direction: column; gap: var(--space-3);">
-              <div style="position: relative;">
-                <input type="text" id="challenge-input" placeholder="Tulis rumus Excel di sini... (Contoh: =SUM(A1:A10))" autocomplete="off" spellcheck="false" style="width: 100%; padding: var(--space-3) var(--space-4); background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: monospace; font-size: 0.95rem;" />
-              </div>
-              <div style="display: flex; gap: var(--space-2); justify-content: flex-end; margin-top: var(--space-2);">
-                <button type="button" id="challenge-hint-btn" class="btn-ghost btn-sm">💡 Petunjuk</button>
-                <button type="submit" class="btn-primary btn-sm">Kirim Jawaban</button>
-              </div>
-            </form>
-
-            <div id="challenge-feedback" style="margin-top: var(--space-4); padding: var(--space-3); border-radius: 6px; font-weight: 600; display: none; line-height: 1.5;"></div>
           </div>
-        </div>
-      </section>
 
-
-
-      <!-- ============ TOOL 4: DATASET GENERATOR ============ -->
-      <section id="dataset-generator" class="section" aria-label="Dataset Generator">
-        <div class="container">
-          <div class="text-center" style="margin-bottom:var(--space-5);">
-            <span class="badge badge-advanced">Interactive Tool</span>
-            <h2 style="margin:var(--space-2) 0 0 0;">Dataset Generator</h2>
-            <p class="text-muted" style="margin-top:var(--space-2);">Buat data CSV acak berkualitas untuk latihan PivotTable atau fungsi lanjutanmu.</p>
-          </div>
-          
-          <div class="card" style="max-width: 800px; margin: 0 auto; padding: var(--space-5); border-top: 4px solid var(--accent); box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+          <div class="card" style="padding: var(--space-5); border-top: 4px solid var(--accent); background: var(--surface); border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
             
-            <div style="margin-bottom:var(--space-5);">
-              <label style="font-weight:600; display:block; margin-bottom:var(--space-2);">Jumlah Baris Data:</label>
-              <div style="display:flex; align-items:center; gap:10px;">
-                <input type="number" id="ds-rows" value="500" min="10" max="10000" style="width:100%; max-width:150px; padding:var(--space-3); border:1px solid var(--border); border-radius:6px; background:var(--surface-2); color:var(--text); font-family:monospace; font-size:1.1rem; font-weight:bold;">
-                <span style="color:var(--text-muted); font-size:0.9rem;">(Maksimal 10.000 baris)</span>
+            <div style="display: block; margin-bottom: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: var(--space-4); gap: 15px;">
+                <h4 style="margin: 0; color: var(--text);">Masukkan Data & Pilih Tipe Grafik:</h4>
+                <select id="chart-type-selector" style="padding: 10px 16px; font-size: 0.95rem; background-color: var(--surface-2); color: var(--text); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; outline: none; font-family: 'Inter', sans-serif;">
+                  <option value="bar">📊 Bar Chart (Batang)</option>
+                  <option value="line">📈 Line Chart (Garis)</option>
+                  <option value="pie">🥧 Pie Chart (Lingkaran)</option>
+                  <option value="doughnut">🍩 Doughnut Chart (Donat)</option>
+                  <option value="radar">🕸️ Radar Chart (Jaring)</option>
+                  <option value="polarArea">🎯 Polar Area Chart</option>
+                </select>
               </div>
+
+              <div style="overflow-x: auto; margin-bottom: var(--space-5);">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; background: var(--surface-2); border-radius: 8px; overflow: hidden;">
+                  <thead>
+                    <tr style="background: rgba(59, 130, 246, 0.1); border-bottom: 2px solid var(--border);">
+                      <th style="padding: 12px; color: var(--text); font-weight: 600;">Kategori Produk</th>
+                      <th style="padding: 12px; color: var(--text); font-weight: 600;">Kuartal 1</th>
+                      <th style="padding: 12px; color: var(--text); font-weight: 600;">Kuartal 2</th>
+                      <th style="padding: 12px; color: var(--text); font-weight: 600;">Kuartal 3</th>
+                      <th style="padding: 12px; color: var(--text); font-weight: 600;">Kuartal 4</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                      <td style="padding: 12px; font-weight: 600; color: #10b981;">🔥 Gas LPG 3kg</td>
+                      <td style="padding: 6px;"><input type="number" id="gas-q1" value="450" style="width: 100%; padding: 8px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 4px;"></td>
+                      <td style="padding: 6px;"><input type="number" id="gas-q2" value="520" style="width: 100%; padding: 8px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 4px;"></td>
+                      <td style="padding: 6px;"><input type="number" id="gas-q3" value="490" style="width: 100%; padding: 8px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 4px;"></td>
+                      <td style="padding: 6px;"><input type="number" id="gas-q4" value="610" style="width: 100%; padding: 8px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 4px;"></td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 12px; font-weight: 600; color: #3b82f6;">🩴 Sandal Athaya</td>
+                      <td style="padding: 6px;"><input type="number" id="sandal-q1" value="120" style="width: 100%; padding: 8px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 4px;"></td>
+                      <td style="padding: 6px;"><input type="number" id="sandal-q2" value="180" style="width: 100%; padding: 8px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 4px;"></td>
+                      <td style="padding: 6px;"><input type="number" id="sandal-q3" value="140" style="width: 100%; padding: 8px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 4px;"></td>
+                      <td style="padding: 6px;"><input type="number" id="sandal-q4" value="230" style="width: 100%; padding: 8px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 4px;"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="position: relative; height: 320px; width: 100%; background: rgba(0,0,0,0.02); padding: 10px; border-radius: 8px;">
+                <canvas id="simulatorChart"></canvas>
+              </div>
+
             </div>
-            
-            <div style="margin-bottom:var(--space-5);">
-              <label style="font-weight:600; display:block; margin-bottom:var(--space-3);">Pilih Kolom yang Dibutuhkan:</label>
-              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:var(--space-3); background:var(--surface-2); padding:var(--space-4); border-radius:8px; border:1px solid var(--border);">
-                
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Order_ID" checked> Order ID
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Tanggal" checked> Tanggal
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Region" checked> Region
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Nama_Sales" checked> Nama Sales
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Kategori" checked> Kategori Produk
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Produk" checked> Nama Produk
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Harga_Satuan" checked> Harga Satuan
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Kuantitas" checked> Kuantitas
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Total_Penjualan" checked> Total Penjualan
-                </label>
-                
-              </div>
-            </div>
-            
-            <button id="btn-generate-csv" class="btn-primary" style="width:100%; font-size:1.1rem; padding:var(--space-3); display:flex; justify-content:center; align-items:center; gap:10px; transition:all 0.3s;">
-              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-              Generate &amp; Download CSV
-            </button>
-            <p style="text-align:center; font-size:0.85rem; color:var(--text-muted); margin-top:var(--space-3);">
-              Data menggunakan pemisah Titik Koma (;) agar langsung rapi (menjadi kolom) saat dibuka di Excel versi Indonesia.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ TOOL 5: QUICK REFERENCE CARD ============ -->
-      <section id="quick-ref" class="section" aria-label="Referensi Cepat Shortcut">
-        <div class="container">
-          <div class="text-center" style="margin-bottom: var(--space-5);">
-            <span class="badge badge-advanced">Quick Reference</span>
-            <h2 style="margin: var(--space-2) 0 0 0;">Excel Shortcut Flashcards</h2>
-            <p class="text-muted" style="margin-top: var(--space-2);">Klik kartu untuk melihat kombinasi tombol shortcut Excel secara instan.</p>
-          </div>
-
-          <div style="max-width: 500px; margin: 0 auto var(--space-6) auto; position: relative;">
-            <input type="text" id="shortcut-search" placeholder="Cari perintah... (misal: Filter, Pivot, Save)" style="width: 100%; padding: var(--space-3) var(--space-4); background: var(--surface); border: 1px solid var(--border); border-radius: 30px; color: var(--text); font-size: 0.95rem; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05);" />
-          </div>
-
-          <div class="flashcard-grid" id="flashcards-container-target">
           </div>
         </div>
       </section>
@@ -272,11 +225,11 @@
       <!-- ============ TOOL 6: FORMULA SANDBOX ============ -->
       <section id="formula-sandbox" class="section" aria-label="Formula Sandbox">
         <div class="container">
-          <div class="text-center" style="margin-bottom: var(--space-5);">
+          <div style="margin-bottom: var(--space-5);">
             <span class="badge badge-advanced">Interactive Sandbox</span>
             <h2 style="margin: var(--space-2) 0 0 0;">Formula Sandbox</h2>
-            <p class="text-muted" style="margin-top: var(--space-2); max-width: 700px; margin-left: auto; margin-right: auto;">
-              Simulator Excel mini — isi sel dengan angka, ketik formula di formula bar, dan lihat hasilnya langsung. Cocok untuk memahami cara kerja SUM, AVERAGE, MIN, MAX, dan COUNT.
+            <p class="text-muted" style="max-width: 800px; margin: var(--space-2) 0 0 0; font-size: 0.95rem; line-height: 1.6;">
+              Mari praktikkan rumus yang sudah Anda pelajari di lingkungan yang aman! Ini adalah sebuah simulator Excel mini langsung di dalam browser Anda. Anda bisa mengetikkan angka di dalam sel, lalu mencoba berbagai rumus dasar seperti =SUM atau =AVERAGE di kolom formula. Jika salah, jangan khawatir—tidak ada data Anda yang akan rusak.
             </p>
           </div>
 
@@ -354,6 +307,128 @@
             Klik sel untuk memilih → ketik angka langsung atau gunakan formula bar di atas. Formula dimulai dengan <code>=</code>. Range: <code>A1:E5</code>. Formula yang didukung: SUM, AVERAGE, MIN, MAX, COUNT.
           </p>
 
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TOOL 2: DAILY CHALLENGE ============ -->
+      <section id="daily-challenge-section" class="section" aria-label="Tantangan Harian Excel">
+        <div class="container">
+          <div style="margin-bottom: var(--space-5);">
+            <span class="badge badge-advanced">Interactive</span>
+            <h2 style="margin: var(--space-2) 0 0 0;">Tantangan Harian Excel</h2>
+            <p class="text-muted" style="max-width: 800px; margin: var(--space-2) 0 0 0; font-size: 0.95rem; line-height: 1.6;">
+              Asah insting logika analisis Anda setiap hari dengan studi kasus mini yang diangkat dari dunia kerja nyata. Anda akan diberikan sebuah situasi bisnis sederhana dan diminta memikirkan langkah apa yang paling tepat untuk menyelesaikannya. Ini adalah tempat terbaik untuk membiasakan diri berpikir seperti seorang Data Analyst profesional.
+            </p>
+          </div>
+
+          <div class="card" id="daily-challenge-card" style="max-width: 800px; margin: 0 auto; padding: var(--space-5); border-top: 4px solid var(--accent); box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+            <div class="flex-between" style="margin-bottom: var(--space-4); font-size: 0.85rem; color: var(--text-muted);">
+              <span id="challenge-date" style="font-family: monospace; font-weight: 600;">📅 LOADING...</span>
+              <span id="challenge-level" class="badge">LEVEL</span>
+            </div>
+
+            <p id="challenge-scenario" style="font-weight: 500; margin-top: 0; margin-bottom: var(--space-3); line-height: 1.5;"></p>
+            <p id="challenge-question" style="margin-bottom: var(--space-4); color: var(--text); font-weight: 600;"></p>
+
+            <form id="challenge-form" style="display: flex; flex-direction: column; gap: var(--space-3);">
+              <div style="position: relative;">
+                <input type="text" id="challenge-input" placeholder="Tulis rumus Excel di sini... (Contoh: =SUM(A1:A10))" autocomplete="off" spellcheck="false" style="width: 100%; padding: var(--space-3) var(--space-4); background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: monospace; font-size: 0.95rem;" />
+              </div>
+              <div style="display: flex; gap: var(--space-2); justify-content: flex-end; margin-top: var(--space-2);">
+                <button type="button" id="challenge-hint-btn" class="btn-ghost btn-sm">💡 Petunjuk</button>
+                <button type="submit" class="btn-primary btn-sm">Kirim Jawaban</button>
+              </div>
+            </form>
+
+            <div id="challenge-feedback" style="margin-top: var(--space-4); padding: var(--space-3); border-radius: 6px; font-weight: 600; display: none; line-height: 1.5;"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TOOL 4: DATASET GENERATOR ============ -->
+      <section id="dataset-generator" class="section" aria-label="Dataset Generator">
+        <div class="container">
+          <div style="margin-bottom:var(--space-5);">
+            <span class="badge badge-advanced">Interactive Tool</span>
+            <h2 style="margin:var(--space-2) 0 0 0;">Dataset Generator</h2>
+            <p class="text-muted" style="max-width: 800px; margin: var(--space-2) 0 0 0; font-size: 0.95rem; line-height: 1.6;">
+              Seringkali kita ingin berlatih Excel, tetapi tidak punya data mentah untuk diolah. Fitur ini akan membuatkan ratusan baris data acak yang terlihat sangat nyata (seperti nama karyawan, gaji, atau laporan penjualan) hanya dengan satu klik! Anda bisa mengunduhnya sebagai file CSV lalu membukanya di Excel untuk berlatih.
+            </p>
+          </div>
+          
+          <div class="card" style="max-width: 800px; margin: 0 auto; padding: var(--space-5); border-top: 4px solid var(--accent); box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
+            
+            <div style="margin-bottom:var(--space-5);">
+              <label style="font-weight:600; display:block; margin-bottom:var(--space-2);">Jumlah Baris Data:</label>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <input type="number" id="ds-rows" value="500" min="10" max="10000" style="width:100%; max-width:150px; padding:var(--space-3); border:1px solid var(--border); border-radius:6px; background:var(--surface-2); color:var(--text); font-family:monospace; font-size:1.1rem; font-weight:bold;">
+                <span style="color:var(--text-muted); font-size:0.9rem;">(Maksimal 10.000 baris)</span>
+              </div>
+            </div>
+            
+            <div style="margin-bottom:var(--space-5);">
+              <label style="font-weight:600; display:block; margin-bottom:var(--space-3);">Pilih Kolom yang Dibutuhkan:</label>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:var(--space-3); background:var(--surface-2); padding:var(--space-4); border-radius:8px; border:1px solid var(--border);">
+                
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Order_ID" checked> Order ID
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Tanggal" checked> Tanggal
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Region" checked> Region
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Nama_Sales" checked> Nama Sales
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Kategori" checked> Kategori Produk
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Produk" checked> Nama Produk
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Harga_Satuan" checked> Harga Satuan
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Kuantitas" checked> Kuantitas
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                  <input type="checkbox" class="ds-col-checkbox" value="Total_Penjualan" checked> Total Penjualan
+                </label>
+                
+              </div>
+            </div>
+            
+            <button id="btn-generate-csv" class="btn-primary" style="width:100%; font-size:1.1rem; padding:var(--space-3); display:flex; justify-content:center; align-items:center; gap:10px; transition:all 0.3s;">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+              Generate &amp; Download CSV
+            </button>
+            <p style="text-align:center; font-size:0.85rem; color:var(--text-muted); margin-top:var(--space-3);">
+              Data menggunakan pemisah Titik Koma (;) agar langsung rapi (menjadi kolom) saat dibuka di Excel versi Indonesia.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TOOL 5: QUICK REFERENCE CARD ============ -->
+      <section id="quick-ref" class="section" aria-label="Referensi Cepat Shortcut">
+        <div class="container">
+          <div style="margin-bottom: var(--space-5);">
+            <span class="badge badge-advanced">Quick Reference</span>
+            <h2 style="margin: var(--space-2) 0 0 0;">Excel Shortcut Flashcards</h2>
+            <p class="text-muted" style="max-width: 800px; margin: var(--space-2) 0 0 0; font-size: 0.95rem; line-height: 1.6;">
+              Rahasia terbesar seorang analis senior yang bekerja super cepat adalah penggunaan tombol pintas (shortcut) keyboard. Gunakan kartu-kartu interaktif ini untuk menghafal jalan pintas yang paling sering dipakai di dunia kerja. Klik kartu untuk membaliknya dan temukan tombol rahasia yang akan menghemat jam kerja Anda!
+            </p>
+          </div>
+
+          <div style="max-width: 500px; margin: 0 auto var(--space-6) auto; position: relative;">
+            <input type="text" id="shortcut-search" placeholder="Cari perintah... (misal: Filter, Pivot, Save)" style="width: 100%; padding: var(--space-3) var(--space-4); background: var(--surface); border: 1px solid var(--border); border-radius: 30px; color: var(--text); font-size: 0.95rem; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05);" />
+          </div>
+
+          <div class="flashcard-grid" id="flashcards-container-target">
           </div>
         </div>
       </section>
@@ -719,6 +794,97 @@
           var form = document.getElementById('formula-form');
           if (form) form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
         });
+      });
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const canvasCtx = document.getElementById('simulatorChart');
+      if(!canvasCtx) return;
+
+      // Function to capture values from inputs
+      function getTableData() {
+        return {
+          gas: [
+            parseFloat(document.getElementById('gas-q1').value) || 0,
+            parseFloat(document.getElementById('gas-q2').value) || 0,
+            parseFloat(document.getElementById('gas-q3').value) || 0,
+            parseFloat(document.getElementById('gas-q4').value) || 0
+          ],
+          sandal: [
+            parseFloat(document.getElementById('sandal-q1').value) || 0,
+            parseFloat(document.getElementById('sandal-q2').value) || 0,
+            parseFloat(document.getElementById('sandal-q3').value) || 0,
+            parseFloat(document.getElementById('sandal-q4').value) || 0
+          ]
+        };
+      }
+
+      const initialData = getTableData();
+
+      const chartConfig = {
+        type: 'bar',
+        data: {
+          labels: ['Kuartal 1', 'Kuartal 2', 'Kuartal 3', 'Kuartal 4'],
+          datasets: [
+            {
+              label: 'Gas LPG 3kg (Tabung)',
+              data: initialData.gas,
+              backgroundColor: 'rgba(16, 185, 129, 0.6)',
+              borderColor: '#10b981',
+              borderWidth: 2,
+              tension: 0.3
+            },
+            {
+              label: 'Sandal Athaya (Pasang)',
+              data: initialData.sandal,
+              backgroundColor: 'rgba(59, 130, 246, 0.6)',
+              borderColor: '#3b82f6',
+              borderWidth: 2,
+              tension: 0.3
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: '#94a3b8', font: { family: 'Inter' } } }
+          },
+          scales: {
+            y: { display: true, beginAtZero: true, grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: '#94a3b8' } },
+            x: { display: true, grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: '#94a3b8' } }
+          }
+        }
+      };
+
+      let liveChart = new Chart(canvasCtx, chartConfig);
+
+      // Live update chart data on input change
+      const allInputs = document.querySelectorAll('#data-visualizer table input');
+      allInputs.forEach(input => {
+        input.addEventListener('input', function() {
+          const freshData = getTableData();
+          liveChart.data.datasets[0].data = freshData.gas;
+          liveChart.data.datasets[1].data = freshData.sandal;
+          liveChart.update();
+        });
+      });
+
+      // Handle selector change
+      document.getElementById('chart-type-selector').addEventListener('change', function(e) {
+        const selectedType = e.target.value;
+        if (['pie', 'doughnut', 'radar', 'polarArea'].includes(selectedType)) {
+          chartConfig.options.scales.x.display = false;
+          chartConfig.options.scales.y.display = false;
+        } else {
+          chartConfig.options.scales.x.display = true;
+          chartConfig.options.scales.y.display = true;
+        }
+        liveChart.destroy();
+        chartConfig.type = selectedType;
+        liveChart = new Chart(canvasCtx, chartConfig);
       });
     });
   </script>
