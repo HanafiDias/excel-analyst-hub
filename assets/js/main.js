@@ -462,8 +462,14 @@
     var closeBtn = document.getElementById('close-quiz');
     var continueBtn = document.getElementById('quiz-btn-continue');
     
-    if (closeBtn) closeBtn.addEventListener('click', function() { modal.style.display = 'none'; });
-    if (continueBtn) continueBtn.addEventListener('click', function() { modal.style.display = 'none'; });
+    if (closeBtn) closeBtn.addEventListener('click', function() { 
+      modal.style.display = 'none'; 
+      document.body.style.overflow = '';
+    });
+    if (continueBtn) continueBtn.addEventListener('click', function() { 
+      modal.style.display = 'none'; 
+      document.body.style.overflow = '';
+    });
 
     document.querySelectorAll('.topic-card').forEach(function (card) {
       var id = card.dataset.topicId;
@@ -539,6 +545,7 @@
         });
 
         modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
       });
     });
   }

@@ -528,23 +528,7 @@
       </div>
 
     </div><!-- /container -->
-  <div id="quiz-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.85); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
-    <div class="card" style="position:relative; width:90%; max-width:550px; padding:var(--space-6); background:var(--surface); border:1px solid var(--border); box-shadow:0 10px 25px rgba(0,0,0,0.5);">
-      <button id="close-quiz" style="position:absolute; top:15px; right:15px; background:none; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer; padding:5px; transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">✖</button>
-      
-      <h3 style="margin-top:0; display:flex; align-items:center; gap:8px;"><span>🧠</span> Knowledge Check</h3>
-      <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:var(--space-4);">Jawab pertanyaan berikut untuk menandai topik ini selesai.</p>
-      
-      <div id="quiz-question" style="font-weight:600; margin-bottom:var(--space-5); font-size:1.05rem; line-height:1.5;"></div>
-      
-      <div id="quiz-options-container" style="display:flex; flex-direction:column; gap:var(--space-3);">
-        </div>
 
-      <div id="quiz-feedback-global" style="margin-top:var(--space-4); padding:var(--space-3); border-radius:6px; font-weight:600; display:none; line-height:1.5;"></div>
-      
-      <button id="quiz-btn-continue" class="btn-primary" style="width:100%; margin-top:var(--space-4); display:none;">Tandai Selesai & Lanjutkan</button>
-    </div>
-  </div>
   </main>
 
   <!-- ============ FOOTER ============ -->
@@ -606,5 +590,22 @@
       });
     });
   </script>
+  <div id="quiz-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.85); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+    <div class="card" style="position:relative; width:90%; max-width:550px; padding:var(--space-6); background:var(--surface); border:1px solid var(--border); box-shadow:0 10px 25px rgba(0,0,0,0.5);">
+      <button id="close-quiz" style="position:absolute; top:15px; right:15px; background:none; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer; padding:5px; transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">✖</button>
+      
+      <h3 style="margin-top:0; display:flex; align-items:center; gap:8px;"><span>🧠</span> Knowledge Check</h3>
+      <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:var(--space-4);">Jawab pertanyaan berikut untuk menandai topik ini selesai.</p>
+      
+      <div id="quiz-question" style="font-weight:600; margin-bottom:var(--space-5); font-size:1.05rem; line-height:1.5;"></div>
+      
+      <div id="quiz-options-container" style="display:flex; flex-direction:column; gap:var(--space-3);">
+        </div>
+
+      <div id="quiz-feedback-global" style="margin-top:var(--space-4); padding:var(--space-3); border-radius:6px; font-weight:600; display:none; line-height:1.5;"></div>
+      
+      <button id="quiz-btn-continue" class="btn-primary" style="width:100%; margin-top:var(--space-4); display:none;">Tandai Selesai & Lanjutkan</button>
+    </div>
+  </div>
 </body>
 </html>

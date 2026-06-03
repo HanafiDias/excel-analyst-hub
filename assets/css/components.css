@@ -1798,13 +1798,17 @@ select.form-input {
    ============================================ */
 .modal-overlay {
   display: none;
-  position: fixed;
-  inset: 0;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background: rgba(0,0,0,0.7);
-  z-index: 2000;
+  z-index: 99999;
   align-items: center;
   justify-content: center;
   padding: var(--space-4);
+  backdrop-filter: blur(4px);
 }
 
 .modal-overlay.open {
@@ -1812,12 +1816,14 @@ select.form-input {
 }
 
 .modal-box {
+  position: relative;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   width: 100%;
   max-width: 900px;
   max-height: 90vh;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-lg);

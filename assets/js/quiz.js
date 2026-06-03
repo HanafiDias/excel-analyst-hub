@@ -339,6 +339,28 @@
           if (window.EAH && window.EAH.markChallengeComplete) {
             window.EAH.markChallengeComplete(challenge.id);
           }
+
+          // --- SISTEM REWARD XP PROFIL ---
+          try {
+            let userData = JSON.parse(localStorage.getItem('eah_user_data'));
+            if (!userData) {
+              userData = { name: "Pengunjung", xp: 0, completedChallenges: 0 };
+            }
+            
+            userData.xp += 50;
+            userData.completedChallenges += 1;
+            
+            localStorage.setItem('eah_user_data', JSON.stringify(userData));
+            
+            // Menggunakan += agar pesan tidak menimpa teks "Jawaban Benar" bawaan
+            const feedbackEl = document.getElementById('challenge-feedback');
+            if (feedbackEl) {
+              feedbackEl.innerHTML += "<br><br><span style='display: inline-block; padding: 6px 12px; background: rgba(245, 158, 11, 0.1); border: 1px solid #f59e0b; border-radius: 6px; color: #f59e0b; font-weight: bold; animation: pulse 2s infinite;'>🎉 +50 XP Berhasil Ditambahkan! Cek menu Profil.</span>";
+            }
+          } catch(e) {
+            console.error("Sistem XP gagal memuat:", e);
+          }
+          // -------------------------------
         } else {
           feedbackEl.style.background = 'rgba(239, 68, 68, 0.1)';
           feedbackEl.style.color = '#ef4444';
