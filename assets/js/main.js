@@ -517,6 +517,44 @@
     initSmoothScroll();
     initTrackSections();
 
+    // --- FUNGSI ANIMASI SUKSES (GAMIFIKASI) ---
+    function triggerSuccessAnimation(btn) {
+      // 1. Efek "Bounce/Pop" pada tombol
+      btn.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+      btn.style.transform = 'scale(1.15)';
+      setTimeout(function() { btn.style.transform = 'scale(1)'; }, 400);
+
+      // 2. Efek Teks Melayang (Floating XP)
+      const rect = btn.getBoundingClientRect();
+      const floatEl = document.createElement('div');
+      floatEl.innerHTML = '🎉 +50 XP';
+      floatEl.style.position = 'fixed';
+      floatEl.style.left = (rect.left + (rect.width / 2) - 40) + 'px';
+      floatEl.style.top = (rect.top - 10) + 'px';
+      floatEl.style.color = '#f59e0b'; // Warna emas/amber
+      floatEl.style.fontWeight = '900';
+      floatEl.style.fontSize = '1.2rem';
+      floatEl.style.textShadow = '0px 2px 5px rgba(0,0,0,0.4)';
+      floatEl.style.pointerEvents = 'none';
+      floatEl.style.zIndex = '999999';
+      floatEl.style.transition = 'all 1s cubic-bezier(0.25, 1, 0.5, 1)';
+      floatEl.style.opacity = '1';
+      floatEl.style.transform = 'translateY(0) scale(0.5)';
+      
+      document.body.appendChild(floatEl);
+
+      // Picu animasi terbang ke atas
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          floatEl.style.transform = 'translateY(-60px) scale(1.3)';
+          floatEl.style.opacity = '0';
+        });
+      });
+
+      // Bersihkan elemen sampah dari HTML setelah animasi selesai
+      setTimeout(function() { floatEl.remove(); }, 1000);
+    }
+
     // --- UNIVERSAL QUIZ TRIGGER (EVENT DELEGATION) ---
     document.addEventListener('click', function(e) {
       const targetBtn = e.target.closest('.btn-mark-done');
@@ -555,6 +593,7 @@
           targetBtn.style.borderColor = '#10b981';
           targetBtn.style.color = '#10b981';
           targetBtn.innerHTML = '✅ Selesai';
+          triggerSuccessAnimation(targetBtn);
           targetBtn.title = 'Klik untuk membatalkan status selesai';
           
           if (window.EAH && window.EAH.setTopicStatus) window.EAH.setTopicStatus(topicId, 'done');
@@ -640,6 +679,7 @@
                 targetBtn.style.borderColor = '#10b981';
                 targetBtn.style.color = '#10b981';
                 targetBtn.innerHTML = '✅ Selesai';
+                triggerSuccessAnimation(targetBtn);
                 targetBtn.title = 'Klik untuk membatalkan status selesai';
 
                 if (window.EAH && window.EAH.setTopicStatus) window.EAH.setTopicStatus(topicId, 'done');
