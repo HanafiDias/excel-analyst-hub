@@ -519,40 +519,82 @@
 
     // --- FUNGSI ANIMASI SUKSES (GAMIFIKASI) ---
     function triggerSuccessAnimation(btn) {
-      // 1. Efek "Bounce/Pop" pada tombol
-      btn.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-      btn.style.transform = 'scale(1.15)';
-      setTimeout(function() { btn.style.transform = 'scale(1)'; }, 400);
+      // 1. Efek pop pada tombol asal (jika terlihat)
+      if (btn) {
+        btn.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        btn.style.transform = 'scale(1.15)';
+        setTimeout(function() { btn.style.transform = 'scale(1)'; }, 400);
+      }
 
-      // 2. Efek Teks Melayang (Floating XP)
-      const rect = btn.getBoundingClientRect();
-      const floatEl = document.createElement('div');
-      floatEl.innerHTML = '🎉 +50 XP';
-      floatEl.style.position = 'fixed';
-      floatEl.style.left = (rect.left + (rect.width / 2) - 40) + 'px';
-      floatEl.style.top = (rect.top - 10) + 'px';
-      floatEl.style.color = '#f59e0b'; // Warna emas/amber
-      floatEl.style.fontWeight = '900';
-      floatEl.style.fontSize = '1.2rem';
-      floatEl.style.textShadow = '0px 2px 5px rgba(0,0,0,0.4)';
-      floatEl.style.pointerEvents = 'none';
-      floatEl.style.zIndex = '999999';
-      floatEl.style.transition = 'all 1s cubic-bezier(0.25, 1, 0.5, 1)';
-      floatEl.style.opacity = '1';
-      floatEl.style.transform = 'translateY(0) scale(0.5)';
-      
-      document.body.appendChild(floatEl);
+      // 2. Kontainer Utama di Tengah Layar (Anti Tertutup Modal)
+      const container = document.createElement('div');
+      container.style.position = 'fixed';
+      container.style.top = '50%';
+      container.style.left = '50%';
+      container.style.transform = 'translate(-50%, -50%)';
+      container.style.zIndex = '9999999'; // Pastikan menembus modal
+      container.style.pointerEvents = 'none';
+      container.style.display = 'flex';
+      container.style.justifyContent = 'center';
+      container.style.alignItems = 'center';
+      document.body.appendChild(container);
 
-      // Picu animasi terbang ke atas
+      // 3. Teks XP Utama (Besar & Bersinar)
+      const textEl = document.createElement('div');
+      textEl.innerHTML = '🎉 +50 XP! 🌟';
+      textEl.style.fontSize = '3.5rem';
+      textEl.style.fontWeight = '900';
+      textEl.style.color = '#f59e0b'; // Emas
+      textEl.style.textShadow = '0 0 20px rgba(245, 158, 11, 0.8), 0 8px 15px rgba(0,0,0,0.5)';
+      textEl.style.whiteSpace = 'nowrap';
+      textEl.style.opacity = '0';
+      textEl.style.transform = 'scale(0.3)';
+      textEl.style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      container.appendChild(textEl);
+
+      // 4. Efek Ledakan Partikel (Kembang Api/Bintang)
+      const emojis = ['✨', '🌟', '💥', '🎉', '🔥'];
+      for (let i = 0; i < 10; i++) {
+        const particle = document.createElement('div');
+        particle.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+        particle.style.position = 'absolute';
+        particle.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem';
+        particle.style.opacity = '0';
+        particle.style.transition = 'all 1s cubic-bezier(0.25, 1, 0.5, 1)';
+        container.appendChild(particle);
+
+        setTimeout(function() {
+          const angle = Math.random() * Math.PI * 2;
+          const distance = Math.random() * 120 + 80;
+          const tx = Math.cos(angle) * distance;
+          const ty = Math.sin(angle) * distance;
+          
+          particle.style.opacity = '1';
+          particle.style.transform = `translate(${tx}px, ${ty}px) scale(${Math.random() + 0.5})`;
+          
+          setTimeout(function() {
+            particle.style.opacity = '0';
+            particle.style.transform = `translate(${tx}px, ${ty - 100}px) scale(0)`;
+          }, 600);
+        }, 50);
+      }
+
+      // 5. Jalankan Animasi Teks Utama
       requestAnimationFrame(function() {
         requestAnimationFrame(function() {
-          floatEl.style.transform = 'translateY(-60px) scale(1.3)';
-          floatEl.style.opacity = '0';
+          textEl.style.opacity = '1';
+          textEl.style.transform = 'scale(1.2)'; // Membesar tiba-tiba
+
+          setTimeout(function() {
+            // Melayang ke atas lalu menghilang
+            textEl.style.transform = 'translateY(-150px) scale(1)';
+            textEl.style.opacity = '0';
+          }, 1200);
         });
       });
 
-      // Bersihkan elemen sampah dari HTML setelah animasi selesai
-      setTimeout(function() { floatEl.remove(); }, 1000);
+      // 6. Bersihkan Sampah HTML
+      setTimeout(function() { container.remove(); }, 2500);
     }
 
     // --- UNIVERSAL QUIZ TRIGGER (EVENT DELEGATION) ---

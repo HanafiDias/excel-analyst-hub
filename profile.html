@@ -86,12 +86,12 @@
             <div style="color:var(--text-muted); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Topik Selesai</div>
           </div>
           <div class="card stat-card" style="text-align:center; padding:var(--space-5);">
-            <div style="font-size:3rem; font-weight:bold; color:#f59e0b; margin-bottom:var(--space-2);">1<span style="font-size:2rem;">🔥</span></div>
+            <div style="font-size:3rem; font-weight:bold; color:#f59e0b; margin-bottom:var(--space-2);"><span id="stat-streak">0</span><span style="font-size:2rem;">🔥</span></div>
             <div style="color:var(--text-muted); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Hari Beruntun (Streak)</div>
           </div>
           <div class="card stat-card" style="text-align:center; padding:var(--space-5);">
-            <div style="font-size:3rem; font-weight:bold; color:var(--accent); margin-bottom:var(--space-2);">3</div>
-            <div style="color:var(--text-muted); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Tools Digunakan</div>
+            <div id="stat-tools" style="font-size:3rem; font-weight:bold; color:var(--accent); margin-bottom:var(--space-2);">0</div>
+            <div style="color:var(--text-muted); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">XP Terkumpul</div>
           </div>
         </div>
 
@@ -130,11 +130,8 @@
 
           <div style="border-top:1px solid var(--border); padding-top:var(--space-5);">
             <h4 style="margin-top:0; margin-bottom:var(--space-4); color:var(--text-muted);">Pencapaian (Badges)</h4>
-            <div style="display:flex; gap:var(--space-3); flex-wrap:wrap;">
-              <div id="badge-1" style="width:50px; height:50px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; font-size:1.5rem; opacity:0.3; filter:grayscale(100%); transition:all 0.3s;" title="Menyelesaikan 1 Topik">🌱</div>
-              <div id="badge-2" style="width:50px; height:50px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; font-size:1.5rem; opacity:0.3; filter:grayscale(100%); transition:all 0.3s;" title="Data Explorer (Selesai > 4 Topik)">🧭</div>
-              <div id="badge-3" style="width:50px; height:50px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; font-size:1.5rem; opacity:0.3; filter:grayscale(100%); transition:all 0.3s;" title="Advanced Modeler (Selesai > 9 Topik)">⚙️</div>
-              <div id="badge-4" style="width:50px; height:50px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; font-size:1.5rem; opacity:0.3; filter:grayscale(100%); transition:all 0.3s;" title="Excel Analyst (Selesai 14+ Topik)">🏆</div>
+            <!-- JS will inject rich badges here -->
+            <div id="badges-container" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:var(--space-4);">
             </div>
           </div>
 
@@ -186,71 +183,6 @@
   </footer>
 
 <script src="assets/js/main.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    if(!window.EAH) return;
-    
-    // Ambil data progres dari LocalStorage via API EAH
-    var progress = window.EAH.getProgress() || {};
-    var doneCount = 0;
-    
-    // Total topik aktual per jalur = 16
-    var totalBeginner = 4;
-    var totalIntermediate = 7;
-    var totalAdvanced = 5;
-
-    var countBeginner = 0;
-    var countIntermediate = 0;
-    var countAdvanced = 0;
-
-    // ID Topik Sistem Aktual & Terkoreksi
-    var beginnerIds = ['excel-interface', 'basic-formulas', 'cell-formatting', 'basic-charts'];
-    var intermediateIds = ['conditional-formatting', 'data-entry', 'data-cleaning', 'vlookup', 'index-match', 'sumif-countif', 'pivot-tables'];
-    var advancedIds = ['power-query', 'advanced-pivot', 'dashboard-design', 'dynamic-arrays', 'data-validation'];
-
-    for(var topicId in progress) {
-      if(progress[topicId] === 'done') {
-        doneCount++;
-        if(beginnerIds.indexOf(topicId) !== -1) countBeginner++;
-        else if(advancedIds.indexOf(topicId) !== -1) countAdvanced++;
-        else countIntermediate++; // Fallback untuk intermediate
-      }
-    }
-
-    // 1. Update Angka Statistik
-    document.getElementById('stat-completed').textContent = doneCount;
-
-    // 2. Update Gelar/Level
-    var levelName = "Newbie Spreadsheet";
-    if(doneCount >= 4) levelName = "Data Explorer";
-    if(doneCount >= 9) levelName = "Advanced Modeler";
-    if(doneCount >= 14) levelName = "Excel Analyst Master";
-    document.getElementById('user-level').textContent = "Level: " + levelName;
-
-    // 3. Update Progress Bars
-    var pctBeg = Math.min(Math.round((countBeginner / totalBeginner) * 100), 100);
-    var pctInt = Math.min(Math.round((countIntermediate / totalIntermediate) * 100), 100);
-    var pctAdv = Math.min(Math.round((countAdvanced / totalAdvanced) * 100), 100);
-
-    document.getElementById('bar-beginner').style.width = pctBeg + '%';
-    document.getElementById('pct-beginner').textContent = pctBeg + '%';
-    if(pctBeg === 100) document.getElementById('bar-beginner').style.background = '#10b981';
-
-    document.getElementById('bar-intermediate').style.width = pctInt + '%';
-    document.getElementById('pct-intermediate').textContent = pctInt + '%';
-    if(pctInt === 100) document.getElementById('bar-intermediate').style.background = '#10b981';
-
-    document.getElementById('bar-advanced').style.width = pctAdv + '%';
-    document.getElementById('pct-advanced').textContent = pctAdv + '%';
-    if(pctAdv === 100) document.getElementById('bar-advanced').style.background = '#10b981';
-
-    // 4. Update Badges
-    var badgeStyle = "opacity:1; filter:none; background:#f59e0b; box-shadow:0 0 15px rgba(245,158,11,0.3);";
-    if(doneCount >= 1) document.getElementById('badge-1').style.cssText += badgeStyle;
-    if(doneCount >= 4) document.getElementById('badge-2').style.cssText += badgeStyle;
-    if(doneCount >= 9) document.getElementById('badge-3').style.cssText += badgeStyle;
-    if(doneCount >= 14) document.getElementById('badge-4').style.cssText += badgeStyle;
-  });
-</script>
+<script src="assets/js/profile.js"></script>
 </body>
 </html>
