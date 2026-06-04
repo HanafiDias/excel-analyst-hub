@@ -103,16 +103,52 @@ document.addEventListener('DOMContentLoaded', function() {
     link.click();
     document.body.removeChild(link);
     
-    // 7. Success Animation on Button
+    // 7. Generate Live Preview Table (First 5 Rows)
+    const previewContainer = document.getElementById('dataset-preview-container');
+    const previewTable = document.getElementById('dataset-preview-table');
+    
+    if (previewContainer && previewTable) {
+      let tableHTML = '<table style="width:100%; border-collapse: collapse; font-size: 0.9rem;"><thead><tr>';
+      
+      // Headers
+      cols.forEach(col => {
+        tableHTML += `<th style="background:var(--surface-2); padding:10px; border-bottom:1px solid var(--border);">${col.replace(/_/g, ' ')}</th>`;
+      });
+      tableHTML += '</tr></thead><tbody>';
+      
+      // Limit preview to max 5 rows
+      const previewRows = Math.min(5, rowCount);
+      const dataRows = csvContent.trim().split('\n').slice(1);
+      for (let i = 0; i < previewRows; i++) {
+        tableHTML += '<tr>';
+        const rowData = dataRows[i].split(';');
+        rowData.forEach(cell => {
+          tableHTML += `<td style="padding:10px; border-bottom:1px solid var(--border);">${cell}</td>`;
+        });
+        tableHTML += '</tr>';
+      }
+      tableHTML += '</tbody></table>';
+      
+      previewTable.innerHTML = tableHTML;
+      previewContainer.style.display = 'block';
+    }
+
+    // 8. Trigger Global Toast & Button Feedback
+    if (window.EAH && window.EAH.showToast) {
+       window.EAH.showToast('Dataset Siap!', `${rowCount} Baris Data Berhasil Dibuat`, '🎲');
+    }
+    
     const originalText = btnGenerate.innerHTML;
     btnGenerate.innerHTML = "✓ Berhasil Diunduh!";
-    btnGenerate.style.background = "#10b981"; // Success Green
+    btnGenerate.style.background = "rgba(16, 185, 129, 0.1)"; 
     btnGenerate.style.borderColor = "#10b981";
+    btnGenerate.style.color = "#10b981";
     
     setTimeout(() => {
       btnGenerate.innerHTML = originalText;
       btnGenerate.style.background = ""; 
       btnGenerate.style.borderColor = ""; 
+      btnGenerate.style.color = "";
     }, 3000);
 
   });

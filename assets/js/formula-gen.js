@@ -319,7 +319,14 @@
     var copyBtn = document.getElementById('copy-formula-btn');
     if (copyBtn) {
       copyBtn.addEventListener('click', function () {
-        window.copyToClipboard(this.dataset.copy, this, '✓ Berhasil disalin!');
+        if (window.copyToClipboard) {
+           window.copyToClipboard(this.dataset.copy, this, '✓ Berhasil disalin!');
+        }
+        
+        // Trigger Global Toast if available
+        if (window.EAH && window.EAH.showToast) {
+           window.EAH.showToast('Tersalin!', 'Formula siap ditempel ke Excel', '📋');
+        }
       });
     }
 

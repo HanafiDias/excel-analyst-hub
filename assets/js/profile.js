@@ -64,16 +64,28 @@
     const statStreak = document.getElementById('stat-streak');
     if(statStreak) statStreak.textContent = updateStreak();
 
-    // Calculate XP (50 XP per completed topic)
-    const totalXP = doneCount * 50;
+    // --- KALKULASI XP & LEVEL CERDAS ---
+    
+    // 1. Ambil data Streak saat ini
+    const currentStreak = updateStreak(); 
+    
+    // 2. Hitung Total XP (50 per topik + 10 per hari streak)
+    const topicXP = doneCount * 50;
+    const streakXP = currentStreak * 10;
+    const totalXP = topicXP + streakXP;
+    
+    // Update angka XP di Dashboard
     const statXP = document.getElementById('stat-tools');
-    if(statXP) statXP.textContent = totalXP;
+    if(statXP) statXP.textContent = totalXP + " XP";
 
-    // Update Level
+    // 3. Tentukan Level berdasarkan TOTAL XP
     var levelName = "Newbie Spreadsheet";
-    if(doneCount >= 4) levelName = "Data Explorer";
-    if(doneCount >= 9) levelName = "Advanced Modeler";
-    if(doneCount >= 14) levelName = "Excel Analyst Master";
+    if(totalXP >= 200) levelName = "Data Explorer";
+    if(totalXP >= 500) levelName = "Advanced Modeler";
+    if(totalXP >= 800) levelName = "Excel Analyst Master";
+    if(totalXP >= 1500) levelName = "Spreadsheet God"; // Secret Level!
+
+    // Update Teks Level di UI
     const levelEl = document.getElementById('user-level');
     if(levelEl) levelEl.textContent = "Level: " + levelName;
 
@@ -85,27 +97,34 @@
       if(bar && label) {
         bar.style.width = pct + '%';
         label.textContent = pct + '%';
-        if(pct === 100) bar.style.background = '#10b981';
+        if(pct === 100) {
+           bar.style.background = '#10b981';
+           // Tambahkan glow pada wadah luarnya (parent)
+           bar.parentElement.classList.add('progress-glow');
+        } else {
+           bar.parentElement.classList.remove('progress-glow');
+        }
       }
     }
     updateBar('bar-beginner', 'pct-beginner', countBeginner, totalBeginner);
     updateBar('bar-intermediate', 'pct-intermediate', countIntermediate, totalIntermediate);
     updateBar('bar-advanced', 'pct-advanced', countAdvanced, totalAdvanced);
 
-    // --- 3. RICH BADGE GENERATION ---
+    // --- 4. RICH BADGE GENERATION (XP-BASED) ---
     const badgesContainer = document.getElementById('badges-container');
     if(badgesContainer) {
+      // Badges kini didasarkan pada target XP, bukan jumlah materi
       const badges = [
-        { icon: '🌱', title: 'Pemula Tangguh', req: 1, desc: 'Menyelesaikan 1 topik' },
-        { icon: '🧭', title: 'Data Explorer', req: 4, desc: 'Menyelesaikan 4 topik' },
-        { icon: '⚙️', title: 'Advanced Modeler', req: 9, desc: 'Menyelesaikan 9 topik' },
-        { icon: '🏆', title: 'Excel Analyst', req: 14, desc: 'Menyelesaikan 14 topik' }
+        { icon: '🌱', title: 'Pemula Tangguh', reqXP: 50, desc: 'Kumpulkan 50 XP' },
+        { icon: '🧭', title: 'Data Explorer', reqXP: 200, desc: 'Kumpulkan 200 XP' },
+        { icon: '⚙️', title: 'Advanced Modeler', reqXP: 500, desc: 'Kumpulkan 500 XP' },
+        { icon: '🏆', title: 'Excel Analyst', reqXP: 800, desc: 'Kumpulkan 800 XP' }
       ];
 
       badgesContainer.innerHTML = '';
       badges.forEach(b => {
-        const isUnlocked = doneCount >= b.req;
-        const remaining = b.req - doneCount;
+        const isUnlocked = totalXP >= b.reqXP;
+        const remaining = b.reqXP - totalXP;
         
         const card = document.createElement('div');
         card.style.background = 'var(--surface-2)';
@@ -133,7 +152,7 @@
         sub.style.fontSize = '0.8rem';
         sub.style.color = 'var(--text-muted)';
         sub.style.marginTop = '4px';
-        sub.textContent = isUnlocked ? 'Terbuka! 🎉' : `Selesaikan ${remaining} topik lagi`;
+        sub.textContent = isUnlocked ? 'Terbuka! 🎉' : `Kumpulkan ${remaining} XP lagi`;
         
         textDiv.appendChild(title);
         textDiv.appendChild(sub);

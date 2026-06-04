@@ -297,21 +297,29 @@
         }
       }
 
-      // B. FORCE UPDATE THE ACTION BUTTON (This ensures the UI survives page reloads)
+      // B. FORCE UPDATE THE ACTION BUTTON (3 States: Done, Locked, Ready)
       var markBtn = card.querySelector('.btn-mark-done');
       if (markBtn) {
         if (status === 'done') {
-          // Module is Completed
           markBtn.style.background = 'rgba(16, 185, 129, 0.1)';
           markBtn.style.borderColor = '#10b981';
           markBtn.style.color = '#10b981';
           markBtn.innerHTML = '✅ Selesai';
           markBtn.title = 'Klik untuk membatalkan status selesai';
+        } else if (status === 'not-started') {
+          // STATE BARU: Terkunci (Belum Dibaca)
+          markBtn.style.background = 'var(--surface-2)';
+          markBtn.style.borderColor = 'var(--border)';
+          markBtn.style.color = 'var(--text-muted)';
+          markBtn.style.opacity = '0.7';
+          markBtn.innerHTML = '🔒 Baca Dulu';
+          markBtn.title = 'Klik Mulai untuk membaca materi terlebih dahulu';
         } else {
-          // Module is Pending/Not Started
+          // STATE: In-Progress / Siap Kuis
           markBtn.style.background = 'transparent';
           markBtn.style.borderColor = 'var(--border)';
           markBtn.style.color = 'var(--text-muted)';
+          markBtn.style.opacity = '1';
           markBtn.innerHTML = '📝 Kerjakan Kuis';
           markBtn.title = 'Klik untuk mengerjakan materi';
         }
@@ -328,7 +336,16 @@
 
       var fill = track.querySelector('.progress-fill');
       var label = track.querySelector('.progress-label');
-      if (fill) fill.style.width = pct + '%';
+      if (fill) {
+        fill.style.width = pct + '%';
+        if (pct === 100) {
+           fill.style.background = '#10b981';
+           // Tambahkan glow pada wadah luarnya (parent) agar tidak terpotong overflow:hidden
+           fill.parentElement.classList.add('progress-glow');
+        } else {
+           fill.parentElement.classList.remove('progress-glow');
+        }
+      }
       if (label) label.textContent = done + '/' + ids.length + ' selesai';
     });
   };
@@ -517,6 +534,51 @@
     initSmoothScroll();
     initTrackSections();
 
+    // --- GLOBAL TOAST NOTIFICATION ---
+    window.EAH.showToast = function(title, subtitle, icon) {
+      let toast = document.getElementById('eah-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'eah-toast';
+        toast.className = 'toast-notification';
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = `
+        <div style="font-size: 2.5rem; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));">${icon}</div>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div style="font-weight: 800; color: #10b981; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">${title}</div>
+          <div style="font-weight: bold; color: var(--text); font-size: 1.15rem;">${subtitle}</div>
+        </div>
+      `;
+      // Slide in
+      setTimeout(function() { toast.classList.add('show'); }, 100);
+      // Slide out after 4.5 seconds
+      setTimeout(function() { toast.classList.remove('show'); }, 4500);
+    };
+
+    // --- ACHIEVEMENT CHECKER ---
+    function checkAchievements() {
+       if (!window.EAH || typeof window.EAH.getProgress !== 'function') return;
+       const p = window.EAH.getProgress();
+       const doneCount = Object.keys(p).filter(k => p[k] === 'done').length;
+       
+       const lastNotified = parseInt(localStorage.getItem('eah_last_notified')) || 0;
+       
+       if (doneCount >= 1 && lastNotified < 1) {
+           window.EAH.showToast('Achievement Unlocked!', 'Pemula Tangguh 🌱', '🌱');
+           localStorage.setItem('eah_last_notified', 1);
+       } else if (doneCount >= 4 && lastNotified < 4) {
+           window.EAH.showToast('Achievement Unlocked!', 'Data Explorer 🧭', '🧭');
+           localStorage.setItem('eah_last_notified', 4);
+       } else if (doneCount >= 9 && lastNotified < 9) {
+           window.EAH.showToast('Achievement Unlocked!', 'Advanced Modeler ⚙️', '⚙️');
+           localStorage.setItem('eah_last_notified', 9);
+       } else if (doneCount >= 14 && lastNotified < 14) {
+           window.EAH.showToast('Achievement Unlocked!', 'Excel Analyst 🏆', '🏆');
+           localStorage.setItem('eah_last_notified', 14);
+       }
+    }
+
     // --- FUNGSI ANIMASI SUKSES (GAMIFIKASI) ---
     function triggerSuccessAnimation(btn) {
       // 1. Efek pop pada tombol asal (jika terlihat)
@@ -614,6 +676,12 @@
         
         const isDone = targetBtn.textContent.includes('Selesai');
 
+        const isLocked = targetBtn.textContent.includes('Baca Dulu');
+        if (isLocked) {
+           alert("Silakan buka dan baca materinya terlebih dahulu dengan mengklik tombol 'Mulai →'");
+           return;
+        }
+
         // 1. FITUR UNDO INSTAN (Bypass System Confirm yang sering diblokir browser)
         if (isDone) {
            targetBtn.style.background = 'transparent';
@@ -636,6 +704,7 @@
           targetBtn.style.color = '#10b981';
           targetBtn.innerHTML = '✅ Selesai';
           triggerSuccessAnimation(targetBtn);
+          checkAchievements();
           targetBtn.title = 'Klik untuk membatalkan status selesai';
           
           if (window.EAH && window.EAH.setTopicStatus) window.EAH.setTopicStatus(topicId, 'done');
@@ -692,14 +761,14 @@
             
             optBtn.textContent = opt.text;
 
-            // Efek Hover Buatan JS
+            // Efek Hover Buatan JS (Konsisten dengan btn-ghost)
             optBtn.addEventListener('mouseenter', function() {
               if (!optBtn.disabled && optBtn.style.background === 'transparent') {
-                optBtn.style.background = 'var(--border)';
+                optBtn.style.background = 'var(--surface-2)';
               }
             });
             optBtn.addEventListener('mouseleave', function() {
-              if (!optBtn.disabled && optBtn.style.background === 'var(--border)') {
+              if (!optBtn.disabled && optBtn.style.background === 'var(--surface-2)') {
                 optBtn.style.background = 'transparent';
               }
             });
@@ -722,6 +791,7 @@
                 targetBtn.style.color = '#10b981';
                 targetBtn.innerHTML = '✅ Selesai';
                 triggerSuccessAnimation(targetBtn);
+                checkAchievements();
                 targetBtn.title = 'Klik untuk membatalkan status selesai';
 
                 if (window.EAH && window.EAH.setTopicStatus) window.EAH.setTopicStatus(topicId, 'done');
@@ -772,6 +842,52 @@
     // Render progress if on learn page
     if (document.querySelector('.topic-card') && window.EAH && window.EAH.renderProgress) {
       window.EAH.renderProgress();
+    }
+    // --- UX FLOW: TRACK "MULAI" CLICKS ---
+    document.querySelectorAll('.topic-card a.btn-primary').forEach(function(link) {
+      link.addEventListener('click', function() {
+        const card = link.closest('.topic-card');
+        if (card) {
+          const topicId = card.dataset.topicId;
+          const p = window.EAH.getProgress();
+          if (!p[topicId] || p[topicId] === 'not-started') {
+            window.EAH.setTopicStatus(topicId, 'in-progress');
+          }
+        }
+      });
+    });
+
+    // --- UX FLOW: AUTO-INJECT BOTTOM NAVIGATION ON TOPIC PAGES ---
+    const path = window.location.pathname;
+    const isTopicPage = path.includes('topic-') || path.endsWith('topic.html');
+    if (isTopicPage) {
+      const navContainer = document.createElement('div');
+      navContainer.className = 'container';
+      navContainer.style.marginTop = '40px';
+      navContainer.style.marginBottom = '60px';
+      navContainer.style.padding = '20px';
+      navContainer.style.background = 'var(--surface)';
+      navContainer.style.border = '1px solid var(--border)';
+      navContainer.style.borderRadius = '8px';
+      navContainer.style.display = 'flex';
+      navContainer.style.justifyContent = 'space-between';
+      navContainer.style.alignItems = 'center';
+      navContainer.style.flexWrap = 'wrap';
+      navContainer.style.gap = '15px';
+      
+      navContainer.innerHTML = `
+          <div>
+              <h4 style="margin:0 0 5px 0;">Sudah selesai membaca?</h4>
+              <p style="margin:0; font-size:0.9rem; color:var(--text-muted);">Kembali ke menu untuk mengerjakan kuis dan menyimpan progres.</p>
+          </div>
+          <a href="learn.html" class="btn-primary" style="text-decoration:none;">⬅ Kembali ke Jalur Belajar</a>
+      `;
+      
+      // Cari tempat teraman untuk menempelkan navigasi
+      const mainEl = document.getElementById('main-content') || document.querySelector('main');
+      if (mainEl) {
+          mainEl.appendChild(navContainer);
+      }
     }
   });
 
