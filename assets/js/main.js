@@ -278,20 +278,43 @@
   window.EAH.renderProgress = function () {
     var progress = window.EAH.getProgress();
 
-    // Update each topic card status indicator
+    // Update each topic card status indicator AND Button visual states
     document.querySelectorAll('.topic-card').forEach(function (card) {
       var id = card.dataset.topicId;
       if (!id) return;
       var status = progress[id] || 'not-started';
+      
+      // A. Update the text label (Belum Dimulai / Selesai)
       var statusEl = card.querySelector('.topic-status');
-      if (!statusEl) return;
-      statusEl.dataset.status = status;
-      if (status === 'done') {
-        statusEl.textContent = '✓ Selesai';
-      } else if (status === 'in-progress') {
-        statusEl.textContent = '● Sedang Dipelajari';
-      } else {
-        statusEl.textContent = '○ Belum Dimulai';
+      if (statusEl) {
+        statusEl.dataset.status = status;
+        if (status === 'done') {
+          statusEl.textContent = '✓ Selesai';
+        } else if (status === 'in-progress') {
+          statusEl.textContent = '● Sedang Dipelajari';
+        } else {
+          statusEl.textContent = '○ Belum Dimulai';
+        }
+      }
+
+      // B. FORCE UPDATE THE ACTION BUTTON (This ensures the UI survives page reloads)
+      var markBtn = card.querySelector('.btn-mark-done');
+      if (markBtn) {
+        if (status === 'done') {
+          // Module is Completed
+          markBtn.style.background = 'rgba(16, 185, 129, 0.1)';
+          markBtn.style.borderColor = '#10b981';
+          markBtn.style.color = '#10b981';
+          markBtn.innerHTML = '✅ Selesai';
+          markBtn.title = 'Klik untuk membatalkan status selesai';
+        } else {
+          // Module is Pending/Not Started
+          markBtn.style.background = 'transparent';
+          markBtn.style.borderColor = 'var(--border)';
+          markBtn.style.color = 'var(--text-muted)';
+          markBtn.innerHTML = '📝 Kerjakan Kuis';
+          markBtn.title = 'Klik untuk mengerjakan materi';
+        }
       }
     });
 
@@ -371,7 +394,7 @@
       ],
       success: '✨ Benar! Freeze Panes (di tab View) sangat krusial saat membaca dataset besar.', fail: '❌ Kurang tepat. Fokus pada fitur "membekukan" area pandang.'
     },
-    'datacleaning': {
+    'data-cleaning': {
       q: 'Jika teks di kolom A terlihat berantakan karena banyak spasi kosong di awal dan akhirnya, fungsi apa yang wajib kamu gunakan?',
       options: [
         { text: 'A. =CLEAN()', correct: false },
@@ -380,7 +403,7 @@
       ],
       success: '✨ Benar! TRIM membersihkan spasi berlebih dari teks.', fail: '❌ Kurang tepat. CLEAN menghapus karakter non-printable, bukan spasi.'
     },
-    'vlookup-indexmatch': {
+    'vlookup': {
       q: 'Apa kelemahan utama dari VLOOKUP yang bisa diatasi oleh kombinasi INDEX-MATCH?',
       options: [
         { text: 'A. VLOOKUP tidak bisa membaca teks, hanya angka.', correct: false },
@@ -389,7 +412,16 @@
       ],
       success: '✨ Benar! INDEX-MATCH lebih dinamis karena bisa mencari ke arah kiri dan kanan.', fail: '❌ Kurang tepat. Ingat aturan "Left-to-Right" VLOOKUP.'
     },
-    'sumif': {
+    'index-match': {
+      q: 'Mengapa analis berpengalaman lebih memilih INDEX-MATCH daripada VLOOKUP?',
+      options: [
+        { text: 'A. Karena bisa mencari data ke arah kiri dari kolom acuan.', correct: true },
+        { text: 'B. Karena lebih mudah ditulis.', correct: false },
+        { text: 'C. Karena otomatis menghapus duplikat.', correct: false }
+      ],
+      success: '✨ Benar! INDEX-MATCH sangat dinamis dan tidak terpengaruh penyisipan kolom.', fail: '❌ Kurang tepat. VLOOKUP terjebak aturan "Left-to-Right".'
+    },
+    'sumif-countif': {
       q: 'Pada fungsi =SUMIF(range, criteria, sum_range), apa yang seharusnya diisi pada argumen "sum_range"?',
       options: [
         { text: 'A. Kolom teks yang menjadi syarat (Misal: Kolom Cabang).', correct: false },
@@ -398,7 +430,7 @@
       ],
       success: '✨ Benar! sum_range adalah rentang nilai yang akan dijumlahkan pada akhirnya.', fail: '❌ Kurang tepat. Perhatikan kata "sum" (jumlah) pada argumen tersebut.'
     },
-    'pivottable': {
+    'pivot-tables': {
       q: 'Di menu Field List PivotTable, ke area manakah kamu harus menarik (drag) kolom metrik jika kamu ingin menghitung Total Penjualan?',
       options: [
         { text: 'A. Area Rows (Baris)', correct: false },
@@ -456,134 +488,26 @@
     }
   };
 
-  /* Topic "Mark Done" buttons on learn page (With Modal Logic) */
-  function initTopicMarkDone() {
-    var modal = document.getElementById('quiz-modal');
-    var closeBtn = document.getElementById('close-quiz');
-    var continueBtn = document.getElementById('quiz-btn-continue');
-    
-    if (closeBtn) closeBtn.addEventListener('click', function() { 
-      modal.style.display = 'none'; 
-      document.body.style.overflow = '';
-    });
-    if (continueBtn) continueBtn.addEventListener('click', function() { 
-      modal.style.display = 'none'; 
-      document.body.style.overflow = '';
-    });
-
-    document.querySelectorAll('.topic-card').forEach(function (card) {
-      var id = card.dataset.topicId;
-      var btn = card.querySelector('.btn-mark-done');
-      if (!btn || !id) return;
-      
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var current = window.EAH.getProgress()[id] || 'not-started';
-        
-        // Bypass if already done
-        if (current === 'done') {
-          window.EAH.setTopicStatus(id, 'not-started');
-          window.EAH.renderProgress();
-          return;
-        }
-
-        var quizData = KNOWLEDGE_CHECKS[id];
-        if (!quizData || !modal) {
-          window.EAH.setTopicStatus(id, 'done');
-          window.EAH.renderProgress();
-          return;
-        }
-
-        // Setup Modal
-        document.getElementById('quiz-question').textContent = quizData.q;
-        var optionsContainer = document.getElementById('quiz-options-container');
-        var feedbackContainer = document.getElementById('quiz-feedback-global');
-        
-        optionsContainer.innerHTML = '';
-        feedbackContainer.style.display = 'none';
-        continueBtn.style.display = 'none';
-
-        quizData.options.forEach(function(opt) {
-          var optBtn = document.createElement('button');
-          optBtn.style.cssText = 'text-align:left; padding:var(--space-3) var(--space-4); background:var(--surface-2); border:1px solid var(--border); border-radius:6px; color:var(--text); cursor:pointer; font-family:inherit; font-size:0.95rem; transition:all 0.2s;';
-          optBtn.textContent = opt.text;
-          
-          optBtn.onmouseover = function() { if(!optBtn.disabled) optBtn.style.borderColor = 'var(--accent)'; };
-          optBtn.onmouseout = function() { if(!optBtn.disabled && optBtn.style.borderColor !== 'rgb(16, 185, 129)' && optBtn.style.borderColor !== 'rgb(239, 68, 68)') optBtn.style.borderColor = 'var(--border)'; };
-
-          optBtn.addEventListener('click', function() {
-            Array.from(optionsContainer.children).forEach(function(b) {
-              b.style.borderColor = 'var(--border)';
-              b.style.background = 'var(--surface-2)';
-            });
-
-            if (opt.correct) {
-              optBtn.style.borderColor = '#10b981';
-              optBtn.style.background = 'rgba(16, 185, 129, 0.05)';
-              feedbackContainer.style.display = 'block';
-              feedbackContainer.style.background = 'rgba(16, 185, 129, 0.1)';
-              feedbackContainer.style.color = '#10b981';
-              feedbackContainer.innerHTML = quizData.success;
-              
-              window.EAH.setTopicStatus(id, 'done');
-              window.EAH.renderProgress();
-              
-              Array.from(optionsContainer.children).forEach(function(b) { b.disabled = true; b.style.cursor = 'default'; });
-              continueBtn.style.display = 'block';
-
-            } else {
-              optBtn.style.borderColor = '#ef4444';
-              optBtn.style.background = 'rgba(239, 68, 68, 0.05)';
-              feedbackContainer.style.display = 'block';
-              feedbackContainer.style.background = 'rgba(239, 68, 68, 0.1)';
-              feedbackContainer.style.color = '#ef4444';
-              feedbackContainer.innerHTML = quizData.fail;
-            }
-          });
-          optionsContainer.appendChild(optBtn);
-        });
-
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-      });
-    });
-  }
-
   /* ------------------------------------------
-     9. THEME TOGGLE (dark/light mode)
+     9. THEME TOGGLE (DARK/LIGHT MODE)
   ------------------------------------------ */
-  var THEME_KEY = 'eah_theme';
-
-  function applyTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    // Update all toggle button icons
-    document.querySelectorAll('.theme-toggle').forEach(function (btn) {
-      btn.textContent = theme === 'dark' ? '☀️' : '🌙';
-      btn.setAttribute('aria-label', theme === 'dark' ? 'Aktifkan mode terang' : 'Aktifkan mode gelap');
-      btn.setAttribute('title', theme === 'dark' ? 'Mode terang' : 'Mode gelap');
-    });
-  }
-
   function initThemeToggle() {
-    // Load saved preference; default to dark
-    var saved = 'dark';
-    try { saved = localStorage.getItem(THEME_KEY) || 'dark'; } catch (e) {}
-    applyTheme(saved);
+    const btn = document.getElementById('theme-toggle-nav');
+    if (!btn) return;
+    
+    // Set icon based on current theme
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    btn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
 
-    document.querySelectorAll('.theme-toggle').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var current = document.documentElement.getAttribute('data-theme') || 'dark';
-        var next = current === 'dark' ? 'light' : 'dark';
-        applyTheme(next);
-        try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
-      });
+    btn.addEventListener('click', function() {
+      let current = document.documentElement.getAttribute('data-theme');
+      let next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('eah_theme', next);
+      btn.textContent = next === 'dark' ? '☀️' : '🌙';
     });
   }
 
-  /* ------------------------------------------
-     10. BOOTSTRAP ALL
-  ------------------------------------------ */
   document.addEventListener('DOMContentLoaded', function () {
     initThemeToggle(); // must run first so theme is applied before paint
     initActiveNav();
@@ -592,10 +516,179 @@
     initFadeIn();
     initSmoothScroll();
     initTrackSections();
-    initTopicMarkDone();
+
+    // --- UNIVERSAL QUIZ TRIGGER (EVENT DELEGATION) ---
+    document.addEventListener('click', function(e) {
+      const targetBtn = e.target.closest('.btn-mark-done');
+
+      if (targetBtn) {
+        e.preventDefault();
+
+        const topicItem = targetBtn.closest('[data-topic-id]');
+        if (!topicItem) {
+          console.error("Elemen parent dengan data-topic-id tidak ditemukan!");
+          return;
+        }
+
+        const topicId = topicItem.getAttribute('data-topic-id');
+        
+        const isDone = targetBtn.textContent.includes('Selesai');
+
+        // 1. FITUR UNDO INSTAN (Bypass System Confirm yang sering diblokir browser)
+        if (isDone) {
+           targetBtn.style.background = 'transparent';
+           targetBtn.style.borderColor = 'var(--border)';
+           targetBtn.style.color = 'var(--text-muted)';
+           targetBtn.innerHTML = '📝 Kerjakan Kuis'; 
+           targetBtn.title = 'Klik untuk mengerjakan materi';
+           
+           if (window.EAH && window.EAH.setTopicStatus) window.EAH.setTopicStatus(topicId, 'pending');
+           if (window.EAH && window.EAH.renderProgress) window.EAH.renderProgress();
+           return; 
+        }
+
+        const quizData = typeof KNOWLEDGE_CHECKS !== 'undefined' ? KNOWLEDGE_CHECKS[topicId] : null;
+
+        // 2. JIKA TIDAK ADA KUIS: Langsung tandai selesai
+        if (!quizData) {
+          targetBtn.style.background = 'rgba(16, 185, 129, 0.1)';
+          targetBtn.style.borderColor = '#10b981';
+          targetBtn.style.color = '#10b981';
+          targetBtn.innerHTML = '✅ Selesai';
+          targetBtn.title = 'Klik untuk membatalkan status selesai';
+          
+          if (window.EAH && window.EAH.setTopicStatus) window.EAH.setTopicStatus(topicId, 'done');
+          if (window.EAH && window.EAH.renderProgress) window.EAH.renderProgress();
+          return;
+        }
+
+        // 3. JIKA ADA KUIS: Siapkan Modal
+        const quizModal = document.getElementById('quiz-modal');
+        const questionEl = document.getElementById('quiz-question');
+        const optionsContainer = document.getElementById('quiz-options-container');
+
+        if (quizModal && questionEl && optionsContainer) {
+          questionEl.textContent = quizData.q;
+          optionsContainer.innerHTML = ''; 
+
+          // Desain Feedback Container
+          let feedbackContainer = document.getElementById('quiz-feedback');
+          if (!feedbackContainer) {
+            feedbackContainer = document.createElement('div');
+            feedbackContainer.id = 'quiz-feedback';
+            feedbackContainer.style.marginTop = '15px';
+            feedbackContainer.style.padding = '12px';
+            feedbackContainer.style.borderRadius = '8px';
+            feedbackContainer.style.fontWeight = '500';
+            optionsContainer.parentNode.appendChild(feedbackContainer);
+          }
+          feedbackContainer.style.display = 'none';
+
+          quizData.options.forEach(function(opt) {
+            const optBtn = document.createElement('button');
+            
+            // Desain Opsi Jawaban (Anti Kepotong & Premium)
+            optBtn.style.display = 'block';
+            optBtn.style.textAlign = 'left';
+            optBtn.style.padding = '14px 18px';
+            optBtn.style.border = '2px solid var(--border)';
+            optBtn.style.borderRadius = '8px';
+            optBtn.style.marginBottom = '12px';
+            optBtn.style.cursor = 'pointer';
+            optBtn.style.width = '100%';
+            optBtn.style.background = 'transparent';
+            optBtn.style.color = 'var(--text)';
+            optBtn.style.fontSize = '1rem';
+            optBtn.style.lineHeight = '1.6';
+            optBtn.style.fontWeight = '500';
+            optBtn.style.transition = 'all 0.2s ease-in-out';
+            
+            // Kunci mutlak agar teks bisa turun baris
+            optBtn.style.whiteSpace = 'normal'; 
+            optBtn.style.minHeight = '50px';
+            optBtn.style.height = 'auto';
+            optBtn.style.wordBreak = 'break-word';
+            
+            optBtn.textContent = opt.text;
+
+            // Efek Hover Buatan JS
+            optBtn.addEventListener('mouseenter', function() {
+              if (!optBtn.disabled && optBtn.style.background === 'transparent') {
+                optBtn.style.background = 'var(--border)';
+              }
+            });
+            optBtn.addEventListener('mouseleave', function() {
+              if (!optBtn.disabled && optBtn.style.background === 'var(--border)') {
+                optBtn.style.background = 'transparent';
+              }
+            });
+
+            optBtn.addEventListener('click', function() {
+              if (opt.correct) {
+                // Berhasil
+                optBtn.style.borderColor = '#10b981';
+                optBtn.style.background = 'rgba(16, 185, 129, 0.1)';
+                optBtn.style.color = '#10b981';
+                
+                feedbackContainer.style.display = 'block';
+                feedbackContainer.style.background = 'rgba(16, 185, 129, 0.1)';
+                feedbackContainer.style.color = '#10b981';
+                feedbackContainer.style.border = '1px solid #10b981';
+                feedbackContainer.innerHTML = '✨ ' + quizData.success;
+
+                targetBtn.style.background = 'rgba(16, 185, 129, 0.1)';
+                targetBtn.style.borderColor = '#10b981';
+                targetBtn.style.color = '#10b981';
+                targetBtn.innerHTML = '✅ Selesai';
+                targetBtn.title = 'Klik untuk membatalkan status selesai';
+
+                if (window.EAH && window.EAH.setTopicStatus) window.EAH.setTopicStatus(topicId, 'done');
+                if (window.EAH && window.EAH.renderProgress) window.EAH.renderProgress();
+
+                // Matikan opsi lain, biarkan tombol yang benar tetap menyala
+                Array.from(optionsContainer.children).forEach(b => {
+                  if(b.tagName === 'BUTTON') {
+                      b.disabled = true;
+                      b.style.cursor = 'not-allowed';
+                      if(b !== optBtn) b.style.opacity = '0.5';
+                  }
+                });
+              } else {
+                // Gagal
+                optBtn.style.borderColor = '#ef4444';
+                optBtn.style.background = 'rgba(239, 68, 68, 0.05)';
+                optBtn.style.color = '#ef4444';
+                
+                feedbackContainer.style.display = 'block';
+                feedbackContainer.style.background = 'rgba(239, 68, 68, 0.1)';
+                feedbackContainer.style.color = '#ef4444';
+                feedbackContainer.style.border = '1px solid #ef4444';
+                feedbackContainer.innerHTML = '❌ ' + quizData.fail;
+              }
+            });
+            optionsContainer.appendChild(optBtn);
+          });
+
+          quizModal.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        }
+      }
+    });
+
+    // --- CLOSE MODAL LOGIC ---
+    document.addEventListener('click', function(e) {
+      // Menutup jika klik di area luar, klik tombol X, atau klik tombol Lanjutkan
+      if (e.target.id === 'quiz-modal' || e.target.closest('#close-quiz') || e.target.id === 'quiz-btn-continue') {
+        const quizModal = document.getElementById('quiz-modal');
+        if (quizModal) {
+          quizModal.style.display = 'none';
+          document.body.style.overflow = ''; // Lepaskan lock scroll
+        }
+      }
+    });
 
     // Render progress if on learn page
-    if (document.querySelector('.topic-card')) {
+    if (document.querySelector('.topic-card') && window.EAH && window.EAH.renderProgress) {
       window.EAH.renderProgress();
     }
   });
