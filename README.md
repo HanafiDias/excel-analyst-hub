@@ -1,64 +1,79 @@
-# Excel Analyst Hub
+# ⊞ Excel Analyst Hub
 
-**Master Excel & Data Analytics through career-focused, hands-on learning.**
+**LMS (Learning Management System) Interaktif untuk Menguasai Excel & Data Analytics**
 
-Excel Analyst Hub is an all-in-one platform designed for the next generation of Indonesian data analysts. It bridges the gap between basic spreadsheet knowledge and job-ready analytical skills through structured paths, interactive tools, and realistic practice scenarios.
+**Excel Analyst Hub** bukan sekadar kumpulan tutorial statis, melainkan sebuah platform *e-learning* komprehensif yang dibangun dari nol untuk menjembatani jurang antara pengetahuan *spreadsheet* dasar dan keahlian analisis data yang siap kerja. 
 
-## **Live Demo** 
-https://hanafidias.github.io/excel-analyst-hub
+Dilengkapi dengan sistem gamifikasi (*XP, Badges, Leveling*), perlindungan alur belajar (*Smart UX Flow*), dan alat *generator* data, platform ini dirancang khusus untuk mencetak generasi *Data Analyst* terbaik di Indonesia.
 
-
-## Core Features
-
-- **Challenge System**: Interactive daily challenges and scenario-based quizzes that test real-world problem-solving skills.
-- **Progression System**: LocalStorage-based tracking that monitors your learning journey, completed topics, and project milestones.
-- **Excel Analyzer**: A suite of interactive tools including a Formula Generator and CSV Dataset Generator for hands-on practice.
-- **Soft Monetization**: A value-first approach providing free premium-grade templates and resources to democratize data education.
-
-## Connected Projects
-
-| Project | Link |
-|---|---|
-| Excel Shortcut Trainer | [Link](https://hanafidias.github.io/excel-shortcut-for-data-analyst) |
-| Excel Formula Trainer | [Link](https://hanafidias.github.io/excel-formula-trainer) |
-| Excel Data Cleaning Guide | [Link](https://hanafidias.github.io/excel-data-cleaning-guide/) |
-| Excel Pivot Table Guide | [Link](https://hanafidias.github.io/excel-pivot-table-guide/) |
-| SQL Trainer | [Link](https://hanafidias.github.io/sql-trainer/) |
-
-## UX Flow
-
-Users begin by selecting a structured track—Beginner, Intermediate, or Advanced—tailored to their current skill level. The journey integrates interactive learning with practical tools like the Formula Generator and daily challenges, allowing users to apply concepts immediately to realistic CSV datasets. Progress is automatically saved to a personal portfolio, creating a visible roadmap from fundamental literacy to career-ready analysis.
-
-## Tech Stack
-
-- **Structure**: Semantic HTML5
-- **Styling**: Vanilla CSS3 (Custom Design System)
-- **Logic**: Vanilla JavaScript (ES6+)
-
-## Why This Project Matters
-
-In the Indonesian job market, there is a significant gap between "knowing Excel" and "analyzing data." This project provides high-quality, localized, and free resources that focus on the specific tools—VLOOKUP, PivotTables, Power Query, and SQL—that hiring managers actually look for.
-
-## Deployment
-
-This project is optimized for static hosting and is currently deployed via **GitHub Pages**. To deploy your own version, simply push the repository to the `main` branch and enable GitHub Pages in the repository settings.
-
-## Future Improvements
-
-- Integration with real-time dataset APIs for advanced analysis scenarios.
-- Expanded library of interactive dashboard templates.
-- Community-driven challenge submission system.
-- Enhanced progression badges and automated certificate generation.
-
-## License
-
-This project is created for learning and portfolio purposes.
-
+## 🌐 **Live Demo** [https://hanafidias.github.io/excel-analyst-hub](https://hanafidias.github.io/excel-analyst-hub)
 
 ---
 
-## **Author**
-Hanafi Dias Arif Dewanto | *Informatics Graduate | Aspiring Data Analyst*
+## ✨ Fitur Unggulan Terkini (V2.0 Update)
 
-- **GitHub**: [HanafiDias](https://github.com/HanafiDias)
-- **LinkedIn**: [hanafidias](https://linkedin.com/in/hanafidias)
+### 🎮 **Sistem Gamifikasi & Ekonomi XP**
+- **Daily Streak & XP Tracking**: Pengguna mendapatkan bonus XP karena rajin *login* (menggunakan `localStorage` cerdas) dan menyelesaikan materi.
+- **Dynamic Leveling**: Gelar pengguna berevolusi secara otomatis berdasarkan akumulasi XP (dari *Newbie Spreadsheet* hingga level rahasia *Spreadsheet God*).
+- **Interactive Badges**: Sistem pencapaian (Badges) memberikan panduan interaktif *"Kumpulkan X XP lagi"* sebelum bisa dibuka.
+- **Global Toast Notifications**: Notifikasi pop-up elegan bergaya *game* meluncur secara *real-time* dari sudut layar saat mendapat pencapaian baru atau menyalin rumus.
+- **Pulsing Glow Progress**: *Progress bar* akan memancarkan cahaya neon hijau (efek animasi *glow*) saat pengguna menyelesaikan sebuah jalur 100%.
+
+### 🧠 **Smart UX Flow & Navigasi Cerdas**
+- **Sistem Kunci Materi (Anti-Cheat)**: Tombol kuis digembok dengan status **"🔒 Baca Dulu"** jika pengunjung belum membuka materi, memaksa alur belajar yang disiplin.
+- **Auto-Inject Bottom Navigation**: Tidak ada jalan buntu. Skrip pintar akan otomatis menyuntikkan navigasi "Kembali ke Jalur Belajar" di bagian paling bawah setiap materi.
+- **Micro-Interactions**: Transisi antar-halaman yang *smooth (fade-in)*, efek kartu yang melayang (*hover-lift*), dan tombol yang membal taktil saat ditekan (*active tactile bounce*).
+
+### 🛠️ **Excel Analyzer & Interactive Tools**
+- **Formula Generator**: Salin *snippet* rumus rumit Excel ke *clipboard* hanya dengan 1 klik.
+- **Dataset Generator (with Live Preview)**: Menghasilkan ribuan baris data CSV acak untuk latihan, lengkap dengan *Live Preview Table* yang dirender secara *real-time* ke layar sebelum diunduh.
+
+### 💼 **Real-World Portfolio & Studi Kasus**
+Bukan sekadar teori. Tersedia jalur Portofolio yang menyediakan unduhan *file* `.xlsx` dan `.csv` untuk kasus nyata perusahaan (seperti *Credit Scoring*, *Sales Dashboard*, *Payment Reconciliation*, dan *HR Tracker*).
+
+---
+
+## 🔗 Proyek Terkait
+
+| Nama Proyek | Tautan |
+|---|---|
+| Excel Shortcut Trainer | [Buka Proyek](https://hanafidias.github.io/excel-shortcut-for-data-analyst) |
+| Excel Formula Trainer | [Buka Proyek](https://hanafidias.github.io/excel-formula-trainer) |
+| Excel Data Cleaning Guide | [Buka Proyek](https://hanafidias.github.io/excel-data-cleaning-guide/) |
+| Excel Pivot Table Guide | [Buka Proyek](https://hanafidias.github.io/excel-pivot-table-guide/) |
+| SQL Trainer | [Buka Proyek](https://hanafidias.github.io/sql-trainer/) |
+
+---
+
+## 💻 Tech Stack & Arsitektur
+
+Platform ini mengutamakan performa super cepat dan arsitektur *clean code* tanpa membebani *browser* dengan *library* yang berat:
+- **Structure**: Semantic HTML5
+- **Styling**: Vanilla CSS3 (Custom Design System, CSS Variables, Animations)
+- **Logic**: Vanilla JavaScript (ES6+, DOM Manipulation, Event Delegation, LocalStorage API)
+- **Architecture**: Modular JS (`main.js`, `profile.js`, `quiz.js`, `dataset-gen.js`, `sandbox.js`)
+
+---
+
+## 🎯 Mengapa Proyek Ini Penting?
+
+Di pasar tenaga kerja Indonesia saat ini, terdapat jarak (*gap*) yang sangat besar antara sekadar "bisa Excel" dan benar-benar "mampu menganalisis data". Excel Analyst Hub hadir menyediakan ekosistem terpadu, berkualitas tinggi, dan gratis yang berfokus pada alat analitik tingkat lanjut yang sesungguhnya dicari oleh perekrut (*VLOOKUP, INDEX-MATCH, PivotTables, Power Query, Dynamic Arrays*).
+
+---
+
+## 🚀 Deployment
+
+Proyek ini sangat ringan dan dioptimalkan sepenuhnya untuk *static hosting*. Saat ini *live* melalui **GitHub Pages**. Tidak membutuhkan *server database* terpisah karena seluruh sesi, preferensi tema, dan progres pengguna diproses secara aman melalui arsitektur *Client-Side Storage*.
+
+---
+
+## 👨‍💻 Tentang Author
+
+**Hanafi Dias Arif Dewanto** *Informatics Graduate | Frontend Developer & Aspiring Data Analyst*
+
+Memadukan latar belakang keilmuan Informatika dengan hasrat mendalam terhadap dunia data. Proyek ini dibangun dari nol sebagai bukti kemampuan merancang arsitektur perangkat lunak (*software architecture*), manipulasi DOM tingkat lanjut, serta perancangan *User Experience* (UX) yang berpusat pada psikologi gamifikasi.
+
+- **GitHub**: [@HanafiDias](https://github.com/HanafiDias)
+- **LinkedIn**: [Hanafi Dias Arif Dewanto](https://linkedin.com/in/hanafidias)
+
+> *"Learning shouldn't be boring; it should be rewarding."*
