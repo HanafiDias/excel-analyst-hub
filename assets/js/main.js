@@ -548,6 +548,9 @@
         <div style="display:flex; flex-direction:column; gap:4px;">
           <div style="font-weight: 800; color: #10b981; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">${title}</div>
           <div style="font-weight: bold; color: var(--text); font-size: 1.15rem;">${subtitle}</div>
+          <div style="font-size: 0.75rem; color: #10b981; font-style: italic; margin-top: 2px; opacity: 0.9;">
+            "Learning shouldn't be boring; it should be rewarding."
+          </div>
         </div>
       `;
       // Slide in

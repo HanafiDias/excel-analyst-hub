@@ -49,31 +49,35 @@ Bukan sekadar teori. Tersedia jalur Portofolio yang menyediakan unduhan *file* `
 
 Platform ini mengutamakan performa super cepat dan arsitektur *clean code* tanpa membebani *browser* dengan *library* yang berat:
 - **Structure**: Semantic HTML5
-- **Styling**: Vanilla CSS3 (Custom Design System, CSS Variables, Animations)
-- **Logic**: Vanilla JavaScript (ES6+, DOM Manipulation, Event Delegation, LocalStorage API)
-- **Architecture**: Modular JS (`main.js`, `profile.js`, `quiz.js`, `dataset-gen.js`, `sandbox.js`)
+- **Styling**: Vanilla CSS3 (Custom Design System)
+- **Logic**: Vanilla JavaScript (ES6+)
+
+## Why This Project Matters
+
+In the Indonesian job market, there is a significant gap between "knowing Excel" and "analyzing data." This project provides high-quality, localized, and free resources that focus on the specific tools—VLOOKUP, PivotTables, Power Query, and SQL—that hiring managers actually look for.
+
+## Deployment
+
+This project is optimized for static hosting and is currently deployed via **GitHub Pages**. To deploy your own version, simply push the repository to the `main` branch and enable GitHub Pages in the repository settings.
+
+## Future Improvements
+
+- Integration with real-time dataset APIs for advanced analysis scenarios.
+- Expanded library of interactive dashboard templates.
+- Community-driven challenge submission system.
+- Enhanced progression badges and automated certificate generation.
+
+## License
+
+This project is created for learning and portfolio purposes.
+
 
 ---
 
-## 🎯 Mengapa Proyek Ini Penting?
+## **Author**
+Hanafi Dias Arif Dewanto | *Informatics Graduate | Aspiring Data Analyst*
 
-Di pasar tenaga kerja Indonesia saat ini, terdapat jarak (*gap*) yang sangat besar antara sekadar "bisa Excel" dan benar-benar "mampu menganalisis data". Excel Analyst Hub hadir menyediakan ekosistem terpadu, berkualitas tinggi, dan gratis yang berfokus pada alat analitik tingkat lanjut yang sesungguhnya dicari oleh perekrut (*VLOOKUP, INDEX-MATCH, PivotTables, Power Query, Dynamic Arrays*).
-
----
-
-## 🚀 Deployment
-
-Proyek ini sangat ringan dan dioptimalkan sepenuhnya untuk *static hosting*. Saat ini *live* melalui **GitHub Pages**. Tidak membutuhkan *server database* terpisah karena seluruh sesi, preferensi tema, dan progres pengguna diproses secara aman melalui arsitektur *Client-Side Storage*.
-
----
-
-## 👨‍💻 Tentang Author
-
-**Hanafi Dias Arif Dewanto** *Informatics Graduate | Frontend Developer & Aspiring Data Analyst*
-
-Memadukan latar belakang keilmuan Informatika dengan hasrat mendalam terhadap dunia data. Proyek ini dibangun dari nol sebagai bukti kemampuan merancang arsitektur perangkat lunak (*software architecture*), manipulasi DOM tingkat lanjut, serta perancangan *User Experience* (UX) yang berpusat pada psikologi gamifikasi.
-
-- **GitHub**: [@HanafiDias](https://github.com/HanafiDias)
-- **LinkedIn**: [Hanafi Dias Arif Dewanto](https://linkedin.com/in/hanafidias)
+- **GitHub**: [HanafiDias](https://github.com/HanafiDias)
+- **LinkedIn**: [hanafidias](https://linkedin.com/in/hanafidias)
 
 > *"Learning shouldn't be boring; it should be rewarding."*
