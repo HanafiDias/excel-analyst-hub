@@ -12,64 +12,188 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Profil Saya — Excel Analyst Hub</title>
-  
+  <meta name="description" content="Pantau progres belajarmu, lihat pencapaian (badges), dan bangun portofoliomu di Excel Analyst Hub." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/components.css" />
-  
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/session.js" defer></script>
 </head>
-<body class="page-body" style="display: flex; flex-direction: column; min-height: 100vh;">
+<body class="page-body">
 
-  <nav class="nav" role="navigation">
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" role="navigation" aria-label="Navigasi utama">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
         <div class="logo-icon" aria-hidden="true">⊞</div>
         Excel Analyst Hub
       </a>
-      <div class="nav-links">
-        <a href="learn.html" class="nav-item">Belajar</a>
-        <a href="leaderboard.html" class="nav-item">Peringkat</a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="learn.html">Belajar</a></li>
+        <li><a href="portfolio.html">Portofolio</a></li>
+        <li><a href="tools.html">Tools</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
+        <a href="profile.html" class="btn-ghost btn-sm" style="display:flex; align-items:center; gap:5px; padding:0.4rem 0.8rem; border:1px solid var(--border);" title="Dashboard Profil">
+          <span style="font-size:1.1rem;">👤</span> <span class="hide-mobile">Profil</span>
+        </a>
+        <a href="learn.html" class="btn-primary btn-sm hide-mobile">Mulai Belajar</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </nav>
+  <div class="nav-menu-mobile" id="mobile-menu" role="navigation" aria-label="Navigasi mobile">
+    <a href="index.html">Beranda</a>
+    <a href="learn.html">Belajar</a>
+    <a href="portfolio.html">Portofolio</a>
+    <a href="tools.html">Tools</a>
+    <div style="height:1px; background:var(--border); margin: 8px 0;"></div> 
+    <a href="profile.html" style="color:var(--accent); font-weight:bold;">👤 Profil Saya</a>
+    <a href="learn.html" class="btn-primary" style="margin-top:8px;">Mulai Belajar</a>
+  </div>
 
-  <main class="container fade-in-section" style="flex: 1; padding: 3rem 1rem;">
-    <div style="max-width: 800px; margin: 0 auto;">
-      
-      <header style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Dashboard Analis</h1>
-          <p style="color: var(--text-muted);">Selamat datang, <strong id="user-email" style="color: var(--primary);">Memuat...</strong></p>
-        </div>
-        <button id="logout-btn" class="btn-secondary" style="border-color: #ef4444; color: #ef4444;">Logout Akun</button>
-      </header>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+  <main id="main-content">
+    <section class="section" aria-label="Dashboard Profil">
+      <div class="container">
         
-        <div class="card" style="text-align: center; padding: 2rem 1rem; border-top: 3px solid var(--primary);">
-          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏆</div>
-          <h3 style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Level Saat Ini</h3>
-          <p id="user-level" style="font-size: 1.5rem; font-weight: bold; margin-top: 0.5rem;">Memuat...</p>
+        <div class="flex-between" style="margin-bottom:var(--space-6); border-bottom:1px solid var(--border); padding-bottom:var(--space-4); flex-wrap:wrap; gap:var(--space-4);">
+          <h1 style="margin:0;">Dashboard Belajar</h1>
+          <div style="display: flex; gap: 8px;">
+            <a href="portfolio.html" class="btn-ghost">📁 Lihat Portofolio</a>
+            <button id="logout-btn" class="btn-ghost" style="color: #ef4444; border-color: #ef4444;">Logout</button>
+          </div>
         </div>
 
-        <div class="card" style="text-align: center; padding: 2rem 1rem; border-top: 3px solid var(--accent);">
-          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚡</div>
-          <h3 style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Total XP</h3>
-          <p id="user-xp" style="font-size: 1.5rem; font-weight: bold; margin-top: 0.5rem;">Memuat...</p>
+        <div class="card" style="display:flex; align-items:center; gap:var(--space-5); padding:var(--space-5); margin-bottom:var(--space-6); flex-wrap:wrap;">
+          <div style="width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg, var(--accent), #8b5cf6); display:flex; align-items:center; justify-content:center; font-size:2rem; font-weight:bold; color:white; flex-shrink:0;">
+            DA
+          </div>
+          <div>
+            <h2 id="user-email" style="margin:0 0 var(--space-2) 0; font-size:1.5rem;">Data Analyst</h2>
+            <p id="user-level" style="margin:0; color:var(--text-muted); font-weight:600;">Level: Menghitung Data...</p>
+
+            <p id="user-status" style="margin:var(--space-2) 0 0 0; font-size:0.85rem; color:#10b981; display:flex; align-items:center; gap:5px;">
+              <span style="display:inline-block; width:8px; height:8px; background:#10b981; border-radius:50%;"></span>
+              Progres tersimpan aman secara lokal di browser ini
+            </p>
+          </div>
         </div>
 
-        <div class="card" style="text-align: center; padding: 2rem 1rem; border-top: 3px solid #10b981;">
-          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💳</div>
-          <h3 style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Status Akun</h3>
-          <p id="user-status" style="font-size: 1.5rem; font-weight: bold; margin-top: 0.5rem; color: #10b981;">Memuat...</p>
+        <div class="grid-3" style="margin-bottom:var(--space-6);">
+          <div class="card stat-card" style="text-align:center; padding:var(--space-5);">
+            <div id="stat-completed" style="font-size:3rem; font-weight:bold; color:var(--text); margin-bottom:var(--space-2);">0</div>
+            <div style="color:var(--text-muted); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Topik Selesai</div>
+          </div>
+          <div class="card stat-card" style="text-align:center; padding:var(--space-5);">
+            <div style="font-size:3rem; font-weight:bold; color:#f59e0b; margin-bottom:var(--space-2);"><span id="stat-streak">0</span><span style="font-size:2rem;">🔥</span></div>
+            <div style="color:var(--text-muted); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Hari Beruntun (Streak)</div>
+          </div>
+          <div class="card stat-card" style="text-align:center; padding:var(--space-5);">
+            <div id="user-xp" style="font-size:3rem; font-weight:bold; color:var(--accent); margin-bottom:var(--space-2);">0</div>
+            <div style="color:var(--text-muted); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">XP Terkumpul</div>
+          </div>
         </div>
 
+        <div class="card" style="padding:var(--space-6);">
+          <h3 style="margin-top:0; margin-bottom:var(--space-5);">Progres Jalur Belajar</h3>
+          
+          <div style="margin-bottom:var(--space-4);">
+            <div class="flex-between" style="margin-bottom:var(--space-2);">
+              <span style="font-weight:600;">Jalur Pemula</span>
+              <span id="pct-beginner" style="color:var(--text-muted); font-family:monospace;">0%</span>
+            </div>
+            <div style="width:100%; height:8px; background:var(--surface-2); border-radius:4px; overflow:hidden;">
+              <div id="bar-beginner" style="height:100%; background:var(--accent); width:0%; transition:width 0.5s ease;"></div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:var(--space-4);">
+            <div class="flex-between" style="margin-bottom:var(--space-2);">
+              <span style="font-weight:600;">Jalur Menengah</span>
+              <span id="pct-intermediate" style="color:var(--text-muted); font-family:monospace;">0%</span>
+            </div>
+            <div style="width:100%; height:8px; background:var(--surface-2); border-radius:4px; overflow:hidden;">
+              <div id="bar-intermediate" style="height:100%; background:var(--accent); width:0%; transition:width 0.5s ease;"></div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:var(--space-5);">
+            <div class="flex-between" style="margin-bottom:var(--space-2);">
+              <span style="font-weight:600;">Jalur Lanjutan</span>
+              <span id="pct-advanced" style="color:var(--text-muted); font-family:monospace;">0%</span>
+            </div>
+            <div style="width:100%; height:8px; background:var(--surface-2); border-radius:4px; overflow:hidden;">
+              <div id="bar-advanced" style="height:100%; background:var(--accent); width:0%; transition:width 0.5s ease;"></div>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid var(--border); padding-top:var(--space-5);">
+            <h4 style="margin-top:0; margin-bottom:var(--space-4); color:var(--text-muted);">Pencapaian (Badges)</h4>
+            <!-- JS will inject rich badges here -->
+            <div id="badges-container" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:var(--space-4);">
+            </div>
+          </div>
+
+        </div>
       </div>
-
-    </div>
+    </section>
   </main>
 
-  <script src="assets/js/profile.js"></script>
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-icon" aria-hidden="true">⊞</div>
+            Excel Analyst Hub
+          </a>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Belajar</h4>
+          <ul>
+            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
+            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
+            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tools & Trainer</h4>
+          <ul>
+            <li><a href="tools.html#formula-generator">Formula Generator</a></li>
+            <li><a href="tools.html#daily-challenge-section">Tantangan Harian</a></li>
+            <li><a href="tools.html#quick-ref">Referensi Cepat</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Jelajahi</h4>
+          <ul>
+            <li><a href="portfolio.html">Portofolio</a></li>
+            <li><a href="topic.html">Tutorial VLOOKUP</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p style="font-style: italic; color: #10b981; font-weight: 600; font-size: 1.05rem; margin-bottom: 12px; letter-spacing: 0.3px;">
+          "Learning shouldn't be boring; it should be rewarding."
+        </p>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">
+          Dibangun untuk generasi data analyst Indonesia berikutnya. <br>
+          Excel Analyst Hub — Investasi Terbaik, Keahlian Nyata.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/profile.js"></script>
 </body>
 </html>
