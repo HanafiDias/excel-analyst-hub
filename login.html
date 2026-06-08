@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Premium — Excel Analyst Hub</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="page-body" style="display: flex; flex-direction: column; min-height: 100vh; justify-content: center; align-items: center;">
+
+  <div class="card" style="max-width: 400px; width: 100%; padding: 2rem; border-top: 4px solid var(--primary);">
+    <h2 style="text-align: center; margin-bottom: 1.5rem;">Masuk ke Akun</h2>
+    
+    <form id="login-form" style="display: flex; flex-direction: column; gap: 1rem;">
+      <input type="email" id="login-email" required placeholder="Email Anda" style="padding: 0.8rem; border-radius: 8px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text);">
+      <input type="password" id="login-password" required placeholder="Password" style="padding: 0.8rem; border-radius: 8px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text);">
+      <button type="submit" id="login-btn" class="btn-primary" style="padding: 0.8rem;">Login Sekarang</button>
+    </form>
+
+    <div style="text-align: center; margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem;">
+      <p style="font-size: 0.9rem;">Belum punya akun? <a href="register.html" style="color: var(--primary); font-weight: bold;">Daftar di sini</a></p>
+    </div>
+  </div>
+
+  <script src="assets/js/login.js"></script>
+</body>
+</html>
