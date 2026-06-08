@@ -1,7 +1,9 @@
 // 1. Inisialisasi Supabase
 const supabaseUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
 const supabaseKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+// PERBAIKAN: Kita ubah namanya menjadi 'supabaseClient' agar tidak bentrok!
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 // 2. BUNGKUSAN WAJIB: Tunggu HTML selesai dirender
 document.addEventListener("DOMContentLoaded", () => {
@@ -15,9 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
 
-  if (!toggleBtn) return; // Hentikan jika tombol tidak ada
+  if (!toggleBtn) return; // Hentikan jika HTML belum siap
 
-  // 3. Fungsi Toggle
+  // 3. Fungsi Toggle (Ganti antara Login dan Register)
   toggleBtn.addEventListener('click', (e) => {
     e.preventDefault();
     isLoginMode = !isLoginMode;
@@ -50,20 +52,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       if (isLoginMode) {
-        const { error } = await supabase.auth.signInWithPassword({
+        // PROSES LOGIN (menggunakan supabaseClient)
+        const { error } = await supabaseClient.auth.signInWithPassword({
           email: email,
           password: password,
         });
         if (error) throw error;
+
         alert('Login berhasil! Selamat datang kembali.');
         window.location.href = 'profile.html';
 
       } else {
-        const { error } = await supabase.auth.signUp({
+        // PROSES REGISTER (menggunakan supabaseClient)
+        const { error } = await supabaseClient.auth.signUp({
           email: email,
           password: password,
         });
         if (error) throw error;
+
         alert('Pendaftaran berhasil! Anda sekarang bisa Login menggunakan akun tersebut.');
         toggleBtn.click();
         passwordInput.value = '';
