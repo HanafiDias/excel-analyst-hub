@@ -206,6 +206,45 @@
 
   window.EAH = window.EAH || {};
 
+  window.EAH.saveProgressToCloud = async function(topicId) {
+    if (!window.supabase) return;
+    const supaUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
+    const supaKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
+    const supa = window.supabase.createClient(supaUrl, supaKey);
+
+    try {
+      const { data: { session } } = await supa.auth.getSession();
+      if (!session) return; // Skip jika user belum login
+
+      const userId = session.user.id;
+      
+      const { data: currentData, error: fetchError } = await supa
+        .from('user_progress')
+        .select('total_xp')
+        .eq('user_id', userId)
+        .single();
+          
+      if (!fetchError && currentData) {
+        const newXp = (currentData.total_xp || 0) + 100; // Hadiah 100 XP per materi selesai
+        
+        // Logika Level Up Otomatis
+        let newLevel = 'Pemula';
+        if (newXp >= 150) newLevel = 'Menengah';
+        if (newXp >= 500) newLevel = 'Lanjutan';
+        if (newXp >= 1000) newLevel = 'Master';
+
+        await supa
+          .from('user_progress')
+          .update({ total_xp: newXp, current_level: newLevel })
+          .eq('user_id', userId);
+          
+        console.log("☁️ Berhasil menyimpan +100 XP ke Database Supabase!");
+      }
+    } catch (err) {
+      console.error("Gagal sinkronisasi ke cloud:", err);
+    }
+  };
+
   /* ------------------------------------------
      UNIFIED STATE MANAGER
   ------------------------------------------ */
@@ -711,6 +750,7 @@
           targetBtn.title = 'Klik untuk membatalkan status selesai';
           
           if (window.EAH && window.EAH.setTopicStatus) window.EAH.setTopicStatus(topicId, 'done');
+          if (window.EAH && window.EAH.saveProgressToCloud) window.EAH.saveProgressToCloud(topicId);
           if (window.EAH && window.EAH.renderProgress) window.EAH.renderProgress();
           return;
         }
@@ -798,6 +838,7 @@
                 targetBtn.title = 'Klik untuk membatalkan status selesai';
 
                 if (window.EAH && window.EAH.setTopicStatus) window.EAH.setTopicStatus(topicId, 'done');
+                if (window.EAH && window.EAH.saveProgressToCloud) window.EAH.saveProgressToCloud(topicId);
                 if (window.EAH && window.EAH.renderProgress) window.EAH.renderProgress();
 
                 // Matikan opsi lain, biarkan tombol yang benar tetap menyala
