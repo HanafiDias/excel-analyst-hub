@@ -37,14 +37,11 @@
       <div class="nav-links">
         <a href="learn.html" class="nav-item">Belajar</a>
         <a href="leaderboard.html" class="nav-item">Peringkat</a>
-        <a href="login.html" class="btn-primary" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">Masuk / Profil</a>
+        <a href="portfolio.html" class="nav-item">Portofolio</a>
       </div>
       <div class="nav-right">
         <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
-        <a href="profile.html" class="btn-ghost btn-sm" style="display:flex; align-items:center; gap:5px; padding:0.4rem 0.8rem; border:1px solid var(--border);" title="Dashboard Profil">
-          <span style="font-size:1.1rem;">👤</span> <span class="hide-mobile">Profil</span>
-        </a>
-        <a href="learn.html" class="btn-primary btn-sm hide-mobile">Mulai Belajar</a>
+        <a href="login.html" class="btn-primary btn-sm" id="nav-auth-btn">Masuk / Profil</a>
         <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
           <span></span><span></span><span></span>
         </button>
@@ -87,7 +84,7 @@
         </div>
         <div class="hero-buttons fade-in-up" style="animation-delay: 0.3s;">
           <a href="login.html" class="btn-primary">Mulai Petualangan <span aria-hidden="true">→</span></a>
-          <a href="#features" class="btn-secondary">Lihat Kurikulum</a>
+          <a href="#paths" class="btn-secondary">Lihat Kurikulum</a>
         </div>
 
         <!-- Stat counters -->
@@ -220,7 +217,7 @@
       <div class="container">
         <div class="section-header fade-in">
           <h2>Tools Interaktif Kami</h2>
-          <p>5 trainer dan panduan interaktif yang dirancang khusus untuk membantu kamu menguasai Excel & SQL secara langsung — gratis, tidak perlu daftar.</p>
+          <p>5 trainer dan panduan interaktif yang dirancang khusus untuk membantu kamu menguasai Excel & SQL secara langsung — latihan mandiri ekstra untuk memperkuat insting analisismu.</p>
         </div>
         <div class="grid-3" style="margin-bottom:var(--space-6);">
 
@@ -232,7 +229,7 @@
             </div>
             <h3 style="margin-bottom:var(--space-2);">Excel Shortcut Trainer</h3>
             <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Latih semua shortcut keyboard Excel yang wajib dikuasai analis data. Latihan interaktif dengan sistem kartu flashcard untuk mempercepat produktivitasmu.</p>
-            <a href="https://hanafidias.github.io/excel-shortcut-for-data-analyst" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer" id="tool-shortcut">Mulai Belajar →</a>
+            <a href="https://hanafidias.github.io/excel-shortcut-for-data-analyst" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer" id="tool-shortcut">Coba Tools ↗</a>
           </div>
 
           <!-- Excel Formula Trainer -->
@@ -243,7 +240,7 @@
             </div>
             <h3 style="margin-bottom:var(--space-2);">Excel Formula Trainer</h3>
             <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Kuasai VLOOKUP, SUMIF, INDEX-MATCH, dan puluhan formula penting lainnya lewat latihan soal nyata. Ideal untuk persiapan wawancara kerja data analyst.</p>
-            <a href="https://hanafidias.github.io/excel-formula-trainer" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer" id="tool-formula">Mulai Belajar →</a>
+            <a href="https://hanafidias.github.io/excel-formula-trainer" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer" id="tool-formula">Coba Tools ↗</a>
           </div>
 
           <!-- Excel Data Cleaning Guide -->
@@ -254,7 +251,7 @@
             </div>
             <h3 style="margin-bottom:var(--space-2);">Excel Data Cleaning Guide</h3>
             <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Panduan lengkap membersihkan data kotor di Excel — TRIM, CLEAN, hapus duplikat, perbaiki format tanggal, dan split kolom. Keahlian nomor satu yang dicari perusahaan.</p>
-            <a href="https://hanafidias.github.io/excel-data-cleaning-guide/" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer" id="tool-cleaning">Mulai Belajar →</a>
+            <a href="https://hanafidias.github.io/excel-data-cleaning-guide/" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer" id="tool-cleaning">Coba Tools ↗</a>
           </div>
 
           <!-- Excel Pivot Table Guide -->
@@ -265,7 +262,7 @@
             </div>
             <h3 style="margin-bottom:var(--space-2);">Excel Pivot Table Guide</h3>
             <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Kuasai PivotTable dari nol hingga membuat laporan interaktif profesional. Pelajari filter, grouping, calculated field, dan slicer untuk dashboard yang impresif.</p>
-            <a href="https://hanafidias.github.io/excel-pivot-table-guide/" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer" id="tool-pivot">Mulai Belajar →</a>
+            <a href="https://hanafidias.github.io/excel-pivot-table-guide/" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer" id="tool-pivot">Coba Tools ↗</a>
           </div>
 
           <!-- SQL Trainer -->
@@ -276,7 +273,7 @@
             </div>
             <h3 style="margin-bottom:var(--space-2);">SQL Trainer</h3>
             <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Latihan SQL interaktif untuk data analyst — SELECT, JOIN, GROUP BY, subquery, dan window functions. Lengkapi kemampuan Excel-mu dengan SQL untuk analisis database skala besar.</p>
-            <a href="https://hanafidias.github.io/sql-trainer/" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer" id="tool-sql">Mulai Belajar →</a>
+            <a href="https://hanafidias.github.io/sql-trainer/" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer" id="tool-sql">Coba Tools ↗</a>
           </div>
 
           <!-- CTA card -->
@@ -318,7 +315,7 @@
               <div class="mock-output">=SUMIF(A1:A100, "Barat", B1:B100)</div>
             </div>
             <div style="padding:var(--space-4) var(--space-6);border-top:1px solid var(--border);">
-              <a href="tools.html" class="btn-ghost btn-sm">Coba gratis →</a>
+              <a href="tools.html" class="btn-ghost btn-sm">Coba Tools ↗</a>
             </div>
           </div>
 
@@ -327,17 +324,17 @@
             <div style="padding:var(--space-5) var(--space-6);border-bottom:1px solid var(--border);">
               <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3);">
                 <span class="tool-number">2</span>
-                <h3 style="margin:0;font-size:1rem;">Tantangan Harian Excel</h3>
+                <h3 style="margin:0;font-size:1rem;">AI Dataset Generator</h3>
               </div>
-              <p style="font-size:0.85rem;color:var(--text-muted);margin:0;">Satu soal Excel nyata setiap hari. Rotasi dari 10 tantangan. Tandai selesai untuk melacak streakmu.</p>
+              <p style="font-size:0.85rem;color:var(--text-muted);margin:0;">Butuh data untuk uji coba? Hasilkan hingga 10.000 baris data dummy Excel yang super realistis hanya dalam 1 detik.</p>
             </div>
             <div style="padding:var(--space-5) var(--space-6);background:var(--surface-2);">
-              <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:var(--space-2);">Tantangan hari ini:</div>
-              <p style="font-size:0.875rem;color:var(--text);margin-bottom:var(--space-3);">Kolom D berisi nilai ujian. Temukan nilai tertinggi ke-3 tanpa mengurutkan datanya.</p>
-              <div class="mock-output">=LARGE(D1:D50, 3)</div>
+              <div class="mock-input">🗃️ "Buatkan 5.000 baris data penjualan toko sandal dengan nama pelanggan, produk, dan omset."</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:var(--space-2);text-transform:uppercase;letter-spacing:0.06em;">Status Eksekusi</div>
+              <div class="mock-output" style="color: #10b981;">✓ 5.000 Baris Berhasil Diunduh (.CSV)</div>
             </div>
             <div style="padding:var(--space-4) var(--space-6);border-top:1px solid var(--border);">
-              <a href="tools.html#daily-challenge" class="btn-ghost btn-sm">Coba tantangan hari ini →</a>
+              <a href="tools.html" class="btn-ghost btn-sm">Coba Generator ↗</a>
             </div>
           </div>
         </div>
@@ -414,7 +411,7 @@
             Pilih jalurmu, kuasai topik demi topik, dan gunakan tools untuk memperkuat apa yang kamu pelajari. Tidak perlu mendaftar.
           </p>
           <div class="btn-group" style="justify-content:center;">
-            <a href="learn.html" class="btn-primary" id="cta-band-learn">Mulai Belajar Gratis →</a>
+            <a href="learn.html" class="btn-primary" id="cta-band-learn">Mulai Petualangan →</a>
             <a href="portfolio.html" class="btn-ghost">Lihat Contoh Proyek</a>
           </div>
         </div>
