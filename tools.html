@@ -12,7 +12,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tools Interaktif — Excel Analyst Hub</title>
-  <meta name="description" content="Tools Excel gratis untuk analis: Formula Generator, Tantangan Harian, dan Kartu Referensi Cepat shortcut." />
+  <meta name="description" content="Tools Interaktif Premium untuk Excel & Data Analyst: AI Dataset Generator, Formula Generator, dan Tantangan Harian untuk mengasah skill analitik Anda." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="assets/css/main.css" />
@@ -360,47 +360,174 @@
           <div class="card" style="max-width: 800px; margin: 0 auto; padding: var(--space-5); border-top: 4px solid var(--accent); box-shadow: 0 8px 30px rgba(0,0,0,0.08);">
             
             <div style="margin-bottom:var(--space-5);">
-              <label style="font-weight:600; display:block; margin-bottom:var(--space-2);">Jumlah Baris Data:</label>
-              <div style="display:flex; align-items:center; gap:10px;">
-                <input type="number" id="ds-rows" value="500" min="10" max="10000" style="width:100%; max-width:150px; padding:var(--space-3); border:1px solid var(--border); border-radius:6px; background:var(--surface-2); color:var(--text); font-family:monospace; font-size:1.1rem; font-weight:bold;">
-                <span style="color:var(--text-muted); font-size:0.9rem;">(Maksimal 10.000 baris)</span>
+              <div style="margin-bottom: 2rem; background: var(--surface); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border); border-left: 4px solid var(--primary);">
+                <label for="ds-rows" style="font-size: 1rem; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
+                  <span>🔢</span> Kapasitas Dataset
+                </label>
+                
+                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                  <input type="number" id="ds-rows" class="form-control" value="500" min="10" max="10000" style="width: 150px; font-size: 1.2rem; font-weight: bold; text-align: center; padding: 0.6rem; border: 2px solid var(--surface-2); border-radius: var(--radius-sm); background: var(--bg-color); color: var(--text);">
+                  
+                  <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted); background: var(--surface-2); padding: 0.5rem 1rem; border-radius: 30px; border: 1px solid var(--border);">
+                    <span style="color: #10b981; font-size: 1rem;">🚀</span> 
+                    <span>Kekuatan Penuh: Hasilkan hingga <strong>10.000 baris data</strong> dalam 1 detik!</span>
+                  </div>
+                </div>
+              </div>
+
+              <style>
+                .advanced-options-card {
+                  background: var(--surface);
+                  border: 1px solid var(--border);
+                  border-radius: var(--radius-md);
+                  padding: var(--space-5);
+                  margin-bottom: var(--space-6);
+                  box-shadow: var(--shadow-sm);
+                }
+                
+                .advanced-options-header {
+                  display: flex;
+                  align-items: center;
+                  gap: var(--space-2);
+                  margin-bottom: var(--space-4);
+                  padding-bottom: var(--space-3);
+                  border-bottom: 1px solid var(--border);
+                }
+                
+                .advanced-options-title {
+                  font-family: var(--font-display);
+                  font-size: 0.95rem;
+                  font-weight: 700;
+                  color: var(--warning);
+                  text-transform: uppercase;
+                  letter-spacing: 0.05em;
+                  margin: 0;
+                }
+                
+                .option-row {
+                  display: flex;
+                  align-items: flex-start;
+                  gap: var(--space-4);
+                  padding: var(--space-3) 0;
+                  border-bottom: 1px solid var(--surface-2);
+                }
+                
+                .option-row:last-child {
+                  border-bottom: none;
+                  padding-bottom: 0;
+                }
+                
+                /* Custom Toggle Switch */
+                .toggle-switch {
+                  position: relative;
+                  display: inline-block;
+                  width: 44px;
+                  height: 24px;
+                  flex-shrink: 0;
+                  margin-top: 2px;
+                }
+                
+                .toggle-switch input {
+                  opacity: 0;
+                  width: 0;
+                  height: 0;
+                }
+                
+                .toggle-slider {
+                  position: absolute;
+                  cursor: pointer;
+                  top: 0; left: 0; right: 0; bottom: 0;
+                  background-color: var(--surface-2);
+                  border: 1px solid var(--border);
+                  transition: .3s;
+                  border-radius: 34px;
+                }
+                
+                .toggle-slider:before {
+                  position: absolute;
+                  content: "";
+                  height: 16px;
+                  width: 16px;
+                  left: 3px;
+                  bottom: 3px;
+                  background-color: var(--text-muted);
+                  transition: .3s;
+                  border-radius: 50%;
+                }
+                
+                .toggle-switch input:checked + .toggle-slider {
+                  background-color: rgba(245, 158, 11, 0.15);
+                  border-color: var(--warning);
+                }
+                
+                .toggle-switch input:checked + .toggle-slider:before {
+                  transform: translateX(20px);
+                  background-color: var(--warning);
+                }
+                
+                .option-content {
+                  flex: 1;
+                }
+                
+                .option-label {
+                  display: block;
+                  font-weight: 600;
+                  font-size: 0.95rem;
+                  color: var(--text);
+                  margin-bottom: 4px;
+                  cursor: pointer;
+                }
+                
+                .option-desc {
+                  font-size: 0.85rem;
+                  color: var(--text-muted);
+                  line-height: 1.5;
+                  margin: 0;
+                }
+              </style>
+
+              <div class="advanced-options-card">
+                <div class="advanced-options-header">
+                  <span style="font-size: 1.2rem;">⚡</span>
+                  <h3 class="advanced-options-title">Fitur Analis Lanjutan</h3>
+                </div>
+                
+                <div class="option-row">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="ds-dirty-data">
+                    <span class="toggle-slider"></span>
+                  </label>
+                  <div class="option-content">
+                    <label for="ds-dirty-data" class="option-label">Simulasi Data Kotor (Dirty Data)</label>
+                    <p class="option-desc">Data sengaja disisipi nilai kosong (NULL) dan format berantakan. Cocok untuk latihan <em>Data Cleaning</em>.</p>
+                  </div>
+                </div>
+
+                <div class="option-row">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="ds-multi-table">
+                    <span class="toggle-slider"></span>
+                  </label>
+                  <div class="option-content">
+                    <label for="ds-multi-table" class="option-label">Format Relasional (Multi-Table)</label>
+                    <p class="option-desc">Hasilkan file Master Produk & Data Transaksi terpisah. Sempurna untuk berlatih fungsi VLOOKUP.</p>
+                  </div>
+                </div>
+
+                <div class="option-row">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="ds-advanced-cols">
+                    <span class="toggle-slider"></span>
+                  </label>
+                  <div class="option-content">
+                    <label for="ds-advanced-cols" class="option-label">Kolom Bisnis Lanjutan (Mode Pro)</label>
+                    <p class="option-desc">Tambahkan kolom Metode Pembayaran, Harga Modal (COGS), Tipe Pelanggan, dan Status Transaksi.</p>
+                  </div>
+                </div>
               </div>
             </div>
             
-            <div style="margin-bottom:var(--space-5);">
-              <label style="font-weight:600; display:block; margin-bottom:var(--space-3);">Pilih Kolom yang Dibutuhkan:</label>
-              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:var(--space-3); background:var(--surface-2); padding:var(--space-4); border-radius:8px; border:1px solid var(--border);">
-                
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Order_ID" checked> Order ID
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Tanggal" checked> Tanggal
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Region" checked> Region
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Nama_Sales" checked> Nama Sales
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Kategori" checked> Kategori Produk
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Produk" checked> Nama Produk
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Harga_Satuan" checked> Harga Satuan
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Kuantitas" checked> Kuantitas
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                  <input type="checkbox" class="ds-col-checkbox" value="Total_Penjualan" checked> Total Penjualan
-                </label>
-                
-              </div>
-            </div>
+
             
             <button id="btn-generate-csv" class="btn-primary" style="width:100%; font-size:1.1rem; padding:var(--space-3); display:flex; justify-content:center; align-items:center; gap:10px; transition:all 0.3s;">
               <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
@@ -899,5 +1026,7 @@
       });
     });
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/session.js" defer></script>
 </body>
 </html>
