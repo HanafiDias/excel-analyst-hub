@@ -1,0 +1,2773 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Data Cleaning Guide</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300;1,600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #eef0f5;
+            --bg2: #e4e7ef;
+            --surface: #f8f9fc;
+            --surface2: #eff1f7;
+            --border: #d5d9e8;
+            --border2: #c2c8dc;
+            --navy: #2d3a5e;
+            --navy2: #1e2843;
+            --teal: #2a8a7e;
+            --teal-lt: #e0f2f0;
+            --teal-md: #9dd4ce;
+            --coral: #c85a4a;
+            --coral-lt: #fdf0ee;
+            --amber: #c4882a;
+            --amber-lt: #fdf4e6;
+            --violet: #6a5acd;
+            --violet-lt: #f0eeff;
+            --slate: #5a6882;
+            --text: #1e2535;
+            --text-mid: #5a6480;
+            --text-dim: #8e9ab5;
+            --mono: 'JetBrains Mono', monospace;
+            --body: 'Outfit', sans-serif;
+            --display: 'Fraunces', serif;
+            --r: 12px;
+            --sh: 0 2px 10px rgba(45, 58, 94, 0.08);
+            --sh-md: 0 8px 28px rgba(45, 58, 94, 0.13);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--body);
+            min-height: 100vh;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse 60% 40% at 10% 0%, rgba(42, 138, 126, 0.07) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 50% at 90% 100%, rgba(45, 58, 94, 0.05) 0%, transparent 70%);
+        }
+
+        .wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 1380px;
+            margin: 0 auto
+        }
+
+        /* ─── HEADER ─── */
+        header {
+            background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 100%);
+            padding: 44px 44px 36px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--teal), #5ab0f0, var(--violet));
+        }
+
+        /* decorative grid dots */
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+
+        .hd-inner {
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .hd-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(42, 138, 126, 0.25);
+            border: 1px solid rgba(42, 138, 126, 0.4);
+            border-radius: 20px;
+            padding: 5px 14px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #7de8d8;
+            margin-bottom: 14px;
+        }
+
+        .hd-pill2 {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #7de8d8;
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            font-family: var(--display);
+            font-size: clamp(24px, 4vw, 46px);
+            font-weight: 700;
+            line-height: 1.08;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        h1 em {
+            color: #7de8d8;
+            font-style: italic;
+        }
+
+        .hd-sub {
+            margin-top: 9px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            max-width: 520px;
+            font-weight: 300;
+        }
+
+        /* stats row */
+        .stats-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding: 0 44px;
+            background: var(--navy2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .stat-chip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 4px;
+            border-right: 1px solid rgba(255, 255, 255, 0.07);
+            padding-right: 20px;
+            margin-right: 10px;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 13px;
+        }
+
+        .stat-chip:last-child {
+            border-right: none
+        }
+
+        .stat-num {
+            font-family: var(--mono);
+            font-size: 20px;
+            font-weight: 500;
+            color: #7de8d8;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            line-height: 1.3;
+        }
+
+        .stat-label strong {
+            display: block;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 13px;
+        }
+
+        .prog-wrap {
+            flex: 1;
+            min-width: 160px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 0;
+            margin-left: auto;
+        }
+
+        .prog-bar {
+            flex: 1;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .prog-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--teal), #5ab0f0);
+            border-radius: 3px;
+            transition: width .5s ease;
+            width: 0%;
+        }
+
+        .prog-label {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.45);
+            white-space: nowrap;
+        }
+
+        /* ─── LAYOUT ─── */
+        .layout {
+            display: grid;
+            grid-template-columns: 268px 1fr;
+            min-height: calc(100vh - 190px);
+        }
+
+        /* ─── SIDEBAR ─── */
+        .sidebar {
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 28px 0;
+            position: sticky;
+            top: 0;
+            height: calc(100vh - 190px);
+            overflow-y: auto;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 3px
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--border2);
+            border-radius: 2px
+        }
+
+        .sb-grp {
+            margin-bottom: 20px
+        }
+
+        .sb-hd {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            padding: 0 22px;
+            margin-bottom: 7px;
+        }
+
+        .sb-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 10px 22px;
+            background: none;
+            border: none;
+            border-left: 2.5px solid transparent;
+            cursor: pointer;
+            color: var(--text-mid);
+            font-family: var(--body);
+            font-size: 13.5px;
+            text-align: left;
+            transition: all .15s;
+        }
+
+        .sb-btn:hover {
+            color: var(--text);
+            background: rgba(42, 138, 126, 0.06);
+        }
+
+        .sb-btn.active {
+            color: var(--teal);
+            background: var(--teal-lt);
+            border-left-color: var(--teal);
+            font-weight: 600;
+        }
+
+        .sb-icon {
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .sb-cnt {
+            margin-left: auto;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--text-dim);
+            background: var(--bg2);
+            padding: 2px 7px;
+            border-radius: 7px;
+        }
+
+        .sb-btn.active .sb-cnt {
+            background: var(--teal-md);
+            color: var(--teal);
+        }
+
+        .sb-sep {
+            height: 1px;
+            background: var(--border);
+            margin: 12px 20px;
+        }
+
+        /* ─── MAIN ─── */
+        .main {
+            padding: 36px 44px;
+        }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 30px;
+            background: var(--surface2);
+            border-radius: 10px;
+            padding: 4px;
+            border: 1px solid var(--border);
+            width: fit-content;
+        }
+
+        .tab-btn {
+            padding: 8px 20px;
+            background: none;
+            border: none;
+            border-radius: 7px;
+            color: var(--text-mid);
+            font-family: var(--body);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .15s;
+        }
+
+        .tab-btn.active {
+            background: var(--surface);
+            color: var(--navy);
+            box-shadow: var(--sh);
+            font-weight: 600;
+        }
+
+        .sec-hd {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .sec-title {
+            font-family: var(--display);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 14px;
+            min-width: 210px;
+            transition: border-color .15s;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--teal-md);
+        }
+
+        .search-box input {
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text);
+            font-family: var(--body);
+            font-size: 13px;
+            width: 100%;
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-dim);
+        }
+
+        /* ─── TECHNIQUE CARDS ─── */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 16px;
+        }
+
+        .tc {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            overflow: hidden;
+            box-shadow: var(--sh);
+            transition: all .2s;
+            animation: slideUp .25s ease both;
+        }
+
+        .tc:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--sh-md);
+            border-color: var(--border2);
+        }
+
+        .tc.done {
+            border-color: var(--teal-md);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .tc-head {
+            padding: 16px 18px 13px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .tc-icon-wrap {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .tc-name {
+            font-family: var(--display);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .tc-cat {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .7px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        .tc-short {
+            font-size: 13px;
+            color: var(--text-mid);
+            margin-top: 2px;
+            line-height: 1.4;
+        }
+
+        .done-badge {
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity .2s;
+            flex-shrink: 0;
+            margin-left: auto;
+        }
+
+        .tc.done .done-badge {
+            opacity: 1;
+        }
+
+        .tc-body {
+            padding: 15px 18px;
+            container-type: inline-size;
+        }
+
+        /* before/after visual */
+        .ba-wrap {
+            display: grid;
+            grid-template-columns: 1fr 28px 1fr;
+            align-items: start;
+            gap: 0;
+            margin-bottom: 13px;
+        }
+
+        /* Stack vertikal jika container sempit (container query) */
+        @container (max-width: 500px) {
+            .ba-wrap {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .ba-arr {
+                display: none;
+            }
+        }
+
+        /* Fallback media query untuk kartu di grid 1 kolom */
+        @media (max-width: 600px) {
+            .ba-wrap {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .ba-arr {
+                display: none;
+            }
+        }
+
+        .ba-col {
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .ba-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .ba-label.before {
+            background: var(--coral-lt);
+            color: var(--coral);
+        }
+
+        .ba-label.after {
+            background: var(--teal-lt);
+            color: var(--teal);
+        }
+
+        .ba-arr {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 26px;
+            color: var(--text-dim);
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        /* mini spreadsheet — scrollable wrapper */
+        .mini-ss-wrap {
+            overflow-x: auto;
+            border-radius: 7px;
+            border: 1px solid var(--border);
+        }
+
+        .mini-ss {
+            background: var(--bg);
+            border-radius: 7px;
+            overflow: hidden;
+            font-family: var(--mono);
+            font-size: 11.5px;
+            min-width: 100%;
+            border: none;
+        }
+
+        .ss-header {
+            display: flex;
+            background: var(--bg2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .ss-cell-hd {
+            padding: 4px 8px;
+            color: var(--text-dim);
+            font-weight: 500;
+            flex: 1;
+            border-right: 1px solid var(--border);
+            text-align: center;
+            white-space: nowrap;
+            min-width: 80px;
+        }
+
+        .ss-row {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .ss-row:last-child {
+            border-bottom: none;
+        }
+
+        .ss-row.hl-bad .ss-cell {
+            background: #fdf0ee;
+        }
+
+        .ss-row.hl-good .ss-cell {
+            background: #e4f5f3;
+        }
+
+        .ss-row.hl-removed {
+            opacity: .35;
+            text-decoration: line-through;
+        }
+
+        .ss-row.hl-empty .ss-cell {
+            background: #fef9ec;
+        }
+
+        .ss-cell {
+            padding: 4px 8px;
+            flex: 1;
+            border-right: 1px solid var(--border);
+            color: var(--text-mid);
+            white-space: normal;
+            word-break: break-word;
+            min-width: 80px;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .ss-cell:last-child {
+            border-right: none;
+        }
+
+        .ss-cell.bad {
+            color: var(--coral);
+        }
+
+        .ss-cell.good {
+            color: var(--teal);
+            font-weight: 500;
+        }
+
+        .ss-cell.empty {
+            color: var(--text-dim);
+            font-style: italic;
+        }
+
+        .ss-num {
+            color: var(--text-dim);
+            text-align: center;
+            min-width: 26px;
+            width: 26px;
+            flex-shrink: 0;
+            background: var(--bg2);
+            border-right: 1px solid var(--border);
+            padding: 4px 4px;
+            font-size: 10px;
+        }
+
+        .tc-steps {
+            margin-bottom: 12px;
+        }
+
+        .step-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 7px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .step-row:last-child {
+            border-bottom: none;
+        }
+
+        .step-n {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .step-txt {
+            font-size: 13px;
+            color: var(--text-mid);
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .step-cmd {
+            font-family: var(--mono);
+            font-size: 11.5px;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 2px 7px;
+            color: var(--navy);
+            display: inline-block;
+            margin-top: 3px;
+        }
+
+        .tc-tip {
+            background: var(--amber-lt);
+            border: 1px solid #f0d8a0;
+            border-radius: 8px;
+            padding: 9px 12px;
+            font-size: 12.5px;
+            color: var(--amber);
+            margin-bottom: 12px;
+            line-height: 1.5;
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .tc-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .tc-tag {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 5px;
+        }
+
+        .tag-essential {
+            background: var(--coral-lt);
+            color: var(--coral);
+            border: 1px solid #f0c8c0;
+        }
+
+        .tag-manual {
+            background: var(--violet-lt);
+            color: var(--violet);
+            border: 1px solid #d8d0f0;
+        }
+
+        .tag-formula {
+            background: var(--teal-lt);
+            color: var(--teal);
+            border: 1px solid var(--teal-md);
+        }
+
+        .tag-advanced {
+            background: var(--bg2);
+            color: var(--slate);
+            border: 1px solid var(--border2);
+        }
+
+        .done-btn {
+            width: 100%;
+            padding: 9px;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-mid);
+            font-family: var(--body);
+            font-size: 12.5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .15s;
+        }
+
+        .done-btn:hover {
+            background: var(--teal-lt);
+            color: var(--teal);
+            border-color: var(--teal-md);
+        }
+
+        .tc.done .done-btn {
+            background: var(--teal-lt);
+            color: var(--teal);
+            border-color: var(--teal-md);
+            font-weight: 600;
+        }
+
+        /* expand */
+        .tc-expand {
+            padding: 0 18px 16px;
+        }
+
+        .expand-btn {
+            width: 100%;
+            padding: 8px;
+            background: none;
+            border: 1px dashed var(--border2);
+            border-radius: 8px;
+            color: var(--text-dim);
+            font-family: var(--body);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all .15s;
+        }
+
+        .expand-btn:hover {
+            border-color: var(--teal-md);
+            color: var(--teal);
+        }
+
+        .expand-panel {
+            display: none;
+            padding: 16px 0 0;
+        }
+
+        .expand-panel.open {
+            display: block;
+        }
+
+        .ep-section {
+            margin-bottom: 16px;
+        }
+
+        .ep-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+        }
+
+        .ep-note {
+            background: var(--surface2);
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-size: 13px;
+            color: var(--text-mid);
+            line-height: 1.6;
+        }
+
+        .ep-note strong {
+            color: var(--text);
+        }
+
+        .shortcut-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--navy);
+            color: #fff;
+            border-radius: 6px;
+            padding: 5px 12px;
+            font-family: var(--mono);
+            font-size: 12px;
+            margin: 3px;
+        }
+
+        .common-mistake {
+            border-left: 3px solid var(--coral);
+            background: var(--coral-lt);
+            padding: 10px 14px;
+            border-radius: 0 8px 8px 0;
+            font-size: 13px;
+            color: var(--text-mid);
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .common-mistake strong {
+            color: var(--coral);
+        }
+
+        /* ─── INTERACTIVE DEMO ─── */
+        .demo-wrap {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            overflow: hidden;
+            box-shadow: var(--sh-md);
+            margin-bottom: 24px;
+        }
+
+        .demo-header {
+            padding: 14px 20px;
+            background: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .demo-title {
+            font-family: var(--display);
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .demo-sub {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .demo-body {
+            padding: 20px;
+        }
+
+        /* table editor */
+        .table-editor {
+            overflow-x: auto;
+            margin-bottom: 16px;
+        }
+
+        .te-table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 13px;
+            font-family: var(--mono);
+        }
+
+        .te-table th {
+            background: var(--navy);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 7px 12px;
+            text-align: left;
+            font-weight: 500;
+            font-size: 11px;
+            letter-spacing: .5px;
+        }
+
+        .te-table td {
+            padding: 6px 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-mid);
+            transition: all .2s;
+        }
+
+        .te-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .te-table tr.dup-row td {
+            background: #fdf5ee;
+        }
+
+        .te-table tr.dup-row.first-dup td {
+            background: var(--amber-lt);
+        }
+
+        .te-table tr.removed-row td {
+            background: var(--coral-lt);
+            opacity: .5;
+            text-decoration: line-through;
+        }
+
+        .te-table tr.clean-row td {
+            background: #e4f5f3;
+        }
+
+        .te-table td.bad {
+            color: var(--coral);
+        }
+
+        .te-table td.fixed {
+            color: var(--teal);
+            font-weight: 500;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .dc-btn {
+            padding: 9px 18px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--body);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .15s;
+        }
+
+        .dc-btn.primary {
+            background: var(--teal);
+            color: #fff;
+        }
+
+        .dc-btn.primary:hover {
+            background: var(--teal);
+        }
+
+        .dc-btn.secondary {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            color: var(--text-mid);
+        }
+
+        .dc-btn.secondary:hover {
+            background: var(--surface2);
+        }
+
+        .dc-btn.danger {
+            background: var(--coral-lt);
+            border: 1px solid #f0c8c0;
+            color: var(--coral);
+        }
+
+        .dc-btn:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+        }
+
+        .demo-result {
+            margin-top: 12px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: none;
+            line-height: 1.5;
+        }
+
+        .demo-result.show {
+            display: block;
+        }
+
+        .demo-result.success {
+            background: var(--teal-lt);
+            border: 1px solid var(--teal-md);
+            color: var(--teal);
+        }
+
+        .demo-result.info {
+            background: var(--violet-lt);
+            border: 1px solid #d0c8f0;
+            color: var(--violet);
+        }
+
+        /* step indicator */
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 20px;
+        }
+
+        .si-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .si-step::after {
+            content: '';
+            position: absolute;
+            top: 14px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: var(--border);
+        }
+
+        .si-step:last-child::after {
+            display: none;
+        }
+
+        .si-step.active::after,
+        .si-step.done::after {
+            background: var(--teal);
+        }
+
+        .si-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            background: var(--surface);
+            margin: 0 auto 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-dim);
+            position: relative;
+            z-index: 1;
+            transition: all .2s;
+        }
+
+        .si-step.active .si-dot {
+            border-color: var(--teal);
+            background: var(--teal);
+            color: #fff;
+        }
+
+        .si-step.done .si-dot {
+            border-color: var(--teal);
+            background: var(--teal-lt);
+            color: var(--teal);
+        }
+
+        .si-label {
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        .si-step.active .si-label {
+            color: var(--teal);
+            font-weight: 600;
+        }
+
+        /* ─── QUIZ ─── */
+        .quiz-start {
+            max-width: 540px;
+            margin: 0 auto;
+        }
+
+        .qs-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: var(--sh-md);
+        }
+
+        .qs-icon {
+            font-size: 52px;
+            margin-bottom: 16px;
+        }
+
+        .qs-card h2 {
+            font-family: var(--display);
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .qs-card p {
+            color: var(--text-mid);
+            font-size: 14px;
+            margin-bottom: 28px;
+            line-height: 1.7;
+        }
+
+        .qcat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .qcat {
+            background: var(--bg2);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 14px;
+            cursor: pointer;
+            transition: all .15s;
+        }
+
+        .qcat:hover {
+            border-color: var(--teal-md);
+        }
+
+        .qcat.sel {
+            border-color: var(--teal);
+            background: var(--teal-lt);
+        }
+
+        .qcat-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .qcat-desc {
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        .btn-start {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--teal), #2a7a9e);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-family: var(--display);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: .3px;
+            transition: opacity .15s;
+        }
+
+        .btn-start:hover {
+            opacity: .9;
+        }
+
+        .qplay {
+            display: none;
+            max-width: 580px;
+            margin: 0 auto;
+        }
+
+        .qplay.on {
+            display: block;
+        }
+
+        .qp-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .qp-track {
+            flex: 1;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .qp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--teal), #5ab0f0);
+            border-radius: 3px;
+            transition: width .4s;
+        }
+
+        .qp-lbl {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--text-dim);
+            white-space: nowrap;
+        }
+
+        .qcard {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--sh-md);
+        }
+
+        .qcard-top {
+            padding: 26px 26px 18px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .qcard-type {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 10px;
+        }
+
+        .qcard-q {
+            font-family: var(--display);
+            font-size: 19px;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .qcard-ctx {
+            font-family: var(--mono);
+            font-size: 12px;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            padding: 10px 14px;
+            color: var(--text-mid);
+            margin-top: 8px;
+            line-height: 1.6;
+        }
+
+        .qcard-opts {
+            padding: 18px 26px;
+            display: grid;
+            gap: 9px;
+        }
+
+        .qopt {
+            padding: 12px 16px;
+            background: var(--bg2);
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13.5px;
+            color: var(--text-mid);
+            text-align: left;
+            transition: all .15s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .qopt-l {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+            transition: all .15s;
+        }
+
+        .qopt:hover:not(:disabled) {
+            border-color: var(--teal-md);
+            background: var(--teal-lt);
+            color: var(--teal);
+        }
+
+        .qopt:hover:not(:disabled) .qopt-l {
+            background: var(--teal);
+            color: #fff;
+        }
+
+        .qopt.correct {
+            border-color: var(--teal);
+            background: var(--teal-lt);
+            color: var(--teal);
+        }
+
+        .qopt.correct .qopt-l {
+            background: var(--teal);
+            color: #fff;
+        }
+
+        .qopt.wrong {
+            border-color: var(--coral);
+            background: var(--coral-lt);
+            color: var(--coral);
+        }
+
+        .qopt.wrong .qopt-l {
+            background: var(--coral);
+            color: #fff;
+        }
+
+        .qopt:disabled {
+            cursor: default;
+        }
+
+        .qexp {
+            margin: 0 26px 16px;
+            padding: 11px 15px;
+            background: var(--teal-lt);
+            border: 1px solid var(--teal-md);
+            border-radius: 9px;
+            font-size: 13px;
+            color: var(--teal);
+            line-height: 1.6;
+            display: none;
+        }
+
+        .qexp.show {
+            display: block;
+        }
+
+        .qnext {
+            display: none;
+            margin: 0 26px 24px;
+            width: calc(100% - 52px);
+            padding: 11px;
+            background: var(--navy);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-family: var(--body);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .15s;
+        }
+
+        .qnext:hover {
+            background: var(--navy2);
+        }
+
+        .qnext.show {
+            display: block;
+        }
+
+        /* result */
+        .qresult {
+            display: none;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .qresult.on {
+            display: block;
+        }
+
+        .qr-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--sh-md);
+            text-align: center;
+        }
+
+        .qr-ring {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .qr-ring svg {
+            transform: rotate(-90deg);
+        }
+
+        .qr-txt {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-pct {
+            font-family: var(--display);
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--teal);
+        }
+
+        .qr-sub-lbl {
+            font-size: 10px;
+            color: var(--text-dim);
+            font-weight: 700;
+            letter-spacing: .5px;
+        }
+
+        .qr-title {
+            font-family: var(--display);
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .qr-msg {
+            color: var(--text-mid);
+            font-size: 14px;
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        .qr-breakdown {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .qr-stat {
+            background: var(--bg2);
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .qr-val {
+            font-family: var(--mono);
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .qr-lbl {
+            font-size: 11px;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        .btn-retry {
+            width: 100%;
+            padding: 13px;
+            background: var(--teal);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-family: var(--body);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: background .15s;
+        }
+
+        .btn-retry:hover {
+            background: var(--teal);
+        }
+
+        .btn-back2 {
+            width: 100%;
+            padding: 11px;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-mid);
+            font-family: var(--body);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all .15s;
+        }
+
+        .btn-back2:hover {
+            background: var(--bg2);
+        }
+
+        /* cheatsheet */
+        .cs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 16px;
+        }
+
+        .cs-block {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            overflow: hidden;
+            box-shadow: var(--sh);
+        }
+
+        .cs-hd {
+            padding: 11px 16px;
+            border-bottom: 1px solid var(--border);
+            font-family: var(--display);
+            font-weight: 600;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cs-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 16px;
+            border-bottom: 1px solid var(--border);
+            gap: 10px;
+        }
+
+        .cs-row:last-child {
+            border-bottom: none;
+        }
+
+        .cs-name {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--navy);
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .cs-desc {
+            font-size: 12px;
+            color: var(--text-mid);
+            text-align: right;
+            flex: 1;
+        }
+
+        .cs-cat-badge {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        @media(max-width:768px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                display: flex;
+                flex-wrap: wrap;
+                padding: 8px;
+                gap: 3px;
+            }
+
+            .sb-btn {
+                border-radius: 8px;
+                border-left: none;
+                width: auto;
+                font-size: 12px;
+                padding: 7px 11px;
+            }
+
+            .sb-btn.active {
+                border: 1.5px solid var(--teal);
+            }
+
+            header,
+            .stats-row,
+            .main {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ba-wrap {
+                grid-template-columns: 1fr;
+            }
+
+            .ba-arr {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+  <a href="../index.html" style="position: fixed; top: 20px; left: 20px; z-index: 9999; background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.2s ease; font-family: sans-serif; font-size: 14px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.borderColor='#3b82f6';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='#334155';">
+    <span aria-hidden="true">🔙</span> Kembali ke Hub
+  </a>
+    <div class="wrap">
+
+        <!-- HEADER -->
+        <header>
+            <div class="hd-inner">
+                <div>
+                    <div class="hd-pill">🧹 Excel Data Cleaning Guide</div>
+                    <h1>Bersihkan Data<br>dengan <em>Excel</em></h1>
+                    <p class="hd-sub">Panduan lengkap membersihkan data kotor di dunia kerja — dari duplikat hingga
+                        missing values. Disertai demo interaktif dan quiz.</p>
+                    <p class="hd-pill2">Created by Hanafi</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- STATS ROW -->
+        <div class="stats-row">
+            <div class="stat-chip">
+                <span class="stat-num" id="doneCount">0</span>
+                <span class="stat-label"><strong>/ <span id="totalCount">0</span> Teknik</strong>dikuasai</span>
+            </div>
+            <div class="stat-chip">
+                <span class="stat-num" id="catCount">6</span>
+                <span class="stat-label"><strong>Kategori</strong>topik</span>
+            </div>
+            <div class="prog-wrap">
+                <span class="prog-label">Progress</span>
+                <div class="prog-bar">
+                    <div class="prog-bar-fill" id="progFill"></div>
+                </div>
+                <span class="prog-label" id="progPct">0%</span>
+            </div>
+        </div>
+
+        <!-- LAYOUT -->
+        <div class="layout">
+
+            <!-- SIDEBAR -->
+            <nav class="sidebar">
+                <div class="sb-grp">
+                    <div class="sb-hd">Kategori</div>
+                    <button class="sb-btn active" onclick="setFilter('all',this)"><span class="sb-icon">🗂️</span>Semua
+                        Teknik<span class="sb-cnt" id="sc-all">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('duplicate',this)"><span class="sb-icon">🔁</span>Data
+                        Duplikat<span class="sb-cnt" id="sc-duplicate">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('text',this)"><span class="sb-icon">✍️</span>Pembersihan
+                        Teks<span class="sb-cnt" id="sc-text">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('structure',this)"><span class="sb-icon">📐</span>Struktur
+                        Data<span class="sb-cnt" id="sc-structure">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('missing',this)"><span class="sb-icon">❓</span>Data
+                        Kosong<span class="sb-cnt" id="sc-missing">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('validation',this)"><span class="sb-icon">✅</span>Validasi
+                        Data<span class="sb-cnt" id="sc-validation">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('format',this)"><span class="sb-icon">🎨</span>Format &
+                        Tipe Data<span class="sb-cnt" id="sc-format">0</span></button>
+                </div>
+                <div class="sb-sep"></div>
+                <div class="sb-grp">
+                    <div class="sb-hd">Filter</div>
+                    <button class="sb-btn" onclick="setFilter('done',this)"><span class="sb-icon">✅</span>Sudah
+                        Dikuasai<span class="sb-cnt" id="sc-done">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('essential',this)"><span class="sb-icon">🔥</span>Wajib
+                        Tahu<span class="sb-cnt" id="sc-essential">0</span></button>
+                </div>
+            </nav>
+
+            <!-- MAIN -->
+            <main class="main">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('learn',this)">📘 Belajar</button>
+                    <button class="tab-btn" onclick="switchTab('demo',this)">🧪 Demo Interaktif</button>
+                    <button class="tab-btn" onclick="switchTab('quiz',this)">🎯 Quiz</button>
+                    <button class="tab-btn" onclick="switchTab('cheatsheet',this)">📋 Cheat Sheet</button>
+                </div>
+
+                <!-- LEARN TAB -->
+                <div id="tab-learn">
+                    <div class="sec-hd">
+                        <div class="sec-title" id="sectionTitle">🗂️ Semua Teknik</div>
+                        <div class="search-box">
+                            <span style="color:var(--text-dim)">🔍</span>
+                            <input type="text" placeholder="Cari teknik..." oninput="doSearch(this.value)">
+                        </div>
+                    </div>
+                    <div class="tech-grid" id="techGrid"></div>
+                </div>
+
+                <!-- DEMO TAB -->
+                <div id="tab-demo" style="display:none">
+                    <div class="sec-hd">
+                        <div class="sec-title">🧪 Demo Interaktif</div>
+                    </div>
+
+                    <!-- DEMO 1: Remove Duplicates -->
+                    <div class="demo-wrap">
+                        <div class="demo-header">
+                            <div>
+                                <div class="demo-title">🔁 Demo: Remove Duplicates</div>
+                                <div class="demo-sub">Klik tombol untuk simulasi pembersihan duplikat</div>
+                            </div>
+                        </div>
+                        <div class="demo-body">
+                            <div class="step-indicator" id="siDup">
+                                <div class="si-step active">
+                                    <div class="si-dot">1</div>
+                                    <div class="si-label">Data Asli</div>
+                                </div>
+                                <div class="si-step">
+                                    <div class="si-dot">2</div>
+                                    <div class="si-label">Tandai Duplikat</div>
+                                </div>
+                                <div class="si-step">
+                                    <div class="si-dot">3</div>
+                                    <div class="si-label">Hapus Duplikat</div>
+                                </div>
+                            </div>
+                            <div class="table-editor" id="demoDupTable"></div>
+                            <div class="demo-controls">
+                                <button class="dc-btn primary" id="btnMarkDup" onclick="demoDup(1)">🔍 Tandai
+                                    Duplikat</button>
+                                <button class="dc-btn danger" id="btnRemDup" onclick="demoDup(2)" disabled>🗑️ Hapus
+                                    Duplikat</button>
+                                <button class="dc-btn secondary" onclick="demoDup(0)">↺ Reset</button>
+                            </div>
+                            <div class="demo-result" id="resDup"></div>
+                        </div>
+                    </div>
+
+                    <!-- DEMO 2: Text Cleaning -->
+                    <div class="demo-wrap">
+                        <div class="demo-header">
+                            <div>
+                                <div class="demo-title">✍️ Demo: Pembersihan Teks</div>
+                                <div class="demo-sub">TRIM, PROPER, SUBSTITUTE diterapkan secara bertahap</div>
+                            </div>
+                        </div>
+                        <div class="demo-body">
+                            <div class="step-indicator" id="siText">
+                                <div class="si-step active">
+                                    <div class="si-dot">1</div>
+                                    <div class="si-label">Data Kotor</div>
+                                </div>
+                                <div class="si-step">
+                                    <div class="si-dot">2</div>
+                                    <div class="si-label">TRIM Spasi</div>
+                                </div>
+                                <div class="si-step">
+                                    <div class="si-dot">3</div>
+                                    <div class="si-label">PROPER + Fix</div>
+                                </div>
+                            </div>
+                            <div class="table-editor" id="demoTextTable"></div>
+                            <div class="demo-controls">
+                                <button class="dc-btn primary" id="btnTrim" onclick="demoText(1)">🧹 TRIM Spasi</button>
+                                <button class="dc-btn primary" id="btnProper" onclick="demoText(2)" disabled>🔤 PROPER +
+                                    Fix</button>
+                                <button class="dc-btn secondary" onclick="demoText(0)">↺ Reset</button>
+                            </div>
+                            <div class="demo-result" id="resText"></div>
+                        </div>
+                    </div>
+
+                    <!-- DEMO 3: Missing Data -->
+                    <div class="demo-wrap">
+                        <div class="demo-header">
+                            <div>
+                                <div class="demo-title">❓ Demo: Handling Missing Data</div>
+                                <div class="demo-sub">Identifikasi dan tangani nilai kosong</div>
+                            </div>
+                        </div>
+                        <div class="demo-body">
+                            <div class="step-indicator" id="siMiss">
+                                <div class="si-step active">
+                                    <div class="si-dot">1</div>
+                                    <div class="si-label">Data Kosong</div>
+                                </div>
+                                <div class="si-step">
+                                    <div class="si-dot">2</div>
+                                    <div class="si-label">Highlight</div>
+                                </div>
+                                <div class="si-step">
+                                    <div class="si-dot">3</div>
+                                    <div class="si-label">Fill/Remove</div>
+                                </div>
+                            </div>
+                            <div class="table-editor" id="demoMissTable"></div>
+                            <div class="demo-controls">
+                                <button class="dc-btn primary" id="btnHighMiss" onclick="demoMiss(1)">🔦 Highlight
+                                    Kosong</button>
+                                <button class="dc-btn primary" id="btnFillMiss" onclick="demoMiss(2)" disabled>✏️ Isi
+                                    dengan "N/A"</button>
+                                <button class="dc-btn secondary" onclick="demoMiss(0)">↺ Reset</button>
+                            </div>
+                            <div class="demo-result" id="resMiss"></div>
+                        </div>
+                    </div>
+
+                    <!-- DEMO 4: Flash Fill -->
+                    <div class="demo-wrap">
+                        <div class="demo-header">
+                            <div>
+                                <div class="demo-title">⚡ Demo: Flash Fill</div>
+                                <div class="demo-sub">Excel mendeteksi pola dan mengisi otomatis</div>
+                            </div>
+                        </div>
+                        <div class="demo-body">
+                            <div class="table-editor" id="demoFlashTable"></div>
+                            <div class="demo-controls">
+                                <button class="dc-btn primary" onclick="demoFlash()">⚡ Terapkan Flash Fill</button>
+                                <button class="dc-btn secondary" onclick="initDemoFlash()">↺ Reset</button>
+                            </div>
+                            <div class="demo-result" id="resFlash"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- QUIZ TAB -->
+                <div id="tab-quiz" style="display:none">
+                    <div id="quizStart">
+                        <div class="quiz-start">
+                            <div class="qs-card">
+                                <div class="qs-icon">🎯</div>
+                                <h2>Quiz Data Cleaning</h2>
+                                <p>Uji pemahaman teknik membersihkan data. Setiap soal dilengkapi penjelasan untuk
+                                    membantu kamu belajar dari kesalahan.</p>
+                                <div class="qcat-grid">
+                                    <div class="qcat sel" onclick="selQCat('all',this)">
+                                        <div class="qcat-title">🎲 Semua Topik</div>
+                                        <div class="qcat-desc">Campuran semua kategori</div>
+                                    </div>
+                                    <div class="qcat" onclick="selQCat('duplicate',this)">
+                                        <div class="qcat-title">🔁 Duplikat</div>
+                                        <div class="qcat-desc">Remove & detect duplicates</div>
+                                    </div>
+                                    <div class="qcat" onclick="selQCat('text',this)">
+                                        <div class="qcat-title">✍️ Teks</div>
+                                        <div class="qcat-desc">TRIM, PROPER, SUBSTITUTE</div>
+                                    </div>
+                                    <div class="qcat" onclick="selQCat('missing',this)">
+                                        <div class="qcat-title">❓ Missing Data</div>
+                                        <div class="qcat-desc">Kosong, null, handling</div>
+                                    </div>
+                                </div>
+                                <button class="btn-start" onclick="startQuiz()">Mulai Quiz — 10 Soal</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qplay" id="qplay">
+                        <div class="qp-bar"><span class="qp-lbl" id="qpLbl">1/10</span>
+                            <div class="qp-track">
+                                <div class="qp-fill" id="qpFill"></div>
+                            </div><span class="qp-lbl">Skor: <span id="qpScore">0</span></span>
+                        </div>
+                        <div class="qcard">
+                            <div class="qcard-top">
+                                <div class="qcard-type">📝 Pilih Jawaban Yang Benar</div>
+                                <div class="qcard-q" id="qpQ"></div>
+                                <div class="qcard-ctx" id="qpCtx" style="display:none"></div>
+                            </div>
+                            <div class="qcard-opts" id="qpOpts"></div>
+                            <div class="qexp" id="qpExp"></div>
+                            <button class="qnext" id="qpNext" onclick="nextQ()">Soal Berikutnya →</button>
+                        </div>
+                    </div>
+                    <div class="qresult" id="qresult">
+                        <div class="qr-card">
+                            <div class="qr-ring"><svg width="120" height="120" viewBox="0 0 120 120">
+                                    <circle cx="60" cy="60" r="50" fill="none" stroke="#d5d9e8" stroke-width="10" />
+                                    <circle id="qrRing" cx="60" cy="60" r="50" fill="none" stroke="#2a8a7e"
+                                        stroke-width="10" stroke-dasharray="314" stroke-dashoffset="314"
+                                        stroke-linecap="round"
+                                        style="transition:stroke-dashoffset 1s ease;transform:rotate(-90deg);transform-origin:60px 60px" />
+                                </svg>
+                                <div class="qr-txt">
+                                    <div class="qr-pct" id="qrPct">0%</div>
+                                    <div class="qr-sub-lbl">SKOR</div>
+                                </div>
+                            </div>
+                            <div class="qr-title" id="qrTitle"></div>
+                            <div class="qr-msg" id="qrMsg"></div>
+                            <div class="qr-breakdown">
+                                <div class="qr-stat">
+                                    <div class="qr-val" id="qrC" style="color:var(--teal)">0</div>
+                                    <div class="qr-lbl">✅ Benar</div>
+                                </div>
+                                <div class="qr-stat">
+                                    <div class="qr-val" id="qrW" style="color:var(--coral)">0</div>
+                                    <div class="qr-lbl">❌ Salah</div>
+                                </div>
+                                <div class="qr-stat">
+                                    <div class="qr-val" id="qrT" style="color:var(--violet)">0</div>
+                                    <div class="qr-lbl">📝 Total</div>
+                                </div>
+                            </div>
+                            <button class="btn-retry" onclick="startQuiz()">🔄 Coba Lagi</button>
+                            <button class="btn-back2" onclick="backQStart()">← Pilih Kategori Lain</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHEAT SHEET TAB -->
+                <div id="tab-cheatsheet" style="display:none">
+                    <div class="sec-title" style="margin-bottom:20px">📋 Cheat Sheet Data Cleaning</div>
+                    <div class="cs-grid" id="csGrid"></div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // ════════════════════════════════════════════════════════════════
+        //  DATA
+        // ════════════════════════════════════════════════════════════════
+        const TECH = [
+            // ── DUPLICATE ──
+            {
+                id: 'remdup', cat: 'duplicate', icon: '🔁', iconBg: '#fdf0ee', iconColor: 'var(--coral)',
+                name: 'Remove Duplicates', catLabel: 'Duplikat',
+                short: 'Hapus baris yang sama persis atau duplikat di kolom tertentu',
+                tags: ['essential'],
+                tip: 'Selalu backup data sebelum Remove Duplicates — aksi ini tidak bisa di-undo setelah simpan!',
+                before: { cols: ['ID', 'Nama', 'Dept'], rows: [['E001', 'Budi Santoso', 'IT'], ['E002', 'Sari Dewi', 'Finance'], ['E001', 'Budi Santoso', 'IT'], ['E003', 'Andi', 'Marketing'], ['E002', 'Sari Dewi', 'Finance']], bad: [2, 4] },
+                after: { cols: ['ID', 'Nama', 'Dept'], rows: [['E001', 'Budi Santoso', 'IT'], ['E002', 'Sari Dewi', 'Finance'], ['E003', 'Andi', 'Marketing']], good: [] },
+                steps: [{ n: 1, txt: 'Klik sel manapun dalam data', cmd: '' },
+                { n: 2, txt: 'Data tab → klik', cmd: 'Remove Duplicates' },
+                { n: 3, txt: 'Centang kolom yang menjadi dasar pengecekan duplikat', cmd: '' },
+                { n: 4, txt: 'Klik OK — Excel otomatis hapus dan tampilkan ringkasan', cmd: '' }],
+                shortcuts: ['Alt → A → M'],
+                notes: 'Remove Duplicates bekerja berdasarkan kolom yang dipilih. Jika hanya centang kolom "Nama", dua baris dengan nama sama tapi ID berbeda tetap dianggap duplikat.',
+                mistakes: ['Tidak memilih seluruh kolom sehingga hapus baris yang sebenarnya berbeda', 'Lupa backup data sebelum operasi', 'Tidak memeriksa hasil setelah operasi']
+            },
+
+            {
+                id: 'condformat', cat: 'duplicate', icon: '🎨', iconBg: '#f0eeff', iconColor: 'var(--violet)',
+                name: 'Highlight Duplicates (Conditional Formatting)', catLabel: 'Duplikat',
+                short: 'Warnai baris duplikat tanpa menghapus — untuk identifikasi manual',
+                tags: ['essential'],
+                tip: 'Lebih aman dari Remove Duplicates langsung — kamu bisa review dulu sebelum hapus.',
+                before: { cols: ['Produk', 'Kode', 'Stok'], rows: [['Laptop', 'LP-001', '50'], ['Monitor', 'MN-002', '30'], ['Laptop', 'LP-001', '50'], ['Keyboard', 'KB-003', '100']], bad: [2] },
+                after: { cols: ['Produk', 'Kode', 'Stok'], rows: [['Laptop', 'LP-001', '50'], ['Monitor', 'MN-002', '30'], ['Laptop (dup)', 'LP-001', '50'], ['Keyboard', 'KB-003', '100']], good: [0, 2] },
+                steps: [{ n: 1, txt: 'Pilih kolom yang ingin dicek (misal kolom ID)', cmd: '' },
+                { n: 2, txt: 'Home → Conditional Formatting → Highlight Cell Rules', cmd: '' },
+                { n: 3, txt: 'Pilih', cmd: 'Duplicate Values' },
+                { n: 4, txt: 'Pilih warna highlight, klik OK', cmd: '' }],
+                shortcuts: ['Alt → H → L → H'],
+                notes: 'Conditional Formatting hanya MENANDAI, tidak menghapus. Setelah teridentifikasi, kamu bisa sort berdasarkan warna lalu hapus manual.',
+                mistakes: ['Mengira highlight otomatis menghapus duplikat', 'Memilih seluruh tabel padahal sebaiknya hanya kolom key/ID']
+            },
+
+            {
+                id: 'countif_dup', cat: 'duplicate', icon: '🔢', iconBg: '#e8f8f5', iconColor: 'var(--teal)',
+                name: 'Deteksi Duplikat dengan COUNTIF', catLabel: 'Duplikat',
+                short: 'Buat kolom helper untuk menghitung berapa kali nilai muncul',
+                tags: ['formula'],
+                tip: 'Berguna saat ingin tahu duplikat ke-berapa suatu nilai, bukan sekadar ada/tidak.',
+                before: { cols: ['ID', 'Nama', 'Cek Dup'], rows: [['E001', 'Budi Santoso', '=COUNTIF($A:$A,A2)'], ['E002', 'Sari Dewi', '=COUNTIF($A:$A,A3)'], ['E001', 'Budi Santoso (dup)', '=COUNTIF($A:$A,A4)'], ['E003', 'Andi', '=COUNTIF($A:$A,A5)']], bad: [2] },
+                after: { cols: ['ID', 'Nama', 'Jumlah Muncul'], rows: [['E001', 'Budi Santoso', '2'], ['E002', 'Sari Dewi', '1'], ['E001', 'Budi Santoso (dup)', '2'], ['E003', 'Andi', '1']], good: [] },
+                steps: [{ n: 1, txt: 'Buat kolom baru di sebelah data, misal kolom C', cmd: '' },
+                { n: 2, txt: 'Ketik formula di C2:', cmd: '=COUNTIF($A:$A,A2)' },
+                { n: 3, txt: 'Copy formula ke bawah untuk semua baris', cmd: 'Ctrl+D' },
+                { n: 4, txt: 'Filter kolom C dengan nilai > 1 untuk lihat duplikat', cmd: '' }],
+                shortcuts: ['Ctrl+Shift+L (AutoFilter)'],
+                notes: 'Dengan COUNTIF, angka > 1 berarti duplikat. Bisa juga gunakan =IF(COUNTIF($A$2:A2,A2)>1,"Duplikat","") untuk tandai mulai dari kejadian kedua.',
+                mistakes: ['Tidak mengunci kolom dengan $ sehingga range bergeser saat di-copy']
+            },
+
+            // ── TEXT CLEANING ──
+            {
+                id: 'trim', cat: 'text', icon: '✂️', iconBg: '#e8f8f5', iconColor: 'var(--teal)',
+                name: 'TRIM — Hapus Spasi Berlebih', catLabel: 'Teks',
+                short: 'Hapus spasi di awal, akhir, dan ganda di tengah teks',
+                tags: ['essential', 'formula'],
+                tip: 'Spasi ekstra adalah penyebab VLOOKUP gagal yang paling sering! Selalu TRIM data sebelum lookup.',
+                before: { cols: ['Nama Asli (Kotor)'], rows: [['  Budi  Santoso  '], [' Sari Dewi'], ['Andi   Pratama  '], [' Rini ']], bad: [0, 1, 2, 3] },
+                after: { cols: ['Nama (Bersih)'], rows: [['Budi Santoso'], ['Sari Dewi'], ['Andi Pratama'], ['Rini']], good: [0, 1, 2, 3] },
+                steps: [{ n: 1, txt: 'Di kolom kosong, ketik formula:', cmd: '=TRIM(A2)' },
+                { n: 2, txt: 'Copy formula ke semua baris yang perlu dibersihkan', cmd: '' },
+                { n: 3, txt: 'Setelah selesai, Copy kolom hasil → Paste Special → Values ke kolom asli', cmd: 'Ctrl+Alt+V → V → Enter' },
+                { n: 4, txt: 'Hapus kolom helper formula', cmd: '' }],
+                shortcuts: ['Ctrl+D (fill down)', 'Ctrl+Alt+V (paste special)'],
+                notes: 'TRIM tidak menghapus karakter non-breaking space (char 160). Untuk itu gunakan: =TRIM(SUBSTITUTE(A2,CHAR(160)," "))',
+                mistakes: ['Lupa Paste Values sebelum menghapus kolom asli', 'TRIM di dalam formula lupa dibubuhkan jika data update']
+            },
+
+            {
+                id: 'proper', cat: 'text', icon: '🔤', iconBg: '#e8f8f5', iconColor: 'var(--teal)',
+                name: 'PROPER / UPPER / LOWER', catLabel: 'Teks',
+                short: 'Standarisasi kapitalisasi teks agar konsisten',
+                tags: ['essential', 'formula'],
+                tip: 'Data dari berbagai sumber sering punya kapitalisasi berbeda. Standarisasi penting sebelum VLOOKUP atau GROUP BY.',
+                before: { cols: ['Data Kasar'], rows: [['BUDI SANTOSO'], ['sari dewi'], ['aNdI pRaTaMa'], ['RINI SUSANTI']], bad: [0, 1, 2, 3] },
+                after: { cols: ['Setelah PROPER'], rows: [['Budi Santoso'], ['Sari Dewi'], ['Andi Pratama'], ['Rini Susanti']], good: [0, 1, 2, 3] },
+                steps: [{ n: 1, txt: 'Untuk Title Case (Nama Depan Kapital):', cmd: '=PROPER(A2)' },
+                { n: 2, txt: 'Untuk semua huruf kapital:', cmd: '=UPPER(A2)' },
+                { n: 3, txt: 'Untuk semua huruf kecil:', cmd: '=LOWER(A2)' },
+                { n: 4, txt: 'Kombinasi: bersihkan spasi DAN rapikan kapital:', cmd: '=TRIM(PROPER(A2))' }],
+                shortcuts: [''],
+                notes: 'PROPER mungkin tidak ideal untuk singkatan (PT, CV, dll) karena akan jadi "Pt", "Cv". Pertimbangkan ini untuk nama perusahaan.',
+                mistakes: ['Pakai PROPER untuk data yang punya singkatan — hasilnya salah']
+            },
+
+            {
+                id: 'substitute', cat: 'text', icon: '🔄', iconBg: '#f0eeff', iconColor: 'var(--violet)',
+                name: 'SUBSTITUTE / Find & Replace', catLabel: 'Teks',
+                short: 'Ganti karakter atau teks tertentu secara massal',
+                tags: ['essential'],
+                tip: 'Find & Replace (Ctrl+H) adalah cara tercepat untuk ganti teks tanpa formula. SUBSTITUTE lebih fleksibel untuk kondisi tertentu.',
+                before: { cols: ['No. Telp (Kotor)'], rows: [['021-1234-5678'], ['0812.345.6789'], ['(021) 9876-5432'], ['62-813-4567-8901']], bad: [0, 1, 2, 3] },
+                after: { cols: ['No. Telp (Bersih)'], rows: [['02112345678'], ['081234568789'], ['021987654032'], ['6281345678901']], good: [0, 1, 2, 3] },
+                steps: [{ n: 1, txt: 'Cara cepat: tekan', cmd: 'Ctrl+H' },
+                { n: 2, txt: 'Di "Find what" ketik karakter yang ingin dihapus (misal "-"), "Replace with" kosongkan', cmd: '' },
+                { n: 3, txt: 'Klik Replace All', cmd: '' },
+                { n: 4, txt: 'Via formula:', cmd: '=SUBSTITUTE(A2,"-","")' }],
+                shortcuts: ['Ctrl+H (Find & Replace)'],
+                notes: 'SUBSTITUTE bisa handle beberapa karakter dengan cara bersarang: =SUBSTITUTE(SUBSTITUTE(A2,"-",""),".","") untuk hapus - dan . sekaligus.',
+                mistakes: ['Replace tanpa sadar mengganti teks di tempat lain yang tidak diinginkan']
+            },
+
+            {
+                id: 'textcol', cat: 'structure', icon: '📊', iconBg: '#e8f8f5', iconColor: 'var(--teal)',
+                name: 'Text to Columns', catLabel: 'Struktur',
+                short: 'Pisahkan satu kolom berisi beberapa nilai menjadi beberapa kolom',
+                tags: ['essential'],
+                tip: 'Data dari sistem lain sering digabung dalam satu sel dengan pemisah koma, titik koma, atau spasi. Text to Columns solusinya.',
+                before: { cols: ['Data Gabung'], rows: [['Budi;IT;Jakarta'], ['Sari;Finance;Surabaya'], ['Andi;Marketing;Bandung'], ['Rini;HR;Medan']], bad: [0, 1, 2, 3] },
+                after: { cols: ['Nama', 'Dept', 'Kota'], rows: [['Budi', 'IT', 'Jakarta'], ['Sari', 'Finance', 'Surabaya'], ['Andi', 'Marketing', 'Bandung'], ['Rini', 'HR', 'Medan']], good: [0, 1, 2, 3] },
+                steps: [{ n: 1, txt: 'Pilih kolom yang ingin dipisah', cmd: '' },
+                { n: 2, txt: 'Data → Text to Columns', cmd: 'Alt → A → E' },
+                { n: 3, txt: 'Pilih "Delimited" (pemisah karakter) atau "Fixed width"', cmd: '' },
+                { n: 4, txt: 'Centang jenis pemisah (semicolon/comma/tab/space), klik Finish', cmd: '' }],
+                shortcuts: ['Alt → A → E'],
+                notes: 'Pastikan kolom di sebelah kanan cukup kosong — Text to Columns akan menimpa data di kolom sebelahnya!',
+                mistakes: ['Tidak mengosongkan kolom sebelah kanan sebelum proses', 'Salah memilih delimiter sehingga hasil tidak sesuai']
+            },
+
+            {
+                id: 'flashfill', cat: 'structure', icon: '⚡', iconBg: '#fdf4e6', iconColor: 'var(--amber)',
+                name: 'Flash Fill', catLabel: 'Struktur',
+                short: 'Excel belajar pola dari contohmu dan mengisi kolom otomatis',
+                tags: ['essential'],
+                tip: 'Flash Fill bekerja dengan mengenali pola dari 1-2 contoh yang kamu ketik. Semakin konsisten polanya, semakin akurat hasilnya.',
+                before: { cols: ['Nama Lengkap', 'Nama Depan (contoh)'], rows: [['Budi Santoso', 'Budi ← ketik ini'], ['Sari Dewi', ''], ['Andi Pratama', ''], ['Rini Susanti', '']], bad: [] },
+                after: { cols: ['Nama Lengkap', 'Nama Depan (hasil Flash Fill)'], rows: [['Budi Santoso', 'Budi'], ['Sari Dewi', 'Sari'], ['Andi Pratama', 'Andi'], ['Rini Susanti', 'Rini']], good: [0, 1, 2, 3] },
+                steps: [{ n: 1, txt: 'Di kolom sebelah data, ketik hasil yang diinginkan untuk baris pertama', cmd: '' },
+                { n: 2, txt: 'Tekan Enter, lalu mulai ketik untuk baris kedua', cmd: '' },
+                { n: 3, txt: 'Excel akan menampilkan preview abu-abu — tekan', cmd: 'Enter untuk terima' },
+                { n: 4, txt: 'Atau tekan shortcut:', cmd: 'Ctrl+E' }],
+                shortcuts: ['Ctrl+E (Flash Fill)'],
+                notes: 'Flash Fill ideal untuk: ekstrak nama depan/belakang, format ulang tanggal, gabungkan teks dengan pola, reformatkan nomor telepon.',
+                mistakes: ['Flash Fill tidak selalu 100% akurat untuk data tidak konsisten — selalu review hasilnya', 'Tidak bekerja jika pola terlalu kompleks atau tidak konsisten']
+            },
+
+            {
+                id: 'concatfix', cat: 'structure', icon: '🔗', iconBg: '#f0eeff', iconColor: 'var(--violet)',
+                name: 'Menggabungkan & Memisah Kolom', catLabel: 'Struktur',
+                short: 'Teknik menggabung beberapa kolom atau memisah data dalam satu kolom',
+                tags: ['formula'],
+                tip: 'Selalu buat kolom hasil di kolom baru, jangan langsung timpa data asli!',
+                before: { cols: ['Nama Depan', 'Nama Belakang'], rows: [['Budi', 'Santoso'], ['Sari', 'Dewi'], ['Andi', 'Pratama']], bad: [] },
+                after: { cols: ['Nama Lengkap'], rows: [['Budi Santoso'], ['Sari Dewi'], ['Andi Pratama']], good: [0, 1, 2] },
+                steps: [{ n: 1, txt: 'Gabung dengan operator &:', cmd: '=A2&" "&B2' },
+                { n: 2, txt: 'Gabung dengan TEXTJOIN (lebih fleksibel):', cmd: '=TEXTJOIN(" ",TRUE,A2,B2)' },
+                { n: 3, txt: 'Pisah: ambil kata pertama (nama depan):', cmd: '=LEFT(A2,FIND(" ",A2)-1)' },
+                { n: 4, txt: 'Pisah: ambil setelah spasi (nama belakang):', cmd: '=MID(A2,FIND(" ",A2)+1,100)' }],
+                shortcuts: [''],
+                notes: 'Untuk data dengan jumlah kata bervariasi, Flash Fill sering lebih mudah daripada formula. Gunakan formula jika data akan terus bertambah.',
+                mistakes: ['Formula FIND error jika tidak ada spasi — tambahkan IFERROR sebagai proteksi']
+            },
+
+            // ── MISSING DATA ──
+            {
+                id: 'findblank', cat: 'missing', icon: '🔦', iconBg: '#fdf4e6', iconColor: 'var(--amber)',
+                name: 'Menemukan Sel Kosong', catLabel: 'Data Kosong',
+                short: 'Identifikasi dan navigasi ke semua sel kosong dengan cepat',
+                tags: ['essential'],
+                tip: 'Go To Special adalah cara tercepat untuk seleksi semua sel kosong sekaligus — jauh lebih efisien dari scroll manual.',
+                before: { cols: ['Nama', 'Dept', 'Email'], rows: [['Budi', 'IT', 'budi@co.id'], [' ', 'Finance', ''], ['Andi', '', 'andi@co.id'], ['Rini', 'HR', '']], bad: [1, 2, 3] },
+                after: { cols: ['Nama', 'Dept', 'Email'], rows: [['Budi', 'IT', 'budi@co.id'], ['(KOSONG)', 'Finance', '(KOSONG)'], ['Andi', '(KOSONG)', 'andi@co.id'], ['Rini', 'HR', '(KOSONG)']], good: [] },
+                steps: [{ n: 1, txt: 'Pilih range data, tekan', cmd: 'Ctrl+G → Special' },
+                { n: 2, txt: 'Centang "Blanks", klik OK — semua sel kosong terseleksi', cmd: '' },
+                { n: 3, txt: 'Isi massal: ketik teks/nilai, tekan', cmd: 'Ctrl+Enter' },
+                { n: 4, txt: 'Via formula: =IF(ISBLANK(A2),"Tidak Ada",A2)', cmd: '' }],
+                shortcuts: ['Ctrl+G → Special → Blanks', 'Ctrl+Enter (isi semua sel terseleksi)'],
+                notes: 'Ctrl+Enter setelah memilih semua sel kosong akan mengisi SEMUA sel kosong yang terseleksi dengan nilai yang sama — sangat efisien.',
+                mistakes: ['Sel yang tampak kosong mungkin berisi spasi atau karakter tidak terlihat — gunakan LEN(A2)=0 untuk cek benar-benar kosong']
+            },
+
+            {
+                id: 'fillmiss', cat: 'missing', icon: '✏️', iconBg: '#e8f8f5', iconColor: 'var(--teal)',
+                name: 'Mengisi Missing Values', catLabel: 'Data Kosong',
+                short: 'Strategi mengisi data kosong: default, rata-rata, atau nilai sebelumnya',
+                tags: ['essential', 'formula'],
+                tip: 'Pilih strategi mengisi sesuai konteks: 0 untuk angka keuangan, rata-rata untuk analitik, nilai terakhir untuk data time series.',
+                before: { cols: ['Bulan', 'Penjualan'], rows: [['Jan', '100'], ['Feb', ''], ['Mar', '120'], ['Apr', '']], bad: [1, 3] },
+                after: { cols: ['Bulan', 'Penjualan'], rows: [['Jan', '100'], ['Feb', '110 (rata-rata)'], ['Mar', '120'], ['Apr', '0 (default)']], good: [1, 3] },
+                steps: [{ n: 1, txt: 'Isi dengan nilai default (0 atau "N/A"):', cmd: 'Go To Special → Blanks → ketik 0 → Ctrl+Enter' },
+                { n: 2, txt: 'Isi dengan rata-rata:', cmd: '=IF(ISBLANK(B2),AVERAGE($B$2:$B$10),B2)' },
+                { n: 3, txt: 'Isi dengan nilai baris sebelumnya (fill down):', cmd: '=IF(B2="",B1,B2)' },
+                { n: 4, txt: 'Hapus baris kosong: filter → pilih kosong → hapus baris', cmd: '' }],
+                shortcuts: ['Alt+D+F+F (AutoFilter)'],
+                notes: 'Untuk analitik, mendokumentasikan cara penanganan missing data sangat penting. Jangan ubah data tanpa mencatat perubahan yang dilakukan.',
+                mistakes: ['Isi rata-rata tanpa mempertimbangkan outlier yang bisa mendistorsi nilai', 'Hapus baris kosong tanpa review — mungkin ada data penting di kolom lain']
+            },
+
+            {
+                id: 'isblank_formula', cat: 'missing', icon: '📋', iconBg: '#f0eeff', iconColor: 'var(--violet)',
+                name: 'ISBLANK / COUNTA untuk Audit', catLabel: 'Data Kosong',
+                short: 'Formula untuk mengaudit kelengkapan data secara sistematis',
+                tags: ['formula'],
+                tip: 'Buat "data quality dashboard" kecil di bagian atas atau di sheet terpisah untuk monitor kelengkapan data.',
+                before: { cols: ['ID', 'Nama', 'Email', 'Audit'], rows: [['E001', 'Budi', 'budi@co.id', '✅ Lengkap'], ['E002', 'Sari', '', '⚠️ Email kosong'], ['E003', '', 'andi@co.id', '⚠️ Nama kosong'], ['E004', '', '', '❌ 2 kosong']], bad: [1, 2, 3] },
+                after: { cols: ['Ringkasan Audit'], rows: [['Total baris: 100'], ['Baris lengkap: 87'], ['Ada kosong: 13'], ['% kelengkapan: 87%']], good: [0, 1, 2, 3] },
+                steps: [{ n: 1, txt: 'Hitung sel kosong di kolom tertentu:', cmd: '=COUNTBLANK(B2:B100)' },
+                { n: 2, txt: 'Hitung baris yang lengkap:', cmd: '=COUNTA(A2:A100)' },
+                { n: 3, txt: 'Tandai baris yang ada kosong:', cmd: '=IF(COUNTBLANK(A2:E2)>0,"Tidak Lengkap","Lengkap")' },
+                { n: 4, txt: 'Hitung % kelengkapan:', cmd: '=1-COUNTBLANK(A2:A100)/COUNTA(A2:A100)' }],
+                shortcuts: [''],
+                notes: 'Rutin lakukan audit data quality sebelum analisis. Data kotor = kesimpulan kotor (Garbage In, Garbage Out).',
+                mistakes: ['Menganalisis data tanpa memeriksa kelengkapan terlebih dahulu']
+            },
+
+            // ── VALIDATION ──
+            {
+                id: 'dataval', cat: 'validation', icon: '🛡️', iconBg: '#fdf0ee', iconColor: 'var(--coral)',
+                name: 'Data Validation', catLabel: 'Validasi',
+                short: 'Batasi input agar hanya data yang valid bisa dimasukkan',
+                tags: ['essential'],
+                tip: 'Lebih baik mencegah data kotor masuk sejak awal daripada membersihkan nanti!',
+                before: { cols: ['Dept (bebas)'], rows: [['IT'], ['it'], ['I.T'], ['Information Technology']], bad: [1, 2, 3] },
+                after: { cols: ['Dept (dropdown)'], rows: [['IT'], ['Finance'], ['Marketing'], ['HR']], good: [0, 1, 2, 3] },
+                steps: [{ n: 1, txt: 'Pilih sel atau kolom yang ingin dibatasi', cmd: '' },
+                { n: 2, txt: 'Data → Data Validation → Data Validation', cmd: 'Alt → A → V → V' },
+                { n: 3, txt: 'Pilih jenis: List (dropdown), Whole Number, Date, dll', cmd: '' },
+                { n: 4, txt: 'Masukkan sumber data atau kriteria, klik OK', cmd: '' }],
+                shortcuts: ['Alt → A → V → V'],
+                notes: 'Untuk dropdown yang panjang, buat list di sheet terpisah dan referensikan. Ini lebih mudah dikelola.',
+                mistakes: ['Data validation hanya berlaku untuk input baru — data lama yang sudah salah tidak otomatis tervalidasi']
+            },
+
+            {
+                id: 'spellcheck', cat: 'validation', icon: '🔍', iconBg: '#f0eeff', iconColor: 'var(--violet)',
+                name: 'Cek Konsistensi & Nilai Unik', catLabel: 'Validasi',
+                short: 'Identifikasi variasi penulisan yang seharusnya sama',
+                tags: ['essential'],
+                tip: 'Gunakan PivotTable atau UNIQUE untuk melihat semua nilai unik di satu kolom — cepat deteksi inkonsistensi.',
+                before: { cols: ['Kota (Tidak Konsisten)'], rows: [['Jakarta'], ['jakarta'], ['JAKARTA'], ['Jkt'], ['Bandung'], ['bandung']], bad: [1, 2, 3, 5] },
+                after: { cols: ['Kota (Konsisten)'], rows: [['Jakarta'], ['Jakarta'], ['Jakarta'], ['Jakarta'], ['Bandung'], ['Bandung']], good: [0, 1, 2, 3, 4, 5] },
+                steps: [{ n: 1, txt: 'Buat PivotTable → seret kolom ke Rows untuk lihat semua nilai unik', cmd: 'Alt → N → V' },
+                { n: 2, txt: 'Atau gunakan:', cmd: '=UNIQUE(A2:A100)' },
+                { n: 3, txt: 'Review nilai yang mirip, gunakan Find & Replace untuk standarisasi', cmd: 'Ctrl+H' },
+                { n: 4, txt: 'Terapkan PROPER atau UPPER untuk standarisasi kapitalisasi', cmd: '=PROPER(A2)' }],
+                shortcuts: ['Alt → N → V (PivotTable)', 'Ctrl+H (Find & Replace)'],
+                notes: 'Inkonsistensi kecil seperti spasi ekstra atau kapitalisasi berbeda membuat GROUP BY di pivot table tidak akurat.',
+                mistakes: ['Langsung analisis tanpa cek nilai unik terlebih dahulu']
+            },
+
+            // ── FORMAT & TYPE ──
+            {
+                id: 'numformat', cat: 'format', icon: '🔢', iconBg: '#fdf4e6', iconColor: 'var(--amber)',
+                name: 'Konversi Teks ke Angka', catLabel: 'Format',
+                short: 'Data angka yang tersimpan sebagai teks tidak bisa dihitung — harus dikonversi',
+                tags: ['essential'],
+                tip: 'Tanda segitiga kecil hijau di pojok kiri sel adalah indikator angka tersimpan sebagai teks. Jangan abaikan ini!',
+                before: { cols: ['Penjualan (sebagai teks)'], rows: [['"1000"'], ['"2500"'], ['"750"'], ['"3200"']], bad: [0, 1, 2, 3] },
+                after: { cols: ['Penjualan (angka)'], rows: [['1000'], ['2500'], ['750'], ['3200']], good: [0, 1, 2, 3] },
+                steps: [{ n: 1, txt: 'Klik tanda seru kuning di sel → Convert to Number', cmd: '' },
+                { n: 2, txt: 'Atau paste angka 1 di sel kosong, copy, pilih sel bermasalah → Paste Special → Multiply', cmd: 'Ctrl+Alt+V → M' },
+                { n: 3, txt: 'Via formula:', cmd: '=VALUE(A2)  atau  =A2*1' },
+                { n: 4, txt: 'Untuk tanggal teks ke serial date:', cmd: '=DATEVALUE(A2)' }],
+                shortcuts: ['Ctrl+Alt+V → M (Paste Special Multiply)'],
+                notes: 'SUM dari angka-sebagai-teks = 0. COUNTIFS tidak menghitung dengan benar. Ini sumber error yang sangat umum di dunia kerja.',
+                mistakes: ['Mengabaikan segitiga hijau dan langsung membuat SUM yang hasilnya 0', 'Menggunakan formula =VALUE tanpa Paste Values setelahnya jika kolom asli dihapus']
+            },
+
+            {
+                id: 'datefix', cat: 'format', icon: '📅', iconBg: '#e8f8f5', iconColor: 'var(--teal)',
+                name: 'Standarisasi Format Tanggal', catLabel: 'Format',
+                short: 'Tanggal dari sistem berbeda sering punya format tidak konsisten — wajib distandardisasi',
+                tags: ['essential'],
+                tip: 'Excel menyimpan tanggal sebagai angka serial. Jika tampil sebagai angka besar (misal 45000), berarti format sel harus diubah ke Date.',
+                before: { cols: ['Tanggal (Tidak Konsisten)'], rows: [['01/04/2024'], ['2024-04-01'], ['April 1, 2024'], ['1-Apr-24']], bad: [1, 2, 3] },
+                after: { cols: ['Tanggal (Standar)'], rows: [['01/04/2024'], ['01/04/2024'], ['01/04/2024'], ['01/04/2024']], good: [0, 1, 2, 3] },
+                steps: [{ n: 1, txt: 'Untuk teks tanggal: gunakan', cmd: '=DATEVALUE(A2)' },
+                { n: 2, txt: 'Format ulang dengan Ctrl+1 → Date → pilih format standar', cmd: 'Ctrl+1' },
+                { n: 3, txt: 'Untuk format ISO (YYYY-MM-DD): gunakan Text to Columns dengan delimiter "-"', cmd: '' },
+                { n: 4, txt: 'Cek apakah tanggal valid:', cmd: '=ISNUMBER(A2)  (harus TRUE)' }],
+                shortcuts: ['Ctrl+1 (Format Cells)', 'Ctrl+Shift+# (format Date cepat)'],
+                notes: 'Hati-hati dengan ambiguitas: 01/04 bisa 1 April atau 4 Januari tergantung regional setting. Komunikasikan format standar dengan tim.',
+                mistakes: ['Asumsi format tanggal tanpa verifikasi regional setting', 'Tidak cek apakah Excel menginterpretasi tanggal dengan benar setelah konversi']
+            },
+        ];
+
+        // QUIZ DATA
+        const QUIZ = [
+            {
+                cat: 'duplicate', q: 'Apa risiko utama menggunakan Remove Duplicates langsung?', ctx: '',
+                opts: ['Excel menjadi lambat', 'Data yang dihapus tidak bisa dikembalikan (irreversible)', 'Hanya menghapus 10 duplikat pertama', 'Tidak bisa digunakan di Excel versi lama'], ans: 1,
+                exp: 'Remove Duplicates permanen dan tidak bisa di-undo setelah file disimpan. Selalu buat backup atau gunakan Conditional Formatting untuk review terlebih dahulu.'
+            },
+            {
+                cat: 'text', q: 'TRIM("  Budi  Santoso  ") menghasilkan...', ctx: '',
+                opts: ['"  Budi  Santoso  " (tidak berubah)', 'Error karena ada spasi', 'Budi Santoso (spasi ekstra dihapus)', 'BudiSantoso (semua spasi dihapus)'], ans: 2,
+                exp: 'TRIM menghapus spasi di awal, akhir, dan mengurangi spasi ganda di tengah menjadi satu. Hasilnya "Budi Santoso" dengan tepat satu spasi di tengah.'
+            },
+            {
+                cat: 'text', q: 'Manakah formula yang BENAR untuk membersihkan teks: hapus spasi DAN ubah ke Title Case?', ctx: '',
+                opts: ['=UPPER(TRIM(A2))', '=TRIM(PROPER(A2))', '=PROPER+TRIM(A2)', '=CLEAN(UPPER(A2))'], ans: 1,
+                exp: '=TRIM(PROPER(A2)) — PROPER mengubah ke Title Case, TRIM menghapus spasi berlebih. Urutan PROPER di dalam TRIM atau sebaliknya tidak terlalu berpengaruh untuk kasus ini.'
+            },
+            {
+                cat: 'duplicate', q: 'Formula =COUNTIF($A:$A,A2) menunjukkan angka 3 untuk suatu baris. Artinya?', ctx: 'Kolom A berisi ID karyawan',
+                opts: ['Ada 3 karyawan di tabel', 'ID tersebut muncul 3 kali — ini duplikat', 'Baris ke-3 dari atas', 'Formula salah dan harus diperbaiki'], ans: 1,
+                exp: 'COUNTIF menghitung berapa kali nilai A2 muncul di seluruh kolom A. Angka 3 berarti ada 3 baris dengan ID yang sama — 2 di antaranya adalah duplikat.'
+            },
+            {
+                cat: 'missing', q: 'Cara paling efisien untuk mengisi SEMUA sel kosong dalam suatu range dengan nilai "N/A" sekaligus adalah?', ctx: '',
+                opts: ['Klik satu per satu dan ketik N/A', 'Ctrl+G → Special → Blanks → ketik N/A → Ctrl+Enter', '=IF(ISBLANK(A2),"N/A",A2) di setiap baris', 'AutoFill dari sel yang sudah berisi N/A'], ans: 1,
+                exp: 'Ctrl+G → Special → Blanks memilih semua sel kosong sekaligus. Setelah itu ketik nilai dan tekan Ctrl+Enter untuk mengisi semua sel kosong yang terseleksi.'
+            },
+            {
+                cat: 'missing', q: '=COUNTBLANK(B2:B100) mengembalikan nilai 15. Artinya?', ctx: '',
+                opts: ['Ada 15 baris data', 'Ada 15 sel yang berisi angka 0', 'Ada 15 sel kosong di range B2:B100', 'Formula error'], ans: 2,
+                exp: 'COUNTBLANK menghitung jumlah sel kosong dalam range. Nilai 15 berarti ada 15 sel yang tidak berisi data di kolom B baris 2-100.'
+            },
+            {
+                cat: 'text', q: 'Shortcut keyboard untuk Flash Fill adalah?', ctx: '',
+                opts: ['Ctrl+F', 'Ctrl+E', 'Alt+F', 'Ctrl+Shift+E'], ans: 1,
+                exp: 'Ctrl+E adalah shortcut Flash Fill. Cukup ketik contoh di sel pertama, lalu tekan Ctrl+E untuk Excel otomatis mengisi pola untuk seluruh kolom.'
+            },
+            {
+                cat: 'duplicate', q: 'Saat menggunakan Text to Columns, hal yang WAJIB dilakukan sebelumnya adalah?', ctx: '',
+                opts: ['Backup file', 'Pastikan kolom di sebelah kanan cukup kosong', 'Urutkan data A-Z terlebih dahulu', 'Aktifkan AutoSave'], ans: 1,
+                exp: 'Text to Columns akan menimpa data di kolom sebelah kanan. Jika ada data di sana, data tersebut akan hilang. Selalu kosongkan kolom yang cukup sebelumnya.'
+            },
+            {
+                cat: 'missing', q: 'Manakah yang BENAR tentang angka yang tersimpan sebagai teks di Excel?', ctx: '',
+                opts: ['SUM tetap berfungsi dengan benar', 'Ditandai dengan segitiga kecil di pojok kiri atas sel', 'Bisa langsung dipakai dalam kalkulasi', 'Tidak ada bedanya dengan angka biasa'], ans: 1,
+                exp: 'Excel menandai angka-sebagai-teks dengan segitiga hijau kecil di pojok kiri atas sel. SUM dan formula lain akan menghasilkan 0 atau error karena tidak mengenali sebagai angka.'
+            },
+            {
+                cat: 'text', q: 'Fungsi SUBSTITUTE("021-1234-5678", "-", "") menghasilkan?', ctx: '',
+                opts: ['021-1234-5678 (tidak berubah)', '02112345678', 'Error', '021 1234 5678'], ans: 1,
+                exp: 'SUBSTITUTE mengganti semua kemunculan "-" dengan "" (kosong/hapus). Hasilnya "02112345678" — semua tanda hubung dihapus.'
+            },
+        ];
+
+        // ════════════════════════════════════════════════════════════════
+        //  STATE
+        // ════════════════════════════════════════════════════════════════
+        let done = JSON.parse(localStorage.getItem('xdc_done') || '[]');
+        let curFilter = 'all', curSearch = '', curTab = 'learn';
+        let openExpand = null;
+        let quizCatSel = 'all', quizQs = [], quizIdx = 0, quizScore = 0;
+
+        // ════════════════════════════════════════════════════════════════
+        //  RENDER TECHNIQUES
+        // ════════════════════════════════════════════════════════════════
+        function tagHtml(tags) {
+            return tags.map(t => {
+                const m = { essential: 'tag-essential', manual: 'tag-manual', formula: 'tag-formula', advanced: 'tag-advanced' };
+                const l = { essential: '🔥 Wajib', manual: '🖱️ Manual', formula: '📐 Formula', advanced: '🎓 Mahir' };
+                return `<span class="tc-tag ${m[t] || 'tag-advanced'}">${l[t] || t}</span>`;
+            }).join('');
+        }
+
+        function miniSS(data) {
+            if (!data) return '';
+            const hd = data.cols.map(c => `<div class="ss-cell-hd">${c}</div>`).join('');
+            const rows = data.rows.map((r, i) => {
+                const isBad = data.bad && data.bad.includes(i);
+                const isGood = data.good && data.good.includes(i);
+                const cls = isBad ? 'hl-bad' : isGood ? 'hl-good' : '';
+                const cells = r.map((c, ci) => {
+                    let cc = '';
+                    if (isBad) cc = 'bad';
+                    if (isGood) cc = 'good';
+                    return `<div class="ss-cell ${cc}">${c}</div>`;
+                }).join('');
+                return `<div class="ss-row ${cls}"><div class="ss-num">${i + 1}</div>${cells}</div>`;
+            }).join('');
+            return `<div class="mini-ss-wrap"><div class="mini-ss"><div class="ss-header"><div class="ss-num">&nbsp;</div>${hd}</div>${rows}</div></div>`;
+        }
+
+        function stepHtml(steps) {
+            const colors = ['#2a8a7e', '#4a7a9b', '#c4882a', '#6a5acd'];
+            return steps.map((s, i) => {
+                return `<div class="step-row">
+      <div class="step-n" style="background:${colors[i % 4]}1a;color:${colors[i % 4]}">${s.n}</div>
+      <div class="step-txt">${s.txt}${s.cmd ? `<div class="step-cmd">${s.cmd}</div>` : ''}</div>
+    </div>`;
+            }).join('');
+        }
+
+        function getFiltered() {
+            return TECH.filter(t => {
+                const mc = curFilter === 'all' ? true : curFilter === 'done' ? done.includes(t.id) : curFilter === 'essential' ? t.tags.includes('essential') : t.cat === curFilter;
+                const s = curSearch.toLowerCase();
+                return mc && (!s || t.name.toLowerCase().includes(s) || t.short.toLowerCase().includes(s) || t.catLabel.toLowerCase().includes(s));
+            });
+        }
+
+        function renderTechs() {
+            const list = getFiltered();
+            const grid = document.getElementById('techGrid');
+            if (!list.length) {
+                grid.innerHTML = `<div style="text-align:center;padding:60px 20px;grid-column:1/-1;color:var(--text-dim)"><div style="font-size:40px;margin-bottom:12px">🔍</div><h3 style="font-family:var(--display);font-size:18px;margin-bottom:6px;color:var(--text-mid)">Tidak ditemukan</h3><p style="font-size:13px">Coba kata kunci lain</p></div>`;
+                return;
+            }
+            grid.innerHTML = list.map((t, i) => {
+                const isDone = done.includes(t.id);
+                const shCuts = t.shortcuts.filter(Boolean).map(s => `<span class="shortcut-pill">${s}</span>`).join('');
+                const mistakes = t.mistakes.map(m => `<div class="common-mistake"><strong>❌ Jangan:</strong> ${m}</div>`).join('');
+                return `<div class="tc ${isDone ? 'done' : ''}" id="tc-${t.id}" style="animation-delay:${Math.min(i * .04, .4)}s">
+      <div class="tc-head">
+        <div class="tc-icon-wrap" style="background:${t.iconBg};color:${t.iconColor}">${t.icon}</div>
+        <div style="flex:1">
+          <div class="tc-name">${t.name}</div>
+          <div class="tc-cat" style="color:${t.iconColor}">${t.catLabel}</div>
+          <div class="tc-short">${t.short}</div>
+        </div>
+        <div class="done-badge">✅</div>
+      </div>
+      <div class="tc-body">
+        <div class="ba-wrap">
+          <div class="ba-col"><div class="ba-label before">Sebelum</div>${miniSS(t.before)}</div>
+          <div class="ba-arr">→</div>
+          <div class="ba-col"><div class="ba-label after">Sesudah</div>${miniSS(t.after)}</div>
+        </div>
+        <div class="tc-steps">${stepHtml(t.steps)}</div>
+        <div class="tc-tip">💡 <span>${t.tip}</span></div>
+        <div class="tc-tags">${tagHtml(t.tags)}</div>
+        <button class="done-btn" onclick="toggleDone('${t.id}')">${isDone ? '✅ Sudah Dikuasai' : '📌 Tandai Sudah Paham'}</button>
+      </div>
+      <div class="tc-expand" id="exp-wrap-${t.id}">
+        <button class="expand-btn" id="exp-btn-${t.id}" onclick="toggleExpand('${t.id}',this)">▼ Detail: Shortcut, Catatan & Kesalahan Umum</button>
+        <div class="expand-panel" id="exp-${t.id}">
+          ${shCuts ? `<div class="ep-section"><div class="ep-title">⌨️ Shortcut</div><div>${shCuts}</div></div>` : ''}
+          <div class="ep-section"><div class="ep-title">📝 Catatan Penting</div><div class="ep-note">${t.notes}</div></div>
+          <div class="ep-section"><div class="ep-title">⚠️ Kesalahan Umum</div>${mistakes}</div>
+        </div>
+      </div>
+    </div>`;
+            }).join('');
+        }
+
+        function toggleExpand(id, btn) {
+            const panel = document.getElementById('exp-' + id);
+            const isOpen = panel.classList.contains('open');
+            if (openExpand && openExpand !== id) {
+                document.getElementById('exp-' + openExpand)?.classList.remove('open');
+                const ob = document.getElementById('exp-btn-' + openExpand);
+                if (ob) ob.textContent = '▼ Detail: Shortcut, Catatan & Kesalahan Umum';
+            }
+            panel.classList.toggle('open');
+            openExpand = isOpen ? null : id;
+            btn.textContent = panel.classList.contains('open') ? '▲ Sembunyikan Detail' : '▼ Detail: Shortcut, Catatan & Kesalahan Umum';
+        }
+
+        function toggleDone(id) {
+            done = done.includes(id) ? done.filter(x => x !== id) : [...done, id];
+            localStorage.setItem('xdc_done', JSON.stringify(done));
+            updateStats();
+            const card = document.getElementById('tc-' + id);
+            if (card) {
+                card.classList.toggle('done');
+                const btn = card.querySelector('.done-btn');
+                btn.textContent = done.includes(id) ? '✅ Sudah Dikuasai' : '📌 Tandai Sudah Paham';
+            }
+        }
+
+        function setFilter(cat, btn) {
+            curFilter = cat;
+            document.querySelectorAll('.sb-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const titles = {
+                all: '🗂️ Semua Teknik', duplicate: '🔁 Data Duplikat', text: '✍️ Pembersihan Teks',
+                structure: '📐 Struktur Data', missing: '❓ Data Kosong', validation: '✅ Validasi Data',
+                format: '🎨 Format & Tipe Data', done: '✅ Sudah Dikuasai', essential: '🔥 Wajib Tahu'
+            };
+            document.getElementById('sectionTitle').textContent = titles[cat] || cat;
+            if (curTab === 'learn') renderTechs();
+        }
+
+        function doSearch(v) {
+            curSearch = v;
+            if (curTab === 'learn') renderTechs();
+        }
+
+        function updateStats() {
+            const total = TECH.length;
+            const d = done.length;
+            document.getElementById('doneCount').textContent = d;
+            document.getElementById('totalCount').textContent = total;
+            const pct = total ? Math.round(d / total * 100) : 0;
+            document.getElementById('progFill').style.width = pct + '%';
+            document.getElementById('progPct').textContent = pct + '%';
+            // sidebar counts
+            document.getElementById('sc-all').textContent = total;
+            ['duplicate', 'text', 'structure', 'missing', 'validation', 'format'].forEach(c => {
+                const el = document.getElementById('sc-' + c);
+                if (el) el.textContent = TECH.filter(t => t.cat === c).length;
+            });
+            document.getElementById('sc-done').textContent = d;
+            document.getElementById('sc-essential').textContent = TECH.filter(t => t.tags.includes('essential')).length;
+        }
+
+        // ════════════════════════════════════════════════════════════════
+        //  INTERACTIVE DEMOS
+        // ════════════════════════════════════════════════════════════════
+        const dupData = [
+            { id: 'E001', name: 'Budi Santoso', dept: 'IT' },
+            { id: 'E002', name: 'Sari Dewi', dept: 'Finance' },
+            { id: 'E001', name: 'Budi Santoso', dept: 'IT' },
+            { id: 'E003', name: 'Andi Pratama', dept: 'Marketing' },
+            { id: 'E002', name: 'Sari Dewi', dept: 'Finance' },
+            { id: 'E004', name: 'Rini Susanti', dept: 'HR' },
+        ];
+
+        function renderDupTable(state) {
+            const ids = [...new Map(dupData.map(r => [r.id, r])).values()].map(r => r.id);
+            const dupcounts = {};
+            dupData.forEach(r => dupcounts[r.id] = (dupcounts[r.id] || 0) + 1);
+            let html = `<table class="te-table"><thead><tr><th>#</th><th>ID</th><th>Nama</th><th>Departemen</th><th>Status</th></tr></thead><tbody>`;
+            let seen = {};
+            dupData.forEach((r, i) => {
+                let cls = '', status = '';
+                if (state >= 1 && dupcounts[r.id] > 1) {
+                    if (!seen[r.id]) { seen[r.id] = true; cls = 'first-dup'; status = '⚠️ Duplikat'; }
+                    else { cls = 'dup-row'; status = '🔁 Duplikat ke-2'; }
+                }
+                if (state >= 2 && dupcounts[r.id] > 1 && seen[r.id] && cls !== 'first-dup') { cls = 'removed-row'; status = '❌ Dihapus'; }
+                html += `<tr class="${cls}"><td>${i + 1}</td><td class="${cls === 'dup-row' || cls === 'first-dup' ? 'bad' : cls === 'clean-row' ? 'fixed' : ''}">${r.id}</td><td>${r.name}</td><td>${r.dept}</td><td>${status || '✅ Unik'}</td></tr>`;
+            });
+            html += '</tbody></table>';
+            document.getElementById('demoDupTable').innerHTML = html;
+        }
+
+        function stepSI(id, step) {
+            document.querySelectorAll('#' + id + ' .si-step').forEach((s, i) => {
+                s.className = 'si-step' + (i < step ? ' done' : i === step ? ' active' : '');
+            });
+        }
+
+        let dupState = 0;
+        function demoDup(s) {
+            dupState = s;
+            renderDupTable(s);
+            stepSI('siDup', s);
+            document.getElementById('btnMarkDup').disabled = s >= 1;
+            document.getElementById('btnRemDup').disabled = s < 1 || s >= 2;
+            const res = document.getElementById('resDup');
+            if (s === 1) { res.className = 'demo-result show info'; res.innerHTML = '🔍 <strong>3 duplikat ditemukan</strong> — baris berwarna kuning adalah kemunculan pertama, baris orange adalah duplikat yang akan dihapus.'; }
+            else if (s === 2) { res.className = 'demo-result show success'; res.innerHTML = '✅ <strong>2 baris duplikat dihapus!</strong> Tersisa 4 baris unik dari 6 baris sebelumnya. ID E001 dan E002 hanya muncul sekali.'; }
+            else { res.className = 'demo-result'; }
+        }
+
+        const textRawData = [
+            { name: '  budi SANTOSO  ', email: 'BUDI@CO.ID' },
+            { name: ' sari dewi', email: 'sari@co.id  ' },
+            { name: 'ANDI   pratama  ', email: '  ANDI@CO.ID' },
+            { name: '  rini susanti', email: 'RINI@co.id' },
+        ];
+
+        function renderTextTable(state) {
+            let html = `<table class="te-table"><thead><tr><th>#</th><th>Nama</th><th>Email</th></tr></thead><tbody>`;
+            textRawData.forEach((r, i) => {
+                let name = r.name, email = r.email, nc = 'bad', ec = 'bad';
+                if (state >= 1) { name = name.trim().replace(/\s+/g, ' '); email = email.trim(); nc = ''; ec = ''; }
+                if (state >= 2) { name = name.split(' ').map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' '); email = email.toLowerCase(); nc = 'fixed'; ec = 'fixed'; }
+                html += `<tr><td>${i + 1}</td><td class="${nc}">${name}</td><td class="${ec}">${email}</td></tr>`;
+            });
+            html += '</tbody></table>';
+            document.getElementById('demoTextTable').innerHTML = html;
+        }
+
+        let textState = 0;
+        function demoText(s) {
+            textState = s;
+            renderTextTable(s);
+            stepSI('siText', s);
+            document.getElementById('btnTrim').disabled = s >= 1;
+            document.getElementById('btnProper').disabled = s < 1 || s >= 2;
+            const res = document.getElementById('resText');
+            if (s === 1) { res.className = 'demo-result show info'; res.innerHTML = '🧹 <strong>TRIM diterapkan!</strong> Spasi di awal, akhir, dan spasi ganda di tengah sudah dihapus.'; }
+            else if (s === 2) { res.className = 'demo-result show success'; res.innerHTML = '✅ <strong>PROPER + LOWER diterapkan!</strong> Nama sekarang Title Case, email jadi huruf kecil. Data siap digunakan.'; }
+            else { res.className = 'demo-result'; }
+        }
+
+        const missData = [
+            { nama: 'Budi Santoso', dept: 'IT', email: 'budi@co.id' },
+            { nama: 'Sari Dewi', dept: '', email: 'sari@co.id' },
+            { nama: 'Andi Pratama', dept: 'Marketing', email: '' },
+            { nama: '', dept: 'HR', email: 'rini@co.id' },
+            { nama: 'Deni Kurnia', dept: '', email: '' },
+        ];
+
+        function renderMissTable(state) {
+            let html = `<table class="te-table"><thead><tr><th>#</th><th>Nama</th><th>Departemen</th><th>Email</th></tr></thead><tbody>`;
+            missData.forEach((r, i) => {
+                const isEmpty = r.nama === '' || r.dept === '' || r.email === '';
+                let cls = isEmpty && state >= 1 ? 'hl-empty' : '';
+                const nc = r.nama === '' && state >= 2 ? 'fixed' : r.nama === '' ? 'bad' : '';
+                const dc = r.dept === '' && state >= 2 ? 'fixed' : r.dept === '' ? 'bad' : '';
+                const ec = r.email === '' && state >= 2 ? 'fixed' : r.email === '' ? 'bad' : '';
+                const nd = r.nama || state < 2 ? r.nama : 'N/A';
+                const dd = r.dept || state < 2 ? r.dept : 'N/A';
+                const ed = r.email || state < 2 ? r.email : 'N/A';
+                html += `<tr class="${cls}"><td>${i + 1}</td><td class="${nc}">${nd || '(kosong)'}</td><td class="${dc}">${dd || '(kosong)'}</td><td class="${ec}">${ed || '(kosong)'}</td></tr>`;
+            });
+            html += '</tbody></table>';
+            document.getElementById('demoMissTable').innerHTML = html;
+        }
+
+        let missState = 0;
+        function demoMiss(s) {
+            missState = s;
+            renderMissTable(s);
+            stepSI('siMiss', s);
+            document.getElementById('btnHighMiss').disabled = s >= 1;
+            document.getElementById('btnFillMiss').disabled = s < 1 || s >= 2;
+            const res = document.getElementById('resMiss');
+            if (s === 1) { res.className = 'demo-result show info'; res.innerHTML = '🔦 <strong>7 sel kosong ditemukan</strong> di 4 baris berbeda. Baris dengan sel kosong di-highlight agar mudah diidentifikasi.'; }
+            else if (s === 2) { res.className = 'demo-result show success'; res.innerHTML = '✅ <strong>Semua sel kosong diisi "N/A"!</strong> Data kini lengkap dan konsisten. Formula COUNTBLANK sekarang mengembalikan 0.'; }
+            else { res.className = 'demo-result'; }
+        }
+
+        const flashRaw = [
+            { full: 'Budi Santoso', first: '', last: '' },
+            { full: 'Sari Dewi', first: '', last: '' },
+            { full: 'Andi Pratama', first: '', last: '' },
+            { full: 'Rini Susanti', first: '', last: '' },
+            { full: 'Deni Kurnia', first: '', last: '' },
+        ];
+
+        function initDemoFlash() {
+            let html = `<table class="te-table"><thead><tr><th>#</th><th>Nama Lengkap</th><th>Nama Depan (contoh: "Budi")</th><th>Nama Belakang (contoh: "Santoso")</th></tr></thead><tbody>`;
+            flashRaw.forEach((r, i) => {
+                html += `<tr><td>${i + 1}</td><td>${r.full}</td><td class="${i === 0 ? 'bad' : ''}">${i === 0 ? 'Budi ← ketik ini' : ''}</td><td class="${i === 0 ? 'bad' : ''}">${i === 0 ? 'Santoso ← ketik ini' : ''}</td></tr>`;
+            });
+            html += '</tbody></table>';
+            document.getElementById('demoFlashTable').innerHTML = html;
+            document.getElementById('resFlash').className = 'demo-result';
+        }
+
+        function demoFlash() {
+            const data = flashRaw.map(r => ({ ...r, first: r.full.split(' ')[0], last: r.full.split(' ').slice(1).join(' ') }));
+            let html = `<table class="te-table"><thead><tr><th>#</th><th>Nama Lengkap</th><th>Nama Depan</th><th>Nama Belakang</th></tr></thead><tbody>`;
+            data.forEach((r, i) => { html += `<tr class="clean-row"><td>${i + 1}</td><td>${r.full}</td><td class="fixed">${r.first}</td><td class="fixed">${r.last}</td></tr>`; });
+            html += '</tbody></table>';
+            document.getElementById('demoFlashTable').innerHTML = html;
+            const res = document.getElementById('resFlash');
+            res.className = 'demo-result show success';
+            res.innerHTML = '⚡ <strong>Flash Fill berhasil!</strong> Excel mendeteksi pola dari contoh baris pertama dan otomatis mengisi seluruh kolom. Shortcut: Ctrl+E';
+        }
+
+        // ════════════════════════════════════════════════════════════════
+        //  QUIZ
+        // ════════════════════════════════════════════════════════════════
+        function selQCat(cat, el) {
+            quizCatSel = cat;
+            document.querySelectorAll('.qcat').forEach(c => c.classList.remove('sel'));
+            el.classList.add('sel');
+        }
+
+        function shuffle(a) { return [...a].sort(() => Math.random() - .5); }
+
+        function startQuiz() {
+            const pool = quizCatSel === 'all' ? QUIZ : QUIZ.filter(q => q.cat === quizCatSel);
+            quizQs = shuffle(pool).slice(0, 10);
+            quizIdx = 0; quizScore = 0;
+            document.getElementById('quizStart').style.display = 'none';
+            document.getElementById('qresult').classList.remove('on');
+            document.getElementById('qplay').classList.add('on');
+            renderQ();
+        }
+
+        function renderQ() {
+            if (quizIdx >= quizQs.length) { showResult(); return; }
+            const q = quizQs[quizIdx];
+            const pct = (quizIdx + 1) / quizQs.length * 100;
+            document.getElementById('qpLbl').textContent = `${quizIdx + 1}/${quizQs.length}`;
+            document.getElementById('qpFill').style.width = pct + '%';
+            document.getElementById('qpScore').textContent = quizScore;
+            document.getElementById('qpQ').textContent = q.q;
+            const ctx = document.getElementById('qpCtx');
+            if (q.ctx) { ctx.textContent = q.ctx; ctx.style.display = 'block'; } else ctx.style.display = 'none';
+            const letters = ['A', 'B', 'C', 'D'];
+            document.getElementById('qpOpts').innerHTML = q.opts.map((o, i) => `<button class="qopt" onclick="ansQ(${i})"><span class="qopt-l">${letters[i]}</span>${o}</button>`).join('');
+            document.getElementById('qpExp').className = 'qexp';
+            document.getElementById('qpNext').className = 'qnext';
+        }
+
+        function ansQ(i) {
+            const q = quizQs[quizIdx];
+            document.querySelectorAll('.qopt').forEach(b => b.disabled = true);
+            document.querySelectorAll('.qopt')[i].classList.add(i === q.ans ? 'correct' : 'wrong');
+            if (i !== q.ans) document.querySelectorAll('.qopt')[q.ans].classList.add('correct');
+            if (i === q.ans) quizScore++;
+            document.getElementById('qpScore').textContent = quizScore;
+            document.getElementById('qpExp').innerHTML = '💡 ' + q.exp;
+            document.getElementById('qpExp').className = 'qexp show';
+            const nb = document.getElementById('qpNext');
+            nb.className = 'qnext show';
+            nb.textContent = quizIdx + 1 >= quizQs.length ? 'Lihat Hasil →' : 'Soal Berikutnya →';
+        }
+
+        function nextQ() { quizIdx++; renderQ(); }
+
+        function showResult() {
+            document.getElementById('qplay').classList.remove('on');
+            const res = document.getElementById('qresult');
+            res.classList.add('on');
+            const pct = Math.round(quizScore / quizQs.length * 100);
+            document.getElementById('qrPct').textContent = pct + '%';
+            document.getElementById('qrC').textContent = quizScore;
+            document.getElementById('qrW').textContent = quizQs.length - quizScore;
+            document.getElementById('qrT').textContent = quizQs.length;
+            const msgs = [[80, '🎉 Luar Biasa!', 'Pemahaman data cleaning kamu sudah sangat baik! Kamu siap untuk kerja sebagai analis.'], [60, '👍 Bagus!', 'Solid! Review topik yang masih salah dan coba lagi untuk hasil sempurna.'], [40, '💪 Terus Semangat!', 'Masih ada yang perlu dipelajari. Baca ulang materi dan latihan lagi.'], [0, '📚 Mulai dari Awal!', 'Jangan menyerah! Baca dulu materi di tab Belajar, kemudian quiz lagi.']];
+            const [, title, msg] = msgs.find(([s]) => pct >= s) || msgs[3];
+            document.getElementById('qrTitle').textContent = title;
+            document.getElementById('qrMsg').textContent = msg;
+            setTimeout(() => document.getElementById('qrRing').setAttribute('stroke-dashoffset', 314 * (1 - pct / 100)), 200);
+        }
+
+        function backQStart() {
+            document.getElementById('qresult').classList.remove('on');
+            document.getElementById('qplay').classList.remove('on');
+            document.getElementById('quizStart').style.display = '';
+        }
+
+        // ════════════════════════════════════════════════════════════════
+        //  CHEAT SHEET
+        // ════════════════════════════════════════════════════════════════
+        function renderCS() {
+            const cats = [
+                { key: 'duplicate', label: '🔁 Data Duplikat', color: 'var(--coral)' },
+                { key: 'text', label: '✍️ Pembersihan Teks', color: 'var(--teal)' },
+                { key: 'structure', label: '📐 Struktur Data', color: 'var(--violet)' },
+                { key: 'missing', label: '❓ Data Kosong', color: 'var(--amber)' },
+                { key: 'validation', label: '✅ Validasi', color: 'var(--navy)' },
+                { key: 'format', label: '🎨 Format & Tipe', color: 'var(--slate)' },
+            ];
+            document.getElementById('csGrid').innerHTML = cats.map(c => {
+                const list = TECH.filter(t => t.cat === c.key);
+                return `<div class="cs-block"><div class="cs-hd" style="border-top:2px solid ${c.color}">${c.label}</div>
+      ${list.map(t => `<div class="cs-row"><span class="cs-name">${t.name}</span><span class="cs-desc">${t.short.substring(0, 45)}...</span></div>`).join('')}
+    </div>`;
+            }).join('');
+        }
+
+        // ════════════════════════════════════════════════════════════════
+        //  TAB SWITCH
+        // ════════════════════════════════════════════════════════════════
+        function switchTab(tab, btn) {
+            curTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            ['learn', 'demo', 'quiz', 'cheatsheet'].forEach(t => document.getElementById('tab-' + t).style.display = t === tab ? '' : 'none');
+            if (tab === 'cheatsheet') renderCS();
+        }
+
+        // ════════════════════════════════════════════════════════════════
+        //  INIT
+        // ════════════════════════════════════════════════════════════════
+        updateStats();
+        renderTechs();
+        renderDupTable(0);
+        renderTextTable(0);
+        renderMissTable(0);
+        initDemoFlash();
+    </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      if (!window.supabase) return;
+      
+      const supaUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
+      const supaKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
+      const supa = window.supabase.createClient(supaUrl, supaKey);
+
+      try {
+        const { data: { session } } = await supa.auth.getSession();
+
+        if (!session) {
+          // Cegat user tamu yang mencoba akses via direct link
+          document.body.style.display = 'none'; // Sembunyikan konten secara instan
+          alert("🔒 Akses Premium Terkunci!\n\nSilakan Masuk atau Daftar akun terlebih dahulu untuk menggunakan tools interaktif ini.");
+          window.location.href = '../login.html'; // Lempar kembali ke halaman login di luar folder
+        }
+      } catch (err) {
+        console.error("Auth check error:", err);
+      }
+    });
+  </script>
+</body>
+
+</html>

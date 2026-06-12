@@ -277,7 +277,7 @@
             </div>
             <h3 style="margin-bottom:var(--space-2);">Excel Shortcut Trainer</h3>
             <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Latih semua shortcut keyboard Excel yang wajib dikuasai analis data. Latihan interaktif dengan sistem kartu flashcard untuk mempercepat produktivitasmu.</p>
-            <a href="https://hanafidias.github.io/excel-shortcut-for-data-analyst" class="btn-ghost btn-sm" target="_blank" rel="noopener noreferrer" id="tool-shortcut">Coba Tools ↗</a>
+            <a href="tools/shortcut.html" class="btn-ghost btn-sm" id="tool-shortcut">Coba Tools ↗</a>
           </div>
 
           <!-- Excel Formula Trainer -->
@@ -288,7 +288,7 @@
             </div>
             <h3 style="margin-bottom:var(--space-2);">Excel Formula Trainer</h3>
             <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Kuasai VLOOKUP, SUMIF, INDEX-MATCH, dan puluhan formula penting lainnya lewat latihan soal nyata. Ideal untuk persiapan wawancara kerja data analyst.</p>
-            <a href="https://hanafidias.github.io/excel-formula-trainer" class="btn-ghost btn-sm" target="_blank" rel="noopener noreferrer" id="tool-formula">Coba Tools ↗</a>
+            <a href="tools/formula.html" class="btn-ghost btn-sm" id="tool-formula">Coba Tools ↗</a>
           </div>
 
           <!-- Excel Data Cleaning Guide -->
@@ -299,7 +299,7 @@
             </div>
             <h3 style="margin-bottom:var(--space-2);">Excel Data Cleaning Guide</h3>
             <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Panduan lengkap membersihkan data kotor di Excel — TRIM, CLEAN, hapus duplikat, perbaiki format tanggal, dan split kolom. Keahlian nomor satu yang dicari perusahaan.</p>
-            <a href="https://hanafidias.github.io/excel-data-cleaning-guide/" class="btn-ghost btn-sm" target="_blank" rel="noopener noreferrer" id="tool-cleaning">Coba Tools ↗</a>
+            <a href="tools/cleaning.html" class="btn-ghost btn-sm" id="tool-cleaning">Coba Tools ↗</a>
           </div>
 
           <!-- Excel Pivot Table Guide -->
@@ -310,7 +310,7 @@
             </div>
             <h3 style="margin-bottom:var(--space-2);">Excel Pivot Table Guide</h3>
             <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Kuasai PivotTable dari nol hingga membuat laporan interaktif profesional. Pelajari filter, grouping, calculated field, dan slicer untuk dashboard yang impresif.</p>
-            <a href="https://hanafidias.github.io/excel-pivot-table-guide/" class="btn-ghost btn-sm" target="_blank" rel="noopener noreferrer" id="tool-pivot">Coba Tools ↗</a>
+            <a href="tools/pivot.html" class="btn-ghost btn-sm" id="tool-pivot">Coba Tools ↗</a>
           </div>
 
           <!-- SQL Trainer -->
@@ -321,7 +321,7 @@
             </div>
             <h3 style="margin-bottom:var(--space-2);">SQL Trainer</h3>
             <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Latihan SQL interaktif untuk data analyst — SELECT, JOIN, GROUP BY, subquery, dan window functions. Lengkapi kemampuan Excel-mu dengan SQL untuk analisis database skala besar.</p>
-            <a href="https://hanafidias.github.io/sql-trainer/" class="btn-ghost btn-sm" target="_blank" rel="noopener noreferrer" id="tool-sql">Coba Tools ↗</a>
+            <a href="tools/sql.html" class="btn-ghost btn-sm" id="tool-sql">Coba Tools ↗</a>
           </div>
 
           <!-- CTA card -->
@@ -489,11 +489,11 @@
         <div class="footer-col">
           <h4>Tools & Trainer</h4>
           <ul>
-            <li><a href="https://hanafidias.github.io/excel-shortcut-for-data-analyst" target="_blank" rel="noopener noreferrer">Excel Shortcut Trainer</a></li>
-            <li><a href="https://hanafidias.github.io/excel-formula-trainer" target="_blank" rel="noopener noreferrer">Excel Formula Trainer</a></li>
-            <li><a href="https://hanafidias.github.io/excel-data-cleaning-guide/" target="_blank" rel="noopener noreferrer">Data Cleaning Guide</a></li>
-            <li><a href="https://hanafidias.github.io/excel-pivot-table-guide/" target="_blank" rel="noopener noreferrer">Pivot Table Guide</a></li>
-            <li><a href="https://hanafidias.github.io/sql-trainer/" target="_blank" rel="noopener noreferrer">SQL Trainer</a></li>
+            <li><a href="tools/shortcut.html" target="_blank" rel="noopener noreferrer">Excel Shortcut Trainer</a></li>
+            <li><a href="tools/formula.html" target="_blank" rel="noopener noreferrer">Excel Formula Trainer</a></li>
+            <li><a href="tools/cleaning.html" target="_blank" rel="noopener noreferrer">Data Cleaning Guide</a></li>
+            <li><a href="tools/pivot.html" target="_blank" rel="noopener noreferrer">Pivot Table Guide</a></li>
+            <li><a href="tools/sql.html" target="_blank" rel="noopener noreferrer">SQL Trainer</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -519,5 +519,54 @@
   </footer>
 
   <script src="assets/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      if (!window.supabase) return;
+      
+      // Inisialisasi Supabase
+      const supaUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
+      const supaKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
+      const supa = window.supabase.createClient(supaUrl, supaKey);
+
+      try {
+        const { data: { session } } = await supa.auth.getSession();
+
+        if (!session) {
+          // JIKA BELUM LOGIN: Ambil semua link materi & semua link di dalam section tools
+          const protectedLinks = document.querySelectorAll('a[href^="learn.html"], a[href^="tools.html"], #tools-teaser a, #paths a');
+          
+          protectedLinks.forEach(link => {
+            // Kecualikan tombol "Lihat Kurikulum" agar tetap bisa di-scroll oleh user umum
+            if (link.getAttribute('href') === '#paths') return;
+
+            link.addEventListener('click', function(e) {
+              e.preventDefault(); // Blokir perpindahan halaman
+              alert("🔒 Akses Fitur Terkunci!\n\nSilakan Masuk atau Daftar akun terlebih dahulu untuk menggunakan tools interaktif dan mengakses materi kurikulum.");
+              window.location.href = 'login.html';
+            });
+          });
+        } else {
+          // JIKA SUDAH LOGIN: Sinkronisasi tombol navigasi & hero
+          
+          // 1. Ubah tombol "Mulai Petualangan" di Hero
+          const btnHero = document.querySelector('.hero-buttons a[href="login.html"]');
+          if (btnHero) {
+            btnHero.href = "learn.html";
+            btnHero.innerHTML = "Lanjutkan Belajar <span aria-hidden=\"true\">→</span>";
+          }
+          
+          // 2. Ubah tombol "Masuk / Profil" di Navbar
+          const navAuthBtn = document.getElementById('nav-auth-btn');
+          if (navAuthBtn) {
+            navAuthBtn.href = "profile.html";
+            navAuthBtn.innerText = "👤 Profil Saya";
+          }
+        }
+      } catch (err) {
+        console.error("Auth check error:", err);
+      }
+    });
+  </script>
 </body>
 </html>

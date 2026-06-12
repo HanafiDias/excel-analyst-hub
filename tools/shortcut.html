@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Shortcuts — Data Analyst Pro</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0e1a;
+            --surface: #111827;
+            --surface2: #1a2235;
+            --border: #1e2d47;
+            --accent: #00d4ff;
+            --accent2: #7c3aed;
+            --accent3: #10b981;
+            --accent4: #f59e0b;
+            --accent5: #ef4444;
+            --text: #e2e8f0;
+            --text-dim: #64748b;
+            --text-mid: #94a3b8;
+            --key-bg: #1e2d47;
+            --key-border: #2d4a6e;
+            --key-text: #00d4ff;
+            --glow: 0 0 20px rgba(0, 212, 255, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── HEADER ── */
+        header {
+            padding: 48px 40px 32px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .header-tag {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: var(--accent);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            opacity: 0.8;
+        }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(28px, 5vw, 52px);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -1px;
+        }
+
+        h1 span.hl {
+            color: var(--accent);
+        }
+
+        h1 span.hl2 {
+            color: var(--accent2);
+        }
+
+        .header-sub {
+            margin-top: 12px;
+            color: var(--text-mid);
+            font-size: 15px;
+            max-width: 520px;
+            line-height: 1.6;
+        }
+
+        /* ── STATS BAR ── */
+        .stats-bar {
+            display: flex;
+            gap: 24px;
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-mid);
+        }
+
+        .stat-val {
+            font-family: 'DM Mono', monospace;
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .progress-bar-wrap {
+            flex: 1;
+            min-width: 200px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-left: auto;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent2), var(--accent));
+            border-radius: 2px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* ── LAYOUT ── */
+        .layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: calc(100vh - 180px);
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            border-right: 1px solid var(--border);
+            padding: 24px 0;
+            position: sticky;
+            top: 0;
+            height: calc(100vh - 180px);
+            overflow-y: auto;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 2px;
+        }
+
+        .sidebar-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            padding: 0 20px;
+            margin-bottom: 8px;
+        }
+
+        .cat-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 11px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-mid);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13.5px;
+            text-align: left;
+            transition: all 0.15s;
+            border-left: 2px solid transparent;
+            position: relative;
+        }
+
+        .cat-btn:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .cat-btn.active {
+            color: var(--accent);
+            background: rgba(0, 212, 255, 0.06);
+            border-left-color: var(--accent);
+        }
+
+        .cat-icon {
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .cat-count {
+            margin-left: auto;
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: var(--text-dim);
+            background: var(--border);
+            padding: 2px 7px;
+            border-radius: 10px;
+        }
+
+        .cat-btn.active .cat-count {
+            background: rgba(0, 212, 255, 0.15);
+            color: var(--accent);
+        }
+
+        .sidebar-sep {
+            height: 1px;
+            background: var(--border);
+            margin: 16px 20px;
+        }
+
+        /* ── MAIN ── */
+        .main {
+            padding: 32px 40px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .section-title .icon {
+            margin-right: 10px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 14px;
+            min-width: 220px;
+        }
+
+        .search-box input {
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            width: 100%;
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-dim);
+        }
+
+        /* ── SHORTCUT CARDS ── */
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 12px;
+        }
+
+        .shortcut-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shortcut-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--card-accent, var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.2s;
+        }
+
+        .shortcut-card:hover {
+            border-color: rgba(0, 212, 255, 0.3);
+            transform: translateY(-1px);
+            box-shadow: var(--glow);
+        }
+
+        .shortcut-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .shortcut-card.learned {
+            border-color: rgba(16, 185, 129, 0.35);
+            background: rgba(16, 185, 129, 0.04);
+        }
+
+        .shortcut-card.learned::before {
+            background: var(--accent3);
+            transform: scaleX(1);
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.4;
+            flex: 1;
+            color: var(--text);
+        }
+
+        .learned-badge {
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            flex-shrink: 0;
+        }
+
+        .shortcut-card.learned .learned-badge {
+            opacity: 1;
+        }
+
+        .keys-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+
+        .key {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--key-bg);
+            border: 1px solid var(--key-border);
+            border-bottom: 3px solid var(--key-border);
+            color: var(--key-text);
+            font-family: 'DM Mono', monospace;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 3px 9px;
+            border-radius: 6px;
+            white-space: nowrap;
+            line-height: 1.4;
+        }
+
+        .key.plus {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 14px;
+            padding: 0 2px;
+            border-bottom: none;
+        }
+
+        .card-tip {
+            font-size: 12px;
+            color: var(--text-dim);
+            line-height: 1.5;
+            margin-top: 6px;
+        }
+
+        .tag-row {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .tag {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: rgba(0, 212, 255, 0.08);
+            color: var(--accent);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+        }
+
+        .tag.hot {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--accent5);
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .tag.essential {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--accent4);
+            border-color: rgba(245, 158, 11, 0.2);
+        }
+
+        .tag.analyst {
+            background: rgba(124, 58, 237, 0.12);
+            color: #a78bfa;
+            border-color: rgba(124, 58, 237, 0.25);
+        }
+
+        .learn-btn {
+            margin-top: 12px;
+            width: 100%;
+            padding: 8px;
+            background: rgba(0, 212, 255, 0.07);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 7px;
+            color: var(--accent);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .learn-btn:hover {
+            background: rgba(0, 212, 255, 0.15);
+        }
+
+        .shortcut-card.learned .learn-btn {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: var(--accent3);
+        }
+
+        /* ── QUIZ MODE ── */
+        .quiz-banner {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(0, 212, 255, 0.08));
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+
+
+        .quiz-info h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .quiz-info p {
+            font-size: 13px;
+            color: var(--text-mid);
+        }
+
+        .quiz-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--accent2), #4f46e5);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.15s;
+            white-space: nowrap;
+        }
+
+        .quiz-btn:hover {
+            opacity: 0.85;
+        }
+
+        /* ── QUIZ OVERLAY ── */
+        .quiz-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 14, 26, 0.95);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quiz-overlay.active {
+            display: flex;
+        }
+
+        .quiz-modal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 540px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .quiz-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .quiz-progress {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+        }
+
+        .quiz-question {
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .quiz-sub {
+            font-size: 13px;
+            color: var(--text-mid);
+            margin-bottom: 28px;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .quiz-opt {
+            padding: 14px 18px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'DM Mono', monospace;
+            font-size: 13px;
+            color: var(--text-mid);
+            text-align: left;
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quiz-opt:hover:not(:disabled) {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .quiz-opt.correct {
+            border-color: var(--accent3);
+            color: var(--accent3);
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        .quiz-opt.wrong {
+            border-color: var(--accent5);
+            color: var(--accent5);
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        .quiz-opt:disabled {
+            cursor: default;
+        }
+
+        .quiz-result {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .quiz-result .score {
+            font-family: 'Syne', sans-serif;
+            font-size: 56px;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .quiz-result p {
+            color: var(--text-mid);
+            margin-bottom: 20px;
+        }
+
+        /* ── CHEAT SHEET ── */
+        .cheatsheet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .cs-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .cs-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .cs-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 16px;
+            border-bottom: 1px solid rgba(30, 45, 71, 0.6);
+            gap: 12px;
+        }
+
+        .cs-row:last-child {
+            border-bottom: none;
+        }
+
+        .cs-desc {
+            font-size: 13px;
+            color: var(--text-mid);
+            flex: 1;
+        }
+
+        .cs-keys {
+            flex-shrink: 0;
+        }
+
+        /* ── TABS ── */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 28px;
+            background: var(--surface);
+            border-radius: 10px;
+            padding: 4px;
+            border: 1px solid var(--border);
+            width: fit-content;
+        }
+
+        .tab-btn {
+            padding: 8px 18px;
+            background: none;
+            border: none;
+            border-radius: 7px;
+            color: var(--text-mid);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .tab-btn.active {
+            background: var(--surface2);
+            color: var(--accent);
+            border: 1px solid var(--border);
+        }
+
+        /* ── EMPTY STATE ── */
+        .empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-dim);
+        }
+
+        .empty .e-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .empty h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--text-mid);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                display: flex;
+                flex-wrap: wrap;
+                padding: 12px;
+                gap: 4px;
+            }
+
+            .cat-btn {
+                border-radius: 8px;
+                border-left: none;
+                width: auto;
+            }
+
+            .cat-btn.active {
+                border: 1px solid rgba(0, 212, 255, 0.4);
+            }
+
+            header,
+            .stats-bar,
+            .main {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .shortcuts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .highlight {
+            animation: flash 0.4s ease;
+        }
+
+        @keyframes flash {
+
+            0%,
+            100% {}
+
+            50% {
+                background: rgba(0, 212, 255, 0.1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+  <a href="../index.html" style="position: fixed; top: 20px; left: 20px; z-index: 9999; background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.2s ease; font-family: sans-serif; font-size: 14px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.borderColor='#3b82f6';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='#334155';">
+    <span aria-hidden="true">🔙</span> Kembali ke Hub
+  </a>
+    <div class="wrapper">
+
+        <!-- HEADER -->
+        <header>
+            <div class="header-tag">📊 Excel Mastery — Data Analyst Edition</div>
+            <h1>Shortcut <span class="hl">Excel</span><br>untuk <span class="hl2">Data Analyst</span></h1>
+            <p class="header-sub">Pelajari semua shortcut penting yang dipakai profesional setiap hari. Tandai yang
+                sudah kamu kuasai dan uji dirimu dengan Quiz Mode.</p>
+            <br>
+            <p class="header-tag">Created by Hanafi </p>
+        </header>
+
+        <!-- STATS BAR -->
+        <div class="stats-bar">
+            <div class="stat">
+                <span class="stat-val" id="learnedCount">0</span>
+                <span>/ <span id="totalCount">0</span> dikuasai</span>
+            </div>
+            <div class="stat">🎯 Progress belajar</div>
+            <div class="progress-bar-wrap">
+                <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
+            <button class="quiz-btn" onclick="openQuiz()" style="margin-left:auto">⚡ Quiz Mode</button>
+        </div>
+
+        <!-- LAYOUT -->
+        <div class="layout">
+
+            <!-- SIDEBAR -->
+            <nav class="sidebar">
+                <div class="sidebar-label">Kategori</div>
+                <button class="cat-btn active" onclick="filterCat('all', this)">
+                    <span class="cat-icon">⚡</span> Semua Shortcut
+                    <span class="cat-count" id="cnt-all">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('navigate', this)">
+                    <span class="cat-icon">🧭</span> Navigasi
+                    <span class="cat-count" id="cnt-navigate">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('select', this)">
+                    <span class="cat-icon">✅</span> Seleksi Data
+                    <span class="cat-count" id="cnt-select">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('edit', this)">
+                    <span class="cat-icon">✏️</span> Edit & Format
+                    <span class="cat-count" id="cnt-edit">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('formula', this)">
+                    <span class="cat-icon">📐</span> Formula
+                    <span class="cat-count" id="cnt-formula">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('data', this)">
+                    <span class="cat-icon">📊</span> Data & Analisis
+                    <span class="cat-count" id="cnt-data">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('pivot', this)">
+                    <span class="cat-icon">🔄</span> PivotTable
+                    <span class="cat-count" id="cnt-pivot">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('file', this)">
+                    <span class="cat-icon">💾</span> File & Workbook
+                    <span class="cat-count" id="cnt-file">0</span>
+                </button>
+                <div class="sidebar-sep"></div>
+                <div class="sidebar-label">Filter</div>
+                <button class="cat-btn" onclick="filterCat('learned', this)">
+                    <span class="cat-icon">✅</span> Sudah Dikuasai
+                    <span class="cat-count" id="cnt-learned">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('essential', this)">
+                    <span class="cat-icon">🔥</span> Paling Penting
+                    <span class="cat-count" id="cnt-essential">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('analyst', this)">
+                    <span class="cat-icon">🎓</span> Analyst Specific
+                    <span class="cat-count" id="cnt-analyst">0</span>
+                </button>
+            </nav>
+
+            <!-- MAIN -->
+            <main class="main">
+
+                <!-- TABS -->
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('learn', this)">📚 Belajar</button>
+                    <button class="tab-btn" onclick="switchTab('cheatsheet', this)">📋 Cheat Sheet</button>
+                </div>
+
+                <!-- LEARN TAB -->
+                <div id="tab-learn">
+                    <div class="quiz-banner">
+                        <div class="quiz-info">
+                            <h3>💡 Cara belajar efektif</h3>
+                            <p>Klik kartu → centang "Sudah Hafal" → uji dengan Quiz Mode. Fokus pada tag 🔥
+                                <b>Essential</b> dulu!</p>
+                        </div>
+                    </div>
+
+                    <div class="section-header">
+                        <div class="section-title" id="sectionTitle">⚡ Semua Shortcut</div>
+                        <div class="search-box">
+                            <span>🔍</span>
+                            <input type="text" id="searchInput" placeholder="Cari shortcut..." oninput="filterSearch()">
+                        </div>
+                    </div>
+
+                    <div class="shortcuts-grid" id="shortcutsGrid"></div>
+                </div>
+
+                <!-- CHEAT SHEET TAB -->
+                <div id="tab-cheatsheet" style="display:none">
+                    <div class="cheatsheet-grid" id="cheatsheetGrid"></div>
+                </div>
+
+            </main>
+        </div>
+
+        <!-- QUIZ OVERLAY -->
+        <div class="quiz-overlay" id="quizOverlay">
+            <div class="quiz-modal">
+                <button class="quiz-close" onclick="closeQuiz()">✕</button>
+                <div id="quizContent"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ══════════════════════════════════════════════
+        //  DATA
+        // ══════════════════════════════════════════════
+        const shortcuts = [
+            // NAVIGASI
+            { id: 1, cat: 'navigate', keys: [['Ctrl', 'Home']], desc: 'Pergi ke sel A1 (awal spreadsheet)', tip: 'Berguna saat kamu ingin langsung ke pojok kiri atas setelah scroll jauh.', tags: ['essential'], color: '#00d4ff' },
+            { id: 2, cat: 'navigate', keys: [['Ctrl', 'End']], desc: 'Pergi ke sel terakhir yang berisi data', tip: 'Cepat cek seberapa besar dataset-mu tanpa scroll.', tags: ['essential', 'analyst'], color: '#00d4ff' },
+            { id: 3, cat: 'navigate', keys: [['Ctrl', '→']], desc: 'Loncat ke ujung data ke kanan', tip: 'Atau ↑ ↓ ← tergantung arah. Lewati sel kosong sekaligus.', tags: ['essential'], color: '#00d4ff' },
+            { id: 4, cat: 'navigate', keys: [['Ctrl', '↓']], desc: 'Loncat ke ujung data ke bawah', tip: 'Kombinasi favorit analyst untuk check panjang data dengan cepat.', tags: ['essential', 'analyst'], color: '#00d4ff' },
+            { id: 5, cat: 'navigate', keys: [['Ctrl', 'G']], desc: 'Go To — pergi ke sel/range tertentu', tip: 'Bisa langsung ketik "A1000" untuk lompat. Juga buka dialog Go To Special.', tags: [], color: '#00d4ff' },
+            { id: 6, cat: 'navigate', keys: [['Ctrl', 'F']], desc: 'Find — cari data dalam worksheet', tip: 'Tekan Ctrl+H untuk Find & Replace sekaligus.', tags: ['essential'], color: '#00d4ff' },
+            { id: 7, cat: 'navigate', keys: [['Ctrl', 'H']], desc: 'Find & Replace', tip: 'Ganti semua "N/A" jadi kosong, atau ubah format teks massal.', tags: ['essential', 'analyst'], color: '#00d4ff' },
+            { id: 8, cat: 'navigate', keys: [['F5']], desc: 'Go To (sama dengan Ctrl+G)', tip: 'Shortcut alternatif untuk Go To dialog.', tags: [], color: '#00d4ff' },
+            { id: 9, cat: 'navigate', keys: [['Ctrl', 'PageDown']], desc: 'Pindah ke sheet berikutnya', tip: 'Ctrl+PageUp untuk balik ke sheet sebelumnya.', tags: ['essential'], color: '#00d4ff' },
+            { id: 10, cat: 'navigate', keys: [['Ctrl', 'PageUp']], desc: 'Pindah ke sheet sebelumnya', tip: 'Navigasi antar sheet tanpa klik tab bawah.', tags: [], color: '#00d4ff' },
+
+            // SELEKSI DATA
+            { id: 11, cat: 'select', keys: [['Ctrl', 'Shift', 'End']], desc: 'Seleksi dari sel aktif ke sel data terakhir', tip: 'Cara cepat seleksi semua data hingga baris/kolom terakhir.', tags: ['essential', 'analyst'], color: '#7c3aed' },
+            { id: 12, cat: 'select', keys: [['Ctrl', 'Shift', 'Home']], desc: 'Seleksi dari sel aktif ke A1', tip: 'Berguna untuk pilih semua dari posisi sekarang ke awal.', tags: [], color: '#7c3aed' },
+            { id: 13, cat: 'select', keys: [['Ctrl', 'A']], desc: 'Pilih semua sel / seluruh tabel', tip: 'Tekan dua kali untuk pilih seluruh worksheet.', tags: ['essential'], color: '#7c3aed' },
+            { id: 14, cat: 'select', keys: [['Ctrl', 'Shift', '→']], desc: 'Seleksi data ke kanan', tip: 'Kombinasikan dengan ↑ ↓ ← untuk seleksi blok besar.', tags: ['essential', 'analyst'], color: '#7c3aed' },
+            { id: 15, cat: 'select', keys: [['Ctrl', 'Shift', '↓']], desc: 'Seleksi data ke bawah', tip: 'Paling sering dipakai analyst untuk pilih kolom data sekaligus.', tags: ['essential', 'analyst'], color: '#7c3aed' },
+            { id: 16, cat: 'select', keys: [['Shift', 'Space']], desc: 'Pilih seluruh baris', tip: 'Lalu Ctrl+Shift+Plus untuk insert baris baru.', tags: [], color: '#7c3aed' },
+            { id: 17, cat: 'select', keys: [['Ctrl', 'Space']], desc: 'Pilih seluruh kolom', tip: 'Berguna untuk delete/format satu kolom penuh.', tags: [], color: '#7c3aed' },
+            { id: 18, cat: 'select', keys: [['Ctrl', 'Shift', '*']], desc: 'Pilih seluruh region data (current region)', tip: 'Memilih blok data yang terhubung di sekitar sel aktif.', tags: ['analyst'], color: '#7c3aed' },
+
+            // EDIT & FORMAT
+            { id: 19, cat: 'edit', keys: [['Ctrl', 'Z']], desc: 'Undo — batalkan aksi terakhir', tip: 'Bisa dipencet berkali-kali untuk undo bertahap.', tags: ['essential'], color: '#f59e0b' },
+            { id: 20, cat: 'edit', keys: [['Ctrl', 'Y']], desc: 'Redo — ulangi aksi yang di-undo', tip: 'Atau F4 untuk repeat aksi terakhir.', tags: ['essential'], color: '#f59e0b' },
+            { id: 21, cat: 'edit', keys: [['Ctrl', 'C']], desc: 'Copy', tip: 'Akan muncul garis putus-putus (marching ants) di sel yang di-copy.', tags: ['essential'], color: '#f59e0b' },
+            { id: 22, cat: 'edit', keys: [['Ctrl', 'X']], desc: 'Cut', tip: 'Data dipindah, bukan diduplikasi.', tags: ['essential'], color: '#f59e0b' },
+            { id: 23, cat: 'edit', keys: [['Ctrl', 'V']], desc: 'Paste', tip: 'Gunakan Ctrl+Alt+V untuk Paste Special (pilih paste value, format, dll).', tags: ['essential'], color: '#f59e0b' },
+            { id: 24, cat: 'edit', keys: [['Ctrl', 'Alt', 'V']], desc: 'Paste Special — pilih apa yang di-paste', tip: 'Pilih "Values Only" untuk paste tanpa formula. Analyst wajib tahu!', tags: ['essential', 'analyst'], color: '#f59e0b' },
+            { id: 25, cat: 'edit', keys: [['Ctrl', 'D']], desc: 'Fill Down — isi ke bawah dengan nilai sel atas', tip: 'Seleksi range dulu lalu Ctrl+D untuk mengisi semua.', tags: ['essential', 'analyst'], color: '#f59e0b' },
+            { id: 26, cat: 'edit', keys: [['Ctrl', 'R']], desc: 'Fill Right — isi ke kanan', tip: 'Sama seperti Ctrl+D tapi ke arah kanan.', tags: ['essential'], color: '#f59e0b' },
+            { id: 27, cat: 'edit', keys: [['Ctrl', 'B']], desc: 'Bold — tebalkan teks', tip: '', tags: [], color: '#f59e0b' },
+            { id: 28, cat: 'edit', keys: [['Ctrl', 'I']], desc: 'Italic — miringkan teks', tip: '', tags: [], color: '#f59e0b' },
+            { id: 29, cat: 'edit', keys: [['Ctrl', 'U']], desc: 'Underline — garis bawah', tip: '', tags: [], color: '#f59e0b' },
+            { id: 30, cat: 'edit', keys: [['Ctrl', '1']], desc: 'Format Cells dialog (format angka, border, dll)', tip: 'Shortcut terpenting untuk formatting! Buka semua opsi format.', tags: ['essential', 'analyst'], color: '#f59e0b' },
+            { id: 31, cat: 'edit', keys: [['Ctrl', 'Shift', '!']], desc: 'Format angka: Number (ribuan, 2 desimal)', tip: 'Format standar angka dengan pemisah ribuan.', tags: ['analyst'], color: '#f59e0b' },
+            { id: 32, cat: 'edit', keys: [['Ctrl', 'Shift', '$']], desc: 'Format angka: Currency (mata uang)', tip: 'Tambah simbol mata uang sesuai regional setting.', tags: ['analyst'], color: '#f59e0b' },
+            { id: 33, cat: 'edit', keys: [['Ctrl', 'Shift', '%']], desc: 'Format angka: Percentage', tip: 'Kalikan 100 dan tambah %. Ingat: 0.1 jadi 10%.', tags: ['essential', 'analyst'], color: '#f59e0b' },
+            { id: 34, cat: 'edit', keys: [['Ctrl', 'Shift', '#']], desc: 'Format: Date (tanggal)', tip: 'Format standar DD/MM/YYYY atau sesuai regional.', tags: ['analyst'], color: '#f59e0b' },
+            { id: 35, cat: 'edit', keys: [['Ctrl', '-']], desc: 'Delete baris/kolom yang terseleksi', tip: 'Pilih baris/kolom dulu dengan Shift+Space atau Ctrl+Space.', tags: ['essential'], color: '#f59e0b' },
+            { id: 36, cat: 'edit', keys: [['Ctrl', 'Shift', '+']], desc: 'Insert baris/kolom baru', tip: 'Seleksi baris/kolom dulu untuk hasil yang tepat.', tags: ['essential'], color: '#f59e0b' },
+            { id: 37, cat: 'edit', keys: [['F2']], desc: 'Edit isi sel yang sedang aktif', tip: 'Masuk mode edit tanpa double-klik. Lebih cepat!', tags: ['essential'], color: '#f59e0b' },
+            { id: 38, cat: 'edit', keys: [['Delete']], desc: 'Hapus isi sel (tidak hapus format)', tip: 'Berbeda dengan Backspace yang langsung masuk mode edit.', tags: ['essential'], color: '#f59e0b' },
+            { id: 39, cat: 'edit', keys: [['Alt', 'Enter']], desc: 'Baris baru di dalam satu sel', tip: 'Berguna untuk menulis keterangan panjang di satu sel.', tags: [], color: '#f59e0b' },
+
+            // FORMULA
+            { id: 40, cat: 'formula', keys: [['=']], desc: 'Mulai mengetik formula', tip: 'Setiap formula Excel wajib diawali tanda "=".', tags: ['essential'], color: '#10b981' },
+            { id: 41, cat: 'formula', keys: [['Alt', '=']], desc: 'AutoSum — jumlahkan otomatis kolom/baris', tip: 'Shortcut paling sering dipakai. Langsung deteksi range dan SUM.', tags: ['essential', 'analyst'], color: '#10b981' },
+            { id: 42, cat: 'formula', keys: [['F4']], desc: 'Toggle referensi absolut/relatif ($A$1, A1, $A1)', tip: 'Tekan F4 berulang saat kursor di referensi sel untuk toggle $. Sangat penting!', tags: ['essential', 'analyst'], color: '#10b981' },
+            { id: 43, cat: 'formula', keys: [['Ctrl', 'Shift', 'Enter']], desc: 'Array Formula (formula CSE)', tip: 'Untuk formula yang memproses banyak sel sekaligus. Hasilnya {}.', tags: ['analyst'], color: '#10b981' },
+            { id: 44, cat: 'formula', keys: [['F9']], desc: 'Hitung ulang semua formula', tip: 'Atau Shift+F9 untuk hitung sheet aktif saja.', tags: [], color: '#10b981' },
+            { id: 45, cat: 'formula', keys: [['Ctrl', '`']], desc: 'Toggle tampilkan formula / nilai', tip: 'Ganti tampilan dari hasil jadi formula di semua sel. Berguna untuk audit.', tags: ['analyst'], color: '#10b981' },
+            { id: 46, cat: 'formula', keys: [['Ctrl', 'Shift', 'A']], desc: 'Insert function arguments setelah nama fungsi', tip: 'Ketik nama fungsi, lalu Ctrl+Shift+A untuk lihat semua argumen.', tags: [], color: '#10b981' },
+            { id: 47, cat: 'formula', keys: [['Shift', 'F3']], desc: 'Buka Function Wizard / Insert Function', tip: 'Dialog lengkap untuk cari dan masukkan fungsi.', tags: [], color: '#10b981' },
+            { id: 48, cat: 'formula', keys: [['Ctrl', '[']], desc: 'Pergi ke sel yang direferensi formula', tip: 'Ctrl+] untuk pergi ke sel yang merujuk sel ini. Berguna untuk trace.', tags: ['analyst'], color: '#10b981' },
+
+            // DATA & ANALISIS
+            { id: 49, cat: 'data', keys: [['Ctrl', 'T']], desc: 'Buat Excel Table dari range data', tip: 'Wajib! Table otomatis expand, punya filter, dan mudah dipakai di formula.', tags: ['essential', 'analyst'], color: '#ef4444' },
+            { id: 50, cat: 'data', keys: [['Ctrl', 'Shift', 'L']], desc: 'Toggle AutoFilter (filter dropdown)', tip: 'Aktifkan/matikan filter di baris header. Analyst pakai ini terus.', tags: ['essential', 'analyst'], color: '#ef4444' },
+            { id: 51, cat: 'data', keys: [['Alt', '↓']], desc: 'Buka dropdown filter / dropdown list validasi', tip: 'Saat di header filter, ini buka menu pilihan filter.', tags: ['essential', 'analyst'], color: '#ef4444' },
+            { id: 52, cat: 'data', keys: [['Ctrl', 'Shift', 'F']], desc: 'Advanced Filter (filter dengan kriteria kompleks)', tip: 'Untuk filter dengan multiple criteria yang tidak bisa di AutoFilter biasa.', tags: ['analyst'], color: '#ef4444' },
+            { id: 53, cat: 'data', keys: [['Alt', 'A', 'S', 'S']], desc: 'Sort dialog (urutan sort kustom)', tip: 'Buka dialog Sort lengkap dengan multiple level sort.', tags: ['analyst'], color: '#ef4444' },
+            { id: 54, cat: 'data', keys: [['Alt', 'H', 'O', 'I']], desc: 'AutoFit lebar kolom', tip: 'Otomatis sesuaikan lebar semua kolom dengan kontennya. Rapi seketika!', tags: ['essential'], color: '#ef4444' },
+            { id: 55, cat: 'data', keys: [['Ctrl', 'Shift', 'U']], desc: 'Expand/collapse formula bar', tip: 'Berguna untuk melihat formula panjang secara penuh.', tags: [], color: '#ef4444' },
+            { id: 56, cat: 'data', keys: [['F11']], desc: 'Buat Chart dari data yang diseleksi', tip: 'Chart otomatis di sheet baru. Alt+F1 untuk chart di sheet yang sama.', tags: ['analyst'], color: '#ef4444' },
+            { id: 57, cat: 'data', keys: [['Alt', 'F1']], desc: 'Insert Chart di sheet aktif (embedded)', tip: 'Chart langsung muncul di sheet yang sama dengan data.', tags: ['analyst'], color: '#ef4444' },
+            { id: 58, cat: 'data', keys: [['Ctrl', 'Q']], desc: 'Quick Analysis Tool', tip: 'Seleksi data, tekan Ctrl+Q untuk opsi format, chart, total, dll. Power feature!', tags: ['analyst'], color: '#ef4444' },
+            { id: 59, cat: 'data', keys: [['Alt', 'D', 'P']], desc: 'Buka PivotTable Wizard', tip: 'Cara lama tapi masih works untuk buat pivot dengan opsi advanced.', tags: ['analyst'], color: '#ef4444' },
+            { id: 60, cat: 'data', keys: [['Ctrl', 'Shift', 'P']], desc: 'Buka Format Cells > Font size', tip: '', tags: [], color: '#ef4444' },
+
+            // PIVOT TABLE
+            { id: 61, cat: 'pivot', keys: [['Alt', 'N', 'V']], desc: 'Insert PivotTable baru', tip: 'Shortcut ribbon untuk langsung buka dialog Insert PivotTable.', tags: ['essential', 'analyst'], color: '#a78bfa' },
+            { id: 62, cat: 'pivot', keys: [['Alt', 'JT']], desc: 'Aktifkan PivotTable Tools tab', tip: 'Muncul saat sel aktif ada di dalam PivotTable.', tags: ['analyst'], color: '#a78bfa' },
+            { id: 63, cat: 'pivot', keys: [['F5']], desc: 'Refresh PivotTable aktif', tip: 'Perbarui data pivot jika sumber data berubah. Alt+F5 refresh semua.', tags: ['essential', 'analyst'], color: '#a78bfa' },
+            { id: 64, cat: 'pivot', keys: [['Alt', 'F5']], desc: 'Refresh All PivotTables', tip: 'Update semua pivot di workbook sekaligus.', tags: ['analyst'], color: '#a78bfa' },
+            { id: 65, cat: 'pivot', keys: [['Ctrl', 'Shift', '*']], desc: 'Pilih seluruh PivotTable', tip: 'Seleksi semua area pivot sekaligus.', tags: ['analyst'], color: '#a78bfa' },
+            { id: 66, cat: 'pivot', keys: [['Enter']], desc: 'Drill down (lihat detail baris/kolom pivot)', tip: 'Double click atau Enter di nilai untuk buka detail di sheet baru.', tags: ['analyst'], color: '#a78bfa' },
+            { id: 67, cat: 'pivot', keys: [['Alt', 'J', 'T', 'I']], desc: 'Buka Field List PivotTable', tip: 'Tampilkan/sembunyikan panel field list untuk drag & drop field.', tags: ['analyst'], color: '#a78bfa' },
+
+            // FILE & WORKBOOK
+            { id: 68, cat: 'file', keys: [['Ctrl', 'S']], desc: 'Save — simpan file', tip: 'Biasakan tekan ini sesering mungkin! Ctrl+Shift+S untuk Save As.', tags: ['essential'], color: '#64748b' },
+            { id: 69, cat: 'file', keys: [['Ctrl', 'Shift', 'S']], desc: 'Save As — simpan dengan nama/lokasi baru', tip: 'Untuk buat versi baru file tanpa menimpa yang lama.', tags: ['essential'], color: '#64748b' },
+            { id: 70, cat: 'file', keys: [['Ctrl', 'W']], desc: 'Close workbook (tutup file)', tip: 'Ctrl+F4 juga works. Excel tanya save dulu jika ada perubahan.', tags: [], color: '#64748b' },
+            { id: 71, cat: 'file', keys: [['Ctrl', 'N']], desc: 'New workbook (buka file baru)', tip: 'Membuka workbook kosong baru.', tags: [], color: '#64748b' },
+            { id: 72, cat: 'file', keys: [['Ctrl', 'O']], desc: 'Open file', tip: 'Buka dialog untuk pilih file Excel yang ada.', tags: [], color: '#64748b' },
+            { id: 73, cat: 'file', keys: [['Ctrl', 'P']], desc: 'Print / Print Preview', tip: 'Lihat preview sebelum cetak. Atur margin, orientasi, dll.', tags: [], color: '#64748b' },
+            { id: 74, cat: 'file', keys: [['F12']], desc: 'Save As dialog langsung', tip: 'Lebih cepat dari Ctrl+Shift+S untuk pilih lokasi/format file.', tags: [], color: '#64748b' },
+            { id: 75, cat: 'file', keys: [['Ctrl', 'F2']], desc: 'Print Preview', tip: 'Lihat tampilan cetak sebelum print.', tags: [], color: '#64748b' },
+            { id: 76, cat: 'file', keys: [['Ctrl', 'Z']], desc: 'Undo (multiple steps)', tip: '', tags: [], color: '#64748b' },
+            { id: 77, cat: 'file', keys: [['Alt', 'F4']], desc: 'Tutup Excel sepenuhnya', tip: 'Keluar dari aplikasi Excel. Akan tanya save jika ada perubahan.', tags: [], color: '#64748b' },
+            { id: 78, cat: 'file', keys: [['Ctrl', 'F6']], desc: 'Pindah antar workbook yang terbuka', tip: 'Jika buka beberapa file Excel, ini untuk switch antar file.', tags: [], color: '#64748b' },
+        ];
+
+        // ══════════════════════════════════════════════
+        //  STATE
+        // ══════════════════════════════════════════════
+        let learned = JSON.parse(localStorage.getItem('xl_learned') || '[]');
+        let currentCat = 'all';
+        let currentSearch = '';
+        let currentTab = 'learn';
+
+        // ══════════════════════════════════════════════
+        //  RENDER
+        // ══════════════════════════════════════════════
+        function renderKeys(keys) {
+            return keys.map(combo => {
+                if (!Array.isArray(combo)) return `<span class="key">${combo}</span>`;
+                return combo.map((k, i) => `<span class="key">${k}</span>${i < combo.length - 1 ? '<span class="key plus">+</span>' : ''}`).join('');
+            }).join('<span class="key plus" style="margin:0 4px">atau</span>');
+        }
+
+        function renderCard(s) {
+            const isLearned = learned.includes(s.id);
+            const tagHtml = s.tags.map(t => {
+                const label = t === 'essential' ? '🔥 Essential' : t === 'analyst' ? '🎓 Analyst' : t === 'hot' ? '🔥 Hot' : t;
+                const cls = t === 'essential' ? 'essential' : t === 'analyst' ? 'analyst' : '';
+                return `<span class="tag ${cls}">${label}</span>`;
+            }).join('');
+
+            return `
+  <div class="shortcut-card ${isLearned ? 'learned' : ''}" style="--card-accent:${s.color}" id="card-${s.id}">
+    <div class="card-top">
+      <div class="card-desc">${s.desc}</div>
+      <span class="learned-badge">✅</span>
+    </div>
+    <div class="keys-row">${renderKeys(s.keys)}</div>
+    ${s.tip ? `<div class="card-tip">💡 ${s.tip}</div>` : ''}
+    ${tagHtml ? `<div class="tag-row">${tagHtml}</div>` : ''}
+    <button class="learn-btn" onclick="toggleLearn(${s.id})">
+      ${isLearned ? '✅ Sudah Hafal!' : '📝 Tandai Sudah Hafal'}
+    </button>
+  </div>`;
+        }
+
+        function filteredShortcuts() {
+            return shortcuts.filter(s => {
+                const matchCat =
+                    currentCat === 'all' ? true :
+                        currentCat === 'learned' ? learned.includes(s.id) :
+                            currentCat === 'essential' ? s.tags.includes('essential') :
+                                currentCat === 'analyst' ? s.tags.includes('analyst') :
+                                    s.cat === currentCat;
+
+                const searchTerm = currentSearch.toLowerCase();
+                const matchSearch = !searchTerm ||
+                    s.desc.toLowerCase().includes(searchTerm) ||
+                    s.tip.toLowerCase().includes(searchTerm) ||
+                    s.keys.flat().join(' ').toLowerCase().includes(searchTerm);
+
+                return matchCat && matchSearch;
+            });
+        }
+
+        function render() {
+            const list = filteredShortcuts();
+            const grid = document.getElementById('shortcutsGrid');
+
+            if (!list.length) {
+                grid.innerHTML = `<div class="empty" style="grid-column:1/-1">
+      <div class="e-icon">🔍</div>
+      <h3>Tidak ada shortcut ditemukan</h3>
+      <p>Coba kata kunci lain atau pilih kategori berbeda</p>
+    </div>`;
+                return;
+            }
+
+            grid.innerHTML = list.map(renderCard).join('');
+            updateCounts();
+            updateStats();
+        }
+
+        function updateCounts() {
+            const cats = ['navigate', 'select', 'edit', 'formula', 'data', 'pivot', 'file'];
+            document.getElementById('cnt-all').textContent = shortcuts.length;
+            cats.forEach(c => {
+                const el = document.getElementById('cnt-' + c);
+                if (el) el.textContent = shortcuts.filter(s => s.cat === c).length;
+            });
+            document.getElementById('cnt-learned').textContent = learned.length;
+            document.getElementById('cnt-essential').textContent = shortcuts.filter(s => s.tags.includes('essential')).length;
+            document.getElementById('cnt-analyst').textContent = shortcuts.filter(s => s.tags.includes('analyst')).length;
+        }
+
+        function updateStats() {
+            const total = shortcuts.length;
+            const done = learned.length;
+            document.getElementById('learnedCount').textContent = done;
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('progressFill').style.width = (done / total * 100) + '%';
+        }
+
+        // ══════════════════════════════════════════════
+        //  ACTIONS
+        // ══════════════════════════════════════════════
+        function toggleLearn(id) {
+            if (learned.includes(id)) {
+                learned = learned.filter(x => x !== id);
+            } else {
+                learned.push(id);
+            }
+            localStorage.setItem('xl_learned', JSON.stringify(learned));
+            const card = document.getElementById('card-' + id);
+            if (card) {
+                card.classList.toggle('learned');
+                const btn = card.querySelector('.learn-btn');
+                const badge = card.querySelector('.learned-badge');
+                if (learned.includes(id)) {
+                    btn.textContent = '✅ Sudah Hafal!';
+                } else {
+                    btn.textContent = '📝 Tandai Sudah Hafal';
+                }
+            }
+            updateStats();
+            updateCounts();
+        }
+
+        function filterCat(cat, btn) {
+            currentCat = cat;
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const titles = {
+                all: '⚡ Semua Shortcut', navigate: '🧭 Navigasi', select: '✅ Seleksi Data',
+                edit: '✏️ Edit & Format', formula: '📐 Formula', data: '📊 Data & Analisis',
+                pivot: '🔄 PivotTable', file: '💾 File & Workbook',
+                learned: '✅ Sudah Dikuasai', essential: '🔥 Paling Penting', analyst: '🎓 Analyst Specific'
+            };
+            document.getElementById('sectionTitle').textContent = titles[cat] || cat;
+
+            if (currentTab === 'learn') render();
+        }
+
+        function filterSearch() {
+            currentSearch = document.getElementById('searchInput').value;
+            render();
+        }
+
+        function switchTab(tab, btn) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('tab-learn').style.display = tab === 'learn' ? '' : 'none';
+            document.getElementById('tab-cheatsheet').style.display = tab === 'cheatsheet' ? '' : 'none';
+            if (tab === 'cheatsheet') renderCheatSheet();
+        }
+
+        // ══════════════════════════════════════════════
+        //  CHEAT SHEET
+        // ══════════════════════════════════════════════
+        function renderCheatSheet() {
+            const cats = [
+                { key: 'navigate', label: '🧭 Navigasi', color: '#00d4ff' },
+                { key: 'select', label: '✅ Seleksi', color: '#7c3aed' },
+                { key: 'edit', label: '✏️ Edit & Format', color: '#f59e0b' },
+                { key: 'formula', label: '📐 Formula', color: '#10b981' },
+                { key: 'data', label: '📊 Data & Analisis', color: '#ef4444' },
+                { key: 'pivot', label: '🔄 PivotTable', color: '#a78bfa' },
+                { key: 'file', label: '💾 File', color: '#64748b' },
+            ];
+
+            const grid = document.getElementById('cheatsheetGrid');
+            grid.innerHTML = cats.map(c => {
+                const list = shortcuts.filter(s => s.cat === c.key);
+                const rows = list.map(s => `
+      <div class="cs-row">
+        <div class="cs-desc">${s.desc}</div>
+        <div class="cs-keys">${renderKeys(s.keys)}</div>
+      </div>
+    `).join('');
+                return `<div class="cs-card">
+      <div class="cs-header" style="border-top:2px solid ${c.color}">${c.label}</div>
+      ${rows}
+    </div>`;
+            }).join('');
+        }
+
+        // ══════════════════════════════════════════════
+        //  QUIZ
+        // ══════════════════════════════════════════════
+        let quizData = [];
+        let quizIndex = 0;
+        let quizScore = 0;
+
+        function openQuiz() {
+            // Shuffle and pick 10 from essential + analyst
+            const pool = shortcuts.filter(s => s.tags.includes('essential') || s.tags.includes('analyst'));
+            quizData = shuffle(pool).slice(0, 10);
+            quizIndex = 0;
+            quizScore = 0;
+            document.getElementById('quizOverlay').classList.add('active');
+            renderQuestion();
+        }
+
+        function closeQuiz() {
+            document.getElementById('quizOverlay').classList.remove('active');
+        }
+
+        function shuffle(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function renderQuestion() {
+            if (quizIndex >= quizData.length) {
+                renderQuizResult();
+                return;
+            }
+
+            const q = quizData[quizIndex];
+            const correctKeys = q.keys[0].join ? q.keys[0].join(' + ') : q.keys[0];
+
+            // Generate 3 wrong answers
+            const wrong = shuffle(shortcuts.filter(s => s.id !== q.id))
+                .slice(0, 3)
+                .map(s => s.keys[0].join ? s.keys[0].join(' + ') : s.keys[0]);
+
+            const options = shuffle([correctKeys, ...wrong]);
+
+            document.getElementById('quizContent').innerHTML = `
+    <div class="quiz-progress">SOAL ${quizIndex + 1} / ${quizData.length} &nbsp;·&nbsp; SKOR: ${quizScore}</div>
+    <div class="quiz-question">${q.desc}</div>
+    <div class="quiz-sub">Shortcut apa yang digunakan untuk fungsi ini?</div>
+    <div class="quiz-options">
+      ${options.map(opt => `<button class="quiz-opt" onclick="checkAnswer(this, '${opt.replace(/'/g, "\\'")}', '${correctKeys.replace(/'/g, "\\'")}', ${q.id})">${opt}</button>`).join('')}
+    </div>
+    <div style="font-size:12px;color:var(--text-dim);text-align:center">Klik jawaban yang benar</div>
+  `;
+        }
+
+        function checkAnswer(btn, chosen, correct, id) {
+            document.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+
+            if (chosen === correct) {
+                btn.classList.add('correct');
+                quizScore++;
+            } else {
+                btn.classList.add('wrong');
+                document.querySelectorAll('.quiz-opt').forEach(b => {
+                    if (b.textContent.trim() === correct) b.classList.add('correct');
+                });
+            }
+
+            setTimeout(() => {
+                quizIndex++;
+                renderQuestion();
+            }, 1200);
+        }
+
+        function renderQuizResult() {
+            const pct = Math.round(quizScore / quizData.length * 100);
+            const msg = pct >= 80 ? '🔥 Luar biasa! Kamu sudah menguasai shortcut ini.' :
+                pct >= 60 ? '👍 Bagus! Terus latihan untuk hafalin yang tersisa.' :
+                    '💪 Tetap semangat! Review lagi kartu yang belum hafal.';
+
+            document.getElementById('quizContent').innerHTML = `
+    <div class="quiz-result">
+      <div class="score">${quizScore}/${quizData.length}</div>
+      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:700;margin-bottom:12px">${pct}% Benar</div>
+      <p>${msg}</p>
+      <button class="quiz-btn" onclick="openQuiz()" style="margin-right:8px">🔄 Ulangi Quiz</button>
+      <button class="quiz-btn" onclick="closeQuiz()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text-mid)">Tutup</button>
+    </div>
+  `;
+        }
+
+        // ══════════════════════════════════════════════
+        //  INIT
+        // ══════════════════════════════════════════════
+        render();
+    </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      if (!window.supabase) return;
+      
+      const supaUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
+      const supaKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
+      const supa = window.supabase.createClient(supaUrl, supaKey);
+
+      try {
+        const { data: { session } } = await supa.auth.getSession();
+
+        if (!session) {
+          // Cegat user tamu yang mencoba akses via direct link
+          document.body.style.display = 'none'; // Sembunyikan konten secara instan
+          alert("🔒 Akses Premium Terkunci!\n\nSilakan Masuk atau Daftar akun terlebih dahulu untuk menggunakan tools interaktif ini.");
+          window.location.href = '../login.html'; // Lempar kembali ke halaman login di luar folder
+        }
+      } catch (err) {
+        console.error("Auth check error:", err);
+      }
+    });
+  </script>
+</body>
+
+</html>
