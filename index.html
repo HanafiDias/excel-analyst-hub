@@ -22,6 +22,59 @@
   <link rel="stylesheet" href="assets/css/components.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/session.js" defer></script>
+  <style>
+    /* 1. Transisi Dasar - Sangat Mulus (Gaya Apple/Stripe) */
+    .card, .tools-teaser {
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      position: relative; /* Wajib untuk ruang efek kilap */
+      z-index: 1;
+    }
+
+    /* 2. Efek Kilap Kaca (Premium Shimmer) */
+    .card::before, .tools-teaser::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 50%; height: 100%;
+      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0) 100%);
+      transform: skewX(-25deg);
+      z-index: 2;
+      pointer-events: none; /* Agar klik tidak terhalang */
+    }
+
+    /* Saat Hover, cahaya menyapu ke kanan */
+    .card:hover::before, .tools-teaser:hover::before {
+      left: 200%;
+      transition: all 0.8s ease-in-out;
+    }
+
+    /* 3. Magnetic Lift untuk Semua Kartu Biasa */
+    .card:hover, .tools-teaser:hover {
+      transform: translateY(-8px) scale(1.02) !important;
+      border-color: rgba(79, 142, 247, 0.6) !important;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 0 20px rgba(79, 142, 247, 0.15) !important;
+      z-index: 10;
+    }
+
+    /* 4. Efek Napas (Breathing Glow) untuk Kartu Unggulan Saat Diam */
+    @keyframes premiumPulse {
+      0%   { box-shadow: 0 5px 15px rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); }
+      50%  { box-shadow: 0 8px 30px rgba(245, 158, 11, 0.25); border-color: rgba(245, 158, 11, 0.8); }
+      100% { box-shadow: 0 5px 15px rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); }
+    }
+
+    .highlight-card {
+      animation: premiumPulse 4s infinite ease-in-out;
+    }
+
+    /* 5. Hover pada Kartu Unggulan (Menimpa animasi napas) */
+    .highlight-card:hover {
+      animation: none !important; 
+      transform: translateY(-8px) scale(1.02) !important;
+      border-color: var(--warning) !important;
+      box-shadow: 0 25px 50px rgba(245, 158, 11, 0.25), 0 0 30px rgba(245, 158, 11, 0.15) !important;
+    }
+  </style>
 </head>
 <body class="page-body">
 
@@ -140,13 +193,11 @@
     <section class="section" id="paths" aria-label="Pratinjau jalur belajar" style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
       <div class="container">
         <div class="section-header fade-in">
-          <h2>Tiga jalur, satu jalan yang jelas</h2>
-          <p>Tentukan titik awal petualanganmu. Setiap jalur dirancang secara runtut dan saling mendukung—tanpa asumsi dasar yang membingungkan, tanpa ada langkah esensial yang dilewati.</p>
+          <h2>Kurikulum Terstruktur. Belajar Tanpa Bingung.</h2>
+          <p>Tiga jalur, satu jalan yang jelas. Setiap materi dirancang berurutan—tanpa asumsi dasar yang melompat, tanpa ada langkah esensial yang terlewat.</p>
         </div>
         <div class="grid-3">
-
-          <!-- Pemula -->
-          <div class="card track-card fade-in delay-1">
+          <div class="card track-card fade-in delay-1" style="display: flex; flex-direction: column; border-radius: 12px; background: var(--surface); overflow: hidden; border: 1px solid var(--border);">
             <div class="track-card-header">
               <div>
                 <h3>Jalur Pemula</h3>
@@ -154,20 +205,19 @@
               </div>
               <span class="badge badge-beginner">Pemula</span>
             </div>
-            <div class="track-topics-preview">
+            <div class="track-topics-preview" style="flex-grow: 1;">
               <div class="track-topic-item">Antarmuka & Navigasi Excel</div>
               <div class="track-topic-item">Formula Dasar: SUM, AVERAGE, COUNT</div>
               <div class="track-topic-item">Pemformatan Sel & Grafik Dasar</div>
             </div>
-            <div class="track-meta">
-              <span>5 topik</span>
-              <span>~3 jam</span>
+            <div class="track-meta" style="margin-bottom: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--surface-2);">
+              <span>📚 5 topik</span>
+              <span>⏱️ ~3 jam</span>
             </div>
-            <a href="learn.html#beginner" class="btn-ghost btn-sm" id="view-beginner">Lihat Jalur Lengkap →</a>
+            <a href="learn.html#beginner" class="btn-ghost btn-sm" style="display: block; width: 100%; text-align: center; border: 1px solid var(--border);">Mulai Jalur Pemula ↗</a>
           </div>
 
-          <!-- Menengah -->
-          <div class="card track-card fade-in delay-2">
+          <div class="card track-card highlight-card fade-in delay-2" style="display: flex; flex-direction: column; border-radius: 12px; background: var(--surface); overflow: hidden;">
             <div class="track-card-header">
               <div>
                 <h3>Jalur Menengah</h3>
@@ -175,39 +225,37 @@
               </div>
               <span class="badge badge-intermediate">Menengah</span>
             </div>
-            <div class="track-topics-preview">
+            <div class="track-topics-preview" style="flex-grow: 1;">
               <div class="track-topic-item">VLOOKUP & INDEX-MATCH</div>
               <div class="track-topic-item">Dasar-Dasar PivotTable</div>
               <div class="track-topic-item">SUMIF, COUNTIF, Data Cleaning</div>
             </div>
-            <div class="track-meta">
-              <span>6 topik</span>
-              <span>~5 jam</span>
+            <div class="track-meta" style="margin-bottom: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--surface-2);">
+              <span>📚 6 topik</span>
+              <span>⏱️ ~5 jam</span>
             </div>
-            <a href="learn.html#intermediate" class="btn-ghost btn-sm" id="view-intermediate">Lihat Jalur Lengkap →</a>
+            <a href="learn.html#intermediate" class="btn-primary btn-sm" style="display: block; width: 100%; text-align: center;">Mulai Jalur Menengah ↗</a>
           </div>
 
-          <!-- Lanjutan -->
-          <div class="card track-card fade-in delay-3">
+          <div class="card track-card fade-in delay-3" style="display: flex; flex-direction: column; border-radius: 12px; background: var(--surface); overflow: hidden; border: 1px solid var(--border);">
             <div class="track-card-header">
               <div>
                 <h3>Jalur Lanjutan</h3>
-                <p style="font-size:0.82rem;color:var(--text-muted);">Untuk analis berpengalaman</p>
+                <p style="font-size:0.82rem;color:var(--text-muted);">Untuk analisis kompleks</p>
               </div>
               <span class="badge badge-advanced">Lanjutan</span>
             </div>
-            <div class="track-topics-preview">
-              <div class="track-topic-item">Dasar-Dasar Power Query</div>
-              <div class="track-topic-item">Prinsip Desain Dashboard</div>
-              <div class="track-topic-item">Dynamic Arrays: FILTER, SORT, UNIQUE</div>
+            <div class="track-topics-preview" style="flex-grow: 1;">
+              <div class="track-topic-item">Advanced Pivot & Data Model</div>
+              <div class="track-topic-item">Power Query Fundamental</div>
+              <div class="track-topic-item">Dashboard Interaktif Lengkap</div>
             </div>
-            <div class="track-meta">
-              <span>5 topik</span>
-              <span>~6 jam</span>
+            <div class="track-meta" style="margin-bottom: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--surface-2);">
+              <span>📚 6 topik</span>
+              <span>⏱️ ~7 jam</span>
             </div>
-            <a href="learn.html#advanced" class="btn-ghost btn-sm" id="view-advanced">Lihat Jalur Lengkap →</a>
+            <a href="learn.html#advanced" class="btn-ghost btn-sm" style="display: block; width: 100%; text-align: center; border: 1px solid var(--border);">Mulai Jalur Lanjutan ↗</a>
           </div>
-
         </div>
       </div>
     </section>
@@ -289,52 +337,50 @@
     </section>
 
     <!-- ============ TOOLS TEASER ============ -->
-    <section class="section" id="tools-teaser" aria-label="Pratinjau tools interaktif" style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+    <section class="section" id="tools-teaser" aria-label="Pratinjau tools interaktif" style="background:var(--bg-color);">
       <div class="container">
         <div class="flex-between" style="margin-bottom:var(--space-8);flex-wrap:wrap;gap:var(--space-4);">
           <div class="section-header fade-in" style="margin-bottom:0;">
-            <h2>Bukan sekadar membaca — langsung praktik</h2>
-            <p>Tools interaktif yang sudah ada di platform. Gunakan seiring kamu belajar.</p>
+            <h2>Bukan Sekadar Teori — Senjata Interaktif</h2>
+            <p>Berhenti membayangkan data. Langsung hasilkan dan praktikkan rumusnya di platform yang sama.</p>
           </div>
-          <a href="tools.html" class="btn-ghost fade-in">Coba semua tools →</a>
+          <a href="tools.html" class="btn-ghost fade-in" style="border: 1px solid var(--border);">Lihat Semua Tools ↗</a>
         </div>
 
         <div class="grid-2 fade-in">
-          <!-- Formula generator teaser -->
-          <div class="tools-teaser">
-            <div style="padding:var(--space-5) var(--space-6);border-bottom:1px solid var(--border);">
+          <div class="tools-teaser highlight-card" style="display: flex; flex-direction: column; border-radius: 12px; background: var(--surface); overflow: hidden;">
+            <div style="padding:var(--space-5) var(--space-6);border-bottom:1px solid var(--border); background: rgba(245,158,11,0.05);">
               <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3);">
-                <span class="tool-number">1</span>
-                <h3 style="margin:0;font-size:1rem;">Formula Generator</h3>
+                <span style="font-size: 1.5rem;">🚀</span>
+                <h3 style="margin:0;font-size:1.1rem; color: var(--warning);">AI Dataset Generator</h3>
               </div>
-              <p style="font-size:0.85rem;color:var(--text-muted);margin:0;">Deskripsikan apa yang ingin kamu lakukan — dapatkan formula beserta penjelasan dan contohnya.</p>
+              <p style="font-size:0.85rem;color:var(--text);margin:0; font-weight: 500; line-height: 1.5;">Satu-satunya simulator data lokal. Hasilkan hingga 10.000 baris data dummy (Data Kotor & Relasional) hanya dalam 1 detik.</p>
             </div>
-            <div style="padding:var(--space-5) var(--space-6);background:var(--surface-2);">
-              <div class="mock-input">📝 "jumlahkan penjualan hanya untuk region Barat"</div>
-              <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:var(--space-2);text-transform:uppercase;letter-spacing:0.06em;">Formula yang Dihasilkan</div>
-              <div class="mock-output">=SUMIF(A1:A100, "Barat", B1:B100)</div>
+            <div style="padding:var(--space-5) var(--space-6);background:var(--surface-2); flex-grow: 1;">
+              <div class="mock-input">🗃️ "Buatkan 10.000 baris data penjualan toko dengan Metode Pembayaran dan Harga Modal (COGS)."</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:var(--space-2);text-transform:uppercase;letter-spacing:0.06em;">Status Eksekusi</div>
+              <div class="mock-output" style="color: #10b981; font-weight: bold; background: rgba(16,185,129,0.1); border-color: #10b981;">✓ 10.000 Baris Berhasil Diunduh (.CSV)</div>
             </div>
-            <div style="padding:var(--space-4) var(--space-6);border-top:1px solid var(--border);">
-              <a href="tools.html" class="btn-ghost btn-sm">Coba Tools ↗</a>
+            <div style="padding:var(--space-4) var(--space-6);border-top:1px solid var(--border); background: var(--surface);">
+              <a href="tools.html" class="btn-primary btn-sm" style="display: block; width: 100%; text-align: center;">Coba Generator Data ↗</a>
             </div>
           </div>
 
-          <!-- Daily challenge teaser -->
-          <div class="tools-teaser">
+          <div class="tools-teaser" style="display: flex; flex-direction: column; border-radius: 12px; background: var(--surface); overflow: hidden; border: 1px solid var(--border);">
             <div style="padding:var(--space-5) var(--space-6);border-bottom:1px solid var(--border);">
               <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3);">
-                <span class="tool-number">2</span>
-                <h3 style="margin:0;font-size:1rem;">AI Dataset Generator</h3>
+                <span style="font-size: 1.5rem;">🧠</span>
+                <h3 style="margin:0;font-size:1rem;">Formula Generator</h3>
               </div>
-              <p style="font-size:0.85rem;color:var(--text-muted);margin:0;">Butuh data untuk uji coba? Hasilkan hingga 10.000 baris data dummy Excel yang super realistis hanya dalam 1 detik.</p>
+              <p style="font-size:0.85rem;color:var(--text-muted);margin:0; line-height: 1.5;">Deskripsikan logikamu menggunakan bahasa manusia biasa — AI kami akan meracik formula Excel yang tepat beserta penjelasannya.</p>
             </div>
-            <div style="padding:var(--space-5) var(--space-6);background:var(--surface-2);">
-              <div class="mock-input">🗃️ "Buatkan 5.000 baris data penjualan toko sandal dengan nama pelanggan, produk, dan omset."</div>
-              <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:var(--space-2);text-transform:uppercase;letter-spacing:0.06em;">Status Eksekusi</div>
-              <div class="mock-output" style="color: #10b981;">✓ 5.000 Baris Berhasil Diunduh (.CSV)</div>
+            <div style="padding:var(--space-5) var(--space-6);background:var(--surface-2); flex-grow: 1;">
+              <div class="mock-input">📝 "Jumlahkan penjualan di B, tapi hanya untuk yang berstatus Lunas di C."</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:var(--space-2);text-transform:uppercase;letter-spacing:0.06em;">Formula yang Dihasilkan</div>
+              <div class="mock-output">=SUMIFS(B:B, C:C, "Lunas")</div>
             </div>
-            <div style="padding:var(--space-4) var(--space-6);border-top:1px solid var(--border);">
-              <a href="tools.html" class="btn-ghost btn-sm">Coba Generator ↗</a>
+            <div style="padding:var(--space-4) var(--space-6);border-top:1px solid var(--border); background: var(--surface);">
+              <a href="tools.html" class="btn-ghost btn-sm" style="display: block; width: 100%; text-align: center; border: 1px solid var(--border);">Coba Generator Formula ↗</a>
             </div>
           </div>
         </div>
