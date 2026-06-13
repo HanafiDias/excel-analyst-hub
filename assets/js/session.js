@@ -19,16 +19,16 @@ document.addEventListener('DOMContentLoaded', async function() {
       // LALUAN 1: JIKA USER BELUM LOGIN (TAMU)
       // ==========================================
       
-      // Jika nekat membuka halaman learn.html atau tools.html secara langsung, tendang ke login
-      if (currentPath.includes('learn.html') || currentPath.includes('tools.html')) {
-        alert("🔒 Akses Terkunci!\n\nSilakan Masuk atau Daftar akun terlebih dahulu untuk mengakses fitur ini.");
+      // Jika nekat membuka halaman premium secara langsung, tendang ke login
+      if (currentPath.includes('learn.html') || currentPath.includes('tools.html') || currentPath.includes('portfolio.html')) {
+        alert("🔒 Akses Fitur Premium Terkunci!\n\nSilakan Masuk atau Daftar akun terlebih dahulu untuk mengakses materi, tools, dan file portofolio premium.");
         window.location.href = 'login.html';
         return;
       }
 
       // Cegat klik tombol premium khusus di halaman Beranda (index.html)
       if (currentPath.includes('index.html') || currentPath === '/' || currentPath.endsWith('')) {
-        const protectedLinks = document.querySelectorAll('a[href^="learn.html"], a[href^="tools.html"], #tools-teaser a, #paths a, #interactive-tools a');
+        const protectedLinks = document.querySelectorAll('a[href^="learn.html"], a[href^="tools.html"], a[href^="portfolio.html"], #tools-teaser a, #paths a, #interactive-tools a');
         
         protectedLinks.forEach(link => {
           if (link.getAttribute('href') === '#paths') return; // Pengecualian scroll silabus
