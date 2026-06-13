@@ -319,6 +319,24 @@
   <main id="main-content" class="container"
     style="padding-top: var(--space-6); padding-bottom: var(--space-8); max-width: 1000px;">
 
+    <div class="profile-header" style="text-align: center; margin-top: 3rem; margin-bottom: 2rem;">
+      <h1 id="greeting-text" style="color: white; font-size: 2rem; font-weight: 700;">Memuat data...</h1>
+      <p id="user-email-display" style="color: #94a3b8;">Mengambil informasi akun</p>
+    </div>
+
+    <div class="glass-card" style="max-width: 500px; margin: 0 auto 3rem auto;">
+      <h3 style="color: white; margin-top: 0; margin-bottom: 1.5rem; font-size: 1.2rem;">⚙️ Pengaturan Akun Utama</h3>
+      
+      <div class="input-group">
+        <label for="nickname-input" style="color: #cbd5e1; font-size: 0.8rem; display: block; margin-bottom: 8px; text-transform: uppercase; font-weight: 500;">Nama Panggilan (Nickname)</label>
+        <input type="text" id="nickname-input" class="glass-input" placeholder="Masukkan nama panggilan Anda" style="width: 100%; padding: 12px 16px; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: white; margin-bottom: 1rem;">
+      </div>
+      
+      <button id="save-profile-btn" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transition: all 0.3s ease;">
+        Simpan Perubahan
+      </button>
+    </div>
+
     <div class="dashboard-hero">
       <div class="cosmic-glow"></div>
 
@@ -525,6 +543,7 @@
       });
     });
   </script>
+  <script src="assets/js/profile.js" defer></script>
   <script src="assets/js/main.js"></script>
 </body>
 
