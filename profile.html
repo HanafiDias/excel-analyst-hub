@@ -1,199 +1,517 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <script>
-    (function() {
+    (function () {
       try {
         var t = localStorage.getItem('eah_theme') || 'dark';
         document.documentElement.setAttribute('data-theme', t);
-      } catch(e) {}
+      } catch (e) { }
     })();
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profil Saya — Excel Analyst Hub</title>
-  <meta name="description" content="Pantau progres belajarmu, lihat pencapaian (badges), dan bangun portofoliomu di Excel Analyst Hub." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>Dashboard Pencapaian Saya — Excel Analyst Hub</title>
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/components.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/js/session.js" defer></script>
+
+  <style>
+    /* 1. Efek Latar Belakang Partikel Melayang (Static Shimmer Space) */
+    .dashboard-hero {
+      position: relative;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      text-align: center;
+      overflow: hidden;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      margin-bottom: 2.5rem;
+    }
+
+    /* Aliran Kosmik Melingkar di Belakang Badge */
+    .cosmic-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(245, 158, 11, 0.05) 50%, rgba(0, 0, 0, 0) 70%);
+      border-radius: 50%;
+      z-index: 1;
+      animation: cosmicPulse 6s infinite ease-in-out;
+    }
+
+    @keyframes cosmicPulse {
+
+      0%,
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+      }
+
+      50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+        filter: blur(10px);
+      }
+    }
+
+    /* 2. Ring Pemutar Badge (The Halo Orbit) */
+    .badge-orbit {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      margin: 0 auto 1.5rem;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badge-orbit::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px dashed rgba(245, 158, 11, 0.4);
+      animation: orbitRotate 20s linear infinite;
+    }
+
+    .badge-orbit::after {
+      content: "";
+      position: absolute;
+      width: 115%;
+      height: 115%;
+      border-radius: 50%;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
+      animation: orbitRotate 30s linear infinite reverse;
+    }
+
+    @keyframes orbitRotate {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* 3. Animasi Floating Besar pada Badge Utama */
+    .tier-badge-visual {
+      font-size: 4.5rem;
+      filter: drop-shadow(0 0 25px rgba(245, 158, 11, 0.6));
+      animation: floatingBadge 4s infinite ease-in-out;
+      user-select: none;
+    }
+
+    @keyframes floatingBadge {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-12px) rotate(3deg);
+      }
+    }
+
+    /* 4. Progress Bar Cair Berkilau (Liquid Data Stream) */
+    .xp-stream-container {
+      max-width: 500px;
+      margin: 1.5rem auto 0.5rem;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 50px;
+      padding: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .xp-stream-bar {
+      height: 16px;
+      border-radius: 50px;
+      background: linear-gradient(90deg, #3b82f6, #6366f1, #f59e0b, #e11d48);
+      background-size: 300% 100%;
+      width: 0%;
+      /* Diatur via JS */
+      transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+      animation: streamFlow 4s linear infinite;
+    }
+
+    @keyframes streamFlow {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      100% {
+        background-position: 300% 50%;
+      }
+    }
+
+    /* Efek Kilatan Menyapu konstan pada Progress Bar */
+    .xp-stream-bar::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+      animation: barShine 2.5s infinite linear;
+    }
+
+    @keyframes barShine {
+      0% {
+        left: -100%;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+
+    /* 5. Grid Lencana/Badges Milestones */
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .badge-item-box {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Status Terkunci (Default sebelum kalkulasi) */
+    .badge-item-box.locked {
+      opacity: 0.4;
+      filter: grayscale(1);
+    }
+
+    .badge-item-box.locked::before {
+      content: "🔒";
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 0.8rem;
+    }
+
+    /* Efek Riak Gelombang saat Lencana Sukses Terbuka di-hover */
+    .badge-item-box:not(.locked):hover {
+      transform: translateY(-5px) scale(1.05);
+      border-color: var(--primary);
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.15), 0 0 15px rgba(245, 158, 11, 0.1);
+    }
+
+    .badge-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+
+    .badge-item-box:not(.locked):hover .badge-icon {
+      transform: rotate(15deg) scale(1.1);
+    }
+
+    .badge-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .badge-desc {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    /* Animasi Lampu Neon Berkedip untuk Status Aktif */
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #10b981;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 8px #10b981;
+      animation: neonPulse 1.5s infinite ease-in-out;
+    }
+
+    @keyframes neonPulse {
+
+      0%,
+      100% {
+        opacity: 0.5;
+        box-shadow: 0 0 4px #10b981;
+      }
+
+      50% {
+        opacity: 1;
+        box-shadow: 0 0 12px #10b981;
+      }
+    }
+
+    /* Tag Paket Premium */
+    .premium-badge-tag {
+      background: linear-gradient(90deg, rgba(245, 158, 11, 0.1) 0%, rgba(225, 29, 72, 0.1) 100%);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #f59e0b;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      display: inline-block;
+    }
+  </style>
 </head>
+
 <body class="page-body">
 
-  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
-
-  <!-- ============ NAVIGATION ============ -->
   <nav class="nav" role="navigation" aria-label="Navigasi utama">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
         <div class="logo-icon" aria-hidden="true">⊞</div>
         Excel Analyst Hub
       </a>
-      <ul class="nav-links" role="list">
-        <li><a href="index.html">Beranda</a></li>
-        <li><a href="learn.html">Belajar</a></li>
-        <li><a href="portfolio.html">Portofolio</a></li>
-        <li><a href="tools.html">Tools</a></li>
-      </ul>
+      <div class="nav-links">
+        <a href="learn.html" class="nav-item">Belajar</a>
+        <a href="profile.html" class="nav-item active">Pencapaian</a>
+        <a href="portfolio.html" class="nav-item">Portofolio</a>
+      </div>
       <div class="nav-right">
-        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
-        <a href="profile.html" class="btn-ghost btn-sm" style="display:flex; align-items:center; gap:5px; padding:0.4rem 0.8rem; border:1px solid var(--border);" title="Dashboard Profil">
-          <span style="font-size:1.1rem;">👤</span> <span class="hide-mobile">Profil</span>
-        </a>
-        <a href="learn.html" class="btn-primary btn-sm hide-mobile">Mulai Belajar</a>
-        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
-          <span></span><span></span><span></span>
-        </button>
+        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang"
+          title="Mode terang">☀️</button>
+        <button class="btn-ghost btn-sm" id="logout-btn"
+          style="border:1px solid var(--border); color:var(--error);">Keluar</button>
       </div>
     </div>
   </nav>
-  <div class="nav-menu-mobile" id="mobile-menu" role="navigation" aria-label="Navigasi mobile">
-    <a href="index.html">Beranda</a>
-    <a href="learn.html">Belajar</a>
-    <a href="portfolio.html">Portofolio</a>
-    <a href="tools.html">Tools</a>
-    <div style="height:1px; background:var(--border); margin: 8px 0;"></div> 
-    <a href="profile.html" style="color:var(--accent); font-weight:bold;">👤 Profil Saya</a>
-    <a href="learn.html" class="btn-primary" style="margin-top:8px;">Mulai Belajar</a>
-  </div>
 
-  <main id="main-content">
-    <section class="section" aria-label="Dashboard Profil">
-      <div class="container">
-        
-        <div class="flex-between" style="margin-bottom:var(--space-6); border-bottom:1px solid var(--border); padding-bottom:var(--space-4); flex-wrap:wrap; gap:var(--space-4);">
-          <h1 style="margin:0;">Dashboard Belajar</h1>
-          <div style="display: flex; gap: 8px;">
-            <a href="portfolio.html" class="btn-ghost">📁 Lihat Portofolio</a>
-            <button id="logout-btn" class="btn-ghost" style="color: #ef4444; border-color: #ef4444;">Logout</button>
+  <main id="main-content" class="container"
+    style="padding-top: var(--space-6); padding-bottom: var(--space-8); max-width: 1000px;">
+
+    <div class="dashboard-hero">
+      <div class="cosmic-glow"></div>
+
+      <div class="badge-orbit">
+        <div class="tier-badge-visual" id="tier-badge">🥉</div>
+      </div>
+
+      <h1 style="margin: 0; font-size: 2rem; letter-spacing: -0.5px;" id="user-greeting">Memuat Petualangan...</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: var(--space-1); margin-bottom: 0;"
+        id="user-tier-title">Junior Analyst Tier</p>
+
+      <div class="xp-stream-container">
+        <div class="xp-stream-bar" id="xp-progress-bar"></div>
+      </div>
+
+      <div style="font-weight: bold; font-size: 1.1rem; color: #f59e0b; margin-top: 0.5rem;" id="xp-display-text">0 XP /
+        500 XP</div>
+    </div>
+
+    <div class="grid-2" style="gap: 2rem; align-items: start;">
+
+      <div class="card" style="padding: 1.5rem;">
+        <h2 style="margin-top: 0; font-size: 1.25rem; display: flex; align-items: center; gap: 8px;">
+          🏆 Lemari Lencana Pencapaian
+        </h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Sistem otomatis mendeteksi total tabungan XP
+          Supabase Anda untuk membuka penghargaan spesial berikut:</p>
+
+        <div class="badge-grid">
+          <div class="badge-item-box locked" id="badge-junior">
+            <div class="badge-icon">🥉</div>
+            <div class="badge-title">Data Cadet</div>
+            <div class="badge-desc">Terbuka otomatis saat memulai akun baru.</div>
+          </div>
+          <div class="badge-item-box locked" id="badge-wrangler">
+            <div class="badge-icon">🥈</div>
+            <div class="badge-title">Data Wrangler</div>
+            <div class="badge-desc">Kumpulkan minimal 500 XP dari belajar & generator.</div>
+          </div>
+          <div class="badge-item-box locked" id="badge-master">
+            <div class="badge-icon">🥇</div>
+            <div class="badge-title">Excel Shogun</div>
+            <div class="badge-desc">Raih status legenda dengan menyentuh angka 2.000 XP.</div>
           </div>
         </div>
+      </div>
 
-        <div class="card" style="display:flex; align-items:center; gap:var(--space-5); padding:var(--space-5); margin-bottom:var(--space-6); flex-wrap:wrap;">
-          <div style="width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg, var(--accent), #8b5cf6); display:flex; align-items:center; justify-content:center; font-size:2rem; font-weight:bold; color:white; flex-shrink:0;">
-            DA
-          </div>
+      <div class="card" style="padding: 1.5rem;">
+        <h2 style="margin-top: 0; font-size: 1.25rem; display: flex; align-items: center; gap: 8px;">
+          💳 Status Akun & Langganan
+        </h2>
+        <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.2rem;">
+
           <div>
-            <h2 id="user-email" style="margin:0 0 var(--space-2) 0; font-size:1.5rem;">Data Analyst</h2>
-            <p id="user-level" style="margin:0; color:var(--text-muted); font-weight:600;">Level: Menghitung Data...</p>
+            <label
+              style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); display: block; margin-bottom: 4px;">Alamat
+              Email</label>
+            <div style="font-weight: 500; font-size: 1.05rem;" id="info-email">memuat...</div>
+          </div>
 
-            <p id="user-status" style="margin:var(--space-2) 0 0 0; font-size:0.85rem; color:#10b981; display:flex; align-items:center; gap:5px;">
-              <span style="display:inline-block; width:8px; height:8px; background:#10b981; border-radius:50%;"></span>
-              Progres tersimpan aman secara lokal di browser ini
-            </p>
-          </div>
-        </div>
-
-        <div class="grid-3" style="margin-bottom:var(--space-6);">
-          <div class="card stat-card" style="text-align:center; padding:var(--space-5);">
-            <div id="stat-completed" style="font-size:3rem; font-weight:bold; color:var(--text); margin-bottom:var(--space-2);">0</div>
-            <div style="color:var(--text-muted); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Topik Selesai</div>
-          </div>
-          <div class="card stat-card" style="text-align:center; padding:var(--space-5);">
-            <div style="font-size:3rem; font-weight:bold; color:#f59e0b; margin-bottom:var(--space-2);"><span id="stat-streak">0</span><span style="font-size:2rem;">🔥</span></div>
-            <div style="color:var(--text-muted); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Hari Beruntun (Streak)</div>
-          </div>
-          <div class="card stat-card" style="text-align:center; padding:var(--space-5);">
-            <div id="user-xp" style="font-size:3rem; font-weight:bold; color:var(--accent); margin-bottom:var(--space-2);">0</div>
-            <div style="color:var(--text-muted); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">XP Terkumpul</div>
-          </div>
-        </div>
-
-        <div class="card" style="padding:var(--space-6);">
-          <h3 style="margin-top:0; margin-bottom:var(--space-5);">Progres Jalur Belajar</h3>
-          
-          <div style="margin-bottom:var(--space-4);">
-            <div class="flex-between" style="margin-bottom:var(--space-2);">
-              <span style="font-weight:600;">Jalur Pemula</span>
-              <span id="pct-beginner" style="color:var(--text-muted); font-family:monospace;">0%</span>
+          <div
+            style="padding: 1rem; background: var(--surface-2); border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="premium-badge-tag">⚡ PREMIUM MONTHLY</span>
+              <span style="font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                <span class="status-dot"></span> Aktif
+              </span>
             </div>
-            <div style="width:100%; height:8px; background:var(--surface-2); border-radius:4px; overflow:hidden;">
-              <div id="bar-beginner" style="height:100%; background:var(--accent); width:0%; transition:width 0.5s ease;"></div>
+
+            <div style="height: 1px; background: var(--border); margin: 4px 0;"></div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.85rem; color: var(--text-muted);">Sisa Masa Aktif</span>
+              <span style="font-weight: bold; color: #10b981; font-size: 1rem;"
+                id="subscription-remaining">Calculating...</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.85rem; color: var(--text-muted);">Pembaruan Berikutnya</span>
+              <span style="font-size: 0.85rem; font-weight: 500;" id="subscription-renew-date">Calculating...</span>
             </div>
           </div>
 
-          <div style="margin-bottom:var(--space-4);">
-            <div class="flex-between" style="margin-bottom:var(--space-2);">
-              <span style="font-weight:600;">Jalur Menengah</span>
-              <span id="pct-intermediate" style="color:var(--text-muted); font-family:monospace;">0%</span>
-            </div>
-            <div style="width:100%; height:8px; background:var(--surface-2); border-radius:4px; overflow:hidden;">
-              <div id="bar-intermediate" style="height:100%; background:var(--accent); width:0%; transition:width 0.5s ease;"></div>
-            </div>
-          </div>
-
-          <div style="margin-bottom:var(--space-5);">
-            <div class="flex-between" style="margin-bottom:var(--space-2);">
-              <span style="font-weight:600;">Jalur Lanjutan</span>
-              <span id="pct-advanced" style="color:var(--text-muted); font-family:monospace;">0%</span>
-            </div>
-            <div style="width:100%; height:8px; background:var(--surface-2); border-radius:4px; overflow:hidden;">
-              <div id="bar-advanced" style="height:100%; background:var(--accent); width:0%; transition:width 0.5s ease;"></div>
-            </div>
-          </div>
-
-          <div style="border-top:1px solid var(--border); padding-top:var(--space-5);">
-            <h4 style="margin-top:0; margin-bottom:var(--space-4); color:var(--text-muted);">Pencapaian (Badges)</h4>
-            <!-- JS will inject rich badges here -->
-            <div id="badges-container" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:var(--space-4);">
-            </div>
+          <div style="padding-top: 0.5rem; display: flex; flex-direction: column; gap: 10px;">
+            <button class="btn-primary btn-sm"
+              style="width: 100%; text-align: center; background: linear-gradient(90deg, #f59e0b, #e11d48); border: none;"
+              onclick="alert('Fungsi Gateway Pembayaran (QRIS/Stripe) akan segera dihubungkan pada tahap berikutnya!')">Perpanjang
+              Langganan ↑</button>
+            <a href="learn.html" class="btn-ghost btn-sm"
+              style="width: 100%; text-align: center; border: 1px solid var(--border);">Lanjutkan Belajar →</a>
           </div>
 
         </div>
       </div>
-    </section>
+
+    </div>
   </main>
 
-  <!-- ============ FOOTER ============ -->
-  <footer class="footer" role="contentinfo">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="index.html" class="nav-logo">
-            <div class="logo-icon" aria-hidden="true">⊞</div>
-            Excel Analyst Hub
-          </a>
-          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Belajar</h4>
-          <ul>
-            <li><a href="learn.html#beginner">Jalur Pemula</a></li>
-            <li><a href="learn.html#intermediate">Jalur Menengah</a></li>
-            <li><a href="learn.html#advanced">Jalur Lanjutan</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Tools & Trainer</h4>
-          <ul>
-            <li><a href="tools.html#formula-generator">Formula Generator</a></li>
-            <li><a href="tools.html#daily-challenge-section">Tantangan Harian</a></li>
-            <li><a href="tools.html#quick-ref">Referensi Cepat</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Jelajahi</h4>
-          <ul>
-            <li><a href="portfolio.html">Portofolio</a></li>
-            <li><a href="topic.html">Tutorial VLOOKUP</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p style="font-style: italic; color: #10b981; font-weight: 600; font-size: 1.05rem; margin-bottom: 12px; letter-spacing: 0.3px;">
-          "Learning shouldn't be boring; it should be rewarding."
-        </p>
-        <p style="color: var(--text-muted); font-size: 0.85rem;">
-          Dibangun untuk generasi data analyst Indonesia berikutnya. <br>
-          Excel Analyst Hub — Investasi Terbaik, Keahlian Nyata.
-        </p>
-      </div>
-    </div>
-  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async function () {
+      if (!window.supabase) return;
 
-<script src="assets/js/main.js"></script>
-<script src="assets/js/profile.js"></script>
+      const supaUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
+      const supaKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
+      const supa = window.supabase.createClient(supaUrl, supaKey);
+
+      // 1. CEK OTENTIKASI USER
+      const { data: { session } } = await supa.auth.getSession();
+      if (!session) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      const user = session.user;
+      document.getElementById('info-email').innerText = user.email;
+      document.getElementById('user-greeting').innerText = `Selamat Datang, ${user.email.split('@')[0]}! 👋`;
+
+      // SIMULASI: Set tanggal kedaluwarsa paket 1 bulan dari sekarang (13 Juli 2026)
+      const expireDate = new Date('2026-07-13T00:00:00');
+      const today = new Date();
+
+      // Hitung selisih hari
+      const diffTime = expireDate - today;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      // Tampilkan sisa hari secara dinamis
+      if (diffDays > 0) {
+        document.getElementById('subscription-remaining').innerText = `${diffDays} Hari Lagi`;
+      } else {
+        document.getElementById('subscription-remaining').innerText = `Paket Habis`;
+        document.getElementById('subscription-remaining').style.color = `var(--error)`;
+      }
+
+      // Format tanggal pembaruan ke format Indonesia
+      const renewDateString = expireDate.toLocaleDateString('id-ID', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      document.getElementById('subscription-renew-date').innerText = renewDateString;
+
+      // 2. TARIK DATA XP DARI DATABASE SUPABASE
+      let totalXp = 0;
+      try {
+        const { data, error } = await supa
+          .from('user_xp')
+          .select('xp_amount')
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+        if (data) {
+          totalXp = data.xp_amount;
+        }
+      } catch (err) {
+        console.error("Gagal menarik data XP:", err);
+      }
+
+      // 3. LOGIKA GAMIFIKASI & CSS ANIMATION CALCULATOR
+      let tierBadge = '🥉';
+      let tierTitle = 'Junior Analyst (Bronze Tier)';
+      let maxTierXp = 500;
+      let minTierXp = 0;
+
+      // Reset & Nyalakan Badge Berdasarkan Milestone Saldo
+      document.getElementById('badge-junior').classList.remove('locked'); // Selalu terbuka
+
+      if (totalXp >= 2000) {
+        tierBadge = '🥇';
+        tierTitle = 'Master of Excel (Gold Tier) 👑';
+        minTierXp = 2000;
+        maxTierXp = 10000; // Cap Maksimal untuk baris penuh
+        document.getElementById('badge-wrangler').classList.remove('locked');
+        document.getElementById('badge-master').classList.remove('locked');
+        // Ubah warna orbit menjadi emas mewah khusus Gold Tier
+        document.querySelector('.badge-orbit').style.setProperty('--warning', '#f59e0b');
+      } else if (totalXp >= 500) {
+        tierBadge = '🥈';
+        tierTitle = 'Data Wrangler (Silver Tier) ⚡';
+        minTierXp = 500;
+        maxTierXp = 2000;
+        document.getElementById('badge-wrangler').classList.remove('locked');
+      }
+
+      // Hitung persentase baris pengisi data liquid
+      let rangeXp = totalXp - minTierXp;
+      let rangeMax = maxTierXp - minTierXp;
+      let percentage = Math.min(Math.max((rangeXp / rangeMax) * 100, 0), 100);
+
+      // Suntikkan data ke layar visual
+      document.getElementById('tier-badge').innerText = tierBadge;
+      document.getElementById('user-tier-title').innerText = tierTitle;
+      document.getElementById('xp-display-text').innerText = `${totalXp} XP / ${maxTierXp} XP`;
+
+      // Jalankan animasi pengisian baris data (Mulus karena Cubic-Bezier)
+      setTimeout(() => {
+        document.getElementById('xp-progress-bar').style.width = `${percentage}%`;
+      }, 300);
+
+      // 4. SISTEM LOGOUT
+      document.getElementById('logout-btn').addEventListener('click', async function () {
+        await supa.auth.signOut();
+        window.location.href = 'index.html';
+      });
+    });
+  </script>
+  <script src="assets/js/main.js"></script>
 </body>
+
 </html>
