@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('eah_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { }
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beli Akses Eksklusif — Excel Analyst Hub</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <style>
+    /* =========================================
+       PREMIUM PRICING UI BY ARSITEK INFORMATIKA
+       ========================================= */
+    .pricing-page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1rem;
+      position: relative;
+      overflow: hidden;
+      background: #0b1120;
+    }
+
+    /* Latar Belakang Cosmic Glow (Palsu tapi Manis) */
+    .pricing-page-wrapper::before {
+      content: "";
+      position: absolute;
+      width: 150%; height: 150%;
+      top: -25%; left: -25%;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(225, 29, 72, 0.05) 50%, rgba(0, 0, 0, 0) 70%);
+      border-radius: 50%;
+      z-index: 1;
+      animation: cosmicFloat 20s infinite ease-in-out;
+    }
+    @keyframes cosmicFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-50px, 50px) scale(1.1); }
+    }
+
+    /* MAIN CARD: Glassmorphism Premium */
+    .exclusive-offer-card {
+      width: 100%;
+      max-width: 900px;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 32px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      position: relative;
+      z-index: 10;
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+    }
+    
+    /* Efek Parallax Hover (Hanya di Desktop) */
+    @media (min-width: 992px) {
+      .exclusive-offer-card:hover {
+        transform: translateY(-8px) scale(1.01);
+        box-shadow: 0 50px 120px rgba(0, 0, 0, 0.8), 0 0 30px rgba(59, 130, 246, 0.2);
+        border-color: rgba(59, 130, 246, 0.4);
+      }
+    }
+
+    /* =========================================
+       KIRI: Value Proposition (Info)
+       ========================================= */
+    .card-info { padding: 3.5rem 3rem; }
+    
+    .logo-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(59, 130, 246, 0.15); color: #60a5fa;
+      padding: 6px 12px; border-radius: 50px; font-weight: 600; font-size: 0.8rem;
+      border: 1px solid rgba(59, 130, 246, 0.3); margin-bottom: 2rem;
+    }
+
+    .card-info h1 { font-size: 2.8rem; font-weight: 800; color: white; margin-top: 0; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -1px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+    .card-info p { color: #cbd5e1; font-size: 1.1rem; line-height: 1.6; margin-bottom: 2.5rem; max-width: 90%; }
+    
+    .benefit-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem; }
+    .benefit-list li { display: flex; align-items: start; gap: 14px; color: #f1f5f9; font-size: 1rem; line-height: 1.4; }
+    
+    /* Ikon Check Neon */
+    .check-icon-wrapper {
+      width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;
+      color: #10b981; margin-top: 2px; flex-shrink: 0;
+    }
+
+    /* =========================================
+       KANAN: Checkout Panel (Pricing)
+       ========================================= */
+    .card-checkout {
+      background: rgba(15, 23, 42, 0.9);
+      border-left: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 3.5rem;
+      display: flex; flex-direction: column; justify-content: center; text-align: center;
+      position: relative;
+    }
+    
+    /* Garis Neon Pemisah */
+    .card-checkout::before {
+      content: ""; position: absolute; left: 0; top: 15%; height: 70%; width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.5), transparent);
+    }
+
+    /* Badge Promo (Liquid Gradient) */
+    .promo-tag {
+      background: linear-gradient(90deg, #f59e0b, #e11d48, #f59e0b);
+      background-size: 200% auto; color: white;
+      padding: 8px 18px; border-radius: 50px; font-size: 0.8rem; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
+      animation: gradientFlow 3s linear infinite; margin-bottom: 2rem; display: inline-block;
+    }
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Pricing Typography (Coret) */
+    .price-old { color: #64748b; text-decoration: line-through; font-size: 1.25rem; font-weight: 500; display: block; margin-bottom: 4px; }
+    
+    /* Harga Final (Super Neon & 1 Baris) */
+    .price-new-wrapper { 
+      position: relative; 
+      display: flex; 
+      align-items: baseline; 
+      justify-content: center;
+      white-space: nowrap; /* Memaksa agar tidak turun baris */
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Bola Cahaya Di Belakang Angka (Glow Ekstrem) */
+    .price-new-wrapper::before {
+      content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 90%; height: 60%; background: rgba(59, 130, 246, 0.6);
+      filter: blur(40px); z-index: -1; border-radius: 50%;
+    }
+
+    .price-new {
+      font-size: 4.5rem; font-weight: 900; margin: 0; line-height: 1;
+      background: linear-gradient(to right, #ffffff, #60a5fa, #ffffff);
+      background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      animation: gradientFlow 3s linear infinite;
+      filter: drop-shadow(0 0 10px rgba(96, 165, 250, 0.9)) drop-shadow(0 0 30px rgba(59, 130, 246, 0.8));
+    }
+    
+    .price-period { 
+      font-size: 1.25rem; font-weight: 600; color: #94a3b8; 
+      -webkit-text-fill-color: #94a3b8; /* Mencegah ikut transparan */
+      margin-left: 8px; 
+    }
+
+    /* TOMBOL UTAMA NEON (The CT) */
+    .btn-upgrade-premium {
+      width: 100%; padding: 18px; margin-top: 2.5rem;
+      background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+      color: white; border: none; border-radius: 16px; font-weight: 700; font-size: 1.1rem;
+      cursor: pointer; position: relative; overflow: hidden;
+      transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+    }
+    .btn-upgrade-premium:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(99, 102, 241, 0.6);
+      filter: brightness(1.1);
+    }
+    
+    /* Efek Kilatan Sweep pada Tombol */
+    .btn-upgrade-premium::after {
+      content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      animation: sweepKilat 4s infinite linear;
+    }
+    @keyframes sweepKilat { 0% { left: -100%; } 30% { left: 100%; } 100% { left: 100%; } }
+
+    /* Metodologi Pembayaran (Glass Tags) */
+    .payment-tags-container { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 1.5rem; flex-wrap: wrap; }
+    .payment-tag-item {
+      font-weight: 700; color: #cbd5e1; font-size: 0.8rem;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      padding: 6px 14px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+
+    /* RESPONSIVE: Mode HP Berantakan kalau Grid Tetap 2 Kolom */
+    @media (max-width: 991px) {
+      .exclusive-offer-card { grid-template-columns: 1fr; border-radius: 24px; max-width: 500px; }
+      .card-info { padding: 3rem 2.5rem; }
+      .card-checkout { padding: 3rem 2.5rem; border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+      .card-checkout::before { display: none; }
+      .card-info h1 { font-size: 2.2rem; }
+      .price-new { font-size: 3.5rem; }
+    }
+  </style>
+</head>
+<body class="page-body">
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" style="display: flex; align-items: center; gap: 8px;">
+        <div class="logo-icon" style="box-shadow: 0 0 10px rgba(59,130,246,0.3);">⊞</div> Excel Analyst Hub
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-item btn-ghost btn-sm" style="border: 1px solid var(--border); border-radius: 50px;">← Beranda</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="pricing-page-wrapper">
+    <div class="exclusive-offer-card">
+      
+      <div class="card-info">
+        <div class="logo-badge">
+          <span>⊞</span> PRE-RELEASE OFFER
+        </div>
+        <h1>Buka Akses<br>Premium Eksklusif</h1>
+        <p>Aktivasi instan dan satu kali untuk membuka gembok seluruh ekosistem pembelajaran, gamifikasi, dan generator data otomatis.</p>
+        
+        <ul class="benefit-list">
+          <li>
+            <div class="check-icon-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <span>Akses Penuh ke <b>Semua Modul Lanjutan</b></span>
+          </li>
+          <li>
+            <div class="check-icon-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <span>Sistem Gamifikasi, Simpan progress & XP</span>
+          </li>
+          <li>
+            <div class="check-icon-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <span><b>Portofolio Generator</b> Dataset Dunia Nyata</span>
+          </li>
+          <li>
+            <div class="check-icon-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <span>Download Semua Lencana Pencapaian Digital</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card-checkout">
+        <div>
+          <div class="promo-tag">EARLY BIRD (DISKON GILA 85%)</div>
+          <span class="price-old">Rp 69.900</span>
+          <div class="price-new-wrapper">
+            <h2 class="price-new">Rp 10rb</h2>
+            <span class="price-period">/bulan</span>
+          </div>
+        </div>
+        
+        <button class="btn-upgrade-premium" onclick="alert('Ini akan memanggil QRIS di langkah integrasi Tripay berikutnya!')">
+          Beli Akses Eksklusif ⚡
+        </button>
+
+        <div class="payment-tags-container">
+          <span class="payment-tag-item">QRIS</span>
+          <span class="payment-tag-item">DANA</span>
+          <span class="payment-tag-item">ShopeePay</span>
+          <span class="payment-tag-item">OVO</span>
+        </div>
+        <p style="color: #64748b; font-size: 0.75rem; margin-top: 1.2rem;">Sistem otomatis: Aktivasi instan setelah bayar.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
