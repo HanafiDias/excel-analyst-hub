@@ -27,36 +27,37 @@
   <!-- ============ NAVIGATION ============ -->
   <nav class="nav" role="navigation" aria-label="Navigasi utama">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <div class="logo-icon" aria-hidden="true">⊞</div>
+      <a href="index.html" class="nav-logo" aria-label="Excel Analyst Hub beranda" style="transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        <div class="logo-icon" aria-hidden="true" style="box-shadow: 0 0 10px rgba(59,130,246,0.5);">⊞</div>
         Excel Analyst Hub
       </a>
-      <ul class="nav-links" role="list">
-        <li><a href="index.html">Beranda</a></li>
-        <li><a href="learn.html">Belajar</a></li>
-        <li><a href="portfolio.html">Portofolio</a></li>
-        <li><a href="tools.html">Tools</a></li>
-      </ul>
+      
+      <div class="nav-links">
+        <a href="index.html" class="nav-item">Beranda</a>
+        <a href="learn.html" class="nav-item">Belajar</a>
+        <a href="tools.html" class="nav-item">Tools</a>
+        <a href="portfolio.html" class="nav-item">Portofolio</a>
+      </div>
+      
       <div class="nav-right">
         <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
-        <a href="profile.html" class="btn-ghost btn-sm" style="display:flex; align-items:center; gap:5px; padding:0.4rem 0.8rem; border:1px solid var(--border);" title="Dashboard Profil">
-          <span style="font-size:1.1rem;">👤</span> <span class="hide-mobile">Profil</span>
+        <a href="login.html" class="btn-sm btn-nav-premium" id="nav-auth-btn" style="padding: 0.45rem 1rem; border-radius: 50px; font-weight: 600; letter-spacing: 0.3px;">
+          Masuk / Profil
         </a>
-        <a href="learn.html" class="btn-primary btn-sm hide-mobile">Mulai Belajar</a>
         <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
   </nav>
+
   <div class="nav-menu-mobile" id="mobile-menu" role="navigation" aria-label="Navigasi mobile">
     <a href="index.html">Beranda</a>
     <a href="learn.html">Belajar</a>
-    <a href="portfolio.html">Portofolio</a>
     <a href="tools.html">Tools</a>
+    <a href="portfolio.html">Portofolio</a>
     <div style="height:1px; background:var(--border); margin: 8px 0;"></div> 
-    <a href="profile.html" style="color:var(--accent); font-weight:bold;">👤 Profil Saya</a>
-    <a href="learn.html" class="btn-primary" style="margin-top:8px;">Mulai Belajar</a>
+    <a href="login.html" class="btn-nav-premium" id="mobile-auth-btn" style="text-align:center; border-radius: 8px; margin-top: 8px;">Masuk / Profil</a>
   </div>
 
   <main id="main-content" class="container fade-in-section">

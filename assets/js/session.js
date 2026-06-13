@@ -1,49 +1,74 @@
-// Inisialisasi Supabase
-const supabaseUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
-const supabaseKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
-const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+document.addEventListener('DOMContentLoaded', async function() {
+  if (!window.supabase) return;
+  
+  // Inisialisasi Supabase
+  const supaUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
+  const supaKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
+  const supa = window.supabase.createClient(supaUrl, supaKey);
 
-document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const { data: { session }, error } = await supabaseClient.auth.getSession();
-    if (error) throw error;
-
+    const { data: { session } } = await supa.auth.getSession();
     const currentPath = window.location.pathname;
 
-    if (session) {
-      // JIKA USER SUDAH LOGIN
-      console.log("User terautentikasi:", session.user.email);
+    // Ambil elemen tombol auth di navbar (Desktop & Mobile)
+    const navAuthBtn = document.getElementById('nav-auth-btn');
+    const mobileAuthBtn = document.getElementById('mobile-auth-btn');
+
+    if (!session) {
+      // ==========================================
+      // LALUAN 1: JIKA USER BELUM LOGIN (TAMU)
+      // ==========================================
       
-      // 1. Ubah tombol Navbar (Pojok Kanan Atas)
-      const navAuthBtn = document.getElementById('nav-auth-btn') || document.querySelector('.nav-right a[href="login.html"]');
-      if (navAuthBtn) {
-        navAuthBtn.textContent = 'Profil Saya';
-        navAuthBtn.href = 'profile.html';
+      // Jika nekat membuka halaman learn.html atau tools.html secara langsung, tendang ke login
+      if (currentPath.includes('learn.html') || currentPath.includes('tools.html')) {
+        alert("🔒 Akses Terkunci!\n\nSilakan Masuk atau Daftar akun terlebih dahulu untuk mengakses fitur ini.");
+        window.location.href = 'login.html';
+        return;
       }
 
-      // 2. Ubah tombol Hero (Mulai Petualangan di Tengah Layar)
-      const heroBtn = document.querySelector('.hero-buttons a[href="login.html"]');
-      if (heroBtn) {
-        heroBtn.innerHTML = 'Lanjutkan Belajar <span aria-hidden="true">→</span>';
-        heroBtn.href = 'learn.html'; // Langsung arahkan ke materi
-      }
+      // Cegat klik tombol premium khusus di halaman Beranda (index.html)
+      if (currentPath.includes('index.html') || currentPath === '/' || currentPath.endsWith('')) {
+        const protectedLinks = document.querySelectorAll('a[href^="learn.html"], a[href^="tools.html"], #tools-teaser a, #paths a, #interactive-tools a');
+        
+        protectedLinks.forEach(link => {
+          if (link.getAttribute('href') === '#paths') return; // Pengecualian scroll silabus
 
-      // 3. Proteksi Halaman Auth (Menendang user yang sudah login dari halaman login)
-      if (currentPath.includes('login.html') || currentPath.includes('register.html')) {
-        window.location.replace('profile.html');
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert("🔒 Akses Fitur Terkunci!\n\nSilakan Masuk atau Daftar akun terlebih dahulu untuk menggunakan tools interaktif dan mengakses materi.");
+            window.location.href = 'login.html';
+          });
+        });
       }
 
     } else {
-      // JIKA USER BELUM LOGIN
-      console.log("Status: Guest / Belum Login");
+      // ==========================================
+      // LALUAN 2: JIKA USER SUDAH LOGIN
+      // ==========================================
+      const user = session.user;
 
-      // Proteksi Halaman Profil (Menendang tamu dari halaman profil)
-      if (currentPath.includes('profile.html')) {
-        alert('Akses Ditolak: Anda harus login untuk melihat halaman ini.');
-        window.location.replace('login.html');
+      // 1. Ubah tombol "Masuk / Profil" di Navbar Desktop menjadi "👤 Profil Saya"
+      if (navAuthBtn) {
+        navAuthBtn.href = "profile.html";
+        navAuthBtn.innerHTML = "👤 Profil Saya";
+      }
+
+      // 2. Ubah tombol "Masuk / Profil" di Navbar Mobile menjadi "👤 Profil Saya"
+      if (mobileAuthBtn) {
+        mobileAuthBtn.href = "profile.html";
+        mobileAuthBtn.innerHTML = "👤 Profil Saya";
+      }
+
+      // 3. Ubah tombol "Mulai Petualangan" khusus di Hero Beranda
+      if (currentPath.includes('index.html') || currentPath === '/' || currentPath.endsWith('')) {
+        const btnHero = document.querySelector('.hero-buttons a[href="login.html"]');
+        if (btnHero) {
+          btnHero.href = "learn.html";
+          btnHero.innerHTML = "Lanjutkan Belajar <span aria-hidden=\"true\">→</span>";
+        }
       }
     }
   } catch (err) {
-    console.error("Error cek sesi:", err.message);
+    console.error("Auth system error:", err);
   }
 });

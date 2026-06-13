@@ -516,3 +516,62 @@ input:focus, select:focus, textarea:focus {
     transform: translateY(0);
   }
 }
+
+/* ==========================================
+   GLOBAL PREMIUM NAVBAR STYLES
+   ========================================== */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.85) !important; /* Warna dasar gelap transparan */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] .nav {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Efek Hover Garis Bawah Meluncur pada Link */
+.nav-item {
+  position: relative;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-item::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--primary);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2px;
+}
+
+.nav-item:hover::after, .nav-item.active::after {
+  width: 100%;
+}
+
+/* Tombol Premium Bersinar di Pojok Kanan */
+.btn-nav-premium {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  color: white !important;
+  border: none;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-nav-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+}

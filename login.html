@@ -7,10 +7,46 @@
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/components.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/session.js" defer></script>
 </head>
-<body class="page-body" style="display: flex; flex-direction: column; min-height: 100vh; justify-content: center; align-items: center;">
+<body class="page-body" style="display: flex; flex-direction: column; min-height: 100vh; align-items: center;">
 
-  <div class="card" style="max-width: 400px; width: 100%; padding: 2rem; border-top: 4px solid var(--primary);">
+  <nav class="nav" role="navigation" aria-label="Navigasi utama" style="width: 100%;">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Excel Analyst Hub beranda" style="transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        <div class="logo-icon" aria-hidden="true" style="box-shadow: 0 0 10px rgba(59,130,246,0.5);">⊞</div>
+        Excel Analyst Hub
+      </a>
+      
+      <div class="nav-links">
+        <a href="index.html" class="nav-item">Beranda</a>
+        <a href="learn.html" class="nav-item">Belajar</a>
+        <a href="tools.html" class="nav-item">Tools</a>
+        <a href="portfolio.html" class="nav-item">Portofolio</a>
+      </div>
+      
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
+        <a href="login.html" class="btn-sm btn-nav-premium" id="nav-auth-btn" style="padding: 0.45rem 1rem; border-radius: 50px; font-weight: 600; letter-spacing: 0.3px;">
+          Masuk / Profil
+        </a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="nav-menu-mobile" id="mobile-menu" role="navigation" aria-label="Navigasi mobile">
+    <a href="index.html">Beranda</a>
+    <a href="learn.html">Belajar</a>
+    <a href="tools.html">Tools</a>
+    <a href="portfolio.html">Portofolio</a>
+    <div style="height:1px; background:var(--border); margin: 8px 0;"></div> 
+    <a href="login.html" class="btn-nav-premium" id="mobile-auth-btn" style="text-align:center; border-radius: 8px; margin-top: 8px;">Masuk / Profil</a>
+  </div>
+
+  <div class="card" style="max-width: 400px; width: 100%; padding: 2rem; border-top: 4px solid var(--primary); margin: auto;">
     <h2 style="text-align: center; margin-bottom: 1.5rem;">Masuk ke Akun</h2>
     
     <form id="login-form" style="display: flex; flex-direction: column; gap: 1rem;">
