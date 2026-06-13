@@ -9,7 +9,7 @@
   
   <style>
     /* =========================================
-       ANIMASI BACKGROUND LOOPING (GOD MODE)
+       CSS RESET & BASE
        ========================================= */
     body {
       margin: 0;
@@ -19,60 +19,106 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden; /* Mencegah scrollbar bocor karena animasi */
+      overflow: hidden; /* Penting agar elemen animasi yang bocor tidak bikin scrollbar */
       font-family: 'Inter', sans-serif;
       position: relative;
     }
 
-    /* Grid Garis Data Latar Belakang */
-    .bg-grid {
-      position: absolute;
+    /* =========================================
+       THE GOD MODE ANIMATED BACKGROUND (LOOPING)
+       ========================================= */
+    
+    /* Layer 1: Infinite Panning Grid */
+    .panning-grid {
+      position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
       background-image: 
         linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
-      z-index: 0;
-      animation: panGrid 20s linear infinite;
+      background-size: 50px 50px;
+      z-index: -1;
+      animation: infinitePan 30s linear infinite;
     }
 
-    @keyframes panGrid {
+    @keyframes infinitePan {
       0% { transform: translateY(0); }
-      100% { transform: translateY(40px); }
+      100% { transform: translateY(50px); }
     }
 
-    /* Bola Energi Melayang 1 (Biru Premium) */
-    .orb-1 {
+    /* Layer 2: Cosmic Nodes (Floating Particles) */
+    .cosmic-nodes {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 0;
+    }
+
+    .node {
       position: absolute;
-      top: -15%; left: -10%;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(0,0,0,0) 70%);
+      background: rgba(59, 130, 246, 0.4);
       border-radius: 50%;
-      filter: blur(60px);
-      z-index: 1;
-      animation: floatOrb1 12s infinite alternate ease-in-out;
+      filter: blur(1px);
+      animation: floatNode 20s infinite ease-in-out;
+      opacity: 0;
     }
 
-    /* Bola Energi Melayang 2 (Emas/Warning) */
-    .orb-2 {
-      position: absolute;
-      bottom: -15%; right: -10%;
+    /* CSS Dinamis untuk letak, ukuran, dan durasi partikel (Diacak secara statis) */
+    .node:nth-child(1) { width: 12px; height: 12px; top: 80%; left: 10%; animation-duration: 18s; }
+    .node:nth-child(2) { width: 18px; height: 18px; top: 20%; left: 30%; animation-duration: 15s; animation-delay: 2s; background: rgba(245, 158, 11, 0.3); }
+    .node:nth-child(3) { width: 8px; height: 8px; top: 60%; left: 70%; animation-duration: 20s; animation-delay: 4s; }
+    .node:nth-child(4) { width: 14px; height: 14px; top: 10%; left: 85%; animation-duration: 12s; background: rgba(245, 158, 11, 0.2); }
+    .node:nth-child(5) { width: 22px; height: 22px; top: 50%; left: 90%; animation-duration: 22s; animation-delay: 1s; }
+    .node:nth-child(6) { width: 9px; height: 9px; top: 75%; left: 50%; animation-duration: 16s; animation-delay: 6s; }
+    
+    /* Batch Tambahan agar Heboh, Rapat & Cepat */
+    .node:nth-child(7) { width: 15px; height: 15px; top: 90%; left: 20%; animation-duration: 14s; animation-delay: 3s; background: rgba(245, 158, 11, 0.25); }
+    .node:nth-child(8) { width: 10px; height: 10px; top: 40%; left: 15%; animation-duration: 19s; animation-delay: 8s; }
+    .node:nth-child(9) { width: 20px; height: 20px; top: 85%; left: 60%; animation-duration: 17s; animation-delay: 0.5s; background: rgba(59, 130, 246, 0.5); }
+    .node:nth-child(10) { width: 6px; height: 6px; top: 30%; left: 45%; animation-duration: 13s; animation-delay: 5s; }
+    .node:nth-child(11) { width: 16px; height: 16px; top: 95%; left: 80%; animation-duration: 21s; animation-delay: 2.5s; background: rgba(245, 158, 11, 0.3); }
+    .node:nth-child(12) { width: 11px; height: 11px; top: 15%; left: 5%; animation-duration: 16s; animation-delay: 9s; }
+    .node:nth-child(13) { width: 19px; height: 19px; top: 55%; left: 35%; animation-duration: 23s; animation-delay: 1.5s; }
+    .node:nth-child(14) { width: 8px; height: 8px; top: 70%; left: 95%; animation-duration: 15s; animation-delay: 7.5s; background: rgba(245, 158, 11, 0.2); }
+    .node:nth-child(15) { width: 25px; height: 25px; top: 105%; left: 40%; animation-duration: 18s; animation-delay: 4.5s; filter: blur(3px); background: rgba(59, 130, 246, 0.6); }
+
+    @keyframes floatNode {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Layer 3: Breathing Aura Glow behind the Card */
+    .aura-glow-container {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
       width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(245, 158, 11, 0.2) 0%, rgba(0,0,0,0) 70%);
+      z-index: 1;
+    }
+
+    .orb {
+      position: absolute;
+      width: 100%; height: 100%;
       border-radius: 50%;
       filter: blur(80px);
-      z-index: 1;
-      animation: floatOrb2 15s infinite alternate-reverse ease-in-out;
+      animation: pulsingOrb 10s infinite ease-in-out;
+      opacity: 0.8;
     }
 
-    @keyframes floatOrb1 {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(100px, 50px) scale(1.2); }
+    .orb-blue {
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(0,0,0,0) 70%);
+      top: -10%; left: -10%;
     }
-    
-    @keyframes floatOrb2 {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(-80px, -60px) scale(1.1); }
+
+    .orb-amber {
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, rgba(0,0,0,0) 70%);
+      bottom: -10%; right: -10%;
+      animation-delay: -5s; /* Mulai di tengah agar pulsing bergantian */
+    }
+
+    @keyframes pulsingOrb {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.15); opacity: 0.9; filter: blur(100px); }
     }
 
     /* =========================================
@@ -83,9 +129,9 @@
       z-index: 10;
       width: 100%;
       max-width: 420px;
-      background: rgba(15, 23, 42, 0.65);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
       border-radius: 24px;
@@ -99,174 +145,50 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .brand-logo {
-      font-size: 2.5rem;
-      text-align: center;
-      margin-bottom: 0.5rem;
-      filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
-    }
+    /* Logo & Teks */
+    .brand-logo { font-size: 2.5rem; text-align: center; margin-bottom: 0.5rem; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5)); user-select: none; }
+    .form-title { text-align: center; color: #f8fafc; font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700; margin-top: 0; }
+    .form-subtitle { text-align: center; color: #94a3b8; font-size: 0.9rem; margin-bottom: 2rem; margin-top: 0; }
 
-    .form-title {
-      text-align: center;
-      color: #f8fafc;
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-      font-weight: 700;
-    }
+    /* SISTEM TAB LOGIN/REGISTER */
+    .tab-container { display: flex; background: rgba(0, 0, 0, 0.3); border-radius: 12px; padding: 4px; margin-bottom: 2rem; border: 1px solid rgba(255, 255, 255, 0.1); }
+    .tab-btn { flex: 1; padding: 10px; text-align: center; color: #94a3b8; background: transparent; border: none; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease; font-family: inherit; }
+    .tab-btn.active { background: rgba(59, 130, 246, 0.2); color: #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.2); border: 1px solid rgba(59, 130, 246, 0.3); }
+    .tab-btn:hover:not(.active) { color: #e2e8f0; }
 
-    .form-subtitle {
-      text-align: center;
-      color: #94a3b8;
-      font-size: 0.9rem;
-      margin-bottom: 2rem;
-    }
-
-    /* Input Fields Premium */
-    .input-group {
-      margin-bottom: 1.5rem;
-      position: relative;
-    }
-
-    .input-group label {
-      display: block;
-      color: #cbd5e1;
-      font-size: 0.8rem;
-      margin-bottom: 8px;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .glass-input {
-      width: 100%;
-      padding: 12px 16px;
-      background: rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      color: white;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      outline: none;
-      box-sizing: border-box;
-    }
-
-    .glass-input:focus {
-      border-color: #3b82f6;
-      background: rgba(59, 130, 246, 0.05);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-    }
+    /* Input Fields */
+    .input-group { margin-bottom: 1.5rem; position: relative; }
+    .input-group label { display: block; color: #cbd5e1; font-size: 0.8rem; margin-bottom: 8px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }
+    .glass-input { width: 100%; padding: 12px 16px; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: white; font-size: 1rem; transition: all 0.3s ease; outline: none; box-sizing: border-box; font-family: inherit; }
+    .glass-input:focus { border-color: #3b82f6; background: rgba(59, 130, 246, 0.05); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
 
     /* Tombol Super Glow */
-    .btn-glow {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
+    .btn-glow { width: 100%; padding: 14px; background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); transition: all 0.3s ease; position: relative; overflow: hidden; font-family: inherit; }
+    .btn-glow:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(99, 102, 241, 0.5); }
+    .btn-glow::after { content: ""; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.3), rgba(255,255,255,0)); animation: btnShine 3s infinite; }
+    @keyframes btnShine { 0% { left: -100%; } 100% { left: 200%; } }
 
-    .btn-glow:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 25px rgba(99, 102, 241, 0.5);
-    }
-
-    .btn-glow::after {
-      content: "";
-      position: absolute;
-      top: 0; left: -100%;
-      width: 50%; height: 100%;
-      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.3), rgba(255,255,255,0));
-      animation: btnShine 3s infinite;
-    }
-
-    @keyframes btnShine {
-      0% { left: -100%; }
-      100% { left: 200%; }
-    }
-
-    /* Tombol Kembali ke Beranda (Melayang Tanpa Session) */
-    .btn-back-home {
-      position: absolute;
-      top: 24px;
-      left: 24px;
-      z-index: 50;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #cbd5e1;
-      padding: 8px 16px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s ease;
-    }
-
-    .btn-back-home:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      transform: translateX(-3px);
-    }
-    /* =========================================
-       SISTEM TAB LOGIN/REGISTER
-       ========================================= */
-    .tab-container {
-      display: flex;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 12px;
-      padding: 4px;
-      margin-bottom: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .tab-btn {
-      flex: 1;
-      padding: 10px;
-      text-align: center;
-      color: #94a3b8;
-      background: transparent;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .tab-btn.active {
-      background: rgba(59, 130, 246, 0.2);
-      color: #ffffff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      border: 1px solid rgba(59, 130, 246, 0.3);
-    }
-
-    .tab-btn:hover:not(.active) {
-      color: #e2e8f0;
-    }
-
-    #auth-helper-text a:hover {
-      text-decoration: underline !important;
-      color: #6366f1 !important;
-    }
+    /* Tombol Kembali (Bebas Akses) */
+    .btn-back-home { position: fixed; top: 24px; left: 24px; z-index: 50; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); color: #cbd5e1; padding: 8px 16px; border-radius: 50px; text-decoration: none; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: all 0.2s ease; }
+    .btn-back-home:hover { background: rgba(255, 255, 255, 0.1); color: white; transform: translateX(-3px); }
   </style>
 </head>
 <body>
 
-  <div class="bg-grid"></div>
-  <div class="orb-1"></div>
-  <div class="orb-2"></div>
+  <div class="panning-grid"></div>
+  
+  <div class="cosmic-nodes">
+    <div class="node"></div><div class="node"></div><div class="node"></div>
+    <div class="node"></div><div class="node"></div><div class="node"></div>
+    <div class="node"></div><div class="node"></div><div class="node"></div>
+    <div class="node"></div><div class="node"></div><div class="node"></div>
+    <div class="node"></div><div class="node"></div><div class="node"></div>
+  </div>
 
+  <div class="aura-glow-container">
+    <div class="orb orb-blue"></div>
+    <div class="orb orb-amber"></div>
+  </div>
   <a href="index.html" class="btn-back-home">
     <span aria-hidden="true">←</span> Kembali ke Beranda
   </a>
@@ -295,8 +217,8 @@
       <button id="auth-btn" class="btn-glow">Masuk ke Ekosistem ✨</button>
       
       <div style="text-align: center; margin-top: 1.5rem;">
-        <p id="auth-helper-text" style="color: #64748b; font-size: 0.8rem;">
-          Lupa kata sandi? <a href="https://wa.me/628XXXXXXXXXX?text=Halo%20Admin%20Excel%20Analyst%20Hub,%20saya%20lupa%20kata%20sandi%20akun%20saya.%20Mohon%20bantuannya%20untuk%20reset%20password" target="_blank" style="color: #3b82f6; text-decoration: none; font-weight: 600;">Hubungi via WA</a>
+        <p id="auth-helper-text" style="color: #64748b; font-size: 0.8rem; margin: 0;">
+          Lupa kata sandi? Hubungi administrator.
         </p>
       </div>
     </div>
@@ -312,21 +234,31 @@
       const authBtn = document.getElementById('auth-btn');
       const helperText = document.getElementById('auth-helper-text');
 
+      // GANTI NOMOR WA ASLI ANDA DI SINI
+      const waNumber = '628XXXXXXXXXX'; 
+      const waLink = `https://wa.me/${waNumber}?text=Halo%20Admin%20Excel%20Analyst%20Hub,%20saya%20lupa%20kata%20sandi%20akun%20saya.%20Mohon%20bantuannya%20untuk%20reset%20password.`;
+
       if (mode === 'login') {
         isLoginMode = true;
         btnLogin.classList.add('active');
         btnRegister.classList.remove('active');
         authBtn.innerHTML = 'Masuk ke Ekosistem ✨';
-        helperText.innerHTML = 'Lupa kata sandi? <a href="https://wa.me/628XXXXXXXXXX?text=Halo%20Admin%20Excel%20Analyst%20Hub,%20saya%20lupa%20kata%20sandi%20akun%20saya.%20Mohon%20bantuannya%20untuk%20reset%20password" target="_blank" style="color: #3b82f6; text-decoration: none; font-weight: 600;">Hubungi via WA</a>';
+        // Versi Final dengan Link WA (GANTI NOMOR DI ATAS)
+        helperText.innerHTML = `Lupa kata sandi? <a href="${waLink}" target="_blank" style="color: #3b82f6; text-decoration: none; font-weight: 600;">Hubungi via WA</a>`;
       } else {
         isLoginMode = false;
         btnRegister.classList.add('active');
         btnLogin.classList.remove('active');
         authBtn.innerHTML = 'Daftar & Mulai Petualangan 🚀';
+        // Versi Final dengan Teks Register Berbayar
         helperText.innerHTML = 'Gunakan email asli Anda. Email ini akan menjadi identitas untuk aktivasi paket Premium.';
       }
     }
+    
+    // Jalankan switchTab('login') saat load untuk pasang link WA
+    document.addEventListener('DOMContentLoaded', () => switchTab('login'));
   </script>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
