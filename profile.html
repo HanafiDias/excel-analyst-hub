@@ -45,13 +45,11 @@
     }
 
     @keyframes cosmicPulse {
-
       0%,
       100% {
         transform: translate(-50%, -50%) scale(1);
         opacity: 0.8;
       }
-
       50% {
         transform: translate(-50%, -50%) scale(1.2);
         opacity: 1;
@@ -93,13 +91,8 @@
     }
 
     @keyframes orbitRotate {
-      from {
-        transform: rotate(0deg);
-      }
-
-      to {
-        transform: rotate(360deg);
-      }
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     /* 3. Animasi Floating Besar pada Badge Utama */
@@ -111,15 +104,9 @@
     }
 
     @keyframes floatingBadge {
-
       0%,
-      100% {
-        transform: translateY(0) rotate(0deg);
-      }
-
-      50% {
-        transform: translateY(-12px) rotate(3deg);
-      }
+      100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(3deg); }
     }
 
     /* 4. Progress Bar Cair Berkilau (Liquid Data Stream) */
@@ -138,7 +125,6 @@
       background: linear-gradient(90deg, #3b82f6, #6366f1, #f59e0b, #e11d48);
       background-size: 300% 100%;
       width: 0%;
-      /* Diatur via JS */
       transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
       position: relative;
       overflow: hidden;
@@ -146,16 +132,10 @@
     }
 
     @keyframes streamFlow {
-      0% {
-        background-position: 0% 50%;
-      }
-
-      100% {
-        background-position: 300% 50%;
-      }
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
     }
 
-    /* Efek Kilatan Menyapu konstan pada Progress Bar */
     .xp-stream-bar::after {
       content: "";
       position: absolute;
@@ -168,13 +148,8 @@
     }
 
     @keyframes barShine {
-      0% {
-        left: -100%;
-      }
-
-      100% {
-        left: 100%;
-      }
+      0% { left: -100%; }
+      100% { left: 100%; }
     }
 
     /* 5. Grid Lencana/Badges Milestones */
@@ -196,7 +171,6 @@
       overflow: hidden;
     }
 
-    /* Status Terkunci (Default sebelum kalkulasi) */
     .badge-item-box.locked {
       opacity: 0.4;
       filter: grayscale(1);
@@ -210,7 +184,6 @@
       font-size: 0.8rem;
     }
 
-    /* Efek Riak Gelombang saat Lencana Sukses Terbuka di-hover */
     .badge-item-box:not(.locked):hover {
       transform: translateY(-5px) scale(1.05);
       border-color: var(--primary);
@@ -240,7 +213,6 @@
       line-height: 1.3;
     }
 
-    /* Animasi Lampu Neon Berkedip untuk Status Aktif */
     .status-dot {
       width: 8px;
       height: 8px;
@@ -252,20 +224,11 @@
     }
 
     @keyframes neonPulse {
-
       0%,
-      100% {
-        opacity: 0.5;
-        box-shadow: 0 0 4px #10b981;
-      }
-
-      50% {
-        opacity: 1;
-        box-shadow: 0 0 12px #10b981;
-      }
+      100% { opacity: 0.5; box-shadow: 0 0 4px #10b981; }
+      50% { opacity: 1; box-shadow: 0 0 12px #10b981; }
     }
 
-    /* Tag Paket Premium */
     .premium-badge-tag {
       background: linear-gradient(90deg, rgba(245, 158, 11, 0.1) 0%, rgba(225, 29, 72, 0.1) 100%);
       border: 1px solid rgba(245, 158, 11, 0.3);
@@ -316,26 +279,7 @@
     <button class="btn-ghost" id="logout-btn-mobile" style="width:100%; border:1px solid var(--border); color:var(--error);">Keluar</button>
   </div>
 
-  <main id="main-content" class="container"
-    style="padding-top: var(--space-6); padding-bottom: var(--space-8); max-width: 1000px;">
-
-    <div class="profile-header" style="text-align: center; margin-top: 3rem; margin-bottom: 2rem;">
-      <h1 id="greeting-text" style="color: white; font-size: 2rem; font-weight: 700;">Memuat data...</h1>
-      <p id="user-email-display" style="color: #94a3b8;">Mengambil informasi akun</p>
-    </div>
-
-    <div class="glass-card" style="max-width: 500px; margin: 0 auto 3rem auto;">
-      <h3 style="color: white; margin-top: 0; margin-bottom: 1.5rem; font-size: 1.2rem;">⚙️ Pengaturan Akun Utama</h3>
-      
-      <div class="input-group">
-        <label for="nickname-input" style="color: #cbd5e1; font-size: 0.8rem; display: block; margin-bottom: 8px; text-transform: uppercase; font-weight: 500;">Nama Panggilan (Nickname)</label>
-        <input type="text" id="nickname-input" class="glass-input" placeholder="Masukkan nama panggilan Anda" style="width: 100%; padding: 12px 16px; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: white; margin-bottom: 1rem;">
-      </div>
-      
-      <button id="save-profile-btn" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transition: all 0.3s ease;">
-        Simpan Perubahan
-      </button>
-    </div>
+  <main id="main-content" class="container" style="padding-top: var(--space-6); padding-bottom: var(--space-8); max-width: 1000px;">
 
     <div class="dashboard-hero">
       <div class="cosmic-glow"></div>
@@ -345,15 +289,13 @@
       </div>
 
       <h1 style="margin: 0; font-size: 2rem; letter-spacing: -0.5px;" id="user-greeting">Memuat Petualangan...</h1>
-      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: var(--space-1); margin-bottom: 0;"
-        id="user-tier-title">Junior Analyst Tier</p>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: var(--space-1); margin-bottom: 0;" id="user-tier-title">Junior Analyst Tier</p>
 
       <div class="xp-stream-container">
         <div class="xp-stream-bar" id="xp-progress-bar"></div>
       </div>
 
-      <div style="font-weight: bold; font-size: 1.1rem; color: #f59e0b; margin-top: 0.5rem;" id="xp-display-text">0 XP /
-        500 XP</div>
+      <div style="font-weight: bold; font-size: 1.1rem; color: #f59e0b; margin-top: 0.5rem;" id="xp-display-text">0 XP / 500 XP</div>
     </div>
 
     <div class="grid-2" style="gap: 2rem; align-items: start;">
@@ -362,8 +304,7 @@
         <h2 style="margin-top: 0; font-size: 1.25rem; display: flex; align-items: center; gap: 8px;">
           🏆 Lemari Lencana Pencapaian
         </h2>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Sistem otomatis mendeteksi total tabungan XP
-          Supabase Anda untuk membuka penghargaan spesial berikut:</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Sistem otomatis mendeteksi total tabungan XP Supabase Anda untuk membuka penghargaan spesial berikut:</p>
 
         <div class="badge-grid">
           <div class="badge-item-box locked" id="badge-junior">
@@ -390,15 +331,17 @@
         </h2>
         <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.2rem;">
 
-          <div>
-            <label
-              style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); display: block; margin-bottom: 4px;">Alamat
-              Email</label>
-            <div style="font-weight: 500; font-size: 1.05rem;" id="info-email">memuat...</div>
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);">
+            <div>
+              <label style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); display: block; margin-bottom: 4px;">Alamat Email</label>
+              <div style="font-weight: 500; font-size: 1.05rem;" id="info-email">memuat...</div>
+            </div>
+            <button onclick="openEditModal()" style="padding: 6px 12px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='rgba(59, 130, 246, 0.2)'" onmouseout="this.style.background='rgba(59, 130, 246, 0.1)'">
+              ✏️ Edit Nama
+            </button>
           </div>
 
-          <div
-            style="padding: 1rem; background: var(--surface-2); border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px;">
+          <div style="padding: 1rem; background: var(--surface-2); border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
               <span class="premium-badge-tag">⚡ PREMIUM MONTHLY</span>
               <span style="font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 6px;">
@@ -410,8 +353,7 @@
 
             <div style="display: flex; justify-content: space-between; align-items: center;">
               <span style="font-size: 0.85rem; color: var(--text-muted);">Sisa Masa Aktif</span>
-              <span style="font-weight: bold; color: #10b981; font-size: 1rem;"
-                id="subscription-remaining">Calculating...</span>
+              <span style="font-weight: bold; color: #10b981; font-size: 1rem;" id="subscription-remaining">Calculating...</span>
             </div>
 
             <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -421,12 +363,8 @@
           </div>
 
           <div style="padding-top: 0.5rem; display: flex; flex-direction: column; gap: 10px;">
-            <button class="btn-primary btn-sm"
-              style="width: 100%; text-align: center; background: linear-gradient(90deg, #f59e0b, #e11d48); border: none;"
-              onclick="alert('Fungsi Gateway Pembayaran (QRIS/Stripe) akan segera dihubungkan pada tahap berikutnya!')">Perpanjang
-              Langganan ↑</button>
-            <a href="learn.html" class="btn-ghost btn-sm"
-              style="width: 100%; text-align: center; border: 1px solid var(--border);">Lanjutkan Belajar →</a>
+            <button class="btn-primary btn-sm" style="width: 100%; text-align: center; background: linear-gradient(90deg, #f59e0b, #e11d48); border: none;" onclick="alert('Fungsi Gateway Pembayaran (QRIS/Stripe) akan segera dihubungkan pada tahap berikutnya!')">Perpanjang Langganan ↑</button>
+            <a href="learn.html" class="btn-ghost btn-sm" style="width: 100%; text-align: center; border: 1px solid var(--border);">Lanjutkan Belajar →</a>
           </div>
 
         </div>
@@ -435,8 +373,31 @@
     </div>
   </main>
 
+  <div id="edit-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 9999; opacity: 0; visibility: hidden; transition: all 0.3s ease;">
+    <div style="width: 100%; max-width: 350px; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 2rem; box-shadow: 0 25px 50px rgba(0,0,0,0.5);">
+      <h3 style="color: white; margin-top: 0; margin-bottom: 1.5rem; font-size: 1.2rem;">Edit Nama Panggilan</h3>
+      <div style="margin-bottom: 1.5rem;">
+        <input type="text" id="modal-nickname-input" placeholder="Masukkan nama..." style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-family: inherit; font-size: 1rem; outline: none; box-sizing: border-box;">
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button onclick="closeEditModal()" style="flex: 1; padding: 10px; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 12px; cursor: pointer;">Batal</button>
+        <button id="modal-save-btn" style="flex: 1; padding: 10px; background: #3b82f6; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 600;">Simpan</button>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    // FUNGSI KONTROL MODAL
+    function openEditModal() {
+        document.getElementById('edit-modal').style.opacity = '1';
+        document.getElementById('edit-modal').style.visibility = 'visible';
+    }
+    function closeEditModal() {
+        document.getElementById('edit-modal').style.opacity = '0';
+        document.getElementById('edit-modal').style.visibility = 'hidden';
+    }
+
     document.addEventListener('DOMContentLoaded', async function () {
       if (!window.supabase) return;
 
@@ -453,17 +414,44 @@
 
       const user = session.user;
       document.getElementById('info-email').innerText = user.email;
-      document.getElementById('user-greeting').innerText = `Selamat Datang, ${user.email.split('@')[0]}! 👋`;
 
-      // SIMULASI: Set tanggal kedaluwarsa paket 1 bulan dari sekarang (13 Juli 2026)
+      // === TARIK DATA NICKNAME DARI SUPABASE ===
+      let currentNick = user.email.split('@')[0];
+      try {
+        const { data: profData } = await supa.from('profiles').select('nickname').eq('id', user.id).maybeSingle();
+        if (profData && profData.nickname) {
+          currentNick = profData.nickname;
+        }
+      } catch (err) { console.error(err); }
+
+      document.getElementById('user-greeting').innerText = `Selamat Datang, ${currentNick}! 👋`;
+      document.getElementById('modal-nickname-input').value = currentNick;
+
+      // === LOGIKA TOMBOL SIMPAN NICKNAME ===
+      document.getElementById('modal-save-btn').addEventListener('click', async () => {
+        const newNick = document.getElementById('modal-nickname-input').value.trim();
+        if(!newNick) return alert("Nickname tidak boleh kosong!");
+        
+        document.getElementById('modal-save-btn').innerText = "Menyimpan...";
+        const { error } = await supa.from('profiles').upsert({ id: user.id, nickname: newNick });
+        
+        if(!error) {
+           document.getElementById('user-greeting').innerText = `Selamat Datang, ${newNick}! 👋`;
+           document.getElementById('modal-save-btn').innerText = "Simpan";
+           closeEditModal();
+        } else {
+           alert("Gagal menyimpan data.");
+           document.getElementById('modal-save-btn').innerText = "Simpan";
+        }
+      });
+
+
+      // === SIMULASI LANGGANAN ===
       const expireDate = new Date('2026-07-13T00:00:00');
       const today = new Date();
-
-      // Hitung selisih hari
       const diffTime = expireDate - today;
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-      // Tampilkan sisa hari secara dinamis
       if (diffDays > 0) {
         document.getElementById('subscription-remaining').innerText = `${diffDays} Hari Lagi`;
       } else {
@@ -471,47 +459,31 @@
         document.getElementById('subscription-remaining').style.color = `var(--error)`;
       }
 
-      // Format tanggal pembaruan ke format Indonesia
-      const renewDateString = expireDate.toLocaleDateString('id-ID', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
+      const renewDateString = expireDate.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
       document.getElementById('subscription-renew-date').innerText = renewDateString;
 
-      // 2. TARIK DATA XP DARI DATABASE SUPABASE
+      // === TARIK DATA XP DARI DATABASE SUPABASE ===
       let totalXp = 0;
       try {
-        const { data, error } = await supa
-          .from('user_xp')
-          .select('xp_amount')
-          .eq('user_id', user.id)
-          .maybeSingle();
+        const { data, error } = await supa.from('user_xp').select('xp_amount').eq('user_id', user.id).maybeSingle();
+        if (data) totalXp = data.xp_amount;
+      } catch (err) { console.error("Gagal menarik data XP:", err); }
 
-        if (data) {
-          totalXp = data.xp_amount;
-        }
-      } catch (err) {
-        console.error("Gagal menarik data XP:", err);
-      }
-
-      // 3. LOGIKA GAMIFIKASI & CSS ANIMATION CALCULATOR
+      // === LOGIKA GAMIFIKASI & CSS ANIMATION CALCULATOR ===
       let tierBadge = '🥉';
       let tierTitle = 'Junior Analyst (Bronze Tier)';
       let maxTierXp = 500;
       let minTierXp = 0;
 
-      // Reset & Nyalakan Badge Berdasarkan Milestone Saldo
-      document.getElementById('badge-junior').classList.remove('locked'); // Selalu terbuka
+      document.getElementById('badge-junior').classList.remove('locked');
 
       if (totalXp >= 2000) {
         tierBadge = '🥇';
         tierTitle = 'Master of Excel (Gold Tier) 👑';
         minTierXp = 2000;
-        maxTierXp = 10000; // Cap Maksimal untuk baris penuh
+        maxTierXp = 10000; 
         document.getElementById('badge-wrangler').classList.remove('locked');
         document.getElementById('badge-master').classList.remove('locked');
-        // Ubah warna orbit menjadi emas mewah khusus Gold Tier
         document.querySelector('.badge-orbit').style.setProperty('--warning', '#f59e0b');
       } else if (totalXp >= 500) {
         tierBadge = '🥈';
@@ -521,29 +493,25 @@
         document.getElementById('badge-wrangler').classList.remove('locked');
       }
 
-      // Hitung persentase baris pengisi data liquid
       let rangeXp = totalXp - minTierXp;
       let rangeMax = maxTierXp - minTierXp;
       let percentage = Math.min(Math.max((rangeXp / rangeMax) * 100, 0), 100);
 
-      // Suntikkan data ke layar visual
       document.getElementById('tier-badge').innerText = tierBadge;
       document.getElementById('user-tier-title').innerText = tierTitle;
       document.getElementById('xp-display-text').innerText = `${totalXp} XP / ${maxTierXp} XP`;
 
-      // Jalankan animasi pengisian baris data (Mulus karena Cubic-Bezier)
       setTimeout(() => {
         document.getElementById('xp-progress-bar').style.width = `${percentage}%`;
       }, 300);
 
-      // 4. SISTEM LOGOUT
+      // === SISTEM LOGOUT ===
       document.getElementById('logout-btn').addEventListener('click', async function () {
         await supa.auth.signOut();
         window.location.href = 'index.html';
       });
     });
   </script>
-  <script src="assets/js/profile.js" defer></script>
   <script src="assets/js/main.js"></script>
 </body>
 
