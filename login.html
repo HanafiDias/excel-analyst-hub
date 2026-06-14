@@ -1,645 +1,138 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('eah_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { }
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Masuk / Daftar — Excel Analyst Hub</title>
+  <title>Masuk — Excel Analyst Hub</title>
   <link rel="stylesheet" href="assets/css/main.css" />
-  <script src="assets/js/session.js" defer></script>
-
+  <link rel="stylesheet" href="assets/css/components.css" />
   <style>
-    /* =========================================
-       CSS RESET & BASE
-       ========================================= */
-    body {
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      background-color: #0f172a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      /* Penting agar elemen animasi yang bocor tidak bikin scrollbar */
-      font-family: 'Inter', sans-serif;
-      position: relative;
+    html, body { height: 100%; overflow: hidden !important; margin: 0 !important; padding: 0 !important; background: #0b1120; }
+
+    .auth-page-wrapper {
+      height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; box-sizing: border-box; padding: 1rem;
     }
 
     /* =========================================
-       THE GOD MODE ANIMATED BACKGROUND (LOOPING)
+       1. ANIMASI GLOWING ORBS (MODE AGRESIF & TERLIHAT)
        ========================================= */
-
-    /* Layer 1: Infinite Panning Grid */
-    .panning-grid {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 50px 50px;
-      z-index: -1;
-      animation: infinitePan 30s linear infinite;
+    .orb-1, .orb-2 {
+      position: absolute; border-radius: 50%; filter: blur(80px); z-index: 0;
+      animation: floatOrb 10s infinite ease-in-out; pointer-events: none;
     }
-
-    @keyframes infinitePan {
-      0% {
-        transform: translateY(0);
-      }
-
-      100% {
-        transform: translateY(50px);
-      }
+    .orb-1 { 
+      width: 450px; height: 450px; background: rgba(59, 130, 246, 0.45); 
+      top: -15%; left: -10%; 
     }
-
-    /* Layer 2: Cosmic Nodes (Floating Particles) */
-    .cosmic-nodes {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
+    .orb-2 { 
+      width: 400px; height: 400px; background: rgba(225, 29, 72, 0.35); 
+      bottom: -15%; right: -10%; animation-delay: -5s; 
     }
-
-    .node {
-      position: absolute;
-      background: rgba(59, 130, 246, 0.4);
-      border-radius: 50%;
-      filter: blur(1px);
-      animation: floatNode 20s infinite ease-in-out;
-      opacity: 0;
+    
+    @keyframes floatOrb {
+      0% { transform: translate(0px, 0px) scale(1); opacity: 0.5; }
+      33% { transform: translate(15vw, 10vh) scale(1.4); opacity: 1; }
+      66% { transform: translate(-10vw, 15vh) scale(0.8); opacity: 0.7; }
+      100% { transform: translate(0px, 0px) scale(1); opacity: 0.5; }
     }
-
-    /* CSS Dinamis untuk letak, ukuran, dan durasi partikel (Diacak secara statis) */
-    .node:nth-child(1) {
-      width: 12px;
-      height: 12px;
-      top: 80%;
-      left: 10%;
-      animation-duration: 18s;
-    }
-
-    .node:nth-child(2) {
-      width: 18px;
-      height: 18px;
-      top: 20%;
-      left: 30%;
-      animation-duration: 15s;
-      animation-delay: 2s;
-      background: rgba(245, 158, 11, 0.3);
-    }
-
-    .node:nth-child(3) {
-      width: 8px;
-      height: 8px;
-      top: 60%;
-      left: 70%;
-      animation-duration: 20s;
-      animation-delay: 4s;
-    }
-
-    .node:nth-child(4) {
-      width: 14px;
-      height: 14px;
-      top: 10%;
-      left: 85%;
-      animation-duration: 12s;
-      background: rgba(245, 158, 11, 0.2);
-    }
-
-    .node:nth-child(5) {
-      width: 22px;
-      height: 22px;
-      top: 50%;
-      left: 90%;
-      animation-duration: 22s;
-      animation-delay: 1s;
-    }
-
-    .node:nth-child(6) {
-      width: 9px;
-      height: 9px;
-      top: 75%;
-      left: 50%;
-      animation-duration: 16s;
-      animation-delay: 6s;
-    }
-
-    /* Batch Tambahan agar Heboh, Rapat & Cepat */
-    .node:nth-child(7) {
-      width: 15px;
-      height: 15px;
-      top: 90%;
-      left: 20%;
-      animation-duration: 14s;
-      animation-delay: 3s;
-      background: rgba(245, 158, 11, 0.25);
-    }
-
-    .node:nth-child(8) {
-      width: 10px;
-      height: 10px;
-      top: 40%;
-      left: 15%;
-      animation-duration: 19s;
-      animation-delay: 8s;
-    }
-
-    .node:nth-child(9) {
-      width: 20px;
-      height: 20px;
-      top: 85%;
-      left: 60%;
-      animation-duration: 17s;
-      animation-delay: 0.5s;
-      background: rgba(59, 130, 246, 0.5);
-    }
-
-    .node:nth-child(10) {
-      width: 6px;
-      height: 6px;
-      top: 30%;
-      left: 45%;
-      animation-duration: 13s;
-      animation-delay: 5s;
-    }
-
-    .node:nth-child(11) {
-      width: 16px;
-      height: 16px;
-      top: 95%;
-      left: 80%;
-      animation-duration: 21s;
-      animation-delay: 2.5s;
-      background: rgba(245, 158, 11, 0.3);
-    }
-
-    .node:nth-child(12) {
-      width: 11px;
-      height: 11px;
-      top: 15%;
-      left: 5%;
-      animation-duration: 16s;
-      animation-delay: 9s;
-    }
-
-    .node:nth-child(13) {
-      width: 19px;
-      height: 19px;
-      top: 55%;
-      left: 35%;
-      animation-duration: 23s;
-      animation-delay: 1.5s;
-    }
-
-    .node:nth-child(14) {
-      width: 8px;
-      height: 8px;
-      top: 70%;
-      left: 95%;
-      animation-duration: 15s;
-      animation-delay: 7.5s;
-      background: rgba(245, 158, 11, 0.2);
-    }
-
-    .node:nth-child(15) {
-      width: 25px;
-      height: 25px;
-      top: 105%;
-      left: 40%;
-      animation-duration: 18s;
-      animation-delay: 4.5s;
-      filter: blur(3px);
-      background: rgba(59, 130, 246, 0.6);
-    }
-
-    @keyframes floatNode {
-      0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0;
-      }
-
-      10% {
-        opacity: 1;
-      }
-
-      90% {
-        opacity: 1;
-      }
-
-      100% {
-        transform: translateY(-100vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
-
-    /* Layer 3: Breathing Aura Glow behind the Card */
-    .aura-glow-container {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 600px;
-      height: 600px;
-      z-index: 1;
-    }
-
-    .orb {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      filter: blur(80px);
-      animation: pulsingOrb 10s infinite ease-in-out;
-      opacity: 0.8;
-    }
-
-    .orb-blue {
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
-      top: -10%;
-      left: -10%;
-    }
-
-    .orb-amber {
-      background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-      bottom: -10%;
-      right: -10%;
-      animation-delay: -5s;
-      /* Mulai di tengah agar pulsing bergantian */
-    }
-
-    @keyframes pulsingOrb {
-
-      0%,
-      100% {
-        transform: scale(1);
-        opacity: 0.6;
-      }
-
-      50% {
-        transform: scale(1.15);
-        opacity: 0.9;
-        filter: blur(100px);
-      }
-    }
-
     /* =========================================
-       GLASSMORPHISM LOGIN CARD
+       2. TOMBOL KEMBALI MELAYANG
        ========================================= */
-    .glass-card {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      max-width: 420px;
-      background: rgba(15, 23, 42, 0.7);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-      border-radius: 24px;
-      padding: 2.5rem;
-      animation: cardEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      opacity: 0;
-      transform: translateY(30px);
+    .btn-floating-back {
+      position: absolute; top: 1.5rem; left: 1.5rem; z-index: 50;
+      background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1); color: #cbd5e1;
+      padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 600;
+      text-decoration: none; display: flex; align-items: center; gap: 8px; transition: all 0.3s;
     }
+    .btn-floating-back:hover { background: rgba(255, 255, 255, 0.1); color: white; transform: translateX(-4px); }
 
-    @keyframes cardEntrance {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* Desain Kartu Form */
+    .auth-card {
+      width: 100%; max-width: 420px; background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 2.5rem;
+      position: relative; z-index: 10; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+      text-align: center; animation: cardEntry 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
+    @keyframes cardEntry { from { opacity: 0; transform: translateY(20px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .auth-card:hover { border-color: rgba(59, 130, 246, 0.3); box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 30px rgba(59,130,246,0.1); transition: all 0.4s ease; }
 
-    /* Logo & Teks */
-    .brand-logo {
-      font-size: 2.5rem;
-      text-align: center;
-      margin-bottom: 0.5rem;
-      filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
-      user-select: none;
-    }
+    .logo-badge { display: inline-flex; background: rgba(59, 130, 246, 0.15); color: #60a5fa; padding: 6px 12px; border-radius: 50px; font-weight: 600; font-size: 0.75rem; border: 1px solid rgba(59, 130, 246, 0.3); margin-bottom: 1.2rem; }
+    .auth-card h1 { font-size: 1.8rem; font-weight: 800; color: white; margin-top: 0; margin-bottom: 0.5rem; }
+    .auth-card p { color: #cbd5e1; font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.5; }
 
-    .form-title {
-      text-align: center;
-      color: #f8fafc;
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-      font-weight: 700;
-      margin-top: 0;
-    }
+    .form-group { margin-bottom: 1.2rem; text-align: left; }
+    .form-group label { color: #cbd5e1; font-size: 0.75rem; display: block; margin-bottom: 6px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+    .form-input-premium { width: 100%; padding: 12px 16px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: white; font-family: inherit; font-size: 0.95rem; outline: none; box-sizing: border-box; transition: border-color 0.3s; }
+    .form-input-premium:focus { border-color: #3b82f6; }
 
-    .form-subtitle {
-      text-align: center;
-      color: #94a3b8;
-      font-size: 0.9rem;
-      margin-bottom: 2rem;
-      margin-top: 0;
-    }
-
-    /* SISTEM TAB LOGIN/REGISTER */
-    .tab-container {
-      display: flex;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 12px;
-      padding: 4px;
-      margin-bottom: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .tab-btn {
-      flex: 1;
-      padding: 10px;
-      text-align: center;
-      color: #94a3b8;
-      background: transparent;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: inherit;
-    }
-
-    .tab-btn.active {
-      background: rgba(59, 130, 246, 0.2);
-      color: #ffffff;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(59, 130, 246, 0.3);
-    }
-
-    .tab-btn:hover:not(.active) {
-      color: #e2e8f0;
-    }
-
-    /* Input Fields */
-    .input-group {
-      margin-bottom: 1.5rem;
-      position: relative;
-    }
-
-    .input-group label {
-      display: block;
-      color: #cbd5e1;
-      font-size: 0.8rem;
-      margin-bottom: 8px;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .glass-input {
-      width: 100%;
-      padding: 12px 16px;
-      background: rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      color: white;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      outline: none;
-      box-sizing: border-box;
-      font-family: inherit;
-    }
-
-    .glass-input:focus {
-      border-color: #3b82f6;
-      background: rgba(59, 130, 246, 0.05);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-    }
-
-    /* Tombol Super Glow */
-    .btn-glow {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      font-family: inherit;
-    }
-
-    .btn-glow:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 25px rgba(99, 102, 241, 0.5);
-    }
-
-    .btn-glow::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 50%;
-      height: 100%;
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
-      animation: btnShine 3s infinite;
-    }
-
-    @keyframes btnShine {
-      0% {
-        left: -100%;
-      }
-
-      100% {
-        left: 200%;
-      }
-    }
-
-    /* Tombol Kembali (Bebas Akses) */
-    .btn-back-home {
-      position: fixed;
-      top: 24px;
-      left: 24px;
-      z-index: 50;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #cbd5e1;
-      padding: 8px 16px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s ease;
-    }
-
-    .btn-back-home:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      transform: translateX(-3px);
-    }
+    .btn-login { width: 100%; padding: 16px; background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; position: relative; overflow: hidden; transition: all 0.3s; box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4); margin-top: 1rem; }
+    .btn-login:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(99, 102, 241, 0.5); filter: brightness(1.1); }
+    .btn-login::after { content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); animation: sweepKilat 4s infinite linear; }
+    @keyframes sweepKilat { 0% { left: -100%; } 30% { left: 100%; } 100% { left: 100%; } }
   </style>
 </head>
-
 <body>
 
-  <div class="panning-grid"></div>
+  <div class="auth-page-wrapper">
+    <div class="orb-1"></div>
+    <div class="orb-2"></div>
+    
+    <a href="index.html" class="btn-floating-back">← Beranda</a>
 
-  <div class="cosmic-nodes">
-    <div class="node"></div>
-    <div class="node"></div>
-    <div class="node"></div>
-    <div class="node"></div>
-    <div class="node"></div>
-    <div class="node"></div>
-    <div class="node"></div>
-    <div class="node"></div>
-    <div class="node"></div>
-    <div class="node"></div>
-    <div class="node"></div>
-    <div class="node"></div>
-    <div class="node"></div>
-    <div class="node"></div>
-    <div class="node"></div>
-  </div>
+    <div class="auth-card">
+      <div class="logo-badge">⊞ EXCEL ANALYST HUB</div>
+      <h1>Selamat Datang</h1>
+      <p>Masuk untuk melanjutkan petualangan data dan akses dashboard premium Anda.</p>
+      
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-email">Alamat Email</label>
+          <input type="email" id="login-email" class="form-input-premium" placeholder="nama@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Kata Sandi</label>
+          <input type="password" id="login-password" class="form-input-premium" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn-login" id="submit-btn">Masuk ke Akun</button>
+      </form>
 
-  <div class="aura-glow-container">
-    <div class="orb orb-blue"></div>
-    <div class="orb orb-amber"></div>
-  </div>
-  <a href="index.html" class="btn-back-home">
-    <span aria-hidden="true">←</span> Kembali ke Beranda
-  </a>
-
-  <div class="glass-card">
-    <div class="brand-logo">⊞</div>
-    <h1 class="form-title">Portal Analis</h1>
-    <p class="form-subtitle">Satu langkah menuju keahlian kelas industri.</p>
-
-    <div class="tab-container">
-      <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">Masuk</button>
-      <button class="tab-btn" id="tab-register" onclick="switchTab('register')">Daftar Baru</button>
-    </div>
-
-    <div id="auth-form-container">
-      <div class="input-group">
-        <label for="email">Alamat Email</label>
-        <input type="email" id="email" class="glass-input" placeholder="contoh@email.com" required>
-      </div>
-
-      <div class="input-group">
-        <label for="password">Kata Sandi</label>
-        <input type="password" id="password" class="glass-input" placeholder="Minimal 6 karakter" required>
-      </div>
-
-      <button id="auth-btn" class="btn-glow">Masuk ke Ekosistem ✨</button>
-
-      <div style="text-align: center; margin-top: 1.5rem;">
-        <p id="auth-helper-text" style="color: #64748b; font-size: 0.8rem; margin: 0;">
-          Lupa kata sandi? Hubungi administrator.
-        </p>
-      </div>
+      <p style="font-size: 0.85rem; color: #64748b; margin-top: 1.5rem; margin-bottom: 0;">
+        Belum punya akses Premium? <br>
+        <a href="register.html" style="color: #f59e0b; text-decoration: none; font-weight: 600; display: inline-block; margin-top: 5px;">⚡ Beli Akses di Sini</a>
+      </p>
     </div>
   </div>
-
-  <script>
-    // State aplikasi (default: login)
-    let isLoginMode = true;
-
-    function switchTab(mode) {
-      const btnLogin = document.getElementById('tab-login');
-      const btnRegister = document.getElementById('tab-register');
-      const authBtn = document.getElementById('auth-btn');
-      const helperText = document.getElementById('auth-helper-text');
-
-      // GANTI NOMOR WA ASLI ANDA DI SINI
-      const waNumber = '+6289618240539';
-      const waLink = `https://wa.me/${waNumber}?text=Halo%20Admin%20Excel%20Analyst%20Hub,%20saya%20lupa%20kata%20sandi%20akun%20saya.%20Mohon%20bantuannya%20untuk%20reset%20password.`;
-
-      if (mode === 'login') {
-        isLoginMode = true;
-        btnLogin.classList.add('active');
-        btnRegister.classList.remove('active');
-        authBtn.innerHTML = 'Masuk ke Ekosistem ✨';
-        // Versi Final dengan Link WA (GANTI NOMOR DI ATAS)
-        helperText.innerHTML = `Lupa kata sandi? <a href="${waLink}" target="_blank" style="color: #3b82f6; text-decoration: none; font-weight: 600;">Hubungi via WA</a>`;
-      } else {
-        isLoginMode = false;
-        btnRegister.classList.add('active');
-        btnLogin.classList.remove('active');
-        authBtn.innerHTML = 'Daftar & Mulai Petualangan 🚀';
-        // Versi Final dengan Teks Register Berbayar
-        helperText.innerHTML = 'Gunakan email asli Anda. Email ini akan menjadi identitas untuk aktivasi paket Premium.';
-      }
-    }
-
-    // Jalankan switchTab('login') saat load untuk pasang link WA
-    document.addEventListener('DOMContentLoaded', () => switchTab('login'));
-  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener('DOMContentLoaded', function() {
       if (!window.supabase) return;
-
-      const supabaseUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
-      const supabaseKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
-      const supa = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-      const authBtn = document.getElementById('auth-btn');
-      const emailInput = document.getElementById('email');
-      const passwordInput = document.getElementById('password');
-
-      if (!authBtn) return;
-
-      authBtn.addEventListener('click', async (e) => {
-        e.preventDefault();
-
-        const email = emailInput.value.trim();
-        const password = passwordInput.value.trim();
-
-        if (!email || !password) {
-          alert('Harap isi alamat email dan kata sandi.');
-          return;
-        }
-
-        const originalText = authBtn.innerHTML;
-        authBtn.innerHTML = 'Memproses... ✨';
-        authBtn.disabled = true;
-
-        try {
-          // 1. Coba login terlebih dahulu
-          const { data, error } = await supa.auth.signInWithPassword({ email, password });
-
-          if (error) {
-            // Jika Invalid credentials, coba buat akun baru
-            if (error.message.toLowerCase().includes('invalid login credentials')) {
-              const { data: signUpData, error: signUpError } = await supa.auth.signUp({ email, password });
-              if (signUpError) throw signUpError;
-              alert('Akun baru berhasil dibuat! Anda sudah masuk.');
-              window.location.href = 'profile.html';
-            } else {
-              throw error;
-            }
-          } else {
-            alert('Login Berhasil! Selamat datang kembali.');
-            window.location.href = 'profile.html';
-          }
-        } catch (error) {
-          alert('Gagal: ' + error.message);
-        } finally {
-          authBtn.innerHTML = originalText;
-          authBtn.disabled = false;
-        }
-      });
+      const supa = window.supabase.createClient('https://laowissohsnhfsbiwcpd.supabase.co', 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC');
+      const form = document.getElementById('login-form');
+      if (form) {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const email = document.getElementById('login-email').value.trim();
+          const password = document.getElementById('login-password').value;
+          const btn = document.getElementById('submit-btn');
+          btn.innerText = "Memeriksa..."; btn.disabled = true;
+          const { error } = await supa.auth.signInWithPassword({ email: email, password: password });
+          if (error) { alert("Gagal masuk: " + error.message); btn.innerText = "Masuk ke Akun"; btn.disabled = false; } 
+          else { window.location.href = 'profile.html'; }
+        });
+      }
     });
   </script>
-
 </body>
-
 </html>

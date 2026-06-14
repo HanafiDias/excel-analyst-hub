@@ -1,74 +1,83 @@
 document.addEventListener('DOMContentLoaded', async function() {
-  if (!window.supabase) return;
-  
-  // Inisialisasi Supabase
+  if (!window.supabase) {
+    console.error("Library Supabase belum dimuat!");
+    return;
+  }
+
   const supaUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
   const supaKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
   const supa = window.supabase.createClient(supaUrl, supaKey);
 
-  try {
-    const { data: { session } } = await supa.auth.getSession();
-    const currentPath = window.location.pathname;
+  const protectedPages = ['learn.html', 'portfolio.html', 'tools.html', 'profile.html'];
+  
+  // Deteksi Nama File Akurat
+  let path = window.location.pathname;
+  let currentPage = path.substring(path.lastIndexOf('/') + 1).split('?')[0].split('#')[0];
+  if (currentPage === '' || currentPage === '/') currentPage = 'index.html'; 
 
-    // Ambil elemen tombol auth di navbar (Desktop & Mobile)
-    const navAuthBtn = document.getElementById('nav-auth-btn');
-    const mobileAuthBtn = document.getElementById('mobile-auth-btn');
+  const isProtectedPage = protectedPages.includes(currentPage);
 
-    if (!session) {
-      // ==========================================
-      // LALUAN 1: JIKA USER BELUM LOGIN (TAMU)
-      // ==========================================
-      
-      // Jika nekat membuka halaman premium secara langsung, tendang ke login
-      if (currentPath.includes('learn.html') || currentPath.includes('tools.html') || currentPath.includes('portfolio.html')) {
-        alert("🔒 Akses Fitur Premium Terkunci!\n\nSilakan Masuk atau Daftar akun terlebih dahulu untuk mengakses materi, tools, dan file portofolio premium.");
-        window.location.href = 'login.html';
-        return;
-      }
+  // Jurus Anti-Mengintip (Sembunyikan Halaman Rahasia Dulu)
+  if (isProtectedPage) {
+    document.body.style.display = 'none'; 
+  }
 
-      // Cegat klik tombol premium khusus di halaman Beranda (index.html)
-      if (currentPath.includes('index.html') || currentPath === '/' || currentPath.endsWith('')) {
-        const protectedLinks = document.querySelectorAll('a[href^="learn.html"], a[href^="tools.html"], a[href^="portfolio.html"], #tools-teaser a, #paths a, #interactive-tools a');
-        
-        protectedLinks.forEach(link => {
-          if (link.getAttribute('href') === '#paths') return; // Pengecualian scroll silabus
+  // 1. CEK SESI USER
+  const { data: { session } } = await supa.auth.getSession();
 
-          link.addEventListener('click', function(e) {
-            e.preventDefault();
-            alert("🔒 Akses Fitur Terkunci!\n\nSilakan Masuk atau Daftar akun terlebih dahulu untuk menggunakan tools interaktif dan mengakses materi.");
-            window.location.href = 'login.html';
-          });
-        });
-      }
+  // === FUNGSI UBAH NAVBAR GLOBAL (Berlaku di Semua Halaman) ===
+  const navAuthBtn = document.getElementById('nav-auth-btn');
+  const mobileAuthBtn = document.getElementById('mobile-auth-btn');
 
-    } else {
-      // ==========================================
-      // LALUAN 2: JIKA USER SUDAH LOGIN
-      // ==========================================
-      const user = session.user;
+  if (session) {
+    if (navAuthBtn) {
+      navAuthBtn.innerText = 'Dashboard Profil';
+      navAuthBtn.href = 'profile.html';
+    }
+    if (mobileAuthBtn) {
+      mobileAuthBtn.innerText = 'Dashboard Profil';
+      mobileAuthBtn.href = 'profile.html';
+    }
+  }
+  // ============================================================
 
-      // 1. Ubah tombol "Masuk / Profil" di Navbar Desktop menjadi "👤 Profil Saya"
-      if (navAuthBtn) {
-        navAuthBtn.href = "profile.html";
-        navAuthBtn.innerHTML = "👤 Profil Saya";
-      }
+  // Jika Tamu Mencoba Masuk Halaman Rahasia
+  if (!session && isProtectedPage) {
+    window.location.href = 'register.html';
+    return;
+  }
 
-      // 2. Ubah tombol "Masuk / Profil" di Navbar Mobile menjadi "👤 Profil Saya"
-      if (mobileAuthBtn) {
-        mobileAuthBtn.href = "profile.html";
-        mobileAuthBtn.innerHTML = "👤 Profil Saya";
-      }
+  // Jika Punya Akun & Masuk Halaman Rahasia, Cek Kasta Premium
+  if (session && isProtectedPage) {
+    try {
+      const { data: profile } = await supa
+        .from('profiles')
+        .select('is_premium, subscription_end')
+        .eq('id', session.user.id)
+        .maybeSingle();
 
-      // 3. Ubah tombol "Mulai Petualangan" khusus di Hero Beranda
-      if (currentPath.includes('index.html') || currentPath === '/' || currentPath.endsWith('')) {
-        const btnHero = document.querySelector('.hero-buttons a[href="login.html"]');
-        if (btnHero) {
-          btnHero.href = "learn.html";
-          btnHero.innerHTML = "Lanjutkan Belajar <span aria-hidden=\"true\">→</span>";
+      const isPremium = profile?.is_premium;
+      const subEnd = profile?.subscription_end ? new Date(profile.subscription_end) : null;
+      const today = new Date();
+
+      // LOGIKA PEMBLOKIRAN
+      if (!isPremium || (subEnd && subEnd < today)) {
+        if (currentPage !== 'profile.html') {
+          alert("Akses Terkunci! 🔒\nAnda belum mengaktifkan paket Premium atau masa aktif habis.");
+          window.location.href = 'pricing.html';
+          return; 
         }
       }
+
+      // Lolos! Buka kembali layarnya
+      document.body.style.display = 'block';
+
+    } catch (err) {
+      console.error("Gagal mengecek status premium:", err);
+      window.location.href = 'index.html'; 
     }
-  } catch (err) {
-    console.error("Auth system error:", err);
+  } else if (!isProtectedPage) {
+    // Pastikan halaman tidak rahasia (seperti index.html) tidak pernah di-hidden
+    document.body.style.display = 'block';
   }
 });
