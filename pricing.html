@@ -11,274 +11,288 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Beli Akses Eksklusif — Excel Analyst Hub</title>
+  <title>Perpanjang Akses Premium — Excel Analyst Hub</title>
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/components.css" />
   <style>
-    /* =========================================
-       PREMIUM PRICING UI BY ARSITEK INFORMATIKA
-       ========================================= */
-    .pricing-page-wrapper {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 3rem 1rem;
-      position: relative;
-      overflow: hidden;
-      background: #0b1120;
+    /* ANTI-SCROLL & FULL SCREEN LAYER */
+    html, body { height: 100%; overflow: hidden !important; margin: 0 !important; padding: 0 !important; background: #0b1120; }
+    .auth-page-wrapper { height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; box-sizing: border-box; padding: 1rem; }
+
+    /* ANIMASI GLOWING ORBS AGRESIF */
+    .orb-1, .orb-2 { position: absolute; border-radius: 50%; filter: blur(80px); z-index: 0; animation: floatOrb 10s infinite ease-in-out; pointer-events: none; }
+    .orb-1 { width: 450px; height: 450px; background: rgba(59, 130, 246, 0.45); top: -15%; left: -10%; }
+    .orb-2 { width: 400px; height: 400px; background: rgba(225, 29, 72, 0.35); bottom: -15%; right: -10%; animation-delay: -5s; }
+    @keyframes floatOrb {
+      0% { transform: translate(0px, 0px) scale(1); opacity: 0.5; }
+      33% { transform: translate(15vw, 10vh) scale(1.4); opacity: 1; }
+      66% { transform: translate(-10vw, 15vh) scale(0.8); opacity: 0.7; }
+      100% { transform: translate(0px, 0px) scale(1); opacity: 0.5; }
     }
 
-    /* Latar Belakang Cosmic Glow (Palsu tapi Manis) */
-    .pricing-page-wrapper::before {
-      content: "";
-      position: absolute;
-      width: 150%; height: 150%;
-      top: -25%; left: -25%;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(225, 29, 72, 0.05) 50%, rgba(0, 0, 0, 0) 70%);
-      border-radius: 50%;
-      z-index: 1;
-      animation: cosmicFloat 20s infinite ease-in-out;
-    }
-    @keyframes cosmicFloat {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(-50px, 50px) scale(1.1); }
-    }
+    /* TOMBOL KEMBALI MELAYANG */
+    .btn-floating-back { position: absolute; top: 1.5rem; left: 1.5rem; z-index: 50; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); color: #cbd5e1; padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: all 0.3s; }
+    .btn-floating-back:hover { background: rgba(255, 255, 255, 0.1); color: white; transform: translateX(-4px); }
 
-    /* MAIN CARD: Glassmorphism Premium */
-    .exclusive-offer-card {
-      width: 100%;
-      max-width: 900px;
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 32px;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      position: relative;
-      z-index: 10;
-      overflow: hidden;
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-    }
-    
-    /* Efek Parallax Hover (Hanya di Desktop) */
-    @media (min-width: 992px) {
-      .exclusive-offer-card:hover {
-        transform: translateY(-8px) scale(1.01);
-        box-shadow: 0 50px 120px rgba(0, 0, 0, 0.8), 0 0 30px rgba(59, 130, 246, 0.2);
-        border-color: rgba(59, 130, 246, 0.4);
-      }
-    }
+    /* LAYOUT 2 KOLOM */
+    .premium-gateway-card { width: 100%; max-width: 950px; max-height: 95vh; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 32px; display: grid; grid-template-columns: 1.1fr 0.9fr; position: relative; z-index: 10; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7); animation: cardInit 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; overflow: hidden; }
+    @keyframes cardInit { from { opacity: 0; transform: translateY(20px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    /* KIRI: Info Pembaruan */
+    .gateway-info { padding: 3rem 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+    .logo-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(59, 130, 246, 0.15); color: #60a5fa; padding: 6px 12px; border-radius: 50px; font-weight: 600; font-size: 0.75rem; border: 1px solid rgba(59, 130, 246, 0.3); margin-bottom: 1.5rem; }
+    .gateway-info h1 { font-size: 2.3rem; font-weight: 800; color: white; margin-top: 0; line-height: 1.15; margin-bottom: 1rem; letter-spacing: -0.5px; }
+    .gateway-info p { color: #cbd5e1; font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.8rem; }
+    .benefit-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem; }
+    .benefit-list li { display: flex; align-items: start; gap: 12px; color: #f1f5f9; font-size: 0.9rem; }
+    .check-icon { color: #10b981; font-size: 1rem; margin-top: 2px; flex-shrink: 0; }
+
+    /* KANAN: Panel Kasir Sederhana */
+    .gateway-form-panel { background: rgba(15, 23, 42, 0.9); border-left: 1px solid rgba(255, 255, 255, 0.05); padding: 3rem 2.5rem; display: flex; flex-direction: column; justify-content: center; position: relative; text-align: center; }
+    .gateway-form-panel::before { content: ""; position: absolute; left: 0; top: 15%; height: 70%; width: 1px; background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.4), transparent); }
+
+    /* Harga Tunggal (Tanpa Coretan) */
+    .price-neon-box { text-align: center; margin-bottom: 2rem; }
+    .price-new-wrapper { position: relative; display: flex; align-items: baseline; justify-content: center; white-space: nowrap; z-index: 2; }
+    .price-new-wrapper::before { content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; height: 70%; background: rgba(59, 130, 246, 0.45); filter: blur(30px); z-index: -1; border-radius: 50%; }
+    .price-new { font-size: 4rem; font-weight: 900; color: white; margin: 0; line-height: 1; background: linear-gradient(to right, #ffffff, #60a5fa, #ffffff); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: textShimmer 3s linear infinite; }
+    @keyframes textShimmer { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+    .price-period { font-size: 1.2rem; font-weight: 600; color: #94a3b8; -webkit-text-fill-color: #94a3b8; margin-left: 6px; }
+
+    /* Tombol Perpanjang */
+    .btn-register-pay { width: 100%; padding: 18px; background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); margin-top: 1rem; }
+    .btn-register-pay:hover { transform: translateY(-1px); box-shadow: 0 12px 25px rgba(99, 102, 241, 0.4); filter: brightness(1.05); }
+
+    .payment-tags { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 1.5rem; flex-wrap: wrap; }
+    .tag-item { font-weight: 700; color: #94a3b8; font-size: 0.8rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 6px 12px; border-radius: 6px; }
 
     /* =========================================
-       KIRI: Value Proposition (Info)
+       CSS MODAL QRIS CHECKOUT (DI LUAR MEDIA QUERY)
        ========================================= */
-    .card-info { padding: 3.5rem 3rem; }
-    
-    .logo-badge {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: rgba(59, 130, 246, 0.15); color: #60a5fa;
-      padding: 6px 12px; border-radius: 50px; font-weight: 600; font-size: 0.8rem;
-      border: 1px solid rgba(59, 130, 246, 0.3); margin-bottom: 2rem;
-    }
+    .qris-modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(11, 17, 32, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: all 0.3s ease; }
+    .qris-modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .qris-modal-card { background: #0f172a; border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 24px; width: 100%; max-width: 400px; padding: 2rem; text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 30px rgba(59, 130, 246, 0.2); transform: translateY(20px) scale(0.95); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .qris-modal-overlay.active .qris-modal-card { transform: translateY(0) scale(1); }
+    .qris-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
+    .qris-header h3 { color: white; margin: 0; font-size: 1.2rem; font-weight: 700; }
+    .close-modal-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: 0.3s; }
+    .close-modal-btn:hover { background: rgba(225, 29, 72, 0.8); color: white; border-color: transparent; }
+    .qris-instruction { color: #cbd5e1; font-size: 0.8rem; line-height: 1.5; margin-bottom: 1.2rem; }
+    .qris-img-container { background: white; padding: 1rem; border-radius: 16px; display: inline-block; margin-bottom: 1.2rem; position: relative; border: 4px solid rgba(59, 130, 246, 0.2); }
+    .qris-img-container img { width: 180px; height: 180px; display: block; }
+    .qris-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #ed2c25; color: white; padding: 2px 12px; border-radius: 20px; font-weight: 900; font-size: 0.8rem; border: 2px solid white; }
+    .qris-details { background: rgba(0,0,0,0.3); padding: 0.8rem 1.2rem; border-radius: 12px; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.05); }
+    .qris-label { color: #94a3b8; font-size: 0.8rem; font-weight: 600; }
+    .qris-amount { color: #10b981; font-size: 1.1rem; font-weight: 800; }
+    .qris-timer-box { margin-bottom: 1.2rem; }
+    .qris-timer-text { font-size: 0.7rem; color: #64748b; text-transform: uppercase; display: block; margin-bottom: 2px; }
+    .qris-timer { color: #f59e0b; font-size: 1.6rem; font-weight: 700; font-family: monospace; letter-spacing: 1px; }
+    .btn-confirm-pay { width: 100%; padding: 14px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3); }
+    .btn-confirm-pay:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4); filter: brightness(1.1); }
+    .btn-confirm-pay:disabled { background: #475569; box-shadow: none; cursor: not-allowed; transform: none; filter: none; }
 
-    .card-info h1 { font-size: 2.8rem; font-weight: 800; color: white; margin-top: 0; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -1px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-    .card-info p { color: #cbd5e1; font-size: 1.1rem; line-height: 1.6; margin-bottom: 2.5rem; max-width: 90%; }
-    
-    .benefit-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem; }
-    .benefit-list li { display: flex; align-items: start; gap: 14px; color: #f1f5f9; font-size: 1rem; line-height: 1.4; }
-    
-    /* Ikon Check Neon */
-    .check-icon-wrapper {
-      width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;
-      color: #10b981; margin-top: 2px; flex-shrink: 0;
-    }
-
-    /* =========================================
-       KANAN: Checkout Panel (Pricing)
-       ========================================= */
-    .card-checkout {
-      background: rgba(15, 23, 42, 0.9);
-      border-left: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 3.5rem;
-      display: flex; flex-direction: column; justify-content: center; text-align: center;
-      position: relative;
-    }
-    
-    /* Garis Neon Pemisah */
-    .card-checkout::before {
-      content: ""; position: absolute; left: 0; top: 15%; height: 70%; width: 1px;
-      background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.5), transparent);
-    }
-
-    /* Badge Promo (Liquid Gradient) */
-    .promo-tag {
-      background: linear-gradient(90deg, #f59e0b, #e11d48, #f59e0b);
-      background-size: 200% auto; color: white;
-      padding: 8px 18px; border-radius: 50px; font-size: 0.8rem; font-weight: 800;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
-      animation: gradientFlow 3s linear infinite; margin-bottom: 2rem; display: inline-block;
-    }
-    @keyframes gradientFlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* Pricing Typography (Coret) */
-    .price-old { color: #64748b; text-decoration: line-through; font-size: 1.25rem; font-weight: 500; display: block; margin-bottom: 4px; }
-    
-    /* Harga Final (Super Neon & 1 Baris) */
-    .price-new-wrapper { 
-      position: relative; 
-      display: flex; 
-      align-items: baseline; 
-      justify-content: center;
-      white-space: nowrap;
-      margin-bottom: 0.5rem;
-      z-index: 2; /* BUG FIXED: Mencegah glow tenggelam */
-    }
-    
-    .price-new-wrapper::before {
-      content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: 90%; height: 60%; background: rgba(59, 130, 246, 0.6);
-      filter: blur(40px); z-index: -1; border-radius: 50%;
-    }
-
-    .price-new {
-      font-size: 4.5rem; font-weight: 900; margin: 0; line-height: 1;
-      background: linear-gradient(to right, #ffffff, #60a5fa, #ffffff);
-      background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      animation: gradientFlow 3s linear infinite;
-      /* BUG FIXED: filter drop-shadow dihapus total di sini */
-    }
-    
-    .price-period { 
-      font-size: 1.25rem; font-weight: 600; color: #94a3b8; 
-      -webkit-text-fill-color: #94a3b8; /* Mencegah ikut transparan */
-      margin-left: 8px; 
-    }
-
-    /* TOMBOL UTAMA NEON (The CT) */
-    .btn-upgrade-premium {
-      width: 100%; padding: 18px; margin-top: 2.5rem;
-      background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
-      color: white; border: none; border-radius: 16px; font-weight: 700; font-size: 1.1rem;
-      cursor: pointer; position: relative; overflow: hidden;
-      transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
-    }
-    .btn-upgrade-premium:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 40px rgba(99, 102, 241, 0.6);
-      filter: brightness(1.1);
-    }
-    
-    /* Efek Kilatan Sweep pada Tombol */
-    .btn-upgrade-premium::after {
-      content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      animation: sweepKilat 4s infinite linear;
-    }
-    @keyframes sweepKilat { 0% { left: -100%; } 30% { left: 100%; } 100% { left: 100%; } }
-
-    /* Metodologi Pembayaran (Glass Tags) */
-    .payment-tags-container { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 1.5rem; flex-wrap: wrap; }
-    .payment-tag-item {
-      font-weight: 700; color: #cbd5e1; font-size: 0.8rem;
-      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
-      padding: 6px 14px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.05em;
-    }
-
-    /* RESPONSIVE: Mode HP Berantakan kalau Grid Tetap 2 Kolom */
-    @media (max-width: 991px) {
-      .exclusive-offer-card { grid-template-columns: 1fr; border-radius: 24px; max-width: 500px; }
-      .card-info { padding: 3rem 2.5rem; }
-      .card-checkout { padding: 3rem 2.5rem; border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.05); }
-      .card-checkout::before { display: none; }
-      .card-info h1 { font-size: 2.2rem; }
-      .price-new { font-size: 3.5rem; }
+    @media (max-width: 991px) { 
+      html, body { overflow: auto !important; } 
+      .auth-page-wrapper { height: auto; min-height: 100vh; padding: 3rem 1rem; } 
+      .btn-floating-back { position: relative; display: inline-flex; margin-bottom: 1rem; top: 0; left: 0; } 
+      .premium-gateway-card { grid-template-columns: 1fr; max-width: 500px; max-height: none; } 
+      .gateway-form-panel { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.05); padding: 2.5rem 2rem; } 
+      .gateway-form-panel::before { display: none; } .gateway-info { padding: 2.5rem 2rem; } 
+      .gateway-info h1 { font-size: 2rem; } .price-new { font-size: 3.2rem; }
     }
   </style>
 </head>
-<body class="page-body">
+<body>
 
-  <nav class="nav">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo" style="display: flex; align-items: center; gap: 8px;">
-        <div class="logo-icon" style="box-shadow: 0 0 10px rgba(59,130,246,0.3);">⊞</div> Excel Analyst Hub
-      </a>
-      <div class="nav-links">
-        <a href="index.html" class="nav-item btn-ghost btn-sm" style="border: 1px solid var(--border); border-radius: 50px;">← Beranda</a>
-      </div>
-    </div>
-  </nav>
+  <div class="auth-page-wrapper">
+    <div class="orb-1"></div>
+    <div class="orb-2"></div>
+    
+    <a href="index.html" class="btn-floating-back">← Beranda</a>
 
-  <div class="pricing-page-wrapper">
-    <div class="exclusive-offer-card">
+    <div class="premium-gateway-card">
       
-      <div class="card-info">
-        <div class="logo-badge">
-          <span>⊞</span> PRE-RELEASE OFFER
-        </div>
-        <h1>Buka Akses<br>Premium Eksklusif</h1>
-        <p>Aktivasi instan dan satu kali untuk membuka gembok seluruh ekosistem pembelajaran, gamifikasi, dan generator data otomatis.</p>
+      <div class="gateway-info">
+        <div class="logo-badge">⊞ RENEWAL ACCESS</div>
+        <h1>Masa Aktif Premium Anda Telah Habis</h1>
+        <p>Lanjutkan petualangan data Anda dan jaga akses ke seluruh portofolio, sistem penyimpanan XP, serta ekosistem Excel Analytics.</p>
         
         <ul class="benefit-list">
-          <li>
-            <div class="check-icon-wrapper">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </div>
-            <span>Akses Penuh ke <b>Semua Modul Lanjutan</b></span>
-          </li>
-          <li>
-            <div class="check-icon-wrapper">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </div>
-            <span>Sistem Gamifikasi, Simpan progress & XP</span>
-          </li>
-          <li>
-            <div class="check-icon-wrapper">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </div>
-            <span><b>Portofolio Generator</b> Dataset Dunia Nyata</span>
-          </li>
-          <li>
-            <div class="check-icon-wrapper">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </div>
-            <span>Download Semua Lencana Pencapaian Digital</span>
-          </li>
+          <li><span class="check-icon">✓</span> Pertahankan Akses ke Semua Modul & Studi Kasus</li>
+          <li><span class="check-icon">✓</span> Lanjutkan Penyimpanan XP & Gamifikasi Pro</li>
+          <li><span class="check-icon">✓</span> Akses Penuh Portofolio Generator</li>
+          <li><span class="check-icon">✓</span> Sinkronisasi Update Modul Terbaru</li>
         </ul>
       </div>
 
-      <div class="card-checkout">
-        <div>
-          <div class="promo-tag">EARLY BIRD (DISKON GILA 85%)</div>
-          <span class="price-old">Rp 69.900</span>
+      <div class="gateway-form-panel">
+        
+        <div class="price-neon-box">
           <div class="price-new-wrapper">
             <h2 class="price-new">Rp 10rb</h2>
             <span class="price-period">/bulan</span>
           </div>
         </div>
-        
-        <button class="btn-upgrade-premium" onclick="alert('Ini akan memanggil QRIS di langkah integrasi Tripay berikutnya!')">
-          Beli Akses Eksklusif ⚡
+
+        <button type="button" class="btn-register-pay" id="submit-btn">
+          Perpanjang Akses Premium ⚡
         </button>
 
-        <div class="payment-tags-container">
-          <span class="payment-tag-item">QRIS</span>
-          <span class="payment-tag-item">DANA</span>
-          <span class="payment-tag-item">ShopeePay</span>
-          <span class="payment-tag-item">OVO</span>
+        <div class="payment-tags">
+          <span class="tag-item">QRIS</span>
+          <span class="tag-item">DANA</span>
+          <span class="tag-item">ShopeePay</span>
+          <span class="tag-item">OVO</span>
         </div>
-        <p style="color: #64748b; font-size: 0.75rem; margin-top: 1.2rem;">Sistem otomatis: Aktivasi instan setelah bayar.</p>
-      </div>
 
+        <p style="text-align: center; font-size: 0.85rem; color: #64748b; margin-top: 1.5rem; margin-bottom: 0;">
+          Aktivasi otomatis instan setelah pembayaran berhasil.
+        </p>
+
+      </div>
     </div>
   </div>
 
-  <script src="assets/js/main.js"></script>
+  <div id="qris-modal" class="qris-modal-overlay">
+    <div class="qris-modal-card">
+      <div class="qris-header">
+        <h3>Selesaikan Pembayaran</h3>
+        <button type="button" class="close-modal-btn" id="close-modal-btn">✕</button>
+      </div>
+      
+      <p class="qris-instruction">Scan QR Code di bawah ini menggunakan M-Banking atau E-Wallet (Gopay, OVO, Dana, ShopeePay).</p>
+      
+      <div class="qris-img-container">
+        <div class="qris-badge">QRIS</div>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=ExcelAnalystHub-Renewal&color=0f172a&bgcolor=ffffff" alt="QRIS Code">
+      </div>
+      
+      <div class="qris-details">
+        <span class="qris-label">Tagihan Perpanjangan</span>
+        <span class="qris-amount">Rp 10.000</span>
+      </div>
+      
+      <div class="qris-timer-box">
+        <span class="qris-timer-text">Batas Waktu Pembayaran</span>
+        <div class="qris-timer" id="qris-timer">05:00</div>
+      </div>
+      
+      <button type="button" class="btn-confirm-pay" id="btn-confirm-pay">Saya Sudah Bayar</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      if (!window.supabase) {
+        alert("Library Supabase belum dimuat!");
+        return;
+      }
+      
+      const supaUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
+      const supaKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
+      const supa = window.supabase.createClient(supaUrl, supaKey);
+
+      // Cek apakah user sedang login tapi masanya habis
+      const { data: { session } } = await supa.auth.getSession();
+      if (!session) {
+        alert("Sesi Anda telah habis. Silakan masuk (login) kembali.");
+        window.location.href = 'login.html';
+        return;
+      }
+
+      const submitBtn = document.getElementById('submit-btn');
+      const qrisModal = document.getElementById('qris-modal');
+      const closeModalBtn = document.getElementById('close-modal-btn');
+      const confirmPayBtn = document.getElementById('btn-confirm-pay');
+      const timerDisplay = document.getElementById('qris-timer');
+      
+      let countdownInterval;
+
+      function startTimer(duration) {
+        clearInterval(countdownInterval);
+        let timer = duration, minutes, seconds;
+        countdownInterval = setInterval(function () {
+          minutes = parseInt(timer / 60, 10);
+          seconds = parseInt(timer % 60, 10);
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+          
+          timerDisplay.textContent = minutes + ":" + seconds;
+          
+          if (--timer < 0) {
+            clearInterval(countdownInterval);
+            timerDisplay.textContent = "00:00";
+            timerDisplay.style.color = "#ef4444";
+            confirmPayBtn.disabled = true;
+            confirmPayBtn.innerText = "Sesi Berakhir";
+          }
+        }, 1000);
+      }
+
+      // KETIKA TOMBOL PERPANJANG DIKLIK
+      if (submitBtn) {
+        submitBtn.addEventListener('click', () => {
+          submitBtn.innerText = "Menunggu Pembayaran...";
+          
+          // Munculkan Modal
+          if (qrisModal) {
+            qrisModal.classList.add('active');
+            confirmPayBtn.disabled = false;
+            confirmPayBtn.innerText = "Saya Sudah Bayar";
+            timerDisplay.style.color = "#f59e0b";
+            startTimer(300); 
+          }
+        });
+      }
+
+      // KETIKA MODAL DITUTUP
+      if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+          qrisModal.classList.remove('active');
+          clearInterval(countdownInterval);
+          submitBtn.innerText = "Perpanjang Akses Premium ⚡";
+        });
+      }
+
+      // KETIKA KLIK "SAYA SUDAH BAYAR"
+      if (confirmPayBtn) {
+        confirmPayBtn.addEventListener('click', () => {
+          clearInterval(countdownInterval);
+          confirmPayBtn.innerText = "Memverifikasi Mutasi...";
+          confirmPayBtn.disabled = true;
+
+          // Simulasi waktu tunggu verifikasi kasir
+          setTimeout(async () => {
+            
+            // Proses Perpanjangan di Database (Tambah 30 hari dari hari ini)
+            const today = new Date();
+            const nextMonth = new Date();
+            nextMonth.setDate(today.getDate() + 30);
+
+            const { error } = await supa.from('profiles').update({
+              is_premium: true,
+              subscription_end: nextMonth.toISOString()
+            }).eq('id', session.user.id);
+
+            if (error) {
+              alert("Gagal memperpanjang akses: " + error.message);
+              qrisModal.classList.remove('active');
+              submitBtn.innerText = "Perpanjang Akses Premium ⚡";
+              return;
+            }
+
+            confirmPayBtn.style.background = "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)";
+            confirmPayBtn.innerText = "Perpanjangan Berhasil! Mengalihkan...";
+            
+            setTimeout(() => {
+              window.location.href = 'profile.html'; 
+            }, 800);
+
+          }, 2000); // 2 Detik Simulasi Loading
+        });
+      }
+    });
+  </script>
 </body>
 </html>
