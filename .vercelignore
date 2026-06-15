@@ -1,0 +1,5 @@
+# Mengamankan script backend dari publik (Wajib untuk Vercel)
+generate_portfolio.py
+*.pyc
+__pycache__/
+.venv/

@@ -1129,10 +1129,238 @@ document.addEventListener('DOMContentLoaded', () => {
             // Gunakan notasi Toast yang sudah kita buat di Fase 4, atau pakai alert standar
             if (typeof window.showToastSafe === 'function') {
                window.showToastSafe("Batas maksimal diatur ke 1.000 baris untuk menjaga kestabilan server.");
+  /* ------------------------------------------
+     7. GLOBAL MODAL CLOSER (BUG FIX #13)
+     Menutup semua jenis modal dengan tombol ESC
+  ------------------------------------------ */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      // Cari semua elemen yang memiliki class 'active' (Modal terbuka)
+      const activeModals = document.querySelectorAll('.active');
+      activeModals.forEach(modal => {
+        // Pastikan yang ditutup hanya yang ber-ID modal atau class modal
+        if (modal.id.includes('modal') || modal.classList.contains('qris-modal-overlay')) {
+          modal.classList.remove('active');
+        }
+      });
+    }
+  });
+
+  /* ------------------------------------------
+     8. ANTI-SPAM ACHIEVEMENT TOAST (BUG FIX #14)
+     Mencegah notifikasi muncul berulang saat halaman di-refresh
+  ------------------------------------------ */
+  window.showToastSafe = function (message) {
+    // Cek apakah toast ini sudah pernah muncul di sesi ini
+    const toastKey = 'eah_toast_' + btoa(message).substring(0, 10);
+    if (sessionStorage.getItem(toastKey)) return; // Jika sudah, hentikan fungsi
+
+    // Panggil fungsi pembuat toast asli (jika sudah ada di kode Mas sebelumnya)
+    // Atau fallback sederhana menggunakan alert/console jika belum ada UI khususnya
+    const toastContainer = document.getElementById('toast-container');
+    if (toastContainer) {
+       // Logika memunculkan toast Mas di sini
+       toastContainer.innerText = message;
+       toastContainer.classList.add('show');
+       setTimeout(() => toastContainer.classList.remove('show'), 3000);
+    } else {
+       console.log("Achievement Unlocked: " + message);
+    }
+
+    // Tandai bahwa toast ini sudah ditampilkan
+    sessionStorage.setItem(toastKey, 'true');
+  };
+
+})();
+
+/* ==========================================
+   PATCH FASE 5: UI/UX & MOBILE INTERACTION
+   ========================================== */
+document.addEventListener('DOMContentLoaded', () => {
+
+  // --- 1. SKELETON LOADING INJEKSI OTOMATIS ---
+  // Mencari elemen profil yang sedang "memuat" lalu diberi efek animasi
+  const profileIds = ['info-email', 'greeting-text', 'subscription-remaining'];
+  profileIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && (el.textContent.toLowerCase().includes('memuat') || el.textContent.includes('Calculating'))) {
+      el.classList.add('skeleton');
+      
+      // Alat pemantau (Observer): Hapus efek skeleton seketika saat data asli Supabase masuk
+      const observer = new MutationObserver(() => {
+        el.classList.remove('skeleton');
+        observer.disconnect();
+      });
+      observer.observe(el, { childList: true, characterData: true, subtree: true });
+    }
+  });
+
+  // --- 2. TOMBOL DAFTAR ISI (TOC) KHUSUS HP ---
+  const sidebar = document.querySelector('.topic-sidebar');
+  if (sidebar) {
+    const tocBtn = document.createElement('button');
+    tocBtn.className = 'toc-mobile-btn';
+    tocBtn.innerHTML = '📑';
+    tocBtn.setAttribute('aria-label', 'Buka Daftar Isi');
+    document.body.appendChild(tocBtn);
+
+    tocBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sidebar.classList.toggle('mobile-open');
+    });
+
+    // Otomatis menutup sidebar jika user mengetuk layar bagian luar
+    document.addEventListener('click', (e) => {
+      if (sidebar.classList.contains('mobile-open') && !sidebar.contains(e.target) && e.target !== tocBtn) {
+        sidebar.classList.remove('mobile-open');
+      }
+    });
+  }
+
+  // --- 3. PENGUNCI INPUT (VALIDASI TOOLS) ---
+  // Mencegah input huruf masuk ke alat Data Visualizer / Formula 
+  const numberInputs = document.querySelectorAll('input[type="number"], .visualizer-input');
+  numberInputs.forEach(input => {
+    input.addEventListener('input', function() {
+      // Regex: Tendang semua karakter selain angka (0-9), minus (-), dan titik (.)
+      this.value = this.value.replace(/[^0-9.-]/g, '');
+    });
+  });
+
+});
+
+/* ==========================================
+   PATCH FASE 6: DRY ARCHITECTURE & STATE
+   ========================================== */
+document.addEventListener('DOMContentLoaded', async () => {
+
+  // --- 1. DINAMISASI PROGRESS BAR (LEARN.HTML) ---
+  // Mencari elemen teks progres (contoh: "0/5 selesai") dan bar-nya
+  const progressText = document.querySelector('.progress-text') || document.querySelector('.progress-label');
+  const topicCards = document.querySelectorAll('.topic-card'); 
+  
+  if (progressText && topicCards.length > 0) {
+     // Menghitung jumlah kartu topik yang memiliki class 'completed' / 'done'
+     const completedCount = document.querySelectorAll('.topic-card.completed, .topic-status.done').length;
+     const totalCount = topicCards.length;
+     
+     // Memperbarui teks secara dinamis
+     progressText.textContent = `${completedCount}/${totalCount} Selesai`;
+     
+     // Memperbarui lebar pita progres (jika elemennya ada)
+     const progressBar = document.querySelector('.progress-bar-fill') || document.querySelector('.progress-fill');
+     if (progressBar) {
+        progressBar.style.width = `${(completedCount / totalCount) * 100}%`;
+     }
+  }
+
+  // --- 2. SENTRALISASI NAVBAR AUTH STATE ---
+  // Otomatis mengubah tombol "Masuk" menjadi "Halo, Nama" di semua 20+ file HTML
+  const navAuthBtns = document.querySelectorAll('#nav-auth-btn, .nav-auth, a[href="login.html"]');
+  
+  if (navAuthBtns.length > 0 && window.supaClient) {
+     const { data: { session } } = await window.supaClient.auth.getSession();
+     
+     if (session) {
+        // Ambil nama dari profil, fallback ke bagian depan email
+        const { data: profile } = await window.supaClient.from('profiles').select('nickname').eq('id', session.user.id).maybeSingle();
+        const displayName = profile?.nickname || session.user.email.split('@')[0];
+        
+        navAuthBtns.forEach(btn => {
+           btn.innerHTML = `👤 Halo, ${displayName}`;
+           btn.href = "profile.html";
+           btn.style.background = "linear-gradient(135deg, #3b82f6, #2563eb)";
+           btn.style.color = "#ffffff";
+           btn.style.border = "none";
+        });
+     }
+  }
+});
+
+/* ==========================================
+   PATCH FASE 7: ACCESSIBILITY & RATE LIMITING
+   ========================================== */
+document.addEventListener('DOMContentLoaded', () => {
+
+   // --- 1. AKSESIBILITAS FLASHCARD (NAVIGASI KEYBOARD) ---
+   // Memungkinkan pengguna membalik kartu (flashcard) hanya dengan menekan Enter atau Spasi
+   const flashcards = document.querySelectorAll('.flashcard, .flip-card, .topic-card');
+   flashcards.forEach(card => {
+      // Pasang tabindex agar kartu bisa di-highlight oleh tombol TAB
+      if (!card.hasAttribute('tabindex')) {
+         card.setAttribute('tabindex', '0');
+      }
+      
+      // Dengarkan tombol Enter (13) atau Spasi (32)
+      card.addEventListener('keydown', function(e) {
+         if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            // Pemicu flip (sesuaikan dengan class flip Mas, umumnya 'flipped' atau 'active')
+            this.classList.toggle('flipped'); 
+            this.classList.toggle('active');
+         }
+      });
+   });
+
+   // --- 2. AKSESIBILITAS LOGO SCREEN READER (TUNANETRA) ---
+   // Mengubah emoji '⊞' menjadi elemen yang bisa dibaca oleh mesin pembaca layar
+   const logoIcons = document.querySelectorAll('.logo-icon');
+   logoIcons.forEach(icon => {
+       icon.setAttribute('role', 'img');
+       icon.setAttribute('aria-label', 'Logo Excel Analyst Hub');
+       icon.removeAttribute('aria-hidden'); 
+   });
+
+   // --- 3. RATE LIMITING (PENCEGAH CRASH DATASET) ---
+   // Mencari kolom input baris di alat Dataset Generator
+   const rowInput = document.getElementById('dataset-rows') || document.querySelector('input[type="number"]');
+   if (rowInput && window.location.pathname.includes('tools.html')) {
+      rowInput.addEventListener('input', function() {
+         let val = parseInt(this.value);
+         // Jika user mengetik angka lebih dari 1000, paksa turun ke 1000
+         if (val > 1000) {
+            this.value = 1000;
+            // Gunakan notasi Toast yang sudah kita buat di Fase 4, atau pakai alert standar
+            if (typeof window.showToastSafe === 'function') {
+               window.showToastSafe("Batas maksimal diatur ke 1.000 baris untuk menjaga kestabilan server.");
             } else {
                alert("Batas maksimal adalah 1.000 baris.");
             }
          }
       });
+   }
+});
+
+/* ==========================================
+   PATCH FASE 8: SEO & PERFORMANCE PRELOAD
+   ========================================== */
+document.addEventListener('DOMContentLoaded', () => {
+
+   // --- 1. META DESCRIPTION GENERATOR OTOMATIS ---
+   // Menyuntikkan deskripsi SEO ke halaman yang belum memilikinya
+   if (!document.querySelector('meta[name="description"]')) {
+       const meta = document.createElement('meta');
+       meta.name = "description";
+       
+       // Ambil teks dari H1 atau Title dokumen sebagai deskripsi
+       const pageTitle = document.querySelector('h1')?.innerText || document.title.replace('Excel Analyst Hub', '').replace('-', '').trim();
+       meta.content = `Pelajari ${pageTitle || 'Analisis Data'} secara mendalam dengan materi interaktif dan praktik langsung di Excel Analyst Hub.`;
+       
+       document.head.appendChild(meta);
+   }
+
+   // --- 2. PRELOAD GOOGLE FONTS (ANTI BERKEDIP/FOIT) ---
+   // Mempercepat pemuatan font Sora & DM Sans
+   if (!document.querySelector('link[href*="fonts.gstatic.com"]')) {
+       const preconnect1 = document.createElement('link');
+       preconnect1.rel = 'preconnect'; 
+       preconnect1.href = 'https://fonts.googleapis.com';
+       
+       const preconnect2 = document.createElement('link');
+       preconnect2.rel = 'preconnect'; 
+       preconnect2.href = 'https://fonts.gstatic.com'; 
+       preconnect2.crossOrigin = 'anonymous';
+       
+       document.head.append(preconnect1, preconnect2);
    }
 });
