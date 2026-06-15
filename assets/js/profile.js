@@ -21,41 +21,32 @@ window.closeEditModal = function() {
 // 2. LOGIKA UTAMA (DATABASE & UI PROFIL)
 // ==========================================
 document.addEventListener('DOMContentLoaded', async function() {
-  // Fail-Secure: Cek ketersediaan library Supabase
-  if (!window.supabase) {
-    console.error("Library Supabase gagal dimuat!");
-    return;
-  }
+  if (!window.supabase) return;
   
-  // Inisialisasi Supabase
   const supaUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
   const supaKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
   const supa = window.supabase.createClient(supaUrl, supaKey);
 
   try {
     // --- 1. CEK SESI USER ---
-    const { data: { session }, error: sessionError } = await supa.auth.getSession();
-    
+    const { data: { session } } = await supa.auth.getSession();
     if (!session) {
-      window.location.replace('login.html'); // Usir instan jika tanpa sesi
+      window.location.replace('login.html');
       return;
     }
 
     const user = session.user;
-    
-    // Render Email User
     const emailDisplay = document.getElementById('info-email'); 
     if (emailDisplay) emailDisplay.textContent = user.email;
 
-    // --- 2. AMBIL DATA DARI TABEL 'profiles' ---
-    const { data: profileData, error: fetchError } = await supa
+    // --- 2. AMBIL DATA PROFIL & XP DARI DATABASE ---
+    const { data: profileData } = await supa
       .from('profiles')
-      .select('nickname, is_premium, subscription_end')
+      .select('nickname, is_premium, subscription_end, total_xp') // Menarik kolom total_xp
       .eq('id', user.id)
       .maybeSingle(); 
 
     // --- 3. RENDER NAMA (PATCH XSS) ---
-    // MENGGUNAKAN textContent AGAR SCRIPT JAHAT TIDAK BISA DIEKSEKUSI
     const greetingText = document.getElementById('greeting-text');
     const nicknameInput = document.getElementById('nickname-input');
 
@@ -63,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       if (greetingText) greetingText.textContent = `Halo, ${profileData.nickname}! 👋`;
       if (nicknameInput) nicknameInput.value = profileData.nickname;
     } else {
-      const defaultName = user.email.split('@')[0]; // Ambil nama depan email
+      const defaultName = user.email.split('@')[0];
       if (greetingText) greetingText.textContent = `Halo, ${defaultName}! 👋`;
     }
 
@@ -80,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       if (diffDays > 0) {
         if (subRemainingEl) {
           subRemainingEl.textContent = `${diffDays} Hari Lagi`;
-          subRemainingEl.style.color = "#10b981"; // Hijau Success
+          subRemainingEl.style.color = "#10b981";
         }
         if (subRenewEl) {
           const options = { day: 'numeric', month: 'long', year: 'numeric' };
@@ -89,7 +80,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       } else {
         if (subRemainingEl) {
           subRemainingEl.textContent = "Kadaluarsa";
-          subRemainingEl.style.color = "#ef4444"; // Merah Danger
+          subRemainingEl.style.color = "#ef4444";
         }
         if (subRenewEl) subRenewEl.textContent = "Silakan perpanjang akses";
       }
@@ -103,10 +94,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (saveBtn) {
       saveBtn.addEventListener('click', async () => {
         const newNickname = nicknameInput.value.trim();
-        if (!newNickname) {
-          alert("Nama panggilan tidak boleh kosong!");
-          return;
-        }
+        if (!newNickname) return alert("Nama panggilan tidak boleh kosong!");
 
         saveBtn.textContent = "Menyimpan...";
         saveBtn.disabled = true;
@@ -127,25 +115,23 @@ document.addEventListener('DOMContentLoaded', async function() {
       });
     }
 
-    // --- 6. SISTEM LOGOUT MENYELURUH (DESKTOP & HP) ---
+    // --- 6. SISTEM LOGOUT MENYELURUH ---
     const handleLogout = async (e) => {
       e.preventDefault();
-      e.target.textContent = "Keluar..."; // Indikator loading
-      
+      e.target.textContent = "Keluar...";
       await supa.auth.signOut();
-      window.location.replace('index.html'); // Hancurkan sesi 100%
+      window.location.replace('index.html');
     };
 
     const logoutBtnDesk = document.getElementById('logout-btn');
     const logoutBtnMob = document.getElementById('logout-btn-mobile');
     
-    // Hubungkan tombol Desktop dan HP ke sistem Logout yang sama
     if (logoutBtnDesk) logoutBtnDesk.addEventListener('click', handleLogout);
     if (logoutBtnMob) logoutBtnMob.addEventListener('click', handleLogout);
 
-    // --- 7. DUMMY RENDER XP (UNTUK MENCEGAH UI BLANK SEMENTARA) ---
-    // Fitur ini akan kita rombak total menggunakan Database di Fase 2
-    const totalXp = 450; 
+    // --- 7. RENDER XP DARI DATABASE (CLOUD SINKRONISASI) ---
+    // Mengganti angka dummy dengan angka asli dari database Supabase
+    const totalXp = profileData?.total_xp || 0; 
     const maxTierXp = 1000;
     const percentage = Math.min((totalXp / maxTierXp) * 100, 100);
     
