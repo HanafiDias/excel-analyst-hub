@@ -206,7 +206,7 @@
 
   window.EAH = window.EAH || {};
 
-  window.EAH.saveProgressToCloud = async function(topicId) {
+  window.EAH.saveProgressToCloud = async function (topicId) {
     if (!window.supabase) return;
     const supaUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
     const supaKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
@@ -217,16 +217,16 @@
       if (!session) return; // Skip jika user belum login
 
       const userId = session.user.id;
-      
+
       const { data: currentData, error: fetchError } = await supa
         .from('user_progress')
         .select('total_xp')
         .eq('user_id', userId)
         .single();
-          
+
       if (!fetchError && currentData) {
         const newXp = (currentData.total_xp || 0) + 100; // Hadiah 100 XP per materi selesai
-        
+
         // Logika Level Up Otomatis
         let newLevel = 'Pemula';
         if (newXp >= 150) newLevel = 'Menengah';
@@ -237,7 +237,7 @@
           .from('user_progress')
           .update({ total_xp: newXp, current_level: newLevel })
           .eq('user_id', userId);
-          
+
         console.log("☁️ Berhasil menyimpan +100 XP ke Database Supabase!");
       }
     } catch (err) {
@@ -250,28 +250,28 @@
   ------------------------------------------ */
   var STATE_KEY = 'eah_unified_state';
 
-  window.EAH.getState = function() {
+  window.EAH.getState = function () {
     try {
       return JSON.parse(localStorage.getItem(STATE_KEY) || '{}');
-    } catch(e) {
+    } catch (e) {
       return {};
     }
   };
 
-  window.EAH.setState = function(updates) {
+  window.EAH.setState = function (updates) {
     var current = window.EAH.getState();
     var merged = Object.assign({}, current, updates);
     try {
       localStorage.setItem(STATE_KEY, JSON.stringify(merged));
-    } catch(e) {}
+    } catch (e) { }
     return merged;
   };
 
-  window.EAH.getTotalXP = function() {
+  window.EAH.getTotalXP = function () {
     return window.EAH.getState().totalXP || 0;
   };
 
-  window.EAH.addXP = function(amount, caseKey) {
+  window.EAH.addXP = function (amount, caseKey) {
     var state = window.EAH.getState();
     var completed = state.completedCases || [];
     if (completed.indexOf(caseKey) !== -1) return false; // already awarded
@@ -283,11 +283,11 @@
     return true;
   };
 
-  window.EAH.getChallengeState = function() {
+  window.EAH.getChallengeState = function () {
     return window.EAH.getState().challenges || {};
   };
 
-  window.EAH.markChallengeComplete = function(id) {
+  window.EAH.markChallengeComplete = function (id) {
     var challenges = window.EAH.getChallengeState();
     challenges[id] = true;
     window.EAH.setState({ challenges: challenges });
@@ -322,7 +322,7 @@
       var id = card.dataset.topicId;
       if (!id) return;
       var status = progress[id] || 'not-started';
-      
+
       // A. Update the text label (Belum Dimulai / Selesai)
       var statusEl = card.querySelector('.topic-status');
       if (statusEl) {
@@ -378,11 +378,11 @@
       if (fill) {
         fill.style.width = pct + '%';
         if (pct === 100) {
-           fill.style.background = '#10b981';
-           // Tambahkan glow pada wadah luarnya (parent) agar tidak terpotong overflow:hidden
-           fill.parentElement.classList.add('progress-glow');
+          fill.style.background = '#10b981';
+          // Tambahkan glow pada wadah luarnya (parent) agar tidak terpotong overflow:hidden
+          fill.parentElement.classList.add('progress-glow');
         } else {
-           fill.parentElement.classList.remove('progress-glow');
+          fill.parentElement.classList.remove('progress-glow');
         }
       }
       if (label) label.textContent = done + '/' + ids.length + ' selesai';
@@ -550,12 +550,12 @@
   function initThemeToggle() {
     const btn = document.getElementById('theme-toggle-nav');
     if (!btn) return;
-    
+
     // Set icon based on current theme
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
     btn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
 
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function () {
       let current = document.documentElement.getAttribute('data-theme');
       let next = current === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
@@ -574,7 +574,7 @@
     initTrackSections();
 
     // --- GLOBAL TOAST NOTIFICATION ---
-    window.EAH.showToast = function(title, subtitle, icon) {
+    window.EAH.showToast = function (title, subtitle, icon) {
       let toast = document.getElementById('eah-toast');
       if (!toast) {
         toast = document.createElement('div');
@@ -593,32 +593,32 @@
         </div>
       `;
       // Slide in
-      setTimeout(function() { toast.classList.add('show'); }, 100);
+      setTimeout(function () { toast.classList.add('show'); }, 100);
       // Slide out after 4.5 seconds
-      setTimeout(function() { toast.classList.remove('show'); }, 4500);
+      setTimeout(function () { toast.classList.remove('show'); }, 4500);
     };
 
     // --- ACHIEVEMENT CHECKER ---
     function checkAchievements() {
-       if (!window.EAH || typeof window.EAH.getProgress !== 'function') return;
-       const p = window.EAH.getProgress();
-       const doneCount = Object.keys(p).filter(k => p[k] === 'done').length;
-       
-       const lastNotified = parseInt(localStorage.getItem('eah_last_notified')) || 0;
-       
-       if (doneCount >= 1 && lastNotified < 1) {
-           window.EAH.showToast('Achievement Unlocked!', 'Pemula Tangguh 🌱', '🌱');
-           localStorage.setItem('eah_last_notified', 1);
-       } else if (doneCount >= 4 && lastNotified < 4) {
-           window.EAH.showToast('Achievement Unlocked!', 'Data Explorer 🧭', '🧭');
-           localStorage.setItem('eah_last_notified', 4);
-       } else if (doneCount >= 9 && lastNotified < 9) {
-           window.EAH.showToast('Achievement Unlocked!', 'Advanced Modeler ⚙️', '⚙️');
-           localStorage.setItem('eah_last_notified', 9);
-       } else if (doneCount >= 14 && lastNotified < 14) {
-           window.EAH.showToast('Achievement Unlocked!', 'Excel Analyst 🏆', '🏆');
-           localStorage.setItem('eah_last_notified', 14);
-       }
+      if (!window.EAH || typeof window.EAH.getProgress !== 'function') return;
+      const p = window.EAH.getProgress();
+      const doneCount = Object.keys(p).filter(k => p[k] === 'done').length;
+
+      const lastNotified = parseInt(localStorage.getItem('eah_last_notified')) || 0;
+
+      if (doneCount >= 1 && lastNotified < 1) {
+        window.EAH.showToast('Achievement Unlocked!', 'Pemula Tangguh 🌱', '🌱');
+        localStorage.setItem('eah_last_notified', 1);
+      } else if (doneCount >= 4 && lastNotified < 4) {
+        window.EAH.showToast('Achievement Unlocked!', 'Data Explorer 🧭', '🧭');
+        localStorage.setItem('eah_last_notified', 4);
+      } else if (doneCount >= 9 && lastNotified < 9) {
+        window.EAH.showToast('Achievement Unlocked!', 'Advanced Modeler ⚙️', '⚙️');
+        localStorage.setItem('eah_last_notified', 9);
+      } else if (doneCount >= 14 && lastNotified < 14) {
+        window.EAH.showToast('Achievement Unlocked!', 'Excel Analyst 🏆', '🏆');
+        localStorage.setItem('eah_last_notified', 14);
+      }
     }
 
     // --- FUNGSI ANIMASI SUKSES (GAMIFIKASI) ---
@@ -627,7 +627,7 @@
       if (btn) {
         btn.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
         btn.style.transform = 'scale(1.15)';
-        setTimeout(function() { btn.style.transform = 'scale(1)'; }, 400);
+        setTimeout(function () { btn.style.transform = 'scale(1)'; }, 400);
       }
 
       // 2. Kontainer Utama di Tengah Layar (Anti Tertutup Modal)
@@ -667,16 +667,16 @@
         particle.style.transition = 'all 1s cubic-bezier(0.25, 1, 0.5, 1)';
         container.appendChild(particle);
 
-        setTimeout(function() {
+        setTimeout(function () {
           const angle = Math.random() * Math.PI * 2;
           const distance = Math.random() * 120 + 80;
           const tx = Math.cos(angle) * distance;
           const ty = Math.sin(angle) * distance;
-          
+
           particle.style.opacity = '1';
           particle.style.transform = `translate(${tx}px, ${ty}px) scale(${Math.random() + 0.5})`;
-          
-          setTimeout(function() {
+
+          setTimeout(function () {
             particle.style.opacity = '0';
             particle.style.transform = `translate(${tx}px, ${ty - 100}px) scale(0)`;
           }, 600);
@@ -684,12 +684,12 @@
       }
 
       // 5. Jalankan Animasi Teks Utama
-      requestAnimationFrame(function() {
-        requestAnimationFrame(function() {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
           textEl.style.opacity = '1';
           textEl.style.transform = 'scale(1.2)'; // Membesar tiba-tiba
 
-          setTimeout(function() {
+          setTimeout(function () {
             // Melayang ke atas lalu menghilang
             textEl.style.transform = 'translateY(-150px) scale(1)';
             textEl.style.opacity = '0';
@@ -698,11 +698,11 @@
       });
 
       // 6. Bersihkan Sampah HTML
-      setTimeout(function() { container.remove(); }, 2500);
+      setTimeout(function () { container.remove(); }, 2500);
     }
 
     // --- UNIVERSAL QUIZ TRIGGER (EVENT DELEGATION) ---
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
       const targetBtn = e.target.closest('.btn-mark-done');
 
       if (targetBtn) {
@@ -715,26 +715,26 @@
         }
 
         const topicId = topicItem.getAttribute('data-topic-id');
-        
+
         const isDone = targetBtn.textContent.includes('Selesai');
 
         const isLocked = targetBtn.textContent.includes('Baca Dulu');
         if (isLocked) {
-           alert("Silakan buka dan baca materinya terlebih dahulu dengan mengklik tombol 'Mulai →'");
-           return;
+          alert("Silakan buka dan baca materinya terlebih dahulu dengan mengklik tombol 'Mulai →'");
+          return;
         }
 
         // 1. FITUR UNDO INSTAN (Bypass System Confirm yang sering diblokir browser)
         if (isDone) {
-           targetBtn.style.background = 'transparent';
-           targetBtn.style.borderColor = 'var(--border)';
-           targetBtn.style.color = 'var(--text-muted)';
-           targetBtn.innerHTML = '📝 Kerjakan Kuis'; 
-           targetBtn.title = 'Klik untuk mengerjakan materi';
-           
-           if (window.EAH && window.EAH.setTopicStatus) window.EAH.setTopicStatus(topicId, 'pending');
-           if (window.EAH && window.EAH.renderProgress) window.EAH.renderProgress();
-           return; 
+          targetBtn.style.background = 'transparent';
+          targetBtn.style.borderColor = 'var(--border)';
+          targetBtn.style.color = 'var(--text-muted)';
+          targetBtn.innerHTML = '📝 Kerjakan Kuis';
+          targetBtn.title = 'Klik untuk mengerjakan materi';
+
+          if (window.EAH && window.EAH.setTopicStatus) window.EAH.setTopicStatus(topicId, 'pending');
+          if (window.EAH && window.EAH.renderProgress) window.EAH.renderProgress();
+          return;
         }
 
         const quizData = typeof KNOWLEDGE_CHECKS !== 'undefined' ? KNOWLEDGE_CHECKS[topicId] : null;
@@ -748,7 +748,7 @@
           triggerSuccessAnimation(targetBtn);
           checkAchievements();
           targetBtn.title = 'Klik untuk membatalkan status selesai';
-          
+
           if (window.EAH && window.EAH.setTopicStatus) window.EAH.setTopicStatus(topicId, 'done');
           if (window.EAH && window.EAH.saveProgressToCloud) window.EAH.saveProgressToCloud(topicId);
           if (window.EAH && window.EAH.renderProgress) window.EAH.renderProgress();
@@ -762,7 +762,7 @@
 
         if (quizModal && questionEl && optionsContainer) {
           questionEl.textContent = quizData.q;
-          optionsContainer.innerHTML = ''; 
+          optionsContainer.innerHTML = '';
 
           // Desain Feedback Container
           let feedbackContainer = document.getElementById('quiz-feedback');
@@ -777,9 +777,9 @@
           }
           feedbackContainer.style.display = 'none';
 
-          quizData.options.forEach(function(opt) {
+          quizData.options.forEach(function (opt) {
             const optBtn = document.createElement('button');
-            
+
             // Desain Opsi Jawaban (Anti Kepotong & Premium)
             optBtn.style.display = 'block';
             optBtn.style.textAlign = 'left';
@@ -795,34 +795,34 @@
             optBtn.style.lineHeight = '1.6';
             optBtn.style.fontWeight = '500';
             optBtn.style.transition = 'all 0.2s ease-in-out';
-            
+
             // Kunci mutlak agar teks bisa turun baris
-            optBtn.style.whiteSpace = 'normal'; 
+            optBtn.style.whiteSpace = 'normal';
             optBtn.style.minHeight = '50px';
             optBtn.style.height = 'auto';
             optBtn.style.wordBreak = 'break-word';
-            
+
             optBtn.textContent = opt.text;
 
             // Efek Hover Buatan JS (Konsisten dengan btn-ghost)
-            optBtn.addEventListener('mouseenter', function() {
+            optBtn.addEventListener('mouseenter', function () {
               if (!optBtn.disabled && optBtn.style.background === 'transparent') {
                 optBtn.style.background = 'var(--surface-2)';
               }
             });
-            optBtn.addEventListener('mouseleave', function() {
+            optBtn.addEventListener('mouseleave', function () {
               if (!optBtn.disabled && optBtn.style.background === 'var(--surface-2)') {
                 optBtn.style.background = 'transparent';
               }
             });
 
-            optBtn.addEventListener('click', function() {
+            optBtn.addEventListener('click', function () {
               if (opt.correct) {
                 // Berhasil
                 optBtn.style.borderColor = '#10b981';
                 optBtn.style.background = 'rgba(16, 185, 129, 0.1)';
                 optBtn.style.color = '#10b981';
-                
+
                 feedbackContainer.style.display = 'block';
                 feedbackContainer.style.background = 'rgba(16, 185, 129, 0.1)';
                 feedbackContainer.style.color = '#10b981';
@@ -843,10 +843,10 @@
 
                 // Matikan opsi lain, biarkan tombol yang benar tetap menyala
                 Array.from(optionsContainer.children).forEach(b => {
-                  if(b.tagName === 'BUTTON') {
-                      b.disabled = true;
-                      b.style.cursor = 'not-allowed';
-                      if(b !== optBtn) b.style.opacity = '0.5';
+                  if (b.tagName === 'BUTTON') {
+                    b.disabled = true;
+                    b.style.cursor = 'not-allowed';
+                    if (b !== optBtn) b.style.opacity = '0.5';
                   }
                 });
               } else {
@@ -854,7 +854,7 @@
                 optBtn.style.borderColor = '#ef4444';
                 optBtn.style.background = 'rgba(239, 68, 68, 0.05)';
                 optBtn.style.color = '#ef4444';
-                
+
                 feedbackContainer.style.display = 'block';
                 feedbackContainer.style.background = 'rgba(239, 68, 68, 0.1)';
                 feedbackContainer.style.color = '#ef4444';
@@ -872,7 +872,7 @@
     });
 
     // --- CLOSE MODAL LOGIC ---
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
       // Menutup jika klik di area luar, klik tombol X, atau klik tombol Lanjutkan
       if (e.target.id === 'quiz-modal' || e.target.closest('#close-quiz') || e.target.id === 'quiz-btn-continue') {
         const quizModal = document.getElementById('quiz-modal');
@@ -888,8 +888,8 @@
       window.EAH.renderProgress();
     }
     // --- UX FLOW: TRACK "MULAI" CLICKS ---
-    document.querySelectorAll('.topic-card a.btn-primary').forEach(function(link) {
-      link.addEventListener('click', function() {
+    document.querySelectorAll('.topic-card a.btn-primary').forEach(function (link) {
+      link.addEventListener('click', function () {
         const card = link.closest('.topic-card');
         if (card) {
           const topicId = card.dataset.topicId;
@@ -918,7 +918,7 @@
       navContainer.style.alignItems = 'center';
       navContainer.style.flexWrap = 'wrap';
       navContainer.style.gap = '15px';
-      
+
       navContainer.innerHTML = `
           <div>
               <h4 style="margin:0 0 5px 0;">Sudah selesai membaca?</h4>
@@ -926,11 +926,11 @@
           </div>
           <a href="learn.html" class="btn-primary" style="text-decoration:none;">⬅ Kembali ke Jalur Belajar</a>
       `;
-      
+
       // Cari tempat teraman untuk menempelkan navigasi
       const mainEl = document.getElementById('main-content') || document.querySelector('main');
       if (mainEl) {
-          mainEl.appendChild(navContainer);
+        mainEl.appendChild(navContainer);
       }
     }
   });
@@ -965,12 +965,12 @@
     // Atau fallback sederhana menggunakan alert/console jika belum ada UI khususnya
     const toastContainer = document.getElementById('toast-container');
     if (toastContainer) {
-       // Logika memunculkan toast Mas di sini
-       toastContainer.innerText = message;
-       toastContainer.classList.add('show');
-       setTimeout(() => toastContainer.classList.remove('show'), 3000);
+      // Logika memunculkan toast Mas di sini
+      toastContainer.innerText = message;
+      toastContainer.classList.add('show');
+      setTimeout(() => toastContainer.classList.remove('show'), 3000);
     } else {
-       console.log("Achievement Unlocked: " + message);
+      console.log("Achievement Unlocked: " + message);
     }
 
     // Tandai bahwa toast ini sudah ditampilkan
@@ -991,7 +991,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById(id);
     if (el && (el.textContent.toLowerCase().includes('memuat') || el.textContent.includes('Calculating'))) {
       el.classList.add('skeleton');
-      
+
       // Alat pemantau (Observer): Hapus efek skeleton seketika saat data asli Supabase masuk
       const observer = new MutationObserver(() => {
         el.classList.remove('skeleton');
@@ -1027,7 +1027,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Mencegah input huruf masuk ke alat Data Visualizer / Formula 
   const numberInputs = document.querySelectorAll('input[type="number"], .visualizer-input');
   numberInputs.forEach(input => {
-    input.addEventListener('input', function() {
+    input.addEventListener('input', function () {
       // Regex: Tendang semua karakter selain angka (0-9), minus (-), dan titik (.)
       this.value = this.value.replace(/[^0-9.-]/g, '');
     });
@@ -1043,43 +1043,43 @@ document.addEventListener('DOMContentLoaded', async () => {
   // --- 1. DINAMISASI PROGRESS BAR (LEARN.HTML) ---
   // Mencari elemen teks progres (contoh: "0/5 selesai") dan bar-nya
   const progressText = document.querySelector('.progress-text') || document.querySelector('.progress-label');
-  const topicCards = document.querySelectorAll('.topic-card'); 
-  
+  const topicCards = document.querySelectorAll('.topic-card');
+
   if (progressText && topicCards.length > 0) {
-     // Menghitung jumlah kartu topik yang memiliki class 'completed' / 'done'
-     const completedCount = document.querySelectorAll('.topic-card.completed, .topic-status.done').length;
-     const totalCount = topicCards.length;
-     
-     // Memperbarui teks secara dinamis
-     progressText.textContent = `${completedCount}/${totalCount} Selesai`;
-     
-     // Memperbarui lebar pita progres (jika elemennya ada)
-     const progressBar = document.querySelector('.progress-bar-fill') || document.querySelector('.progress-fill');
-     if (progressBar) {
-        progressBar.style.width = `${(completedCount / totalCount) * 100}%`;
-     }
+    // Menghitung jumlah kartu topik yang memiliki class 'completed' / 'done'
+    const completedCount = document.querySelectorAll('.topic-card.completed, .topic-status.done').length;
+    const totalCount = topicCards.length;
+
+    // Memperbarui teks secara dinamis
+    progressText.textContent = `${completedCount}/${totalCount} Selesai`;
+
+    // Memperbarui lebar pita progres (jika elemennya ada)
+    const progressBar = document.querySelector('.progress-bar-fill') || document.querySelector('.progress-fill');
+    if (progressBar) {
+      progressBar.style.width = `${(completedCount / totalCount) * 100}%`;
+    }
   }
 
   // --- 2. SENTRALISASI NAVBAR AUTH STATE ---
   // Otomatis mengubah tombol "Masuk" menjadi "Halo, Nama" di semua 20+ file HTML
   const navAuthBtns = document.querySelectorAll('#nav-auth-btn, .nav-auth, a[href="login.html"]');
-  
+
   if (navAuthBtns.length > 0 && window.supaClient) {
-     const { data: { session } } = await window.supaClient.auth.getSession();
-     
-     if (session) {
-        // Ambil nama dari profil, fallback ke bagian depan email
-        const { data: profile } = await window.supaClient.from('profiles').select('nickname').eq('id', session.user.id).maybeSingle();
-        const displayName = profile?.nickname || session.user.email.split('@')[0];
-        
-        navAuthBtns.forEach(btn => {
-           btn.innerHTML = `👤 Halo, ${displayName}`;
-           btn.href = "profile.html";
-           btn.style.background = "linear-gradient(135deg, #3b82f6, #2563eb)";
-           btn.style.color = "#ffffff";
-           btn.style.border = "none";
-        });
-     }
+    const { data: { session } } = await window.supaClient.auth.getSession();
+
+    if (session) {
+      // Ambil nama dari profil, fallback ke bagian depan email
+      const { data: profile } = await window.supaClient.from('profiles').select('nickname').eq('id', session.user.id).maybeSingle();
+      const displayName = profile?.nickname || session.user.email.split('@')[0];
+
+      navAuthBtns.forEach(btn => {
+        btn.innerHTML = `👤 Halo, ${displayName}`;
+        btn.href = "profile.html";
+        btn.style.background = "linear-gradient(135deg, #3b82f6, #2563eb)";
+        btn.style.color = "#ffffff";
+        btn.style.border = "none";
+      });
+    }
   }
 });
 
@@ -1088,247 +1088,53 @@ document.addEventListener('DOMContentLoaded', async () => {
    ========================================== */
 document.addEventListener('DOMContentLoaded', () => {
 
-   // --- 1. AKSESIBILITAS FLASHCARD (NAVIGASI KEYBOARD) ---
-   // Memungkinkan pengguna membalik kartu (flashcard) hanya dengan menekan Enter atau Spasi
-   const flashcards = document.querySelectorAll('.flashcard, .flip-card, .topic-card');
-   flashcards.forEach(card => {
-      // Pasang tabindex agar kartu bisa di-highlight oleh tombol TAB
-      if (!card.hasAttribute('tabindex')) {
-         card.setAttribute('tabindex', '0');
+  // --- 1. AKSESIBILITAS FLASHCARD (NAVIGASI KEYBOARD) ---
+  // Memungkinkan pengguna membalik kartu (flashcard) hanya dengan menekan Enter atau Spasi
+  const flashcards = document.querySelectorAll('.flashcard, .flip-card, .topic-card');
+  flashcards.forEach(card => {
+    // Pasang tabindex agar kartu bisa di-highlight oleh tombol TAB
+    if (!card.hasAttribute('tabindex')) {
+      card.setAttribute('tabindex', '0');
+    }
+
+    // Dengarkan tombol Enter (13) atau Spasi (32)
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        // Pemicu flip (sesuaikan dengan class flip Mas, umumnya 'flipped' atau 'active')
+        this.classList.toggle('flipped');
+        this.classList.toggle('active');
       }
-      
-      // Dengarkan tombol Enter (13) atau Spasi (32)
-      card.addEventListener('keydown', function(e) {
-         if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            // Pemicu flip (sesuaikan dengan class flip Mas, umumnya 'flipped' atau 'active')
-            this.classList.toggle('flipped'); 
-            this.classList.toggle('active');
-         }
-      });
-   });
-
-   // --- 2. AKSESIBILITAS LOGO SCREEN READER (TUNANETRA) ---
-   // Mengubah emoji '⊞' menjadi elemen yang bisa dibaca oleh mesin pembaca layar
-   const logoIcons = document.querySelectorAll('.logo-icon');
-   logoIcons.forEach(icon => {
-       icon.setAttribute('role', 'img');
-       icon.setAttribute('aria-label', 'Logo Excel Analyst Hub');
-       icon.removeAttribute('aria-hidden'); 
-   });
-
-   // --- 3. RATE LIMITING (PENCEGAH CRASH DATASET) ---
-   // Mencari kolom input baris di alat Dataset Generator
-   const rowInput = document.getElementById('dataset-rows') || document.querySelector('input[type="number"]');
-   if (rowInput && window.location.pathname.includes('tools.html')) {
-      rowInput.addEventListener('input', function() {
-         let val = parseInt(this.value);
-         // Jika user mengetik angka lebih dari 1000, paksa turun ke 1000
-         if (val > 1000) {
-            this.value = 1000;
-            // Gunakan notasi Toast yang sudah kita buat di Fase 4, atau pakai alert standar
-            if (typeof window.showToastSafe === 'function') {
-               window.showToastSafe("Batas maksimal diatur ke 1.000 baris untuk menjaga kestabilan server.");
-  /* ------------------------------------------
-     7. GLOBAL MODAL CLOSER (BUG FIX #13)
-     Menutup semua jenis modal dengan tombol ESC
-  ------------------------------------------ */
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-      // Cari semua elemen yang memiliki class 'active' (Modal terbuka)
-      const activeModals = document.querySelectorAll('.active');
-      activeModals.forEach(modal => {
-        // Pastikan yang ditutup hanya yang ber-ID modal atau class modal
-        if (modal.id.includes('modal') || modal.classList.contains('qris-modal-overlay')) {
-          modal.classList.remove('active');
-        }
-      });
-    }
-  });
-
-  /* ------------------------------------------
-     8. ANTI-SPAM ACHIEVEMENT TOAST (BUG FIX #14)
-     Mencegah notifikasi muncul berulang saat halaman di-refresh
-  ------------------------------------------ */
-  window.showToastSafe = function (message) {
-    // Cek apakah toast ini sudah pernah muncul di sesi ini
-    const toastKey = 'eah_toast_' + btoa(message).substring(0, 10);
-    if (sessionStorage.getItem(toastKey)) return; // Jika sudah, hentikan fungsi
-
-    // Panggil fungsi pembuat toast asli (jika sudah ada di kode Mas sebelumnya)
-    // Atau fallback sederhana menggunakan alert/console jika belum ada UI khususnya
-    const toastContainer = document.getElementById('toast-container');
-    if (toastContainer) {
-       // Logika memunculkan toast Mas di sini
-       toastContainer.innerText = message;
-       toastContainer.classList.add('show');
-       setTimeout(() => toastContainer.classList.remove('show'), 3000);
-    } else {
-       console.log("Achievement Unlocked: " + message);
-    }
-
-    // Tandai bahwa toast ini sudah ditampilkan
-    sessionStorage.setItem(toastKey, 'true');
-  };
-
-})();
-
-/* ==========================================
-   PATCH FASE 5: UI/UX & MOBILE INTERACTION
-   ========================================== */
-document.addEventListener('DOMContentLoaded', () => {
-
-  // --- 1. SKELETON LOADING INJEKSI OTOMATIS ---
-  // Mencari elemen profil yang sedang "memuat" lalu diberi efek animasi
-  const profileIds = ['info-email', 'greeting-text', 'subscription-remaining'];
-  profileIds.forEach(id => {
-    const el = document.getElementById(id);
-    if (el && (el.textContent.toLowerCase().includes('memuat') || el.textContent.includes('Calculating'))) {
-      el.classList.add('skeleton');
-      
-      // Alat pemantau (Observer): Hapus efek skeleton seketika saat data asli Supabase masuk
-      const observer = new MutationObserver(() => {
-        el.classList.remove('skeleton');
-        observer.disconnect();
-      });
-      observer.observe(el, { childList: true, characterData: true, subtree: true });
-    }
-  });
-
-  // --- 2. TOMBOL DAFTAR ISI (TOC) KHUSUS HP ---
-  const sidebar = document.querySelector('.topic-sidebar');
-  if (sidebar) {
-    const tocBtn = document.createElement('button');
-    tocBtn.className = 'toc-mobile-btn';
-    tocBtn.innerHTML = '📑';
-    tocBtn.setAttribute('aria-label', 'Buka Daftar Isi');
-    document.body.appendChild(tocBtn);
-
-    tocBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      sidebar.classList.toggle('mobile-open');
-    });
-
-    // Otomatis menutup sidebar jika user mengetuk layar bagian luar
-    document.addEventListener('click', (e) => {
-      if (sidebar.classList.contains('mobile-open') && !sidebar.contains(e.target) && e.target !== tocBtn) {
-        sidebar.classList.remove('mobile-open');
-      }
-    });
-  }
-
-  // --- 3. PENGUNCI INPUT (VALIDASI TOOLS) ---
-  // Mencegah input huruf masuk ke alat Data Visualizer / Formula 
-  const numberInputs = document.querySelectorAll('input[type="number"], .visualizer-input');
-  numberInputs.forEach(input => {
-    input.addEventListener('input', function() {
-      // Regex: Tendang semua karakter selain angka (0-9), minus (-), dan titik (.)
-      this.value = this.value.replace(/[^0-9.-]/g, '');
     });
   });
 
-});
+  // --- 2. AKSESIBILITAS LOGO SCREEN READER (TUNANETRA) ---
+  // Mengubah emoji '⊞' menjadi elemen yang bisa dibaca oleh mesin pembaca layar
+  const logoIcons = document.querySelectorAll('.logo-icon');
+  logoIcons.forEach(icon => {
+    icon.setAttribute('role', 'img');
+    icon.setAttribute('aria-label', 'Logo Excel Analyst Hub');
+    icon.removeAttribute('aria-hidden');
+  });
 
-/* ==========================================
-   PATCH FASE 6: DRY ARCHITECTURE & STATE
-   ========================================== */
-document.addEventListener('DOMContentLoaded', async () => {
-
-  // --- 1. DINAMISASI PROGRESS BAR (LEARN.HTML) ---
-  // Mencari elemen teks progres (contoh: "0/5 selesai") dan bar-nya
-  const progressText = document.querySelector('.progress-text') || document.querySelector('.progress-label');
-  const topicCards = document.querySelectorAll('.topic-card'); 
-  
-  if (progressText && topicCards.length > 0) {
-     // Menghitung jumlah kartu topik yang memiliki class 'completed' / 'done'
-     const completedCount = document.querySelectorAll('.topic-card.completed, .topic-status.done').length;
-     const totalCount = topicCards.length;
-     
-     // Memperbarui teks secara dinamis
-     progressText.textContent = `${completedCount}/${totalCount} Selesai`;
-     
-     // Memperbarui lebar pita progres (jika elemennya ada)
-     const progressBar = document.querySelector('.progress-bar-fill') || document.querySelector('.progress-fill');
-     if (progressBar) {
-        progressBar.style.width = `${(completedCount / totalCount) * 100}%`;
-     }
-  }
-
-  // --- 2. SENTRALISASI NAVBAR AUTH STATE ---
-  // Otomatis mengubah tombol "Masuk" menjadi "Halo, Nama" di semua 20+ file HTML
-  const navAuthBtns = document.querySelectorAll('#nav-auth-btn, .nav-auth, a[href="login.html"]');
-  
-  if (navAuthBtns.length > 0 && window.supaClient) {
-     const { data: { session } } = await window.supaClient.auth.getSession();
-     
-     if (session) {
-        // Ambil nama dari profil, fallback ke bagian depan email
-        const { data: profile } = await window.supaClient.from('profiles').select('nickname').eq('id', session.user.id).maybeSingle();
-        const displayName = profile?.nickname || session.user.email.split('@')[0];
-        
-        navAuthBtns.forEach(btn => {
-           btn.innerHTML = `👤 Halo, ${displayName}`;
-           btn.href = "profile.html";
-           btn.style.background = "linear-gradient(135deg, #3b82f6, #2563eb)";
-           btn.style.color = "#ffffff";
-           btn.style.border = "none";
-        });
-     }
-  }
-});
-
-/* ==========================================
-   PATCH FASE 7: ACCESSIBILITY & RATE LIMITING
-   ========================================== */
-document.addEventListener('DOMContentLoaded', () => {
-
-   // --- 1. AKSESIBILITAS FLASHCARD (NAVIGASI KEYBOARD) ---
-   // Memungkinkan pengguna membalik kartu (flashcard) hanya dengan menekan Enter atau Spasi
-   const flashcards = document.querySelectorAll('.flashcard, .flip-card, .topic-card');
-   flashcards.forEach(card => {
-      // Pasang tabindex agar kartu bisa di-highlight oleh tombol TAB
-      if (!card.hasAttribute('tabindex')) {
-         card.setAttribute('tabindex', '0');
-      }
-      
-      // Dengarkan tombol Enter (13) atau Spasi (32)
-      card.addEventListener('keydown', function(e) {
-         if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            // Pemicu flip (sesuaikan dengan class flip Mas, umumnya 'flipped' atau 'active')
-            this.classList.toggle('flipped'); 
-            this.classList.toggle('active');
+  // --- 3. RATE LIMITING (PENCEGAH CRASH DATASET) ---
+  // Mencari kolom input baris di alat Dataset Generator
+  const rowInput = document.getElementById('dataset-rows') || document.querySelector('input[type="number"]');
+  if (rowInput && window.location.pathname.includes('tools.html')) {
+    rowInput.addEventListener('input', function () {
+      let val = parseInt(this.value);
+      // Jika user mengetik angka lebih dari 1000, paksa turun ke 1000
+      if (val > 1000) {
+        this.value = 1000;
+        // Gunakan notasi Toast yang sudah kita buat di Fase 4, atau pakai alert standar
+        if (typeof window.showToastSafe === 'function') {
+          window.showToastSafe("Batas maksimal diatur ke 1.000 baris untuk menjaga kestabilan server.");
+         } else {
+           alert("Batas maksimal adalah 1.000 baris.");
          }
-      });
-   });
-
-   // --- 2. AKSESIBILITAS LOGO SCREEN READER (TUNANETRA) ---
-   // Mengubah emoji '⊞' menjadi elemen yang bisa dibaca oleh mesin pembaca layar
-   const logoIcons = document.querySelectorAll('.logo-icon');
-   logoIcons.forEach(icon => {
-       icon.setAttribute('role', 'img');
-       icon.setAttribute('aria-label', 'Logo Excel Analyst Hub');
-       icon.removeAttribute('aria-hidden'); 
-   });
-
-   // --- 3. RATE LIMITING (PENCEGAH CRASH DATASET) ---
-   // Mencari kolom input baris di alat Dataset Generator
-   const rowInput = document.getElementById('dataset-rows') || document.querySelector('input[type="number"]');
-   if (rowInput && window.location.pathname.includes('tools.html')) {
-      rowInput.addEventListener('input', function() {
-         let val = parseInt(this.value);
-         // Jika user mengetik angka lebih dari 1000, paksa turun ke 1000
-         if (val > 1000) {
-            this.value = 1000;
-            // Gunakan notasi Toast yang sudah kita buat di Fase 4, atau pakai alert standar
-            if (typeof window.showToastSafe === 'function') {
-               window.showToastSafe("Batas maksimal diatur ke 1.000 baris untuk menjaga kestabilan server.");
-            } else {
-               alert("Batas maksimal adalah 1.000 baris.");
-            }
-         }
-      });
-   }
+       }
+     });
+  }
 });
 
 /* ==========================================
@@ -1336,31 +1142,31 @@ document.addEventListener('DOMContentLoaded', () => {
    ========================================== */
 document.addEventListener('DOMContentLoaded', () => {
 
-   // --- 1. META DESCRIPTION GENERATOR OTOMATIS ---
-   // Menyuntikkan deskripsi SEO ke halaman yang belum memilikinya
-   if (!document.querySelector('meta[name="description"]')) {
-       const meta = document.createElement('meta');
-       meta.name = "description";
-       
-       // Ambil teks dari H1 atau Title dokumen sebagai deskripsi
-       const pageTitle = document.querySelector('h1')?.innerText || document.title.replace('Excel Analyst Hub', '').replace('-', '').trim();
-       meta.content = `Pelajari ${pageTitle || 'Analisis Data'} secara mendalam dengan materi interaktif dan praktik langsung di Excel Analyst Hub.`;
-       
-       document.head.appendChild(meta);
-   }
+  // --- 1. META DESCRIPTION GENERATOR OTOMATIS ---
+  // Menyuntikkan deskripsi SEO ke halaman yang belum memilikinya
+  if (!document.querySelector('meta[name="description"]')) {
+    const meta = document.createElement('meta');
+    meta.name = "description";
 
-   // --- 2. PRELOAD GOOGLE FONTS (ANTI BERKEDIP/FOIT) ---
-   // Mempercepat pemuatan font Sora & DM Sans
-   if (!document.querySelector('link[href*="fonts.gstatic.com"]')) {
-       const preconnect1 = document.createElement('link');
-       preconnect1.rel = 'preconnect'; 
-       preconnect1.href = 'https://fonts.googleapis.com';
-       
-       const preconnect2 = document.createElement('link');
-       preconnect2.rel = 'preconnect'; 
-       preconnect2.href = 'https://fonts.gstatic.com'; 
-       preconnect2.crossOrigin = 'anonymous';
-       
-       document.head.append(preconnect1, preconnect2);
-   }
+    // Ambil teks dari H1 atau Title dokumen sebagai deskripsi
+    const pageTitle = document.querySelector('h1')?.innerText || document.title.replace('Excel Analyst Hub', '').replace('-', '').trim();
+    meta.content = `Pelajari ${pageTitle || 'Analisis Data'} secara mendalam dengan materi interaktif dan praktik langsung di Excel Analyst Hub.`;
+
+    document.head.appendChild(meta);
+  }
+
+  // --- 2. PRELOAD GOOGLE FONTS (ANTI BERKEDIP/FOIT) ---
+  // Mempercepat pemuatan font Sora & DM Sans
+  if (!document.querySelector('link[href*="fonts.gstatic.com"]')) {
+    const preconnect1 = document.createElement('link');
+    preconnect1.rel = 'preconnect';
+    preconnect1.href = 'https://fonts.googleapis.com';
+
+    const preconnect2 = document.createElement('link');
+    preconnect2.rel = 'preconnect';
+    preconnect2.href = 'https://fonts.gstatic.com';
+    preconnect2.crossOrigin = 'anonymous';
+
+    document.head.append(preconnect1, preconnect2);
+  }
 });
