@@ -1082,3 +1082,57 @@ document.addEventListener('DOMContentLoaded', async () => {
      }
   }
 });
+
+/* ==========================================
+   PATCH FASE 7: ACCESSIBILITY & RATE LIMITING
+   ========================================== */
+document.addEventListener('DOMContentLoaded', () => {
+
+   // --- 1. AKSESIBILITAS FLASHCARD (NAVIGASI KEYBOARD) ---
+   // Memungkinkan pengguna membalik kartu (flashcard) hanya dengan menekan Enter atau Spasi
+   const flashcards = document.querySelectorAll('.flashcard, .flip-card, .topic-card');
+   flashcards.forEach(card => {
+      // Pasang tabindex agar kartu bisa di-highlight oleh tombol TAB
+      if (!card.hasAttribute('tabindex')) {
+         card.setAttribute('tabindex', '0');
+      }
+      
+      // Dengarkan tombol Enter (13) atau Spasi (32)
+      card.addEventListener('keydown', function(e) {
+         if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            // Pemicu flip (sesuaikan dengan class flip Mas, umumnya 'flipped' atau 'active')
+            this.classList.toggle('flipped'); 
+            this.classList.toggle('active');
+         }
+      });
+   });
+
+   // --- 2. AKSESIBILITAS LOGO SCREEN READER (TUNANETRA) ---
+   // Mengubah emoji '⊞' menjadi elemen yang bisa dibaca oleh mesin pembaca layar
+   const logoIcons = document.querySelectorAll('.logo-icon');
+   logoIcons.forEach(icon => {
+       icon.setAttribute('role', 'img');
+       icon.setAttribute('aria-label', 'Logo Excel Analyst Hub');
+       icon.removeAttribute('aria-hidden'); 
+   });
+
+   // --- 3. RATE LIMITING (PENCEGAH CRASH DATASET) ---
+   // Mencari kolom input baris di alat Dataset Generator
+   const rowInput = document.getElementById('dataset-rows') || document.querySelector('input[type="number"]');
+   if (rowInput && window.location.pathname.includes('tools.html')) {
+      rowInput.addEventListener('input', function() {
+         let val = parseInt(this.value);
+         // Jika user mengetik angka lebih dari 1000, paksa turun ke 1000
+         if (val > 1000) {
+            this.value = 1000;
+            // Gunakan notasi Toast yang sudah kita buat di Fase 4, atau pakai alert standar
+            if (typeof window.showToastSafe === 'function') {
+               window.showToastSafe("Batas maksimal diatur ke 1.000 baris untuk menjaga kestabilan server.");
+            } else {
+               alert("Batas maksimal adalah 1.000 baris.");
+            }
+         }
+      });
+   }
+});

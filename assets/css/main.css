@@ -657,3 +657,25 @@ input:focus, select:focus, textarea:focus {
         overflow-y: auto;
     }
 }
+
+/* =========================================
+   PATCH FASE 7: ACCESSIBILITY (WCAG)
+   ========================================= */
+
+/* 1. Meningkatkan kontras warna teks sekunder agar lebih mudah dibaca */
+:root {
+    --text-muted: #cbd5e1 !important; /* Dicerahkan agar lebih kontras di background gelap */
+}
+
+/* 2. Mengamankan teks abu-abu di atas kotak surface (background abu gelap) */
+.surface-2 .text-muted, [style*="var(--surface-2)"] [style*="var(--text-muted)"] {
+    color: #e2e8f0 !important; 
+}
+
+/* 3. Indikator Fokus Keyboard (Wajib untuk WCAG) */
+/* Memberikan cincin biru yang jelas saat user menggunakan tombol TAB */
+.flashcard:focus, .flip-card:focus, .topic-card:focus, a:focus, button:focus {
+    outline: 3px solid #3b82f6 !important;
+    outline-offset: 3px;
+    border-radius: 8px;
+}
