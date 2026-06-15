@@ -935,4 +935,46 @@
     }
   });
 
+  /* ------------------------------------------
+     7. GLOBAL MODAL CLOSER (BUG FIX #13)
+     Menutup semua jenis modal dengan tombol ESC
+  ------------------------------------------ */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      // Cari semua elemen yang memiliki class 'active' (Modal terbuka)
+      const activeModals = document.querySelectorAll('.active');
+      activeModals.forEach(modal => {
+        // Pastikan yang ditutup hanya yang ber-ID modal atau class modal
+        if (modal.id.includes('modal') || modal.classList.contains('qris-modal-overlay')) {
+          modal.classList.remove('active');
+        }
+      });
+    }
+  });
+
+  /* ------------------------------------------
+     8. ANTI-SPAM ACHIEVEMENT TOAST (BUG FIX #14)
+     Mencegah notifikasi muncul berulang saat halaman di-refresh
+  ------------------------------------------ */
+  window.showToastSafe = function (message) {
+    // Cek apakah toast ini sudah pernah muncul di sesi ini
+    const toastKey = 'eah_toast_' + btoa(message).substring(0, 10);
+    if (sessionStorage.getItem(toastKey)) return; // Jika sudah, hentikan fungsi
+
+    // Panggil fungsi pembuat toast asli (jika sudah ada di kode Mas sebelumnya)
+    // Atau fallback sederhana menggunakan alert/console jika belum ada UI khususnya
+    const toastContainer = document.getElementById('toast-container');
+    if (toastContainer) {
+       // Logika memunculkan toast Mas di sini
+       toastContainer.innerText = message;
+       toastContainer.classList.add('show');
+       setTimeout(() => toastContainer.classList.remove('show'), 3000);
+    } else {
+       console.log("Achievement Unlocked: " + message);
+    }
+
+    // Tandai bahwa toast ini sudah ditampilkan
+    sessionStorage.setItem(toastKey, 'true');
+  };
+
 })();
