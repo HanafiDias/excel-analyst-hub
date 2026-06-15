@@ -575,3 +575,85 @@ input:focus, select:focus, textarea:focus {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
 }
+
+/* =========================================
+   PATCH FASE 5: UI/UX & MOBILE RESPONSIVENESS
+   ========================================= */
+
+/* 1. Fix Safari 100vh Modal (Mencegah modal terpotong di HP iPhone) */
+.modal-overlay, .qris-modal-overlay, #edit-modal, .modal {
+    height: 100dvh !important;
+}
+
+/* 2. Fix Grid Sandbox & Tabel Visualizer di HP */
+@media (max-width: 600px) {
+    #sb-grid {
+        min-width: 100% !important;
+    }
+    .data-visualizer-table-wrapper, .table-responsive {
+        overflow-x: auto !important;
+        display: block;
+        width: 100%;
+    }
+}
+
+/* 3. Skeleton Loading (Efek Memuat Abu-abu Elegan) */
+.skeleton {
+    background: linear-gradient(90deg, var(--surface-2, #1e293b) 25%, var(--border, #334155) 50%, var(--surface-2, #1e293b) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: 6px;
+    color: transparent !important;
+    user-select: none;
+    pointer-events: none;
+}
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* 4. Tombol TOC Mobile (Floating Button Daftar Isi) */
+.toc-mobile-btn {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 55px;
+    height: 55px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    z-index: 9999;
+    cursor: pointer;
+    font-size: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+.toc-mobile-btn:active {
+    transform: scale(0.9);
+}
+@media (max-width: 900px) {
+    .toc-mobile-btn {
+        display: flex; 
+    }
+    .topic-sidebar {
+        transition: transform 0.3s ease;
+    }
+    .topic-sidebar.mobile-open {
+        display: block !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100dvh;
+        z-index: 9998;
+        background: var(--surface-1, #0f172a);
+        border-right: 1px solid var(--border);
+        padding: 80px 20px 20px 20px;
+        box-shadow: 4px 0 20px rgba(0,0,0,0.6);
+        overflow-y: auto;
+    }
+}

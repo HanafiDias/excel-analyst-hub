@@ -978,3 +978,59 @@
   };
 
 })();
+
+/* ==========================================
+   PATCH FASE 5: UI/UX & MOBILE INTERACTION
+   ========================================== */
+document.addEventListener('DOMContentLoaded', () => {
+
+  // --- 1. SKELETON LOADING INJEKSI OTOMATIS ---
+  // Mencari elemen profil yang sedang "memuat" lalu diberi efek animasi
+  const profileIds = ['info-email', 'greeting-text', 'subscription-remaining'];
+  profileIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && (el.textContent.toLowerCase().includes('memuat') || el.textContent.includes('Calculating'))) {
+      el.classList.add('skeleton');
+      
+      // Alat pemantau (Observer): Hapus efek skeleton seketika saat data asli Supabase masuk
+      const observer = new MutationObserver(() => {
+        el.classList.remove('skeleton');
+        observer.disconnect();
+      });
+      observer.observe(el, { childList: true, characterData: true, subtree: true });
+    }
+  });
+
+  // --- 2. TOMBOL DAFTAR ISI (TOC) KHUSUS HP ---
+  const sidebar = document.querySelector('.topic-sidebar');
+  if (sidebar) {
+    const tocBtn = document.createElement('button');
+    tocBtn.className = 'toc-mobile-btn';
+    tocBtn.innerHTML = '📑';
+    tocBtn.setAttribute('aria-label', 'Buka Daftar Isi');
+    document.body.appendChild(tocBtn);
+
+    tocBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sidebar.classList.toggle('mobile-open');
+    });
+
+    // Otomatis menutup sidebar jika user mengetuk layar bagian luar
+    document.addEventListener('click', (e) => {
+      if (sidebar.classList.contains('mobile-open') && !sidebar.contains(e.target) && e.target !== tocBtn) {
+        sidebar.classList.remove('mobile-open');
+      }
+    });
+  }
+
+  // --- 3. PENGUNCI INPUT (VALIDASI TOOLS) ---
+  // Mencegah input huruf masuk ke alat Data Visualizer / Formula 
+  const numberInputs = document.querySelectorAll('input[type="number"], .visualizer-input');
+  numberInputs.forEach(input => {
+    input.addEventListener('input', function() {
+      // Regex: Tendang semua karakter selain angka (0-9), minus (-), dan titik (.)
+      this.value = this.value.replace(/[^0-9.-]/g, '');
+    });
+  });
+
+});
