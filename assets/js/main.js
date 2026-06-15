@@ -1034,3 +1034,51 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
+/* ==========================================
+   PATCH FASE 6: DRY ARCHITECTURE & STATE
+   ========================================== */
+document.addEventListener('DOMContentLoaded', async () => {
+
+  // --- 1. DINAMISASI PROGRESS BAR (LEARN.HTML) ---
+  // Mencari elemen teks progres (contoh: "0/5 selesai") dan bar-nya
+  const progressText = document.querySelector('.progress-text') || document.querySelector('.progress-label');
+  const topicCards = document.querySelectorAll('.topic-card'); 
+  
+  if (progressText && topicCards.length > 0) {
+     // Menghitung jumlah kartu topik yang memiliki class 'completed' / 'done'
+     const completedCount = document.querySelectorAll('.topic-card.completed, .topic-status.done').length;
+     const totalCount = topicCards.length;
+     
+     // Memperbarui teks secara dinamis
+     progressText.textContent = `${completedCount}/${totalCount} Selesai`;
+     
+     // Memperbarui lebar pita progres (jika elemennya ada)
+     const progressBar = document.querySelector('.progress-bar-fill') || document.querySelector('.progress-fill');
+     if (progressBar) {
+        progressBar.style.width = `${(completedCount / totalCount) * 100}%`;
+     }
+  }
+
+  // --- 2. SENTRALISASI NAVBAR AUTH STATE ---
+  // Otomatis mengubah tombol "Masuk" menjadi "Halo, Nama" di semua 20+ file HTML
+  const navAuthBtns = document.querySelectorAll('#nav-auth-btn, .nav-auth, a[href="login.html"]');
+  
+  if (navAuthBtns.length > 0 && window.supaClient) {
+     const { data: { session } } = await window.supaClient.auth.getSession();
+     
+     if (session) {
+        // Ambil nama dari profil, fallback ke bagian depan email
+        const { data: profile } = await window.supaClient.from('profiles').select('nickname').eq('id', session.user.id).maybeSingle();
+        const displayName = profile?.nickname || session.user.email.split('@')[0];
+        
+        navAuthBtns.forEach(btn => {
+           btn.innerHTML = `👤 Halo, ${displayName}`;
+           btn.href = "profile.html";
+           btn.style.background = "linear-gradient(135deg, #3b82f6, #2563eb)";
+           btn.style.color = "#ffffff";
+           btn.style.border = "none";
+        });
+     }
+  }
+});

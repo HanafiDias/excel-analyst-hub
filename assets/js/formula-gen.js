@@ -398,3 +398,74 @@
   });
 
 })();
+
+/* ==========================================
+   PATCH FASE 6: FORMULA HISTORY STATE
+   ========================================== */
+document.addEventListener('DOMContentLoaded', () => {
+   const inputEl = document.getElementById('formula-input') || document.querySelector('textarea');
+   const generateBtn = document.getElementById('generate-btn') || document.querySelector('button.btn-primary');
+
+   if (inputEl && generateBtn) {
+      // 1. Buat kontainer untuk menampilkan riwayat
+      const historyContainer = document.createElement('div');
+      historyContainer.className = 'formula-history-wrapper';
+      historyContainer.innerHTML = `
+        <h4 style="margin-top: 1.5rem; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">⏱️ Riwayat Kueri Terakhir</h4>
+        <ul id="history-list" style="list-style: none; padding: 0; margin-top: 0.5rem; font-size: 0.85rem; color: #cbd5e1;"></ul>
+      `;
+      
+      // Letakkan elemen riwayat di bawah area teks input
+      inputEl.parentNode.insertBefore(historyContainer, inputEl.nextSibling);
+      const historyList = document.getElementById('history-list');
+
+      // 2. Fungsi memuat riwayat dari memori peramban
+      const loadHistory = () => {
+         const history = JSON.parse(localStorage.getItem('eah_formula_history') || '[]');
+         historyList.innerHTML = '';
+         history.forEach(item => {
+            const li = document.createElement('li');
+            li.style.padding = '10px 12px';
+            li.style.background = 'var(--surface-2)';
+            li.style.border = '1px solid var(--border)';
+            li.style.borderRadius = '8px';
+            li.style.marginBottom = '6px';
+            li.style.cursor = 'pointer';
+            li.style.transition = 'all 0.2s';
+            li.textContent = `📝 ${item.query.length > 50 ? item.query.substring(0, 50) + '...' : item.query}`;
+            li.title = "Klik untuk menggunakan kembali kueri ini";
+            
+            // Efek Hover
+            li.onmouseover = () => li.style.borderColor = '#3b82f6';
+            li.onmouseout = () => li.style.borderColor = 'var(--border)';
+            
+            // Jika diklik, masukkan kembali ke kotak teks
+            li.onclick = () => { 
+                inputEl.value = item.query; 
+                inputEl.focus();
+            };
+            historyList.appendChild(li);
+         });
+      };
+
+      // Jalankan fungsi saat halaman dimuat
+      loadHistory();
+
+      // 3. Simpan kueri baru saat tombol Generate diklik
+      generateBtn.addEventListener('click', () => {
+         setTimeout(() => { 
+            const val = inputEl.value.trim();
+            if (val) {
+               let history = JSON.parse(localStorage.getItem('eah_formula_history') || '[]');
+               // Jangan simpan kalau kuerinya sama persis dengan yang terakhir
+               if (history.length === 0 || history[0].query !== val) {
+                  history.unshift({ query: val });
+                  if (history.length > 3) history.pop(); // Batasi maksimal 3 riwayat saja
+                  localStorage.setItem('eah_formula_history', JSON.stringify(history));
+                  loadHistory();
+               }
+            }
+         }, 300); // Jeda singkat agar tidak mengganggu fungsi utama generate
+      });
+   }
+});
