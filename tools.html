@@ -1030,5 +1030,194 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+
+    // =========================================
+    // 1. ENGINE TANTANGAN HARIAN (AUTOPILOT LOOPING)
+    // =========================================
+    const dateEl = document.getElementById('challenge-date');
+    const scenarioEl = document.getElementById('challenge-scenario');
+    const questionEl = document.getElementById('challenge-question');
+
+    if (dateEl && scenarioEl && questionEl && window.supabase) {
+      const supaUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
+      const supaKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
+      const supabase = window.supabase.createClient(supaUrl, supaKey);
+
+      async function loadDailyChallenge() {
+        const today = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        dateEl.innerHTML = `📅 ${today.toLocaleDateString('id-ID', options)}`;
+
+        try {
+          // 1. Minta Supabase menghitung total ketersediaan soal
+          const { count, error: countErr } = await supabase
+            .from('daily_challenges')
+            .select('*', { count: 'exact', head: true });
+
+          if (countErr || count === 0) {
+            scenarioEl.innerHTML = "<em>Sistem sedang menyiapkan tantangan baru. Silakan kembali lagi nanti!</em>";
+            questionEl.innerHTML = "";
+            document.getElementById('challenge-form').style.display = 'none';
+            return;
+          }
+
+          // 2. Matematika Looping (Memutar soal sesuai jumlah hari yang berlalu)
+          const epochDays = Math.floor(Date.now() / 86400000);
+          const targetDayNumber = (epochDays % count) + 1;
+
+          // 3. Tarik data soal sesuai putaran hari ini
+          const { data, error } = await supabase
+            .from('daily_challenges')
+            .select('*')
+            .eq('day_number', targetDayNumber)
+            .single();
+
+          if (error || !data) return;
+
+          // 4. Injeksi data ke UI
+          document.getElementById('challenge-level').textContent = data.level;
+          scenarioEl.innerHTML = data.scenario;
+          questionEl.innerHTML = data.question;
+
+          const form = document.getElementById('challenge-form');
+          const feedback = document.getElementById('challenge-feedback');
+          const hintBtn = document.getElementById('challenge-hint-btn');
+          const input = document.getElementById('challenge-input');
+
+          hintBtn.addEventListener('click', () => {
+            feedback.style.display = 'block';
+            feedback.style.background = 'rgba(59, 130, 246, 0.1)';
+            feedback.style.color = 'var(--accent)';
+            feedback.style.border = '1px solid var(--accent)';
+            feedback.innerHTML = `💡 <strong>Petunjuk:</strong> ${data.hint}`;
+          });
+
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const answer = input.value.toUpperCase().replace(/\s/g, '');
+            feedback.style.display = 'block';
+
+            const keywordsArray = Array.isArray(data.correct_keywords) ? data.correct_keywords : String(data.correct_keywords).split(',');
+            const isCorrect = keywordsArray.some(keyword => answer.includes(String(keyword).replace(/\s/g, '')));
+
+            if (isCorrect) {
+              feedback.style.background = 'rgba(16, 185, 129, 0.1)';
+              feedback.style.color = '#10b981';
+              feedback.style.border = '1px solid #10b981';
+              feedback.innerHTML = `✨ <strong>Tepat Sekali!</strong> ${data.success_message}`;
+
+              if (typeof triggerSuccessAnimation === 'function') triggerSuccessAnimation(null);
+            } else {
+              feedback.style.background = 'rgba(239, 68, 68, 0.1)';
+              feedback.style.color = '#ef4444';
+              feedback.style.border = '1px solid #ef4444';
+              feedback.innerHTML = `❌ <strong>Kurang Tepat.</strong> ${data.fail_message}`;
+            }
+          });
+
+        } catch (err) {
+          console.error("Gagal memuat tantangan:", err);
+        }
+      }
+
+      loadDailyChallenge();
+    }
+
+    // =========================================
+    // 2. ENGINE FLASHCARD PREMIUM (SUPABASE FETCH)
+    // =========================================
+    const fcContainer = document.getElementById('flashcards-container-target');
+
+    if (fcContainer && window.supabase) {
+      const supaUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
+      const supaKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
+      const supabase = window.supabase.createClient(supaUrl, supaKey);
+
+      async function loadFlashcards() {
+        try {
+          // Ambil data kartu dari Supabase
+          const { data, error } = await supabase
+            .from('flashcards')
+            .select('*')
+            .order('id', { ascending: true });
+
+          if (error || !data) {
+            console.error("Gagal memuat flashcard", error);
+            return;
+          }
+
+          // Siapkan Grid Wadah
+          fcContainer.style.display = 'grid';
+          fcContainer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(220px, 1fr))';
+          fcContainer.style.gap = '24px';
+
+          // Injeksi CSS Khusus (Mencegah style tumpang tindih)
+          if (!document.getElementById('fc-dynamic-style')) {
+            const fcStyle = document.createElement('style');
+            fcStyle.id = 'fc-dynamic-style';
+            fcStyle.innerHTML = `
+              .fc-card { perspective: 1000px; height: 160px; cursor: pointer; border-radius: 16px; transition: transform 0.3s ease; outline: none; }
+              .fc-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+              .fc-front, .fc-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px; text-align: center; }
+              .fc-front { background: var(--surface-2); border: 2px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: all 0.3s ease; }
+              .fc-back { background: rgba(15, 23, 42, 0.95); transform: rotateY(180deg); }
+              .fc-card:hover { transform: translateY(-6px); }
+              .fc-card.flipped .fc-inner { transform: rotateY(180deg); }
+            `;
+            document.head.appendChild(fcStyle);
+          }
+
+          // Render Data dari Database ke HTML
+          fcContainer.innerHTML = data.map(card => `
+            <div class="fc-card" tabindex="0" role="button" aria-label="${card.description}">
+              <div class="fc-inner">
+                <div class="fc-front" style="--hover-color: ${card.color_hex};">
+                  <div style="font-size: 2.8rem; margin-bottom: 8px; line-height: 1; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));">${card.emoji}</div>
+                  <div style="font-size: 1.1rem; font-weight: 800; background: linear-gradient(135deg, ${card.color_hex}, #ffffff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${card.shortcut}</div>
+                  <div style="position: absolute; bottom: 10px; font-size: 0.65rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.5px;">KLIK UNTUK MEMBALIK</div>
+                </div>
+                <div class="fc-back" style="border: 2px solid ${card.color_hex}; box-shadow: 0 0 25px ${card.color_hex}30;">
+                  <div style="font-size: 1.5rem; margin-bottom: 10px; opacity: 0.8;">${card.emoji}</div>
+                  <div style="font-size: 0.9rem; font-weight: 600; color: #fff; line-height: 1.5;">${card.description}</div>
+                </div>
+              </div>
+            </div>
+          `).join('');
+
+          // Pasang Efek Glow Interaktif
+          document.querySelectorAll('.fc-card').forEach(card => {
+            const front = card.querySelector('.fc-front');
+            const color = front.style.getPropertyValue('--hover-color');
+
+            card.addEventListener('mouseenter', () => {
+              front.style.borderColor = color;
+              front.style.boxShadow = `0 10px 30px ${color}40`;
+            });
+            card.addEventListener('mouseleave', () => {
+              front.style.borderColor = 'var(--border)';
+              front.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
+            });
+
+            card.addEventListener('click', () => card.classList.toggle('flipped'));
+            card.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                card.classList.toggle('flipped');
+              }
+            });
+          });
+        } catch (err) {
+          console.error("Kesalahan fetch flashcards:", err);
+        }
+      }
+
+      loadFlashcards();
+    }
+
+  });
+  </script>
+
 </body>
 </html>

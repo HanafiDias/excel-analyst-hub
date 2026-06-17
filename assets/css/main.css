@@ -679,3 +679,18 @@ input:focus, select:focus, textarea:focus {
     outline-offset: 3px;
     border-radius: 8px;
 }
+
+/* ==========================================
+   FORCE DARK MODE (KILL LIGHT MODE)
+   ========================================== */
+#theme-toggle-nav,
+.theme-toggle,
+[aria-label="Aktifkan mode terang"] {
+    display: none !important;
+    pointer-events: none !important;
+}
+
+html, body {
+    color-scheme: dark !important;
+    background-color: var(--bg) !important;
+}
