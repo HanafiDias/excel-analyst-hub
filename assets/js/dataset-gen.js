@@ -3,7 +3,7 @@
    Mendukung: Data Kotor, Multi-Table, Konteks Lokal, Kolom Bisnis Lanjutan & Gamifikasi XP
    ============================================ */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const btnGenerate = document.getElementById('btn-generate-csv');
   if (!btnGenerate) return;
 
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const paymentMethods = ["Tunai", "QRIS", "Transfer BCA", "VA Mandiri", "ShopeePay", "GoPay"];
   const custTypes = ["Baru", "Reguler", "Reguler", "Member", "Member"]; // Reguler & Member lebih sering
   const statuses = ["Selesai", "Selesai", "Selesai", "Selesai", "Selesai", "Selesai", "Selesai", "Retur", "Batal", "Batal"]; // 70% Selesai, 10% Retur, 20% Batal
-  
+
   // Database Produk Relasional (Ditambah atribut 'cost' untuk Modal)
   const products = [
     { id: "PRD-001", name: "Laptop Pro 15", category: "Elektronik", price: 15000000, cost: 12500000 },
@@ -28,41 +28,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
   const randomDate = (start, end) => new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-  
+
   const makeDirty = (val, isDirty) => {
     if (!isDirty) return val;
     const rand = Math.random();
-    if (rand < 0.05) return `  ${val}  `; 
-    if (rand > 0.95) return ""; 
-    if (rand > 0.90 && typeof val === "string") return val.toLowerCase(); 
+    if (rand < 0.05) return `  ${val}  `;
+    if (rand > 0.95) return "";
+    if (rand > 0.90 && typeof val === "string") return val.toLowerCase();
     return val;
   };
 
-  btnGenerate.addEventListener('click', async function() {
+  btnGenerate.addEventListener('click', async function () {
     let rowCount = parseInt(document.getElementById('ds-rows').value) || 500;
-    if (rowCount > 10000) rowCount = 10000; 
+    if (rowCount > 10000) rowCount = 10000;
     if (rowCount < 10) rowCount = 10; // Mencegah user iseng mengetik minus atau 0
-    
+
     const isDirty = document.getElementById('ds-dirty-data') ? document.getElementById('ds-dirty-data').checked : false;
     const isMulti = document.getElementById('ds-multi-table') ? document.getElementById('ds-multi-table').checked : false;
     const isAdvanced = document.getElementById('ds-advanced-cols') ? document.getElementById('ds-advanced-cols').checked : false;
 
     btnGenerate.innerHTML = "⏳ Menghasilkan Data...";
-    
+
     setTimeout(async () => {
       if (isMulti) {
         // --- LOGIKA MULTI-TABLE ---
-        let masterCsv = isAdvanced 
+        let masterCsv = isAdvanced
           ? "ID_Produk;Nama_Produk;Kategori;Harga_Satuan;Harga_Modal\n"
           : "ID_Produk;Nama_Produk;Kategori;Harga_Satuan\n";
-          
-        products.forEach(p => { 
-          masterCsv += isAdvanced 
+
+        products.forEach(p => {
+          masterCsv += isAdvanced
             ? `${p.id};${p.name};${p.category};${p.price};${p.cost}\n`
-            : `${p.id};${p.name};${p.category};${p.price}\n`; 
+            : `${p.id};${p.name};${p.category};${p.price}\n`;
         });
 
-        let transCsv = isAdvanced 
+        let transCsv = isAdvanced
           ? "ID_Transaksi;Tanggal;ID_Sales;Region;ID_Produk;Qty;Metode_Pembayaran;Tipe_Pelanggan;Status_Transaksi\n"
           : "ID_Transaksi;Tanggal;ID_Sales;Region;ID_Produk;Qty\n";
 
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
           let region = makeDirty(getRandom(regions), isDirty);
           let prod = getRandom(products);
           let qty = Math.floor(Math.random() * 10) + 1;
-          
+
           let baseRow = `TRX-${10000 + i};${dateStr};${sales};${region};${prod.id};${qty}`;
 
           if (isAdvanced) {
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       } else {
         // --- LOGIKA FLAT TABLE ---
-        let csvContent = isAdvanced 
+        let csvContent = isAdvanced
           ? "ID_Transaksi;Tanggal;Nama_Sales;Region;Kategori;Nama_Produk;Harga_Satuan;Qty;Total_Penjualan;Metode_Pembayaran;Tipe_Pelanggan;Status_Transaksi;Harga_Modal;Total_Keuntungan\n"
           : "ID_Transaksi;Tanggal;Nama_Sales;Region;Kategori;Nama_Produk;Harga_Satuan;Qty;Total_Penjualan\n";
 
@@ -149,30 +149,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     try {
       const { data: { session } } = await supa.auth.getSession();
-      if (!session) return; 
+      if (!session) return;
 
       const userId = session.user.id;
-      const { data: currentData } = await supa.from('user_progress').select('total_xp').eq('user_id', userId).single();
-      
+      // FIXED: dulu baca dari 'user_progress', sekarang dari 'profiles'
+      // (profiles.total_xp adalah sumber kebenaran XP yang dibaca profile.js)
+      const { data: currentData } = await supa.from('profiles').select('total_xp').eq('id', userId).single();
+
       if (currentData) {
         let earnedXp = 10; // Base
-        if (rows >= 1000) earnedXp += 15; 
-        if (isDirty) earnedXp += 20; 
-        if (isMulti) earnedXp += 25; 
+        if (rows >= 1000) earnedXp += 15;
+        if (isDirty) earnedXp += 20;
+        if (isMulti) earnedXp += 25;
         if (isAdvanced) earnedXp += 20; // Bonus Opsi Lanjutan
 
         const newXp = (currentData.total_xp || 0) + earnedXp;
-        let newLevel = 'Pemula';
-        if (newXp >= 150) newLevel = 'Menengah';
-        if (newXp >= 500) newLevel = 'Lanjutan';
-        if (newXp >= 1000) newLevel = 'Master';
 
-        await supa.from('user_progress').update({ total_xp: newXp, current_level: newLevel }).eq('user_id', userId);
-        
+        // FIXED: dulu update ke 'user_progress' (termasuk current_level manual),
+        // sekarang update ke 'profiles'. current_level TIDAK ditulis manual lagi --
+        // trigger trg_recalculate_level di database otomatis menghitungnya
+        // begitu total_xp berubah, jadi tidak akan tidak-sinkron lagi.
+        await supa.from('profiles').update({ total_xp: newXp }).eq('id', userId);
+
         if (window.EAH && window.EAH.showToast) {
-           window.EAH.showToast('Pencapaian Terbuka!', `☁️ +${earnedXp} XP berhasil disimpan ke awan!`, '🏆');
+          window.EAH.showToast('Pencapaian Terbuka!', `☁️ +${earnedXp} XP berhasil disimpan ke awan!`, '🏆');
         } else {
-           alert(`☁️ Hebat! +${earnedXp} XP ditambahkan ke profil Anda karena mengeksplorasi Tools Generator.`);
+          alert(`☁️ Hebat! +${earnedXp} XP ditambahkan ke profil Anda karena mengeksplorasi Tools Generator.`);
         }
       }
     } catch (err) {

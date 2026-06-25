@@ -701,11 +701,63 @@
       setTimeout(function () { container.remove(); }, 2500);
     }
 
+    // Ekspor ke window.EAH supaya bisa dipanggil dari halaman lain
+    // (learn.html, topic.html, dll) dengan angka XP yang akurat
+    window.EAH.triggerXPAnimation = function (xpAmount) {
+      // Buat versi lokal yang menerima angka XP dinamis
+      const container = document.createElement('div');
+      container.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999999;pointer-events:none;display:flex;justify-content:center;align-items:center;';
+      document.body.appendChild(container);
+
+      const textEl = document.createElement('div');
+      textEl.innerHTML = `🎉 +${xpAmount} XP! 🌟`;
+      textEl.style.cssText = 'font-size:3.5rem;font-weight:900;color:#f59e0b;text-shadow:0 0 20px rgba(245,158,11,0.8),0 8px 15px rgba(0,0,0,0.5);white-space:nowrap;opacity:0;transform:scale(0.3);transition:all 0.6s cubic-bezier(0.34,1.56,0.64,1);';
+      container.appendChild(textEl);
+
+      const emojis = ['✨', '🌟', '💥', '🎉', '🔥'];
+      for (let i = 0; i < 10; i++) {
+        const particle = document.createElement('div');
+        particle.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+        particle.style.cssText = `position:absolute;font-size:${Math.random() * 1.5 + 1.5}rem;opacity:0;transition:all 1s cubic-bezier(0.25,1,0.5,1);`;
+        container.appendChild(particle);
+        setTimeout(function () {
+          const angle = Math.random() * Math.PI * 2;
+          const distance = Math.random() * 120 + 80;
+          const tx = Math.cos(angle) * distance;
+          const ty = Math.sin(angle) * distance;
+          particle.style.opacity = '1';
+          particle.style.transform = `translate(${tx}px,${ty}px) scale(${Math.random() + 0.5})`;
+          setTimeout(function () {
+            particle.style.opacity = '0';
+            particle.style.transform = `translate(${tx}px,${ty - 100}px) scale(0)`;
+          }, 600);
+        }, 50);
+      }
+
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          textEl.style.opacity = '1';
+          textEl.style.transform = 'scale(1.2)';
+          setTimeout(function () {
+            textEl.style.transform = 'translateY(-150px) scale(1)';
+            textEl.style.opacity = '0';
+          }, 1200);
+        });
+      });
+
+      setTimeout(function () { container.remove(); }, 2500);
+    };
+
     // --- UNIVERSAL QUIZ TRIGGER (EVENT DELEGATION) ---
     document.addEventListener('click', function (e) {
       const targetBtn = e.target.closest('.btn-mark-done');
 
       if (targetBtn) {
+        // SISTEM BARU: tombol dengan data-material-id ditangani oleh
+        // learn.html secara independen -- jangan diproses di sini
+        // untuk mencegah animasi +50 XP yang salah dan double reward.
+        if (targetBtn.hasAttribute('data-material-id')) return;
+
         e.preventDefault();
 
         const topicItem = targetBtn.closest('[data-topic-id]');
@@ -1129,11 +1181,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Gunakan notasi Toast yang sudah kita buat di Fase 4, atau pakai alert standar
         if (typeof window.showToastSafe === 'function') {
           window.showToastSafe("Batas maksimal diatur ke 1.000 baris untuk menjaga kestabilan server.");
-         } else {
-           alert("Batas maksimal adalah 1.000 baris.");
-         }
-       }
-     });
+        } else {
+          alert("Batas maksimal adalah 1.000 baris.");
+        }
+      }
+    });
   }
 });
 

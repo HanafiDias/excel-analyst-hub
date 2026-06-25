@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <script>
-    (function() {
+    (function () {
       try {
         var t = localStorage.getItem('eah_theme') || 'dark';
         document.documentElement.setAttribute('data-theme', t);
-      } catch(e) {}
+      } catch (e) { }
     })();
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutorial VLOOKUP — Excel Analyst Hub</title>
-  <meta name="description" content="Pelajari VLOOKUP dari nol — sintaks, kesalahan umum, contoh dunia nyata, dan kapan beralih ke INDEX-MATCH. Untuk pengguna Excel tingkat menengah." />
+  <title>Materi — Excel Analyst Hub</title>
+  <meta name="description" content="Pelajari Excel dari nol bersama Excel Analyst Hub." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/components.css" />
 </head>
+
 <body class="page-body">
 
   <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
@@ -36,7 +38,8 @@
         <li><a href="tools.html">Tools</a></li>
       </ul>
       <div class="nav-right">
-        <button class="theme-toggle" id="theme-toggle-topic" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
+        <button class="theme-toggle" id="theme-toggle-topic" aria-label="Aktifkan mode terang"
+          title="Mode terang">☀️</button>
         <a href="learn.html" class="btn-primary btn-sm">Mulai Belajar</a>
         <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu-topic">
           <span></span><span></span><span></span>
@@ -57,12 +60,7 @@
       <!-- ============ SIDEBAR TOC ============ -->
       <aside class="toc-sidebar" aria-label="Daftar isi">
         <p class="toc-title">Di Halaman Ini</p>
-        <a href="#what-is-vlookup">Apa itu VLOOKUP?</a>
-        <a href="#syntax">Penjelasan Sintaks</a>
-        <a href="#first-vlookup">VLOOKUP Pertamamu</a>
-        <a href="#common-errors">Kesalahan Umum & Solusinya</a>
-        <a href="#vs-index-match">vs INDEX-MATCH</a>
-        <a href="#real-world">Contoh Dunia Nyata</a>
+        <p style="font-size:0.82rem; color:var(--text-muted); font-style:italic;">Memuat daftar isi...</p>
       </aside>
 
       <!-- ============ MAIN CONTENT ============ -->
@@ -70,252 +68,29 @@
 
         <!-- Topic header -->
         <header class="topic-header">
-          <nav aria-label="Breadcrumb" style="margin-bottom:var(--space-4);">
-            <a href="learn.html" style="font-size:0.82rem;color:var(--text-muted);">← Kembali ke Jalur Belajar</a>
+          <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom:var(--space-4);">
+            <a href="learn.html">Jalur Belajar</a> / <span id="breadcrumb-category">...</span> / <span
+              id="breadcrumb-title">Memuat...</span>
           </nav>
           <div class="topic-meta">
-            <span class="badge badge-intermediate">Menengah</span>
-            <span class="duration">~25 menit</span>
+            <span class="badge badge-intermediate" id="topic-level-badge">Memuat...</span>
+            <span id="topic-reading-time" class="badge duration" style="display:none;"></span>
             <span id="topic-status-header" class="topic-status" data-status="not-started">○ Belum Dimulai</span>
           </div>
-          <h1>VLOOKUP: Mencari Data di Seluruh Spreadsheet</h1>
-          <p>Formula yang paling sering ditanyakan dalam wawancara Excel. Begini cara kerjanya yang sebenarnya — termasuk bagian yang biasanya dilewati tutorial lain.</p>
+          <h1 id="topic-main-title">Memuat Materi...</h1>
+          <p class="lead" id="topic-description"
+            style="font-size:0.95rem; color:var(--text-muted); line-height:1.75; margin-top:var(--space-3);">Harap
+            tunggu sebentar.</p>
         </header>
 
-        <!-- ====== SECTION 1 ====== -->
-        <section id="what-is-vlookup">
-          <h2>Apa itu VLOOKUP?</h2>
+        <!-- Dynamic content area — diisi oleh Supabase + marked.js -->
+        <div id="dynamic-content" class="topic-content"></div>
 
-          <p>VLOOKUP adalah singkatan dari <strong>Vertical Lookup</strong> (Pencarian Vertikal). Formula ini mencari ke bawah kolom pertama sebuah tabel untuk nilai yang kamu tentukan, dan ketika menemukannya, mengembalikan nilai dari baris yang sama — hanya dari kolom yang berbeda.</p>
-
-          <p>Bayangkan seperti menggunakan indeks di bagian belakang buku: kamu mencari kata kunci (nilai yang dicari), menemukan nomor halaman (kolom lain), dan pergi ke sana. Bedanya Excel melakukan bagian "pergi ke sana" secara otomatis.</p>
-
-          <p>Batasan utama: VLOOKUP selalu mencari di <em>kolom pertama</em> tabelmu. Jika nilai yang kamu cari tidak ada di kolom paling kiri, VLOOKUP tidak akan bekerja. Inilah alasan paling umum orang menemui jalan buntu — dan salah satu alasan analis akhirnya beralih ke INDEX-MATCH.</p>
-
-          <div class="callout callout-tip">
-            <p class="callout-title">💡 Kapan analis benar-benar menggunakan ini?</p>
-            <p>Setiap hari. VLOOKUP adalah cara kamu menggabungkan dua tabel yang berbagi kunci bersama — seperti mencocokkan nama karyawan dengan ID, kode produk dengan harga, atau kode region dengan nama region. Setiap kali kamu punya dua daftar dan ingin menarik data dari satu ke yang lain, itulah pekerjaan VLOOKUP.</p>
-          </div>
-        </section>
-
-        <!-- ====== SECTION 2 ====== -->
-        <section id="syntax">
-          <h2>Penjelasan Sintaks</h2>
-
-          <p>Sintaks lengkapnya:</p>
-          <div class="formula-block">=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</div>
-
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
-          <table class="syntax-table" aria-label="Deskripsi argumen VLOOKUP">
-            <thead>
-              <tr>
-                <th>Argumen</th>
-                <th>Artinya</th>
-                <th>Wajib?</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>lookup_value</td>
-                <td>Nilai yang kamu cari. Biasanya referensi sel seperti A2, atau teks dalam tanda kutip seperti "Budi".</td>
-                <td>Wajib</td>
-              </tr>
-              <tr>
-                <td>table_array</td>
-                <td>Rentang yang akan dicari. Harus dimulai dengan kolom yang berisi lookup_value. Gunakan $ untuk mengunci referensi ini.</td>
-                <td>Wajib</td>
-              </tr>
-              <tr>
-                <td>col_index_num</td>
-                <td>Kolom ke berapa dari table_array yang akan dikembalikan — 1 berarti kolom pertama, 2 berarti kolom kedua, dst.</td>
-                <td>Wajib</td>
-              </tr>
-              <tr>
-                <td>range_lookup</td>
-                <td>TRUE = pencocokan perkiraan (data terurut). FALSE = pencocokan tepat. <strong>Gunakan FALSE hampir selalu.</strong></td>
-                <td>Opsional</td>
-              </tr>
-            </tbody>
-          </table>
-          </div>
-
-
-          <div class="callout callout-warning">
-            <p class="callout-title">⚠️ Selalu gunakan FALSE untuk pencocokan tepat</p>
-            <p>Jika kamu menghilangkan range_lookup atau menggunakan TRUE, VLOOKUP mengasumsikan datamu terurut dan melakukan pencocokan perkiraan. Pada data yang tidak terurut, ini mengembalikan jawaban yang salah tanpa pesan error apapun. Jika ragu: gunakan FALSE. Kamu hampir selalu menginginkan pencocokan tepat.</p>
-          </div>
-        </section>
-
-        <!-- ====== SECTION 3 ====== -->
-        <section id="first-vlookup">
-          <h2>VLOOKUP Pertamamu</h2>
-
-          <p>Misalkan kamu punya dua sheet. Sheet1 berisi daftar transaksi penjualan:</p>
-
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
-          <table class="syntax-table" aria-label="Contoh data transaksi">
-            <thead>
-              <tr><th>A — ID Karyawan</th><th>B — Jumlah Penjualan</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>EMP001</td><td>12.500.000</td></tr>
-              <tr><td>EMP003</td><td>8.200.000</td></tr>
-              <tr><td>EMP002</td><td>15.700.000</td></tr>
-            </tbody>
-          </table>
-          </div>
-
-          <p>Dan Sheet2 berisi tabel referensi karyawan:</p>
-
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
-          <table class="syntax-table" aria-label="Contoh tabel referensi">
-            <thead>
-              <tr><th>A — ID Karyawan</th><th>B — Nama</th><th>C — Departemen</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>EMP001</td><td>Budi Santoso</td><td>Sales</td></tr>
-              <tr><td>EMP002</td><td>Sari Dewi</td><td>Sales</td></tr>
-              <tr><td>EMP003</td><td>Ahmad Fauzi</td><td>Operations</td></tr>
-            </tbody>
-          </table>
-          </div>
-
-
-          <p>Untuk menarik nama karyawan ke Sheet1 di setiap baris transaksi:</p>
-          <div class="formula-block">=VLOOKUP(A2, Sheet2!$A$2:$C$100, 2, FALSE)</div>
-
-          <p>Memecah ini:</p>
-          <ul>
-            <li><strong>A2</strong> — ID Karyawan yang kamu cari (EMP001)</li>
-            <li><strong>Sheet2!$A$2:$C$100</strong> — tabel referensi, dikunci dengan $ agar tidak bergeser saat kamu menyalin formula ke bawah</li>
-            <li><strong>2</strong> — kembalikan kolom ke-2 dari tabel (Nama)</li>
-            <li><strong>FALSE</strong> — pencocokan tepat</li>
-          </ul>
-
-          <p>Untuk mendapatkan departemen, cukup ubah 2 menjadi 3:</p>
-          <div class="formula-block">=VLOOKUP(A2, Sheet2!$A$2:$C$100, 3, FALSE)</div>
-
-          <div class="callout callout-tip">
-            <p class="callout-title">💡 Kunci table_array-mu dengan $</p>
-            <p>Tanpa tanda $, saat kamu menyalin formula ke bawah dari baris 2 ke baris 3, Sheet2!$A$2:$C$100 akan bergeser menjadi Sheet2!A3:C101 — dan hasilnya akan salah. Tekan F4 setelah memilih rentang untuk mengaktifkan tanda $ secara bergantian.</p>
-          </div>
-        </section>
-
-        <!-- ====== SECTION 4 ====== -->
-        <section id="common-errors">
-          <h2>Kesalahan Umum &amp; Solusinya</h2>
-
-          <h3>Error #N/A</h3>
-          <p>Ini berarti VLOOKUP tidak dapat menemukan kecocokan. Penyebab paling umum:</p>
-          <ul>
-            <li><strong>Spasi trailing:</strong> "EMP001" ≠ "EMP001 " (dengan spasi di belakang). Perbaiki dengan TRIM: <code>=VLOOKUP(TRIM(A2), ...)</code></li>
-            <li><strong>Ketidakcocokan angka vs teks:</strong> Nilai lookup adalah angka tetapi tabel menyimpannya sebagai teks (atau sebaliknya). Periksa dengan melihat perataan — rata kiri biasanya berarti teks.</li>
-            <li><strong>Nilai memang tidak ada</strong> di kolom pertama table_array-mu.</li>
-          </ul>
-
-          <p>Untuk menangani #N/A dengan anggun, bungkus dengan IFERROR:</p>
-          <div class="formula-block">=IFERROR(VLOOKUP(A2, Sheet2!$A$2:$C$100, 2, FALSE), "Tidak Ditemukan")</div>
-
-          <h3>Error #REF!</h3>
-          <p>col_index_num-mu lebih besar dari jumlah kolom di table_array. Jika tabelmu adalah kolom A hingga C (3 kolom) dan kamu memasukkan col_index_num = 4, kamu akan mendapatkan #REF!. Hitung kolommu kembali.</p>
-
-          <h3>Nilai salah dikembalikan (tidak ada error)</h3>
-          <p>Hampir selalu disebabkan menggunakan TRUE (atau menghilangkan range_lookup) alih-alih FALSE. Saat data tidak terurut, pencocokan perkiraan mengembalikan hasil yang tidak dapat diprediksi. Selalu periksa ulang bahwa kamu memiliki FALSE sebagai argumen terakhir.</p>
-
-          <div class="callout callout-warning">
-            <p class="callout-title">⚠️ VLOOKUP rapuh saat kolom berubah</p>
-            <p>Jika seseorang menyisipkan kolom di tabel referensimu, setiap VLOOKUP yang mereferensikan col_index_num &gt;= kolom yang disisipkan akan secara diam-diam mengembalikan data yang salah. Ini tidak teoritis — ini terjadi di file nyata. Inilah alasan utama analis berpengalaman beralih ke INDEX-MATCH.</p>
-          </div>
-        </section>
-
-        <!-- ====== SECTION 5 ====== -->
-        <section id="vs-index-match">
-          <h2>Kapan Menggunakan INDEX-MATCH</h2>
-
-          <p>VLOOKUP memiliki tiga keterbatasan nyata yang diselesaikan oleh INDEX-MATCH:</p>
-
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
-          <table class="syntax-table" aria-label="Perbandingan VLOOKUP vs INDEX-MATCH">
-            <thead>
-              <tr>
-                <th>Situasi</th>
-                <th>VLOOKUP</th>
-                <th>INDEX-MATCH</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Kolom pencarian adalah kolom pertama dalam tabel</td>
-                <td>✅ Bekerja baik</td>
-                <td>✅ Bekerja baik</td>
-              </tr>
-              <tr>
-                <td>Kolom pencarian ada di <em>tengah</em> tabel (lihat ke kiri)</td>
-                <td>❌ Tidak bisa</td>
-                <td>✅ Bekerja baik</td>
-              </tr>
-              <tr>
-                <td>Seseorang menyisipkan kolom di tabel</td>
-                <td>❌ Mengembalikan kolom yang salah secara diam-diam</td>
-                <td>✅ Tidak terpengaruh — mereferensikan kolom secara langsung</td>
-              </tr>
-              <tr>
-                <td>Dataset sangat besar (&gt;100k baris)</td>
-                <td>Lebih lambat</td>
-                <td>Lebih cepat</td>
-              </tr>
-            </tbody>
-          </table>
-          </div>
-
-
-          <p>INDEX-MATCH yang setara untuk contoh transaksi di atas:</p>
-          <div class="formula-block">=INDEX(Sheet2!$B$2:$B$100, MATCH(A2, Sheet2!$A$2:$A$100, 0))</div>
-
-          <p>Baca ini sebagai: "Berikan nilai dari kolom B (nama), di baris di mana kolom A cocok dengan A2 (EMP001), dengan pencocokan tepat (0)."</p>
-
-          <div class="callout callout-tip">
-            <p class="callout-title">💡 Mana yang harus digunakan?</p>
-            <p>Jika kamu sedang belajar Excel dan perlu pencarian cepat pada tabel sederhana yang kamu kontrol: VLOOKUP tidak masalah. Jika kamu membangun sesuatu yang akan digunakan orang lain, mungkin ada kolom yang ditambahkan, atau kolom pencarian bukan yang pertama: gunakan INDEX-MATCH. Dalam wawancara, mengetahui keduanya — dan kapan menggunakan masing-masing — adalah jawaban yang tepat.</p>
-          </div>
-        </section>
-
-        <!-- ====== SECTION 6 ====== -->
-        <section id="real-world">
-          <h2>Contoh Dunia Nyata</h2>
-
-          <p>Begini cara ini muncul dalam pekerjaan analis. Kamu menerima laporan penjualan bulanan dari tim penjualan — 500 baris data transaksi. Setiap baris memiliki ID pelanggan tetapi tidak ada nama pelanggan atau tier. Ekspor CRM-mu memiliki detail pelanggan.</p>
-
-          <p>Tugasmu: lengkapi laporan dengan nama pelanggan dan tier mereka (Gold / Silver / Regular), lalu hitung rata-rata nilai transaksi per tier.</p>
-
-          <h3>Langkah 1: Tarik nama pelanggan</h3>
-          <p>Laporan penjualan ada di <code>Sheet1</code>, kolom A berisi ID Pelanggan. Data CRM ada di <code>Sheet2</code>, kolom A–C (ID, Nama, Tier).</p>
-          <div class="formula-block">=IFERROR(VLOOKUP(A2, Sheet2!$A:$C, 2, FALSE), "Pelanggan Tidak Dikenal")</div>
-
-          <h3>Langkah 2: Tarik tier pelanggan</h3>
-          <div class="formula-block">=IFERROR(VLOOKUP(A2, Sheet2!$A:$C, 3, FALSE), "Tidak Terklasifikasi")</div>
-
-          <h3>Langkah 3: Rata-rata per tier</h3>
-          <p>Setelah tier terisi (katakanlah kolom D), hitung rata-rata nilai transaksi per tier:</p>
-          <div class="formula-block">=AVERAGEIF($D$2:$D$500, "Gold", $C$2:$C$500)</div>
-
-          <p>Ini adalah alur kerja analis yang khas: impor → perkaya dengan VLOOKUP → agregat dengan SUMIF/AVERAGEIF → presentasikan. Setelah kamu nyaman dengan pola ini, kamu bisa menjalankannya dalam hitungan menit.</p>
-
-          <div class="callout callout-tip">
-            <p class="callout-title">💡 Selalu periksa tingkat kecocokanmu</p>
-            <p>Setelah menjalankan VLOOKUP pada data nyata, hitung berapa banyak hasil "Tidak Ditemukan" yang kamu dapatkan: <code>=COUNTIF(D:D, "Pelanggan Tidak Dikenal")</code>. Tingkat ketidakcocokan yang tinggi biasanya berarti ada masalah format data — ID disimpan secara berbeda, spasi ekstra, atau inkonsistensi sistem sumber. Perbaiki datanya, bukan formulanya.</p>
-          </div>
-        </section>
-
-        <!-- ====== PREV / NEXT NAV ====== -->
+        <!-- Prev / Next Nav -->
         <nav class="topic-nav" aria-label="Navigasi topik">
-          <a href="topic-basic-charts.html" class="topic-nav-item">
-            <span class="topic-nav-direction">← Sebelumnya</span>
-            <span class="topic-nav-title">Grafik Dasar &amp; Visualisasi</span>
-          </a>
-          <a href="topic-indexmatch.html" class="topic-nav-item" style="text-align:right;">
-            <span class="topic-nav-direction">Berikutnya →</span>
-            <span class="topic-nav-title">INDEX-MATCH: Cara yang Lebih Baik</span>
+          <a href="learn.html" class="topic-nav-item">
+            <span class="topic-nav-direction">← Kembali</span>
+            <span class="topic-nav-title">Jalur Belajar</span>
           </a>
         </nav>
 
@@ -332,7 +107,8 @@
             <div class="logo-icon" aria-hidden="true">⊞</div>
             Excel Analyst Hub
           </a>
-          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia
+            berikutnya.</p>
         </div>
         <div class="footer-col">
           <h4>Belajar</h4>
@@ -359,7 +135,8 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p style="font-style: italic; color: #10b981; font-weight: 600; font-size: 1.05rem; margin-bottom: 12px; letter-spacing: 0.3px;">
+        <p
+          style="font-style: italic; color: #10b981; font-weight: 600; font-size: 1.05rem; margin-bottom: 12px; letter-spacing: 0.3px;">
           "Learning shouldn't be boring; it should be rewarding."
         </p>
         <p style="color: var(--text-muted); font-size: 0.85rem;">
@@ -370,70 +147,302 @@
     </div>
   </footer>
 
+  <!-- Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
   <script src="assets/js/main.js"></script>
+
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener("DOMContentLoaded", async function () {
 
-      // Tandai topik VLOOKUP sebagai dikunjungi dalam pelacak kemajuan
-      if (window.EAH && window.EAH.markVisited) {
-        window.EAH.markVisited('vlookup');
-        window.EAH.renderProgress && window.EAH.renderProgress();
+      // ==========================================
+      // 0. INISIALISASI
+      // ==========================================
+      const urlParams = new URLSearchParams(window.location.search);
+      const slug = urlParams.get('slug');
+      if (!slug) { window.location.href = 'learn.html'; return; }
+
+      // Gunakan window.supaClient global jika ada (dari supabase-config.js),
+      // atau buat instance baru sebagai fallback.
+      let supabase;
+      if (window.supaClient) {
+        supabase = window.supaClient;
+      } else if (window.supabase) {
+        const supaUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
+        const supaKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
+        supabase = window.supabase.createClient(supaUrl, supaKey);
+      } else {
+        console.error("Library Supabase belum dimuat.");
+        return;
       }
 
-      // Perbarui indikator status header
-      var statusEl = document.getElementById('topic-status-header');
-      if (statusEl && window.EAH) {
-        var p = window.EAH.getProgress();
-        var status = p['vlookup'] || 'in-progress';
-        statusEl.dataset.status = status;
-        statusEl.textContent = status === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
-      }
+      // ==========================================
+      // 1. KONFIGURASI MARKED.JS — CUSTOM RENDERER
+      // ==========================================
+      marked.use({
+        renderer: {
+          blockquote(token) {
+            // FIXED (final, berdasarkan debug nyata): di versi marked.js
+            // yang dimuat ini, parameter "token" pada renderer.blockquote
+            // BUKAN object {text, raw, tokens} seperti dokumentasi umum --
+            // ternyata berupa STRING HTML yang sudah di-render (terbukti
+            // dari console.log yang menampilkan '<p>Bayangkan data...</p>'
+            // langsung sebagai teks, bukan object). Karena itu token.text
+            // dan token.raw selalu undefined -- bukan API yang salah kita
+            // tebak, tapi tipe datanya sendiri yang berbeda dari ekspektasi.
+            //
+            // Solusi: "token" di sini SUDAH berupa HTML siap pakai,
+            // tidak perlu di-parse ulang sama sekali.
+            const bodyHtml = String(token || '');
 
-      // IntersectionObserver — tautan TOC aktif saat digulir
-      var sections = document.querySelectorAll('.topic-content section[id]');
-      var tocLinks = document.querySelectorAll('.toc-sidebar a');
+            // Deteksi "TIP:" dari HTML mentah (biasanya muncul sebagai
+            // awal isi <p>TIP: ...)
+            const isTip = /<p>\s*TIP:/i.test(bodyHtml);
+            const cleanedHtml = isTip
+              ? bodyHtml.replace(/<p>\s*TIP:\s*/i, '<p>')
+              : bodyHtml;
 
-      if (sections.length && tocLinks.length) {
-        var activeSection = null;
+            if (isTip) {
+              return `<div class="callout callout-tip"><div class="callout-body">${cleanedHtml}</div></div>`;
+            } else {
+              return `<div class="callout callout-warning"><div class="callout-body">${cleanedHtml}</div></div>`;
+            }
+          }
+        }
+      });
 
-        var observer = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              activeSection = entry.target.id;
-              tocLinks.forEach(function (link) {
-                link.classList.remove('active');
-              });
-              var activeLink = document.querySelector('.toc-sidebar a[href="#' + activeSection + '"]');
-              if (activeLink) activeLink.classList.add('active');
+
+      // ==========================================
+      // 2. MAPPING SECTION TYPE → LABEL
+      // ==========================================
+      const SECTION_LABELS = {
+        concept: 'Konsep Dasar',
+        example: 'Contoh Penerapan',
+        guided_practice: 'Latihan Terpandu',
+        study_case_brief: 'Study Case',
+        faq: 'FAQ & Kesalahan Umum',
+        summary: 'Ringkasan'
+      };
+
+      // ==========================================
+      // 3. AMBIL DATA DARI SUPABASE
+      // ==========================================
+      try {
+        // 3a. Ambil metadata materi dari tabel `materials`
+        const { data: material, error: matError } = await supabase
+          .from('materials')
+          .select('*')
+          .eq('slug', slug)
+          .single();
+
+        if (matError || !material) throw matError || new Error('Materi tidak ditemukan');
+
+        // 3b. Ambil semua section dari tabel `material_sections`
+        const { data: sections, error: secError } = await supabase
+          .from('material_sections')
+          .select('*')
+          .eq('material_id', material.id)
+          .order('order_index', { ascending: true });
+
+        if (secError) throw secError;
+
+        // ==========================================
+        // 4. INJEKSI KONTEN & META
+        // ==========================================
+        document.title = material.title + ' — Excel Analyst Hub';
+
+        const catEl = document.getElementById('breadcrumb-category');
+        const titleEl = document.getElementById('breadcrumb-title');
+        if (catEl) catEl.textContent = material.topic || 'Materi';
+        if (titleEl) titleEl.textContent = material.title;
+
+        const headerH1 = document.getElementById('topic-main-title');
+        if (headerH1) headerH1.textContent = material.title;
+
+        // Gunakan prerequisite sebagai subtitle (description tidak ada di skema baru)
+        const headerLead = document.getElementById('topic-description');
+        if (headerLead) {
+          if (material.prerequisite) {
+            headerLead.textContent = 'Prasyarat: ' + material.prerequisite;
+            headerLead.style.display = '';
+          } else {
+            headerLead.style.display = 'none';
+          }
+        }
+
+        // Sembunyikan reading_time (kolom tidak ada di skema baru)
+        const timeBadge = document.getElementById('topic-reading-time');
+        if (timeBadge) timeBadge.style.display = 'none';
+
+        // Badge level
+        const levelBadge = document.getElementById('topic-level-badge');
+        if (levelBadge) {
+          const level = (material.level || 'menengah').toLowerCase();
+          levelBadge.textContent = level.charAt(0).toUpperCase() + level.slice(1);
+          // Ganti class badge sesuai level
+          levelBadge.className = 'badge';
+          if (level === 'pemula' || level === 'beginner') {
+            levelBadge.classList.add('badge-beginner');
+          } else if (level === 'lanjutan' || level === 'advanced') {
+            levelBadge.classList.add('badge-advanced');
+          } else {
+            levelBadge.classList.add('badge-intermediate');
+          }
+        }
+
+        // ==========================================
+        // 5. RENDER SECTIONS (MARKDOWN → HTML)
+        // ==========================================
+        const contentArea = document.getElementById('dynamic-content');
+        if (contentArea && sections && sections.length > 0) {
+          const htmlParts = sections.map(function (sec) {
+            const secId = 'sec-' + sec.section_type;
+            const label = SECTION_LABELS[sec.section_type] || sec.section_type;
+            const mdHtml = marked.parse(sec.content || '');
+            return `<section id="${secId}"><h2>${label}</h2>${mdHtml}</section>`;
+          });
+          contentArea.innerHTML = htmlParts.join('\n');
+        } else if (contentArea) {
+          contentArea.innerHTML = '<p style="color:var(--text-muted); padding: var(--space-6) 0;">Konten materi belum tersedia.</p>';
+        }
+
+        // ==========================================
+        // 6. GENERATOR DAFTAR ISI (TOC) OTOMATIS
+        // ==========================================
+        const tocSidebar = document.querySelector('.toc-sidebar');
+        if (tocSidebar && contentArea) {
+          tocSidebar.innerHTML = '<p class="toc-title">Di Halaman Ini</p>';
+          const sectionEls = contentArea.querySelectorAll('section[id]');
+          sectionEls.forEach(function (sec) {
+            const heading = sec.querySelector('h2');
+            if (heading) {
+              const a = document.createElement('a');
+              a.href = '#' + sec.id;
+              a.textContent = heading.textContent;
+              tocSidebar.appendChild(a);
             }
           });
-        }, {
-          rootMargin: '-80px 0px -60% 0px',
-          threshold: 0
-        });
 
-        sections.forEach(function (section) {
-          observer.observe(section);
-        });
-      }
-
-      // Tombol tandai selesai (ditampilkan di status header)
-      var headerStatus = document.getElementById('topic-status-header');
-      if (headerStatus) {
-        headerStatus.style.cursor = 'pointer';
-        headerStatus.title = 'Klik untuk menandai selesai';
-        headerStatus.addEventListener('click', function () {
-          if (window.EAH) {
-            var current = window.EAH.getProgress()['vlookup'] || 'in-progress';
-            var next = current === 'done' ? 'in-progress' : 'done';
-            window.EAH.setTopicStatus('vlookup', next);
-            headerStatus.dataset.status = next;
-            headerStatus.textContent = next === 'done' ? '✓ Selesai' : '● Sedang Dipelajari';
+          // IntersectionObserver untuk highlight TOC aktif saat scroll
+          const tocLinks = tocSidebar.querySelectorAll('a');
+          if (sectionEls.length && tocLinks.length) {
+            const tocObserver = new IntersectionObserver(function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  tocLinks.forEach(function (link) { link.classList.remove('active'); });
+                  const activeLink = tocSidebar.querySelector('a[href="#' + entry.target.id + '"]');
+                  if (activeLink) activeLink.classList.add('active');
+                }
+              });
+            }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+            sectionEls.forEach(function (sec) { tocObserver.observe(sec); });
           }
-        });
+        }
+
+        // ==========================================
+        // 7. PROGRESS TRACKING VIA SUPABASE
+        // ==========================================
+        const statusEl = document.getElementById('topic-status-header');
+
+        // Cek apakah user sedang login
+        const { data: { session } } = await supabase.auth.getSession();
+
+        if (session && session.user) {
+          const userId = session.user.id;
+          const materialId = material.id;
+
+          // Helper: render label status
+          function renderStatusLabel(status) {
+            if (!statusEl) return;
+            const statusMap = {
+              'in_progress': '● Sedang Dipelajari',
+              'read': '◐ Sudah Dibaca',
+              'completed': '✓ Selesai'
+            };
+            const dataMap = {
+              'in_progress': 'in-progress',
+              'read': 'done',
+              'completed': 'done'
+            };
+            statusEl.textContent = statusMap[status] || '● Sedang Dipelajari';
+            statusEl.dataset.status = dataMap[status] || 'in-progress';
+            // Hapus cursor pointer (tidak ada klik manual)
+            statusEl.style.cursor = 'default';
+            statusEl.title = '';
+          }
+
+          // 7a. Cek atau buat row progress untuk user ini
+          const { data: existingProgress, error: progressError } = await supabase
+            .from('user_material_progress')
+            .select('*')
+            .eq('user_id', userId)
+            .eq('material_id', materialId)
+            .maybeSingle();
+
+          let currentStatus = 'in_progress';
+
+          if (progressError) {
+            console.warn('Gagal mengambil progress:', progressError);
+          } else if (!existingProgress) {
+            // Belum ada row → INSERT baru dengan status in_progress
+            const { error: insertError } = await supabase
+              .from('user_material_progress')
+              .insert({ user_id: userId, material_id: materialId, status: 'in_progress' });
+            if (insertError) console.warn('Gagal insert progress:', insertError);
+            currentStatus = 'in_progress';
+          } else {
+            currentStatus = existingProgress.status || 'in_progress';
+          }
+
+          renderStatusLabel(currentStatus);
+
+          // 7b. IntersectionObserver pada elemen terakhir konten:
+          //     Saat elemen terakhir terlihat dan status masih 'in_progress' → ubah ke 'read'
+          if (contentArea && contentArea.lastElementChild) {
+            const lastEl = contentArea.lastElementChild;
+            const readObserver = new IntersectionObserver(function (entries, obs) {
+              entries.forEach(async function (entry) {
+                if (entry.isIntersecting && currentStatus === 'in_progress') {
+                  obs.disconnect(); // Jalankan hanya sekali
+                  const { error: updateError } = await supabase
+                    .from('user_material_progress')
+                    .update({ status: 'read' })
+                    .eq('user_id', userId)
+                    .eq('material_id', materialId)
+                    .eq('status', 'in_progress'); // Hanya update jika masih in_progress
+                  if (!updateError) {
+                    currentStatus = 'read';
+                    renderStatusLabel('read');
+                  }
+                }
+              });
+            }, { threshold: 0.1 });
+            readObserver.observe(lastEl);
+          }
+
+        } else {
+          // User belum login → tampilkan status netral, tidak bisa track
+          if (statusEl) {
+            statusEl.textContent = '○ Belum Dimulai';
+            statusEl.dataset.status = 'not-started';
+            statusEl.style.cursor = 'default';
+            statusEl.title = 'Login untuk melacak progress belajar';
+          }
+        }
+
+      } catch (err) {
+        console.error("Gagal memuat materi:", err);
+        const contentArea = document.getElementById('dynamic-content');
+        if (contentArea) contentArea.innerHTML = `
+        <div style="text-align:center; padding: 50px;">
+          <h2>Materi Tidak Ditemukan</h2>
+          <p>Maaf, materi yang Anda cari tidak ada atau terjadi kesalahan jaringan.</p>
+          <a href="learn.html" class="btn-primary" style="margin-top: 20px; display:inline-block;">Kembali ke Kurikulum</a>
+        </div>`;
       }
 
     });
   </script>
 </body>
+
 </html>

@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <script>
-    (function() {
+    (function () {
       try {
         var t = localStorage.getItem('eah_theme') || 'dark';
         document.documentElement.setAttribute('data-theme', t);
-      } catch(e) {}
+      } catch (e) { }
     })();
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jalur Belajar — Excel Analyst Hub</title>
-  <meta name="description" content="Kuasai Excel langkah demi langkah. Tiga jalur keahlian dari pemula hingga lanjutan — masing-masing dengan konten nyata, pelacak kemajuan, dan latihan praktis." />
+  <meta name="description"
+    content="Kuasai Excel langkah demi langkah. Tiga jalur keahlian dari pemula hingga lanjutan — masing-masing dengan konten nyata, pelacak kemajuan, dan latihan praktis." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="assets/css/main.css" />
@@ -20,6 +22,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/session.js" defer></script>
 </head>
+
 <body class="page-body">
 
   <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
@@ -27,21 +30,25 @@
   <!-- ============ NAVIGATION ============ -->
   <nav class="nav" role="navigation" aria-label="Navigasi utama">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo" aria-label="Excel Analyst Hub beranda" style="transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <a href="index.html" class="nav-logo" aria-label="Excel Analyst Hub beranda"
+        style="transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'"
+        onmouseout="this.style.transform='scale(1)'">
         <div class="logo-icon" aria-hidden="true" style="box-shadow: 0 0 10px rgba(59,130,246,0.5);">⊞</div>
         Excel Analyst Hub
       </a>
-      
+
       <div class="nav-links">
         <a href="index.html" class="nav-item">Beranda</a>
         <a href="learn.html" class="nav-item">Belajar</a>
         <a href="tools.html" class="nav-item">Tools</a>
         <a href="portfolio.html" class="nav-item">Portofolio</a>
       </div>
-      
+
       <div class="nav-right">
-        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
-        <a href="login.html" class="btn-sm btn-nav-premium" id="nav-auth-btn" style="padding: 0.45rem 1rem; border-radius: 50px; font-weight: 600; letter-spacing: 0.3px;">
+        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang"
+          title="Mode terang">☀️</button>
+        <a href="login.html" class="btn-sm btn-nav-premium" id="nav-auth-btn"
+          style="padding: 0.45rem 1rem; border-radius: 50px; font-weight: 600; letter-spacing: 0.3px;">
           Masuk / Profil
         </a>
         <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -56,8 +63,9 @@
     <a href="learn.html">Belajar</a>
     <a href="tools.html">Tools</a>
     <a href="portfolio.html">Portofolio</a>
-    <div style="height:1px; background:var(--border); margin: 8px 0;"></div> 
-    <a href="login.html" class="btn-nav-premium" id="mobile-auth-btn" style="text-align:center; border-radius: 8px; margin-top: 8px;">Masuk / Profil</a>
+    <div style="height:1px; background:var(--border); margin: 8px 0;"></div>
+    <a href="login.html" class="btn-nav-premium" id="mobile-auth-btn"
+      style="text-align:center; border-radius: 8px; margin-top: 8px;">Masuk / Profil</a>
   </div>
 
   <main id="main-content" class="container fade-in-section">
@@ -66,17 +74,22 @@
     <header class="page-header" style="padding-top: var(--space-6); padding-bottom: var(--space-5);">
       <div class="container">
         <div style="display: flex; align-items: center; gap: 15px; margin-bottom: var(--space-3);">
-          <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981; display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">3 Jalur Kurikulum</span>
+          <span class="badge"
+            style="background: rgba(16, 185, 129, 0.1); color: #10b981; display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">3
+            Jalur Kurikulum</span>
           <span style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">16 Total Topik</span>
         </div>
-        <h1 style="margin-top: 0; margin-bottom: var(--space-2); font-size: 2.5rem; line-height: 1.2;">Jalur Belajar Excel Analyst</h1>
+        <h1 style="margin-top: 0; margin-bottom: var(--space-2); font-size: 2.5rem; line-height: 1.2;">Jalur Belajar
+          Excel Analyst</h1>
         <p class="text-muted text-lg" style="max-width: 800px; margin: 0; font-size: 1.1rem; line-height: 1.6;">
-          Tiga kurikulum terstruktur dari dasar hingga lanjutan, dirancang khusus untuk pengembangan keahlian nyata di dunia kerja. Klik topik untuk mulai — kemajuanmu akan tersimpan secara otomatis.
+          Tiga kurikulum terstruktur dari dasar hingga lanjutan, dirancang khusus untuk pengembangan keahlian nyata di
+          dunia kerja. Klik topik untuk mulai — kemajuanmu akan tersimpan secara otomatis.
         </p>
-        <div style="display: inline-block; margin-top: 1.5rem; padding: 0.6rem 1.2rem; background: rgba(16, 185, 129, 0.08); border-radius: 50px; border: 1px solid rgba(16, 185, 129, 0.2);">
-           <span style="font-style: italic; color: #10b981; font-weight: 500; font-size: 0.95rem;">
-             "Learning shouldn't be boring; it should be rewarding."
-           </span>
+        <div
+          style="display: inline-block; margin-top: 1.5rem; padding: 0.6rem 1.2rem; background: rgba(16, 185, 129, 0.08); border-radius: 50px; border: 1px solid rgba(16, 185, 129, 0.2);">
+          <span style="font-style: italic; color: #10b981; font-weight: 500; font-size: 0.95rem;">
+            "Learning shouldn't be boring; it should be rewarding."
+          </span>
         </div>
       </div>
     </header>
@@ -87,7 +100,7 @@
       <!-- ====== JALUR PEMULA ====== -->
       <!-- Alias anchors so both "#beginner" and "#pemula" work -->
       <span id="pemula" style="position:relative;top:calc(-1 * (var(--nav-height) + 16px));visibility:hidden;"></span>
-      <div class="track-section fade-in" id="beginner" data-track="beginner">
+      <div class="track-section fade-in" id="beginner" data-track="beginner" data-level="pemula">
 
         <div class="track-section-header" role="button" aria-expanded="true" tabindex="0">
           <div class="track-section-title">
@@ -109,90 +122,112 @@
 
         <div class="track-section-body">
           <div class="track-section-body-inner">
-          <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:var(--space-5);">Tidak perlu pengalaman sebelumnya. Mulai di sini jika Excel terasa membingungkan — kamu akan meninggalkan jalur ini dengan cukup percaya diri untuk membuat laporan pertamamu dari awal.</p>
-          <div class="topics-grid">
+            <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:var(--space-5);">Tidak perlu pengalaman
+              sebelumnya. Mulai di sini jika Excel terasa membingungkan — kamu akan meninggalkan jalur ini dengan cukup
+              percaya diri untuk membuat laporan pertamamu dari awal.</p>
+            <div class="topics-grid">
 
-            <div class="topic-card" data-topic-id="excel-interface">
-              <div class="topic-card-title">Antarmuka & Navigasi Excel</div>
-              <div class="topic-card-badge"><span class="badge badge-beginner">Pemula</span></div>
-              <div class="topic-card-desc">Pelajari di mana semua tombol berada: Ribbon, Name Box, Formula Bar, dan tab worksheet. Bagaimana analis benar-benar menavigasi spreadsheet besar tanpa menggunakan mouse.</div>
-              <div class="topic-card-footer">
-                <div style="display:flex;align-items:center;gap:var(--space-3);">
-                  <span class="duration">~15 menit</span>
-                  <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+              <div class="topic-card" data-topic-id="excel-interface">
+                <div class="topic-card-title">Antarmuka & Navigasi Excel</div>
+                <div class="topic-card-badge"><span class="badge badge-beginner">Pemula</span></div>
+                <div class="topic-card-desc">Pelajari di mana semua tombol berada: Ribbon, Name Box, Formula Bar, dan
+                  tab worksheet. Bagaimana analis benar-benar menavigasi spreadsheet besar tanpa menggunakan mouse.
                 </div>
-                <div style="display:flex;gap:var(--space-2);">
-                  <button class="btn-mark-done" style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;" title="Tandai Selesai">📝 Kerjakan Kuis</button>
-                  <a href="topic-excel-interface.html" class="btn-primary btn-sm">Mulai →</a>
+                <div class="topic-card-footer">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span class="duration">~15 menit</span>
+                    <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn-mark-done"
+                      style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;"
+                      title="Tandai Selesai">📝 Kerjakan Kuis</button>
+                    <a href="topic-excel-interface.html" class="btn-primary btn-sm">Mulai →</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="topic-card" data-topic-id="data-entry">
-              <div class="topic-card-title">Praktik Terbaik Entri Data</div>
-              <div class="topic-card-badge"><span class="badge badge-beginner">Pemula</span></div>
-              <div class="topic-card-desc">Cara menyusun data agar formula dan PivotTable bekerja dengan benar. Kesalahan yang sering dilakukan pemula: tanggal tersimpan sebagai teks, angka dengan spasi, sel yang digabung merusak segalanya.</div>
-              <div class="topic-card-footer">
-                <div style="display:flex;align-items:center;gap:var(--space-3);">
-                  <span class="duration">~20 menit</span>
-                  <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
-                </div>
-                <div style="display:flex;gap:var(--space-2);">
-                  <button class="btn-mark-done" style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;" title="Tandai Selesai">📝 Kerjakan Kuis</button>
-                  <a href="topic-data-entry.html" class="btn-primary btn-sm">Mulai →</a>
+              <div class="topic-card" data-topic-id="data-entry">
+                <div class="topic-card-title">Praktik Terbaik Entri Data</div>
+                <div class="topic-card-badge"><span class="badge badge-beginner">Pemula</span></div>
+                <div class="topic-card-desc">Cara menyusun data agar formula dan PivotTable bekerja dengan benar.
+                  Kesalahan yang sering dilakukan pemula: tanggal tersimpan sebagai teks, angka dengan spasi, sel yang
+                  digabung merusak segalanya.</div>
+                <div class="topic-card-footer">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span class="duration">~20 menit</span>
+                    <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn-mark-done"
+                      style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;"
+                      title="Tandai Selesai">📝 Kerjakan Kuis</button>
+                    <a href="topic-data-entry.html" class="btn-primary btn-sm">Mulai →</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="topic-card" data-topic-id="basic-formulas">
-              <div class="topic-card-title">Formula Dasar: SUM, AVERAGE, COUNT</div>
-              <div class="topic-card-badge"><span class="badge badge-beginner">Pemula</span></div>
-              <div class="topic-card-desc">Tiga formula yang digunakan setiap analis setiap hari. Buat dari nol, pahami cara kerja referensi sel (relatif vs absolut), dan hindari kesalahan formula yang paling umum.</div>
-              <div class="topic-card-footer">
-                <div style="display:flex;align-items:center;gap:var(--space-3);">
-                  <span class="duration">~25 menit</span>
-                  <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+              <div class="topic-card" data-topic-id="basic-formulas">
+                <div class="topic-card-title">Formula Dasar: SUM, AVERAGE, COUNT</div>
+                <div class="topic-card-badge"><span class="badge badge-beginner">Pemula</span></div>
+                <div class="topic-card-desc">Tiga formula yang digunakan setiap analis setiap hari. Buat dari nol,
+                  pahami cara kerja referensi sel (relatif vs absolut), dan hindari kesalahan formula yang paling umum.
                 </div>
-                <div style="display:flex;gap:var(--space-2);">
-                  <button class="btn-mark-done" style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;" title="Tandai Selesai">📝 Kerjakan Kuis</button>
-                  <a href="topic-basic-formulas.html" class="btn-primary btn-sm">Mulai →</a>
+                <div class="topic-card-footer">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span class="duration">~25 menit</span>
+                    <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn-mark-done"
+                      style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;"
+                      title="Tandai Selesai">📝 Kerjakan Kuis</button>
+                    <a href="topic-basic-formulas.html" class="btn-primary btn-sm">Mulai →</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="topic-card" data-topic-id="cell-formatting">
-              <div class="topic-card-title">Pemformatan Sel & Gaya</div>
-              <div class="topic-card-badge"><span class="badge badge-beginner">Pemula</span></div>
-              <div class="topic-card-desc">Spreadsheet yang tampak profesional berkomunikasi dengan jelas. Format angka, mata uang, persentase, format tanggal — dan cara membuat laporan yang tidak terlihat dibuat di tahun 2003.</div>
-              <div class="topic-card-footer">
-                <div style="display:flex;align-items:center;gap:var(--space-3);">
-                  <span class="duration">~20 menit</span>
-                  <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
-                </div>
-                <div style="display:flex;gap:var(--space-2);">
-                  <button class="btn-mark-done" style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;" title="Tandai Selesai">📝 Kerjakan Kuis</button>
-                  <a href="topic-cell-formatting.html" class="btn-primary btn-sm">Mulai →</a>
+              <div class="topic-card" data-topic-id="cell-formatting">
+                <div class="topic-card-title">Pemformatan Sel & Gaya</div>
+                <div class="topic-card-badge"><span class="badge badge-beginner">Pemula</span></div>
+                <div class="topic-card-desc">Spreadsheet yang tampak profesional berkomunikasi dengan jelas. Format
+                  angka, mata uang, persentase, format tanggal — dan cara membuat laporan yang tidak terlihat dibuat di
+                  tahun 2003.</div>
+                <div class="topic-card-footer">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span class="duration">~20 menit</span>
+                    <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn-mark-done"
+                      style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;"
+                      title="Tandai Selesai">📝 Kerjakan Kuis</button>
+                    <a href="topic-cell-formatting.html" class="btn-primary btn-sm">Mulai →</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="topic-card" data-topic-id="basic-charts">
-              <div class="topic-card-title">Grafik Dasar & Visualisasi</div>
-              <div class="topic-card-badge"><span class="badge badge-beginner">Pemula</span></div>
-              <div class="topic-card-desc">Jenis grafik mana untuk data apa — dan mengapa sebagian besar grafik Excel terlihat buruk secara default. Bar vs kolom, kapan menggunakan grafik garis, cara membersihkan grafik agar terlihat profesional.</div>
-              <div class="topic-card-footer">
-                <div style="display:flex;align-items:center;gap:var(--space-3);">
-                  <span class="duration">~30 menit</span>
-                  <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
-                </div>
-                <div style="display:flex;gap:var(--space-2);">
-                  <button class="btn-mark-done" style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;" title="Tandai Selesai">📝 Kerjakan Kuis</button>
-                  <a href="topic-basic-charts.html" class="btn-primary btn-sm">Mulai →</a>
+              <div class="topic-card" data-topic-id="basic-charts">
+                <div class="topic-card-title">Grafik Dasar & Visualisasi</div>
+                <div class="topic-card-badge"><span class="badge badge-beginner">Pemula</span></div>
+                <div class="topic-card-desc">Jenis grafik mana untuk data apa — dan mengapa sebagian besar grafik Excel
+                  terlihat buruk secara default. Bar vs kolom, kapan menggunakan grafik garis, cara membersihkan grafik
+                  agar terlihat profesional.</div>
+                <div class="topic-card-footer">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span class="duration">~30 menit</span>
+                    <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn-mark-done"
+                      style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;"
+                      title="Tandai Selesai">📝 Kerjakan Kuis</button>
+                    <a href="topic-basic-charts.html" class="btn-primary btn-sm">Mulai →</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -200,7 +235,7 @@
       <!-- ====== JALUR MENENGAH ====== -->
       <!-- Alias anchors so both "#intermediate" and "#menengah" work -->
       <span id="menengah" style="position:relative;top:calc(-1 * (var(--nav-height) + 16px));visibility:hidden;"></span>
-      <div class="track-section fade-in delay-1" id="intermediate" data-track="intermediate">
+      <div class="track-section fade-in delay-1" id="intermediate" data-track="intermediate" data-level="menengah">
 
         <div class="track-section-header" role="button" aria-expanded="true" tabindex="0">
           <div class="track-section-title">
@@ -222,106 +257,131 @@
 
         <div class="track-section-body">
           <div class="track-section-body-inner">
-          <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:var(--space-5);">Kamu sudah harus tahu formula dasar sebelum memulai di sini. Ini adalah keahlian yang membedakan analis yang bisa mengeksekusi dengan analis yang bisa memecahkan masalah.</p>
-          <div class="topics-grid">
+            <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:var(--space-5);">Kamu sudah harus tahu
+              formula dasar sebelum memulai di sini. Ini adalah keahlian yang membedakan analis yang bisa mengeksekusi
+              dengan analis yang bisa memecahkan masalah.</p>
+            <div class="topics-grid">
 
-            <div class="topic-card" data-topic-id="vlookup">
-              <div class="topic-card-title">VLOOKUP & HLOOKUP</div>
-              <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
-              <div class="topic-card-desc">Formula yang paling sering ditanyakan dalam wawancara Excel. Pelajari cara kerjanya, di mana ia gagal, dan kesalahan persis yang kamu temui di data nyata (dan cara mengatasinya).</div>
-              <div class="topic-card-footer">
-                <div style="display:flex;align-items:center;gap:var(--space-3);">
-                  <span class="duration">~25 menit</span>
-                  <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
-                </div>
-                <div style="display:flex;gap:var(--space-2);">
-                  <button class="btn-mark-done" style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;" title="Tandai Selesai">📝 Kerjakan Kuis</button>
-                  <a href="topic.html" class="btn-primary btn-sm">Mulai →</a>
+              <div class="topic-card" data-topic-id="vlookup">
+                <div class="topic-card-title">VLOOKUP & HLOOKUP</div>
+                <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
+                <div class="topic-card-desc">Formula yang paling sering ditanyakan dalam wawancara Excel. Pelajari cara
+                  kerjanya, di mana ia gagal, dan kesalahan persis yang kamu temui di data nyata (dan cara
+                  mengatasinya).</div>
+                <div class="topic-card-footer">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span class="duration">~25 menit</span>
+                    <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn-mark-done"
+                      style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;"
+                      title="Tandai Selesai">📝 Kerjakan Kuis</button>
+                    <a href="topic.html" class="btn-primary btn-sm">Mulai →</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="topic-card" data-topic-id="index-match">
-              <div class="topic-card-title">INDEX-MATCH: Cara yang Lebih Baik</div>
-              <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
-              <div class="topic-card-desc">Mengapa analis berpengalaman lebih memilih INDEX-MATCH daripada VLOOKUP — bisa melihat ke kiri, lebih cepat di dataset besar, dan tidak rusak saat kamu menyisipkan kolom.</div>
-              <div class="topic-card-footer">
-                <div style="display:flex;align-items:center;gap:var(--space-3);">
-                  <span class="duration">~30 menit</span>
-                  <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
-                </div>
-                <div style="display:flex;gap:var(--space-2);">
-                  <button class="btn-mark-done" style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;" title="Tandai Selesai">📝 Kerjakan Kuis</button>
-                  <a href="topic-index-match.html" class="btn-primary btn-sm">Mulai →</a>
+              <div class="topic-card" data-topic-id="index-match">
+                <div class="topic-card-title">INDEX-MATCH: Cara yang Lebih Baik</div>
+                <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
+                <div class="topic-card-desc">Mengapa analis berpengalaman lebih memilih INDEX-MATCH daripada VLOOKUP —
+                  bisa melihat ke kiri, lebih cepat di dataset besar, dan tidak rusak saat kamu menyisipkan kolom.</div>
+                <div class="topic-card-footer">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span class="duration">~30 menit</span>
+                    <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn-mark-done"
+                      style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;"
+                      title="Tandai Selesai">📝 Kerjakan Kuis</button>
+                    <a href="topic-index-match.html" class="btn-primary btn-sm">Mulai →</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="topic-card" data-topic-id="sumif-countif">
-              <div class="topic-card-title">SUMIF &amp; COUNTIF</div>
-              <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
-              <div class="topic-card-desc">Agregasi kondisional adalah dasar dari setiap tugas pelaporan yang akan kamu lakukan. SUMIF, COUNTIF, AVERAGEIF, dan versi multi-kriterianya SUMIFS dan COUNTIFS — dengan contoh laporan penjualan nyata.</div>
-              <div class="topic-card-footer">
-                <div style="display:flex;align-items:center;gap:var(--space-3);">
-                  <span class="duration">~25 menit</span>
-                  <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
-                </div>
-                <div style="display:flex;gap:var(--space-2);">
-                  <button class="btn-mark-done" style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;" title="Tandai Selesai">📝 Kerjakan Kuis</button>
-                  <a href="topic-sumif-countif.html" class="btn-primary btn-sm">Mulai →</a>
+              <div class="topic-card" data-topic-id="sumif-countif">
+                <div class="topic-card-title">SUMIF &amp; COUNTIF</div>
+                <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
+                <div class="topic-card-desc">Agregasi kondisional adalah dasar dari setiap tugas pelaporan yang akan
+                  kamu lakukan. SUMIF, COUNTIF, AVERAGEIF, dan versi multi-kriterianya SUMIFS dan COUNTIFS — dengan
+                  contoh laporan penjualan nyata.</div>
+                <div class="topic-card-footer">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span class="duration">~25 menit</span>
+                    <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn-mark-done"
+                      style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;"
+                      title="Tandai Selesai">📝 Kerjakan Kuis</button>
+                    <a href="topic-sumif-countif.html" class="btn-primary btn-sm">Mulai →</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="topic-card" data-topic-id="pivot-tables">
-              <div class="topic-card-title">Dasar-Dasar PivotTable</div>
-              <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
-              <div class="topic-card-desc">Fitur paling powerful di Excel untuk merangkum data. Buat PivotTable dari nol, pahami empat area (Baris, Kolom, Nilai, Filter), dan cara merefresh serta memformat hasilnya.</div>
-              <div class="topic-card-footer">
-                <div style="display:flex;align-items:center;gap:var(--space-3);">
-                  <span class="duration">~35 menit</span>
-                  <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+              <div class="topic-card" data-topic-id="pivot-tables">
+                <div class="topic-card-title">Dasar-Dasar PivotTable</div>
+                <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
+                <div class="topic-card-desc">Fitur paling powerful di Excel untuk merangkum data. Buat PivotTable dari
+                  nol, pahami empat area (Baris, Kolom, Nilai, Filter), dan cara merefresh serta memformat hasilnya.
                 </div>
-                <div style="display:flex;gap:var(--space-2);">
-                  <button class="btn-mark-done" style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;" title="Tandai Selesai">📝 Kerjakan Kuis</button>
-                  <a href="topic-pivot-tables.html" class="btn-primary btn-sm">Mulai →</a>
+                <div class="topic-card-footer">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span class="duration">~35 menit</span>
+                    <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn-mark-done"
+                      style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;"
+                      title="Tandai Selesai">📝 Kerjakan Kuis</button>
+                    <a href="topic-pivot-tables.html" class="btn-primary btn-sm">Mulai →</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="topic-card" data-topic-id="data-cleaning">
-              <div class="topic-card-title">Teknik Data Cleaning</div>
-              <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
-              <div class="topic-card-desc">Data dunia nyata selalu berantakan. TRIM, CLEAN, SUBSTITUTE, LEFT/MID/RIGHT untuk memisahkan kolom, Text-to-Columns, menghapus duplikat — teknik yang digunakan analis sebelum mereka bisa melakukan analisis apa pun.</div>
-              <div class="topic-card-footer">
-                <div style="display:flex;align-items:center;gap:var(--space-3);">
-                  <span class="duration">~30 menit</span>
-                  <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
-                </div>
-                <div style="display:flex;gap:var(--space-2);">
-                  <button class="btn-mark-done" style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;" title="Tandai Selesai">📝 Kerjakan Kuis</button>
-                  <a href="topic-data-cleaning.html" class="btn-primary btn-sm">Mulai →</a>
+              <div class="topic-card" data-topic-id="data-cleaning">
+                <div class="topic-card-title">Teknik Data Cleaning</div>
+                <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
+                <div class="topic-card-desc">Data dunia nyata selalu berantakan. TRIM, CLEAN, SUBSTITUTE, LEFT/MID/RIGHT
+                  untuk memisahkan kolom, Text-to-Columns, menghapus duplikat — teknik yang digunakan analis sebelum
+                  mereka bisa melakukan analisis apa pun.</div>
+                <div class="topic-card-footer">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span class="duration">~30 menit</span>
+                    <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn-mark-done"
+                      style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;"
+                      title="Tandai Selesai">📝 Kerjakan Kuis</button>
+                    <a href="topic-data-cleaning.html" class="btn-primary btn-sm">Mulai →</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="topic-card" data-topic-id="conditional-formatting">
-              <div class="topic-card-title">Conditional Formatting</div>
-              <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
-              <div class="topic-card-desc">Buat data berbicara sendiri — color scales, data bars, icon sets, dan aturan berbasis formula. Cara analis HR menggunakannya untuk menandai masalah kehadiran, dan cara analis keuangan menyoroti varians anggaran.</div>
-              <div class="topic-card-footer">
-                <div style="display:flex;align-items:center;gap:var(--space-3);">
-                  <span class="duration">~20 menit</span>
-                  <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
-                </div>
-                <div style="display:flex;gap:var(--space-2);">
-                  <button class="btn-mark-done" style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;" title="Tandai Selesai">📝 Kerjakan Kuis</button>
-                  <a href="topic-conditional-formatting.html" class="btn-primary btn-sm">Mulai →</a>
+              <div class="topic-card" data-topic-id="conditional-formatting">
+                <div class="topic-card-title">Conditional Formatting</div>
+                <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
+                <div class="topic-card-desc">Buat data berbicara sendiri — color scales, data bars, icon sets, dan
+                  aturan berbasis formula. Cara analis HR menggunakannya untuk menandai masalah kehadiran, dan cara
+                  analis keuangan menyoroti varians anggaran.</div>
+                <div class="topic-card-footer">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span class="duration">~20 menit</span>
+                    <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn-mark-done"
+                      style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;"
+                      title="Tandai Selesai">📝 Kerjakan Kuis</button>
+                    <a href="topic-conditional-formatting.html" class="btn-primary btn-sm">Mulai →</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -330,7 +390,7 @@
       <!-- Alias anchors so both "#advanced", "#mahir", and "#lanjutan" work -->
       <span id="mahir" style="position:relative;top:calc(-1 * (var(--nav-height) + 16px));visibility:hidden;"></span>
       <span id="lanjutan" style="position:relative;top:calc(-1 * (var(--nav-height) + 16px));visibility:hidden;"></span>
-      <div class="track-section fade-in delay-2" id="advanced" data-track="advanced">
+      <div class="track-section fade-in delay-2" id="advanced" data-track="advanced" data-level="mahir">
 
         <div class="track-section-header" role="button" aria-expanded="true" tabindex="0">
           <div class="track-section-title">
@@ -352,90 +412,146 @@
 
         <div class="track-section-body">
           <div class="track-section-body-inner">
-          <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:var(--space-5);">Untuk analis berpengalaman yang siap naik level. Keahlian ini membedakan analis tingkat menengah dari analis senior. Kamu perlu terbiasa dengan PivotTable dan formula sebelum menyelam ke sini.</p>
-          <div class="topics-grid">
+            <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:var(--space-5);">Untuk analis
+              berpengalaman yang siap naik level. Keahlian ini membedakan analis tingkat menengah dari analis senior.
+              Kamu perlu terbiasa dengan PivotTable dan formula sebelum menyelam ke sini.</p>
+            <div class="topics-grid">
 
-            <div class="topic-card" data-topic-id="power-query">
-              <div class="topic-card-title">Dasar-Dasar Power Query</div>
-              <div class="topic-card-badge"><span class="badge badge-advanced">Lanjutan</span></div>
-              <div class="topic-card-desc">Impor, transformasi, dan gabungkan data dari berbagai sumber tanpa menulis formula. Power Query mengotomatiskan proses data cleaning yang dulu kamu lakukan secara manual — dan diperbarui dengan satu klik saat data sumber berubah.</div>
-              <div class="topic-card-footer">
-                <div style="display:flex;align-items:center;gap:var(--space-3);">
-                  <span class="duration">~45 menit</span>
-                  <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
-                </div>
-                <div style="display:flex;gap:var(--space-2);">
-                  <button class="btn-mark-done" style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;" title="Tandai Selesai">📝 Kerjakan Kuis</button>
-                  <a href="topic-power-query.html" class="btn-primary btn-sm">Mulai →</a>
+              <div class="topic-card" data-topic-id="power-query">
+                <div class="topic-card-title">Dasar-Dasar Power Query</div>
+                <div class="topic-card-badge"><span class="badge badge-advanced">Lanjutan</span></div>
+                <div class="topic-card-desc">Impor, transformasi, dan gabungkan data dari berbagai sumber tanpa menulis
+                  formula. Power Query mengotomatiskan proses data cleaning yang dulu kamu lakukan secara manual — dan
+                  diperbarui dengan satu klik saat data sumber berubah.</div>
+                <div class="topic-card-footer">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span class="duration">~45 menit</span>
+                    <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn-mark-done"
+                      style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;"
+                      title="Tandai Selesai">📝 Kerjakan Kuis</button>
+                    <a href="topic-power-query.html" class="btn-primary btn-sm">Mulai →</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="topic-card" data-topic-id="advanced-pivot">
-              <div class="topic-card-title">PivotTable Lanjutan & Slicer</div>
-              <div class="topic-card-badge"><span class="badge badge-advanced">Lanjutan</span></div>
-              <div class="topic-card-desc">Calculated fields, calculated items, pengelompokan tanggal per bulan/kuartal, menghubungkan beberapa PivotTable dengan slicer untuk dashboard interaktif. Cara membangun laporan manajemen yang bisa difilter sendiri oleh stakeholder.</div>
-              <div class="topic-card-footer">
-                <div style="display:flex;align-items:center;gap:var(--space-3);">
-                  <span class="duration">~40 menit</span>
-                  <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
-                </div>
-                <div style="display:flex;gap:var(--space-2);">
-                  <button class="btn-mark-done" style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;" title="Tandai Selesai">📝 Kerjakan Kuis</button>
-                  <a href="topic-advanced-pivot.html" class="btn-primary btn-sm">Mulai →</a>
+              <div class="topic-card" data-topic-id="advanced-pivot">
+                <div class="topic-card-title">PivotTable Lanjutan & Slicer</div>
+                <div class="topic-card-badge"><span class="badge badge-advanced">Lanjutan</span></div>
+                <div class="topic-card-desc">Calculated fields, calculated items, pengelompokan tanggal per
+                  bulan/kuartal, menghubungkan beberapa PivotTable dengan slicer untuk dashboard interaktif. Cara
+                  membangun laporan manajemen yang bisa difilter sendiri oleh stakeholder.</div>
+                <div class="topic-card-footer">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span class="duration">~40 menit</span>
+                    <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn-mark-done"
+                      style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;"
+                      title="Tandai Selesai">📝 Kerjakan Kuis</button>
+                    <a href="topic-advanced-pivot.html" class="btn-primary btn-sm">Mulai →</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="topic-card" data-topic-id="dashboard-design">
-              <div class="topic-card-title">Prinsip Desain Dashboard</div>
-              <div class="topic-card-badge"><span class="badge badge-advanced">Lanjutan</span></div>
-              <div class="topic-card-desc">Layout, hierarki, dan warna — tiga hal yang membuat dashboard jernih bukan berantakan. Cara analis menyusun tampilan eksekutif vs tampilan operasional, dan konvensi yang membuat dashboard intuitif tanpa legenda.</div>
-              <div class="topic-card-footer">
-                <div style="display:flex;align-items:center;gap:var(--space-3);">
-                  <span class="duration">~35 menit</span>
-                  <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
-                </div>
-                <div style="display:flex;gap:var(--space-2);">
-                  <button class="btn-mark-done" style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;" title="Tandai Selesai">📝 Kerjakan Kuis</button>
-                  <a href="topic-dashboard-design.html" class="btn-primary btn-sm">Mulai →</a>
+              <div class="topic-card" data-topic-id="dashboard-design">
+                <div class="topic-card-title">Prinsip Desain Dashboard</div>
+                <div class="topic-card-badge"><span class="badge badge-advanced">Lanjutan</span></div>
+                <div class="topic-card-desc">Layout, hierarki, dan warna — tiga hal yang membuat dashboard jernih bukan
+                  berantakan. Cara analis menyusun tampilan eksekutif vs tampilan operasional, dan konvensi yang membuat
+                  dashboard intuitif tanpa legenda.</div>
+                <div class="topic-card-footer">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span class="duration">~35 menit</span>
+                    <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn-mark-done"
+                      style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;"
+                      title="Tandai Selesai">📝 Kerjakan Kuis</button>
+                    <a href="topic-dashboard-design.html" class="btn-primary btn-sm">Mulai →</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="topic-card" data-topic-id="dynamic-arrays">
-              <div class="topic-card-title">Dynamic Arrays: FILTER, SORT, UNIQUE</div>
-              <div class="topic-card-badge"><span class="badge badge-advanced">Lanjutan</span></div>
-              <div class="topic-card-desc">Fitur paling powerful di Excel modern — formula yang mengembalikan banyak hasil secara otomatis. Filter tabel berdasarkan kriteria tanpa kolom pembantu, urutkan data secara dinamis, ekstrak nilai unik. Menggantikan lusinan formula dengan satu ekspresi bersih.</div>
-              <div class="topic-card-footer">
-                <div style="display:flex;align-items:center;gap:var(--space-3);">
-                  <span class="duration">~30 menit</span>
-                  <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
-                </div>
-                <div style="display:flex;gap:var(--space-2);">
-                  <button class="btn-mark-done" style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;" title="Tandai Selesai">📝 Kerjakan Kuis</button>
-                  <a href="topic-dynamic-arrays.html" class="btn-primary btn-sm">Mulai →</a>
+              <div class="topic-card" data-topic-id="dynamic-arrays">
+                <div class="topic-card-title">Dynamic Arrays: FILTER, SORT, UNIQUE</div>
+                <div class="topic-card-badge"><span class="badge badge-advanced">Lanjutan</span></div>
+                <div class="topic-card-desc">Fitur paling powerful di Excel modern — formula yang mengembalikan banyak
+                  hasil secara otomatis. Filter tabel berdasarkan kriteria tanpa kolom pembantu, urutkan data secara
+                  dinamis, ekstrak nilai unik. Menggantikan lusinan formula dengan satu ekspresi bersih.</div>
+                <div class="topic-card-footer">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span class="duration">~30 menit</span>
+                    <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn-mark-done"
+                      style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;"
+                      title="Tandai Selesai">📝 Kerjakan Kuis</button>
+                    <a href="topic-dynamic-arrays.html" class="btn-primary btn-sm">Mulai →</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="topic-card" data-topic-id="data-validation">
-              <div class="topic-card-title">Validasi Data & Proteksi</div>
-              <div class="topic-card-badge"><span class="badge badge-advanced">Lanjutan</span></div>
-              <div class="topic-card-desc">Membangun spreadsheet yang akan diisi oleh orang lain. Dropdown list, pembatasan input, pesan kesalahan, dan proteksi sheet — cara analis membangun formulir input yang tahan banting untuk mencegah masalah kualitas data.</div>
-              <div class="topic-card-footer">
-                <div style="display:flex;align-items:center;gap:var(--space-3);">
-                  <span class="duration">~25 menit</span>
-                  <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
-                </div>
-                <div style="display:flex;gap:var(--space-2);">
-                  <button class="btn-mark-done" style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;" title="Tandai Selesai">📝 Kerjakan Kuis</button>
-                  <a href="topic-data-validation.html" class="btn-primary btn-sm">Mulai →</a>
+              <div class="topic-card" data-topic-id="data-validation">
+                <div class="topic-card-title">Validasi Data & Proteksi</div>
+                <div class="topic-card-badge"><span class="badge badge-advanced">Lanjutan</span></div>
+                <div class="topic-card-desc">Membangun spreadsheet yang akan diisi oleh orang lain. Dropdown list,
+                  pembatasan input, pesan kesalahan, dan proteksi sheet — cara analis membangun formulir input yang
+                  tahan banting untuk mencegah masalah kualitas data.</div>
+                <div class="topic-card-footer">
+                  <div style="display:flex;align-items:center;gap:var(--space-3);">
+                    <span class="duration">~25 menit</span>
+                    <span class="topic-status" data-status="not-started">○ Belum Dimulai</span>
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);">
+                    <button class="btn-mark-done"
+                      style="background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 4px 10px; cursor: pointer; font-size: 0.85rem; transition: 0.3s;"
+                      title="Tandai Selesai">📝 Kerjakan Kuis</button>
+                    <a href="topic-data-validation.html" class="btn-primary btn-sm">Mulai →</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
+            </div>
           </div>
+        </div>
+      </div>
+
+      <!-- ====== JALUR EXPERT ====== -->
+      <span id="expert" style="position:relative;top:calc(-1 * (var(--nav-height) + 16px));visibility:hidden;"></span>
+      <div class="track-section fade-in delay-3" id="expert-section" data-track="expert" data-level="expert">
+
+        <div class="track-section-header" role="button" aria-expanded="true" tabindex="0">
+          <div class="track-section-title">
+            <span class="badge badge-advanced" <h2>Studi Kasus: Analisis Bisnis End-to-End</h2>
+          </div>
+          <div class="track-section-meta">
+            <div class="progress-wrapper" style="min-width:180px;margin-bottom:0;">
+              <div class="progress-header">
+                <span class="progress-label" id="expert-progress-label">0/7 selesai</span>
+              </div>
+              <div class="progress-bar" style="margin-top:var(--space-2);">
+                <div class="progress-fill" id="expert-progress-fill"></div>
+              </div>
+            </div>
+            <span class="track-toggle" aria-hidden="true">▼</span>
+          </div>
+        </div>
+
+        <div class="track-section-body">
+          <div class="track-section-body-inner">
+            <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:var(--space-5);">
+              Level puncak kurikulum. Di sini semua skill Level 1-3 menyatu dalam satu proyek analisis bisnis nyata dari
+              awal hingga presentasi ke C-Level. Selesaikan semua Level sebelumnya sebelum masuk ke sini.
+            </p>
+            <div class="topics-grid" id="expert-grid">
+              <!-- Diisi dinamis oleh JavaScript dari tabel materials (level: expert) -->
+            </div>
           </div>
         </div>
       </div>
@@ -444,10 +560,13 @@
       <div class="track-section fade-in delay-3" id="tools-trainers" style="margin-top:var(--space-8);">
         <div style="margin-bottom:var(--space-6);">
           <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2);">
-            <span class="badge" style="background:linear-gradient(135deg,var(--accent),var(--accent-2,#7c3aed));color:#fff;border:none;">⚡ Tools & Trainer</span>
+            <span class="badge"
+              style="background:linear-gradient(135deg,var(--accent),var(--accent-2,#7c3aed));color:#fff;border:none;">⚡
+              Tools & Trainer</span>
           </div>
           <h2 style="margin-bottom:var(--space-2);">Tools Interaktif Kami</h2>
-          <p style="font-size:0.875rem;color:var(--text-muted);">Trainer dan panduan langsung yang melengkapi jalur belajar ini. Gunakan selagi kamu belajar untuk mempercepat pemahaman.</p>
+          <p style="font-size:0.875rem;color:var(--text-muted);">Trainer dan panduan langsung yang melengkapi jalur
+            belajar ini. Gunakan selagi kamu belajar untuk mempercepat pemahaman.</p>
         </div>
 
         <div class="topics-grid">
@@ -456,14 +575,16 @@
           <div class="topic-card" style="border-left:3px solid var(--accent);">
             <div class="topic-card-title">⌨️ Excel Shortcut Trainer</div>
             <div class="topic-card-badge"><span class="badge badge-beginner">Pemula</span></div>
-            <div class="topic-card-desc">Latih semua shortcut keyboard Excel yang wajib dikuasai analis data. Sistem kartu flashcard interaktif — pilih kategori, jawab, dan ulangi sampai otomatis.</div>
+            <div class="topic-card-desc">Latih semua shortcut keyboard Excel yang wajib dikuasai analis data. Sistem
+              kartu flashcard interaktif — pilih kategori, jawab, dan ulangi sampai otomatis.</div>
             <div class="topic-card-footer">
               <div style="display:flex;align-items:center;gap:var(--space-3);">
                 <span class="duration">Latihan mandiri</span>
                 <span class="topic-status" data-status="not-started" style="color:var(--accent);">⚡ External Tool</span>
               </div>
               <div style="display:flex;gap:var(--space-2);">
-                <a href="https://hanafidias.github.io/excel-shortcut-for-data-analyst" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Mulai Belajar →</a>
+                <a href="https://hanafidias.github.io/excel-shortcut-for-data-analyst" class="btn-primary btn-sm"
+                  target="_blank" rel="noopener noreferrer">Mulai Belajar →</a>
               </div>
             </div>
           </div>
@@ -472,14 +593,16 @@
           <div class="topic-card" style="border-left:3px solid var(--accent);">
             <div class="topic-card-title">ƒ Excel Formula Trainer</div>
             <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
-            <div class="topic-card-desc">Kuasai VLOOKUP, SUMIF, INDEX-MATCH, dan puluhan formula penting lainnya lewat latihan soal nyata. Ideal untuk persiapan wawancara kerja data analyst.</div>
+            <div class="topic-card-desc">Kuasai VLOOKUP, SUMIF, INDEX-MATCH, dan puluhan formula penting lainnya lewat
+              latihan soal nyata. Ideal untuk persiapan wawancara kerja data analyst.</div>
             <div class="topic-card-footer">
               <div style="display:flex;align-items:center;gap:var(--space-3);">
                 <span class="duration">Latihan mandiri</span>
                 <span class="topic-status" data-status="not-started" style="color:var(--accent);">⚡ External Tool</span>
               </div>
               <div style="display:flex;gap:var(--space-2);">
-                <a href="https://hanafidias.github.io/excel-formula-trainer" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Mulai Belajar →</a>
+                <a href="https://hanafidias.github.io/excel-formula-trainer" class="btn-primary btn-sm" target="_blank"
+                  rel="noopener noreferrer">Mulai Belajar →</a>
               </div>
             </div>
           </div>
@@ -488,14 +611,16 @@
           <div class="topic-card" style="border-left:3px solid var(--accent);">
             <div class="topic-card-title">🧹 Excel Data Cleaning Guide</div>
             <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
-            <div class="topic-card-desc">Panduan lengkap membersihkan data kotor di Excel — TRIM, CLEAN, hapus duplikat, perbaiki format tanggal, dan split kolom. Keahlian nomor satu yang dicari perusahaan.</div>
+            <div class="topic-card-desc">Panduan lengkap membersihkan data kotor di Excel — TRIM, CLEAN, hapus duplikat,
+              perbaiki format tanggal, dan split kolom. Keahlian nomor satu yang dicari perusahaan.</div>
             <div class="topic-card-footer">
               <div style="display:flex;align-items:center;gap:var(--space-3);">
                 <span class="duration">Panduan interaktif</span>
                 <span class="topic-status" data-status="not-started" style="color:var(--accent);">⚡ External Tool</span>
               </div>
               <div style="display:flex;gap:var(--space-2);">
-                <a href="https://hanafidias.github.io/excel-data-cleaning-guide/" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Mulai Belajar →</a>
+                <a href="https://hanafidias.github.io/excel-data-cleaning-guide/" class="btn-primary btn-sm"
+                  target="_blank" rel="noopener noreferrer">Mulai Belajar →</a>
               </div>
             </div>
           </div>
@@ -504,14 +629,16 @@
           <div class="topic-card" style="border-left:3px solid var(--accent);">
             <div class="topic-card-title">📊 Excel Pivot Table Guide</div>
             <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
-            <div class="topic-card-desc">Kuasai PivotTable dari nol hingga membuat laporan interaktif profesional. Pelajari filter, grouping, calculated field, dan slicer untuk dashboard yang impresif.</div>
+            <div class="topic-card-desc">Kuasai PivotTable dari nol hingga membuat laporan interaktif profesional.
+              Pelajari filter, grouping, calculated field, dan slicer untuk dashboard yang impresif.</div>
             <div class="topic-card-footer">
               <div style="display:flex;align-items:center;gap:var(--space-3);">
                 <span class="duration">Panduan interaktif</span>
                 <span class="topic-status" data-status="not-started" style="color:var(--accent);">⚡ External Tool</span>
               </div>
               <div style="display:flex;gap:var(--space-2);">
-                <a href="https://hanafidias.github.io/excel-pivot-table-guide/" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Mulai Belajar →</a>
+                <a href="https://hanafidias.github.io/excel-pivot-table-guide/" class="btn-primary btn-sm"
+                  target="_blank" rel="noopener noreferrer">Mulai Belajar →</a>
               </div>
             </div>
           </div>
@@ -520,14 +647,16 @@
           <div class="topic-card" style="border-left:3px solid var(--accent);">
             <div class="topic-card-title">🗃️ SQL Trainer</div>
             <div class="topic-card-badge"><span class="badge badge-advanced">Lanjutan</span></div>
-            <div class="topic-card-desc">Latihan SQL interaktif untuk data analyst — SELECT, JOIN, GROUP BY, subquery, dan window functions. Lengkapi kemampuan Excel-mu dengan SQL untuk analisis database skala besar.</div>
+            <div class="topic-card-desc">Latihan SQL interaktif untuk data analyst — SELECT, JOIN, GROUP BY, subquery,
+              dan window functions. Lengkapi kemampuan Excel-mu dengan SQL untuk analisis database skala besar.</div>
             <div class="topic-card-footer">
               <div style="display:flex;align-items:center;gap:var(--space-3);">
                 <span class="duration">Latihan mandiri</span>
                 <span class="topic-status" data-status="not-started" style="color:var(--accent);">⚡ External Tool</span>
               </div>
               <div style="display:flex;gap:var(--space-2);">
-                <a href="https://hanafidias.github.io/sql-trainer/" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Mulai Belajar →</a>
+                <a href="https://hanafidias.github.io/sql-trainer/" class="btn-primary btn-sm" target="_blank"
+                  rel="noopener noreferrer">Mulai Belajar →</a>
               </div>
             </div>
           </div>
@@ -548,7 +677,8 @@
             <div class="logo-icon" aria-hidden="true">⊞</div>
             Excel Analyst Hub
           </a>
-          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia berikutnya.</p>
+          <p class="footer-tagline">Platform belajar Excel berfokus karir untuk generasi data analyst Indonesia
+            berikutnya.</p>
         </div>
         <div class="footer-col">
           <h4>Belajar</h4>
@@ -561,11 +691,16 @@
         <div class="footer-col">
           <h4>Tools & Trainer</h4>
           <ul>
-            <li><a href="https://hanafidias.github.io/excel-shortcut-for-data-analyst" target="_blank" rel="noopener noreferrer">Shortcut Trainer</a></li>
-            <li><a href="https://hanafidias.github.io/excel-formula-trainer" target="_blank" rel="noopener noreferrer">Formula Trainer</a></li>
-            <li><a href="https://hanafidias.github.io/excel-data-cleaning-guide/" target="_blank" rel="noopener noreferrer">Data Cleaning</a></li>
-            <li><a href="https://hanafidias.github.io/excel-pivot-table-guide/" target="_blank" rel="noopener noreferrer">Pivot Table Guide</a></li>
-            <li><a href="https://hanafidias.github.io/sql-trainer/" target="_blank" rel="noopener noreferrer">SQL Trainer</a></li>
+            <li><a href="https://hanafidias.github.io/excel-shortcut-for-data-analyst" target="_blank"
+                rel="noopener noreferrer">Shortcut Trainer</a></li>
+            <li><a href="https://hanafidias.github.io/excel-formula-trainer" target="_blank"
+                rel="noopener noreferrer">Formula Trainer</a></li>
+            <li><a href="https://hanafidias.github.io/excel-data-cleaning-guide/" target="_blank"
+                rel="noopener noreferrer">Data Cleaning</a></li>
+            <li><a href="https://hanafidias.github.io/excel-pivot-table-guide/" target="_blank"
+                rel="noopener noreferrer">Pivot Table Guide</a></li>
+            <li><a href="https://hanafidias.github.io/sql-trainer/" target="_blank" rel="noopener noreferrer">SQL
+                Trainer</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -577,7 +712,8 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p style="font-style: italic; color: #10b981; font-weight: 600; font-size: 1.05rem; margin-bottom: 12px; letter-spacing: 0.3px;">
+        <p
+          style="font-style: italic; color: #10b981; font-weight: 600; font-size: 1.05rem; margin-bottom: 12px; letter-spacing: 0.3px;">
           "Learning shouldn't be boring; it should be rewarding."
         </p>
         <p style="color: var(--text-muted); font-size: 0.85rem;">
@@ -590,35 +726,482 @@
 
   <script src="assets/js/main.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener("DOMContentLoaded", function () {
+      // Render progress tracker (existing functionality)
       if (window.EAH && window.EAH.renderProgress) {
         window.EAH.renderProgress();
       }
-
-      // FIX: Trigger re-render whenever the user navigates back via browser history / back button
-      window.addEventListener('pageshow', function(event) {
-        if (window.EAH && window.EAH.renderProgress) {
-          window.EAH.renderProgress();
-        }
+      window.addEventListener('pageshow', function () {
+        if (window.EAH && window.EAH.renderProgress) window.EAH.renderProgress();
       });
+
+      if (window.supabase) {
+        const supaUrl = 'https://laowissohsnhfsbiwcpd.supabase.co';
+        const supaKey = 'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC';
+        const supabase = window.supabase.createClient(supaUrl, supaKey);
+
+        // Global states
+        let currentUser = null;
+        let currentQuiz = null;
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let currentMaterialId = null;
+
+        async function checkSession() {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session && session.user) {
+            currentUser = session.user;
+          }
+        }
+
+        async function loadCurriculum() {
+          await checkSession();
+
+          const { data: materials, error } = await supabase
+            .from('materials')
+            .select('id, title, slug, level, short_description, order_index')
+            .order('order_index', { ascending: true, nullsFirst: false });
+
+          if (error || !materials) {
+            console.error("Gagal memuat kurikulum:", error);
+            return;
+          }
+
+          // Target grid per level -- termasuk grid Expert yang baru
+          const gridPemula = document.querySelector('#beginner .topics-grid');
+          const gridMenengah = document.querySelector('#intermediate .topics-grid');
+          const gridMahir = document.querySelector('#advanced .topics-grid');
+          const gridExpert = document.getElementById('expert-grid');
+
+          if (gridPemula) gridPemula.innerHTML = '';
+          if (gridMenengah) gridMenengah.innerHTML = '';
+          if (gridMahir) gridMahir.innerHTML = '';
+          if (gridExpert) gridExpert.innerHTML = '';
+
+          materials.forEach(item => {
+            let badgeClass = 'beginner';
+            let displayLevel = 'Pemula';
+            if (item.level === 'menengah') { badgeClass = 'intermediate'; displayLevel = 'Menengah'; }
+            else if (item.level === 'mahir') { badgeClass = 'advanced'; displayLevel = 'Lanjutan'; }
+            else if (item.level === 'expert') { badgeClass = 'expert'; displayLevel = 'Expert'; }
+
+            const cardHTML = `
+            <div class="topic-card" data-material-id="${item.id}" data-topic-id="${item.slug}" data-level="${item.level}">
+              <div class="topic-card-title">${item.title}</div>
+              <div class="topic-card-badge"><span class="badge badge-${badgeClass}"
+
+              >${displayLevel}</span></div>
+              <div class="topic-card-desc">${item.short_description || ''}</div>
+              <div class="topic-card-footer">
+                <div style="display:flex;align-items:center;gap:var(--space-3);">
+                  <span class="topic-status" data-status="not-started" id="status-${item.id}">○ Belum Dimulai</span>
+                </div>
+                <div style="display:flex;gap:var(--space-2);">
+                  <button
+                    class="btn-mark-done btn-quiz-locked"
+                    data-material-id="${item.id}"
+                    disabled
+                    style="background:transparent;border:1px solid var(--border);border-radius:4px;color:var(--text-muted);padding:4px 10px;cursor:not-allowed;font-size:0.85rem;opacity:0.5;"
+                    title="Baca materi terlebih dahulu">🔒 Baca Dulu</button>
+                  <a href="topic.html?slug=${item.slug}" class="btn-primary btn-sm">Mulai →</a>
+                </div>
+              </div>
+            </div>`;
+
+            if (item.level === 'pemula' && gridPemula) gridPemula.innerHTML += cardHTML;
+            else if (item.level === 'menengah' && gridMenengah) gridMenengah.innerHTML += cardHTML;
+            else if (item.level === 'mahir' && gridMahir) gridMahir.innerHTML += cardHTML;
+            else if (item.level === 'expert' && gridExpert) gridExpert.innerHTML += cardHTML;
+          });
+
+          await loadUserProgress();
+        }
+
+        // Definisi total materi per level (sesuai kurikulum final)
+        const LEVEL_TOTALS = { pemula: 6, menengah: 6, mahir: 6, expert: 7 };
+
+        async function loadUserProgress() {
+          if (!currentUser) return;
+          const { data: progress, error } = await supabase
+            .from('user_material_progress')
+            .select('material_id, status, quiz_attempt_score')
+            .eq('user_id', currentUser.id);
+
+          if (error || !progress) {
+            console.error("Gagal memuat progress:", error);
+            return;
+          }
+
+          // Hitung selesai per level untuk progress bar
+          const completedPerLevel = { pemula: 0, menengah: 0, mahir: 0, expert: 0 };
+
+          progress.forEach(p => {
+            const statusEl = document.getElementById('status-' + p.material_id);
+            const card = statusEl ? statusEl.closest('.topic-card') : null;
+            const cardLevel = card ? card.getAttribute('data-level') : null;
+
+            if (statusEl) {
+              if (p.status === 'completed') {
+                statusEl.setAttribute('data-status', 'done');
+                statusEl.innerHTML = '✓ Selesai';
+                if (cardLevel && completedPerLevel[cardLevel] !== undefined) {
+                  completedPerLevel[cardLevel]++;
+                }
+              } else if (p.status === 'in_progress' || p.status === 'read') {
+                statusEl.setAttribute('data-status', 'in-progress');
+                statusEl.innerHTML = p.status === 'read' ? '◐ Sudah Dibaca' : '● Sedang Dipelajari';
+              }
+            }
+
+            // PEMBATAS KUIS: unlock tombol kuis jika status 'read' atau 'completed'
+            // Saat status in_progress atau belum ada = tombol tetap locked (disabled)
+            const quizBtn = document.querySelector('.btn-mark-done[data-material-id="' + p.material_id + '"]');
+            if (quizBtn) {
+              if (p.status === 'read' || p.status === 'completed') {
+                // Unlock: user sudah baca materi (scroll sampai bawah)
+                quizBtn.disabled = false;
+                quizBtn.classList.remove('btn-quiz-locked');
+                quizBtn.style.cursor = 'pointer';
+                quizBtn.style.opacity = '1';
+                quizBtn.title = 'Kerjakan Kuis';
+                if (p.status === 'completed') {
+                  quizBtn.innerHTML = '✅ Kuis Selesai';
+                  quizBtn.style.borderColor = '#10b981';
+                  quizBtn.style.color = '#10b981';
+                } else {
+                  quizBtn.innerHTML = '📝 Kerjakan Kuis';
+                }
+              }
+              // in_progress = tetap locked, belum scroll sampai bawah
+            }
+          });
+
+          // Update progress bar per level
+          Object.keys(completedPerLevel).forEach(level => {
+            const section = document.querySelector('[data-level="' + level + '"]');
+            if (!section) return;
+            const total = LEVEL_TOTALS[level] || 0;
+            const done = completedPerLevel[level];
+            const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+            const labelEl = section.querySelector('.progress-label');
+            const fillEl = section.querySelector('.progress-fill');
+            if (labelEl) labelEl.textContent = done + '/' + total + ' selesai';
+            if (fillEl) {
+              fillEl.style.width = pct + '%';
+              // Glow effect saat progress bar penuh (100%)
+              if (pct >= 100) {
+                fillEl.classList.remove('progress-glow-soft');
+                fillEl.classList.add('progress-glow');
+              } else if (pct > 0) {
+                fillEl.classList.remove('progress-glow');
+                fillEl.classList.add('progress-glow-soft');
+              } else {
+                fillEl.classList.remove('progress-glow');
+                fillEl.classList.remove('progress-glow-soft');
+              }
+            }
+          });
+
+          window.EAH_PROGRESS = progress;
+        }
+
+        // Modal Logic
+        const quizModal = document.getElementById('quiz-modal');
+        const closeBtn = document.getElementById('close-quiz');
+        const progressEl = document.getElementById('quiz-progress');
+        const questionEl = document.getElementById('quiz-question');
+        const optionsContainer = document.getElementById('quiz-options-container');
+        const btnPrev = document.getElementById('quiz-btn-prev');
+        const btnNext = document.getElementById('quiz-btn-next');
+        const feedbackGlobal = document.getElementById('quiz-feedback-global');
+        const btnCloseFinal = document.getElementById('quiz-btn-close-final');
+        const btnRetry = document.getElementById('quiz-btn-retry');
+
+        function resetModalUI() {
+          feedbackGlobal.style.display = 'none';
+          btnCloseFinal.style.display = 'none';
+          btnRetry.style.display = 'none';
+          btnPrev.style.display = 'block';
+          btnNext.style.display = 'block';
+          document.getElementById('quiz-nav-container').style.display = 'flex';
+          optionsContainer.innerHTML = '';
+          questionEl.innerHTML = '';
+          progressEl.innerHTML = '';
+          btnNext.textContent = 'Selanjutnya';
+
+          // Reset scroll position
+          const feedbackContainer = document.getElementById('quiz-feedback-global');
+          if (feedbackContainer) feedbackContainer.scrollTop = 0;
+        }
+
+        closeBtn.addEventListener('click', () => { quizModal.style.display = 'none'; });
+        btnCloseFinal.addEventListener('click', () => {
+          quizModal.style.display = 'none';
+          loadUserProgress();
+        });
+
+        btnRetry.addEventListener('click', () => {
+          userAnswers = {};
+          currentQuestionIndex = 0;
+          resetModalUI();
+          renderQuestion();
+        });
+
+        document.body.addEventListener('click', async (e) => {
+          if (e.target.classList.contains('btn-mark-done')) {
+            const matId = e.target.getAttribute('data-material-id');
+            if (!matId) return;
+
+            if (!currentUser) {
+              alert('Silakan login terlebih dahulu untuk mengerjakan kuis.');
+              window.location.href = 'login.html';
+              return;
+            }
+
+            currentMaterialId = matId;
+            userAnswers = {};
+            currentQuestionIndex = 0;
+            currentQuiz = null;
+            currentQuestions = [];
+
+            // Fetch Quiz
+            const { data: quizzes, error: qErr } = await supabase
+              .from('quizzes')
+              .select('*')
+              .eq('material_id', matId)
+              .limit(1);
+
+            if (qErr || !quizzes || quizzes.length === 0) {
+              alert('Kuis belum tersedia untuk materi ini.');
+              return;
+            }
+            currentQuiz = quizzes[0];
+
+            // Tambah xp_reward dari materials ke currentQuiz
+            // supaya animasi XP bisa menampilkan angka yang akurat
+            const { data: matData } = await supabase
+              .from('materials')
+              .select('xp_reward')
+              .eq('id', matId)
+              .single();
+            currentQuiz.xp_reward = matData ? matData.xp_reward : 20;
+
+            // Fetch Questions
+            const { data: questions, error: qqErr } = await supabase
+              .from('quiz_questions')
+              .select('*')
+              .eq('quiz_id', currentQuiz.id)
+              .order('order_index', { ascending: true });
+
+            if (qqErr || !questions || questions.length === 0) {
+              alert('Pertanyaan kuis belum tersedia.');
+              return;
+            }
+            currentQuestions = questions;
+
+            resetModalUI();
+            renderQuestion();
+            quizModal.style.display = 'flex';
+          }
+        });
+
+        function renderQuestion() {
+          const q = currentQuestions[currentQuestionIndex];
+          progressEl.textContent = `Soal ${currentQuestionIndex + 1} dari ${currentQuestions.length}`;
+          questionEl.textContent = q.question_text;
+
+          optionsContainer.innerHTML = '';
+          const savedAnswer = userAnswers[currentQuestionIndex];
+
+          q.options.forEach((opt, idx) => {
+            const label = document.createElement('label');
+            label.style.display = 'flex';
+            label.style.gap = '10px';
+            label.style.alignItems = 'center';
+            label.style.padding = '12px 15px';
+            label.style.border = '1px solid var(--border)';
+            label.style.borderRadius = '6px';
+            label.style.cursor = 'pointer';
+            label.style.transition = '0.2s';
+
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = `quiz-q-${currentQuestionIndex}`;
+            radio.value = opt;
+            if (savedAnswer === opt) radio.checked = true;
+
+            radio.addEventListener('change', () => {
+              userAnswers[currentQuestionIndex] = opt;
+            });
+
+            label.appendChild(radio);
+            const textNode = document.createTextNode(opt);
+            label.appendChild(textNode);
+
+            label.onmouseover = () => { if (!radio.checked) label.style.background = 'var(--surface-2)'; };
+            label.onmouseout = () => { label.style.background = 'transparent'; };
+
+            optionsContainer.appendChild(label);
+          });
+
+          btnPrev.disabled = currentQuestionIndex === 0;
+          btnNext.textContent = currentQuestionIndex === currentQuestions.length - 1 ? 'Submit Kuis' : 'Selanjutnya';
+        }
+
+        btnPrev.addEventListener('click', () => {
+          if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            renderQuestion();
+          }
+        });
+
+        btnNext.addEventListener('click', async () => {
+          if (!userAnswers[currentQuestionIndex]) {
+            alert('Harap pilih salah satu jawaban.');
+            return;
+          }
+
+          if (currentQuestionIndex < currentQuestions.length - 1) {
+            currentQuestionIndex++;
+            renderQuestion();
+          } else {
+            await submitQuiz();
+          }
+        });
+
+        async function submitQuiz() {
+          let correctCount = 0;
+          let reviewHTML = `<div style="display:flex; flex-direction:column; gap:20px; margin-top:20px;">`;
+
+          currentQuestions.forEach((q, idx) => {
+            const userAns = userAnswers[idx];
+            const isCorrect = userAns === q.correct_answer;
+            if (isCorrect) correctCount++;
+
+            const icon = isCorrect ? '✅' : '❌';
+            reviewHTML += `
+            <div style="border: 1px solid var(--border); border-radius: 6px; padding: 15px; background: var(--surface-2);">
+              <div style="font-weight:600; margin-bottom:8px;">${idx + 1}. ${q.question_text}</div>
+              <div style="font-size:0.9rem; margin-bottom:5px;">Jawabanmu: <strong>${userAns}</strong> ${icon}</div>
+              ${!isCorrect ? `<div style="font-size:0.9rem; color:var(--success); margin-bottom:5px;">Jawaban Benar: <strong>${q.correct_answer}</strong></div>` : ''}
+              <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding-top:8px; border-top:1px solid var(--border);">
+                <em>Pembahasan: ${q.explanation}</em>
+              </div>
+            </div>
+          `;
+          });
+          reviewHTML += `</div>`;
+
+          const finalScore = Math.round((correctCount / currentQuestions.length) * 100);
+          const isPassed = finalScore >= currentQuiz.passing_score;
+
+          document.getElementById('quiz-nav-container').style.display = 'none';
+          optionsContainer.innerHTML = '';
+          questionEl.innerHTML = '';
+          progressEl.innerHTML = '';
+
+          feedbackGlobal.style.display = 'block';
+          feedbackGlobal.innerHTML = `
+          <div style="text-align:center; font-size:1.2rem; margin-bottom:10px;">
+            Skor Anda: <span style="font-size:2rem; color:${isPassed ? 'var(--success)' : 'var(--warning)'};">${finalScore}</span>
+          </div>
+          <div style="text-align:center; margin-bottom:20px;">
+            ${isPassed ? '🎉 Selamat! Anda lulus kuis ini.' : '⚠️ Anda belum mencapai skor kelulusan (' + currentQuiz.passing_score + ').'}
+          </div>
+          ${reviewHTML}
+        `;
+
+          btnCloseFinal.style.display = 'block';
+          if (!isPassed) {
+            btnRetry.style.display = 'block';
+          }
+
+          const existingProg = (window.EAH_PROGRESS || []).find(p => p.material_id === currentMaterialId);
+          const oldScore = existingProg ? existingProg.quiz_attempt_score : null;
+          const alreadyCompleted = existingProg && existingProg.status === 'completed';
+
+          // SATU UPSERT TUNGGAL — mencegah race condition dan dobel trigger
+          // Bangun payload berdasarkan dua kondisi secara independen:
+          // - Skor hanya diupdate jika skor baru lebih besar dari sebelumnya
+          // - Status hanya diupdate jadi 'completed' jika lulus DAN belum completed sebelumnya
+          const updatePayload = {
+            user_id: currentUser.id,
+            material_id: currentMaterialId,
+            updated_at: new Date().toISOString()
+          };
+
+          // KONDISI 1: skor baru lebih besar dari skor terbaik sebelumnya
+          if (oldScore === null || finalScore > oldScore) {
+            updatePayload.quiz_attempt_score = finalScore;
+          }
+
+          // KONDISI 2: lulus kuis dan belum pernah completed sebelumnya
+          // (pisah kondisi ini untuk mencegah dobel trigger database)
+          if (isPassed && !alreadyCompleted) {
+            updatePayload.status = 'completed';
+          }
+
+          // Kirim satu upsert saja — kalau row sudah ada (conflict) akan UPDATE,
+          // kalau belum ada akan INSERT. Dengan satu operasi ini, trigger database
+          // hanya bisa jalan MAKSIMAL SATU KALI, menghilangkan kemungkinan dobel XP.
+          const { error: upsertErr } = await supabase
+            .from('user_material_progress')
+            .upsert(updatePayload, { onConflict: 'user_id,material_id' });
+
+          if (upsertErr) console.error('Gagal menyimpan hasil kuis:', upsertErr);
+
+          // ANIMASI XP — hanya muncul saat benar-benar lulus DAN
+          // belum pernah completed sebelumnya (mencegah animasi dobel
+          // kalau user retry setelah sudah pernah lulus)
+          if (isPassed && !alreadyCompleted && window.EAH && window.EAH.triggerXPAnimation) {
+            // Ambil xp_reward dari data materi yang sedang dibuka
+            // currentQuiz.xp_reward sudah disimpan saat fetch quiz sebelumnya
+            const xpToShow = currentQuiz.xp_reward || 20;
+            // Tunda sedikit supaya animasi muncul SETELAH feedback skor tampil
+            setTimeout(function () {
+              window.EAH.triggerXPAnimation(xpToShow);
+            }, 400);
+          }
+        }
+
+        loadCurriculum();
+      }
     });
   </script>
-  <div id="quiz-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.85); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
-    <div class="card" style="position:relative; width:90%; max-width:550px; padding:var(--space-6); background:var(--surface); border:1px solid var(--border); box-shadow:0 10px 25px rgba(0,0,0,0.5);">
-      <button id="close-quiz" style="position:absolute; top:15px; right:15px; background:none; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer; padding:5px; transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">✖</button>
-      
-      <h3 style="margin-top:0; display:flex; align-items:center; gap:8px;"><span>🧠</span> Knowledge Check</h3>
-      <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:var(--space-4);">Jawab pertanyaan berikut untuk menandai topik ini selesai.</p>
-      
-      <div id="quiz-question" style="font-weight:600; margin-bottom:var(--space-5); font-size:1.05rem; line-height:1.5;"></div>
-      
-      <div id="quiz-options-container" style="display:flex; flex-direction:column; gap:var(--space-3);">
-        </div>
+  <div id="quiz-modal"
+    style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.85); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+    <div class="card"
+      style="position:relative; width:90%; max-width:650px; max-height:90vh; overflow-y:auto; padding:var(--space-6); background:var(--surface); border:1px solid var(--border); box-shadow:0 10px 25px rgba(0,0,0,0.5);">
+      <button id="close-quiz"
+        style="position:absolute; top:15px; right:15px; background:none; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer; padding:5px; transition:color 0.2s;"
+        onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">✖</button>
 
-      <div id="quiz-feedback-global" style="margin-top:var(--space-4); padding:var(--space-3); border-radius:6px; font-weight:600; display:none; line-height:1.5;"></div>
-      
-      <button id="quiz-btn-continue" class="btn-primary" style="width:100%; margin-top:var(--space-4); display:none;">Tandai Selesai & Lanjutkan</button>
+      <h3 style="margin-top:0; display:flex; align-items:center; gap:8px;"><span>🧠</span> Knowledge Check</h3>
+      <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:var(--space-4);">Jawab pertanyaan berikut untuk
+        menandai topik ini selesai.</p>
+
+      <div id="quiz-progress"
+        style="font-size:0.85rem; color:var(--text-muted); margin-bottom:var(--space-3); font-weight:600;"></div>
+      <div id="quiz-question"
+        style="font-weight:600; margin-bottom:var(--space-5); font-size:1.05rem; line-height:1.5;"></div>
+
+      <div id="quiz-options-container" style="display:flex; flex-direction:column; gap:var(--space-3);"></div>
+
+      <div id="quiz-nav-container" style="display:flex; gap:var(--space-3); margin-top:var(--space-5);">
+        <button id="quiz-btn-prev" class="btn-ghost" style="flex:1;">Sebelumnya</button>
+        <button id="quiz-btn-next" class="btn-primary" style="flex:1;">Selanjutnya</button>
+      </div>
+
+      <div id="quiz-feedback-global" style="margin-top:var(--space-4); display:none; line-height:1.5;"></div>
+
+      <button id="quiz-btn-close-final" class="btn-primary"
+        style="width:100%; margin-top:var(--space-4); display:none;">Tutup</button>
+      <button id="quiz-btn-retry" class="btn-ghost" style="width:100%; margin-top:var(--space-2); display:none;">Coba
+        Lagi</button>
     </div>
   </div>
 </body>
+
 </html>
