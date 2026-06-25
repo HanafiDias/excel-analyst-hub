@@ -1,4 +1,4 @@
-# ⊞ Excel Analyst Hub
+# Excel Analyst Hub
 
 **LMS Premium & Eksklusif untuk Menguasai Excel & Data Analytics**
 

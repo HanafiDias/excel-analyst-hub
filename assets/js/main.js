@@ -1038,7 +1038,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- 1. SKELETON LOADING INJEKSI OTOMATIS ---
   // Mencari elemen profil yang sedang "memuat" lalu diberi efek animasi
-  const profileIds = ['info-email', 'greeting-text', 'subscription-remaining'];
+  const profileIds = ['info-email', 'greeting-text', 'subscription-remaining', 'topic-main-title', 'breadcrumb-title', 'breadcrumb-category', 'topic-level-badge'];
   profileIds.forEach(id => {
     const el = document.getElementById(id);
     if (el && (el.textContent.toLowerCase().includes('memuat') || el.textContent.includes('Calculating'))) {
