@@ -19,7 +19,7 @@ if (isProtectedPage) {
   premiumLoader.id = 'premium-auth-loader';
   premiumLoader.innerHTML = `
     <div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0b1120; z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.4s ease;">
-      <div style="font-size: 4rem; animation: pulseGlow 1.5s infinite ease-in-out;">⊞</div>
+      <img src="assets/img/logo-navbar.png" alt="" style="width:4rem;height:4rem;object-fit:contain;animation:pulseGlow 1.5s infinite ease-in-out;" />
       <div style="margin-top: 25px; color: #94a3b8; font-family: sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">
         Memverifikasi Akses
       </div>
