@@ -39,6 +39,64 @@ document.addEventListener('DOMContentLoaded', async function() {
     const emailDisplay = document.getElementById('info-email'); 
     if (emailDisplay) emailDisplay.textContent = user.email;
 
+    // --- CEK APAKAH USER BARU SELESAI PROSES PEMBAYARAN ---
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentStatus = urlParams.get('payment');
+
+    if (paymentStatus === 'success' || paymentStatus === 'pending') {
+      const banner = document.getElementById('payment-status-banner');
+      const bannerText = document.getElementById('payment-status-text');
+      const bannerSpinner = document.getElementById('payment-status-spinner');
+
+      if (banner && bannerText) {
+        banner.style.display = 'flex';
+        banner.style.background = 'rgba(245, 158, 11, 0.1)';
+        banner.style.border = '1px solid rgba(245, 158, 11, 0.3)';
+        banner.style.color = '#f59e0b';
+        bannerText.textContent = 'Memproses konfirmasi pembayaran Anda...';
+
+        let attempts = 0;
+        const maxAttempts = 10;
+
+        const pollInterval = setInterval(async () => {
+          attempts++;
+
+          const { data: pollData } = await supa
+            .from('profiles')
+            .select('is_premium, subscription_end')
+            .eq('id', user.id)
+            .maybeSingle();
+
+          const isNowPremium = pollData?.is_premium === true &&
+            pollData?.subscription_end &&
+            new Date(pollData.subscription_end).getTime() > Date.now();
+
+          if (isNowPremium) {
+            clearInterval(pollInterval);
+            banner.style.background = 'rgba(16, 185, 129, 0.1)';
+            banner.style.border = '1px solid rgba(16, 185, 129, 0.3)';
+            banner.style.color = '#10b981';
+            if (bannerSpinner) bannerSpinner.style.display = 'none';
+            bannerText.textContent = '✅ Pembayaran berhasil! Akses premium Anda sudah aktif.';
+
+            // Bersihkan query param dari URL tanpa reload halaman
+            window.history.replaceState({}, document.title, window.location.pathname);
+
+            // Reload data subscription di kartu bawah tanpa reload seluruh halaman
+            setTimeout(() => location.reload(), 1500);
+
+          } else if (attempts >= maxAttempts) {
+            clearInterval(pollInterval);
+            banner.style.background = 'rgba(239, 68, 68, 0.1)';
+            banner.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+            banner.style.color = '#ef4444';
+            if (bannerSpinner) bannerSpinner.style.display = 'none';
+            bannerText.textContent = 'Pembayaran sedang diproses lebih lama dari biasanya. Silakan refresh halaman ini dalam beberapa menit.';
+          }
+        }, 3000);
+      }
+    }
+
     // --- 2. AMBIL DATA PROFIL & XP DARI DATABASE ---
     const { data: profileData } = await supa
       .from('profiles')
