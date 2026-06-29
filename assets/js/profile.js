@@ -199,6 +199,44 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (xpText) xpText.textContent = `${totalXp} XP / ${maxTierXp} XP`;
     if (xpBar) setTimeout(() => { xpBar.style.width = `${percentage}%`; }, 300);
 
+    // --- 8. RENDER LENCANA PENCAPAIAN DARI DATABASE ---
+    const badgeContainer = document.getElementById('badge-grid-container');
+    if (badgeContainer) {
+      try {
+        const { data: allBadges } = await supa
+          .from('badge_definitions')
+          .select('badge_key, badge_name, badge_description, icon_emoji, trigger_type, threshold_value')
+          .order('trigger_type', { ascending: true })
+          .order('threshold_value', { ascending: true });
+
+        const { data: userProgress } = await supa
+          .from('user_progress')
+          .select('badges_unlocked')
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+        const unlockedKeys = userProgress?.badges_unlocked || [];
+
+        if (allBadges && allBadges.length) {
+          badgeContainer.innerHTML = allBadges.map(badge => {
+            const isUnlocked = unlockedKeys.includes(badge.badge_key);
+            return `
+              <div class="badge-item-box ${isUnlocked ? '' : 'locked'}" id="badge-${badge.badge_key}" title="${badge.badge_description}">
+                <div class="badge-icon">${badge.icon_emoji}</div>
+                <div class="badge-title">${badge.badge_name}</div>
+                <div class="badge-desc">${badge.badge_description}</div>
+              </div>
+            `;
+          }).join('');
+        } else {
+          badgeContainer.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem; grid-column: 1 / -1;">Belum ada lencana yang tersedia.</p>';
+        }
+      } catch (badgeErr) {
+        console.error("Gagal memuat lencana:", badgeErr);
+        badgeContainer.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem; grid-column: 1 / -1;">Gagal memuat lencana.</p>';
+      }
+    }
+
   } catch (err) {
     console.error("Terjadi error sistem:", err);
   }
