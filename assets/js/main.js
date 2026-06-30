@@ -28,10 +28,10 @@ window.EAH_Badge = (function () {
 
     const overlay = document.createElement('div');
     overlay.id = 'badge-unlock-overlay';
-    overlay.style.cssText = 'display:none; position:fixed; inset:0; background:rgba(15,23,42,0.75); z-index:9999; align-items:center; justify-content:center; padding:20px;';
+    overlay.style.cssText = 'display:none; position:fixed; inset:0; background:rgba(15,23,42,0.75); z-index:9999; align-items:center; justify-content:center; padding:20px; overflow:hidden;';
     overlay.innerHTML = `
-      <div id="badge-unlock-card" style="background:linear-gradient(160deg, #1e293b, #0f172a); border:1px solid rgba(59,130,246,0.4); border-radius:20px; max-width:380px; width:100%; padding:32px 24px; text-align:center; position:relative; overflow:visible; transform:scale(0.4) rotate(-8deg); opacity:0;">
-        <div id="badge-confetti-layer" style="position:absolute; inset:0; pointer-events:none; overflow:hidden; border-radius:20px;"></div>
+      <div id="badge-confetti-layer" style="position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:1;"></div>
+      <div id="badge-unlock-card" style="background:linear-gradient(160deg, #1e293b, #0f172a); border:1px solid rgba(59,130,246,0.4); border-radius:20px; max-width:380px; width:100%; padding:32px 24px; text-align:center; position:relative; overflow:visible; transform:scale(0.4) rotate(-8deg); opacity:0; z-index:2;">
         <p style="color:#f59e0b; font-size:0.8rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin:0 0 10px; position:relative; z-index:2;">Lencana Baru Terbuka!</p>
         <div id="badge-unlock-icon-wrap" style="position:relative; width:110px; height:110px; margin:0 auto 14px; display:flex; align-items:center; justify-content:center;">
           <div id="badge-glow-1" style="position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle, rgba(245,158,11,0.5), transparent 70%); opacity:0;"></div>
@@ -55,13 +55,13 @@ window.EAH_Badge = (function () {
       const color = colors[Math.floor(Math.random() * colors.length)];
       const size = isStrip ? '4px' : (6 + Math.random() * 5) + 'px';
       piece.style.cssText = `position:absolute; top:-16px; left:${Math.random() * 100}%; width:${size}; height:${isStrip ? (9 + Math.random() * 8) + 'px' : size}; background:${color}; border-radius:${isStrip ? '2px' : (Math.random() > 0.5 ? '50%' : '2px')};`;
-      const fallDuration = 1.3 + Math.random() * 1.1;
-      const delay = Math.random() * 0.4;
-      const drift = (Math.random() - 0.5) * 100;
+      const fallDuration = 1.4 + Math.random() * 1.2;
+      const delay = Math.random() * 0.5;
+      const drift = (Math.random() - 0.5) * 140;
       const rotation = 300 + Math.random() * 360;
       piece.animate([
         { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
-        { transform: `translate(${drift}px, 360px) rotate(${rotation}deg)`, opacity: 0 }
+        { transform: `translate(${drift}px, 100vh) rotate(${rotation}deg)`, opacity: 0 }
       ], { duration: fallDuration * 1000, delay: delay * 1000, easing: 'cubic-bezier(0.4,0,0.6,1)', fill: 'forwards' });
       container.appendChild(piece);
     }
