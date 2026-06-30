@@ -11,26 +11,17 @@ window.EAH_Badge = (function () {
 
     const style = document.createElement('style');
     style.textContent = `
-      @keyframes badgeBounce {
-        0% { transform: scale(0); }
-        60% { transform: scale(1.3); }
-        100% { transform: scale(1); }
-      }
-      @keyframes confettiFall {
-        0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-        100% { transform: translateY(280px) rotate(360deg); opacity: 0; }
-      }
-      .confetti-piece {
-        position: absolute;
-        top: 0;
-        width: 8px;
-        height: 8px;
-        animation: confettiFall 1.6s ease-in forwards;
-      }
       @media (max-width: 480px) {
         #badge-unlock-card { padding: 24px 18px; }
-        #badge-unlock-icon { font-size: 3.2rem; }
-        #badge-unlock-name { font-size: 1.2rem; }
+        #badge-unlock-icon-wrap { width: 90px !important; height: 90px !important; }
+        #badge-unlock-icon { font-size: 3rem !important; }
+        #badge-unlock-name { font-size: 1.15rem !important; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #badge-unlock-card, #badge-unlock-icon, #badge-glow-1, #badge-glow-2 {
+          animation: none !important;
+          transition: opacity 0.2s ease !important;
+        }
       }
     `;
     document.head.appendChild(style);
@@ -39,29 +30,59 @@ window.EAH_Badge = (function () {
     overlay.id = 'badge-unlock-overlay';
     overlay.style.cssText = 'display:none; position:fixed; inset:0; background:rgba(15,23,42,0.75); z-index:9999; align-items:center; justify-content:center; padding:20px;';
     overlay.innerHTML = `
-      <div id="badge-unlock-card" style="background:linear-gradient(160deg, #1e293b, #0f172a); border:1px solid rgba(59,130,246,0.4); border-radius:20px; max-width:380px; width:100%; padding:32px 24px; text-align:center; position:relative; overflow:hidden; transform:scale(0.7); opacity:0; transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;">
-        <div id="badge-confetti-layer" style="position:absolute; inset:0; pointer-events:none; overflow:hidden;"></div>
-        <p style="color:#f59e0b; font-size:0.8rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin:0 0 8px;">Lencana Baru Terbuka!</p>
-        <div id="badge-unlock-icon" style="font-size:4rem; margin:12px 0; display:inline-block; animation:badgeBounce 0.8s ease 0.3s both;">🏆</div>
-        <h3 id="badge-unlock-name" style="color:#fff; font-size:1.4rem; font-weight:700; margin:8px 0 6px;">Nama Lencana</h3>
-        <p id="badge-unlock-desc" style="color:#94a3b8; font-size:0.9rem; margin:0 0 24px; line-height:1.5;">Deskripsi lencana</p>
-        <button type="button" id="badge-unlock-close-btn" style="background:linear-gradient(135deg,#3b82f6,#2563eb); color:#fff; border:none; padding:12px 32px; border-radius:10px; font-size:0.95rem; font-weight:600; cursor:pointer; width:100%;">Lanjutkan Belajar</button>
+      <div id="badge-unlock-card" style="background:linear-gradient(160deg, #1e293b, #0f172a); border:1px solid rgba(59,130,246,0.4); border-radius:20px; max-width:380px; width:100%; padding:32px 24px; text-align:center; position:relative; overflow:visible; transform:scale(0.4) rotate(-8deg); opacity:0;">
+        <div id="badge-confetti-layer" style="position:absolute; inset:0; pointer-events:none; overflow:hidden; border-radius:20px;"></div>
+        <p style="color:#f59e0b; font-size:0.8rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin:0 0 10px; position:relative; z-index:2;">Lencana Baru Terbuka!</p>
+        <div id="badge-unlock-icon-wrap" style="position:relative; width:110px; height:110px; margin:0 auto 14px; display:flex; align-items:center; justify-content:center;">
+          <div id="badge-glow-1" style="position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle, rgba(245,158,11,0.5), transparent 70%); opacity:0;"></div>
+          <div id="badge-glow-2" style="position:absolute; inset:8px; border-radius:50%; border:2px solid rgba(245,158,11,0.6); opacity:0;"></div>
+          <div id="badge-unlock-icon" style="font-size:3.6rem; position:relative; z-index:2; transform:scale(0);">🏆</div>
+        </div>
+        <h3 id="badge-unlock-name" style="color:#fff; font-size:1.35rem; font-weight:700; margin:6px 0 6px; position:relative; z-index:2; opacity:0; transform:translateY(8px);">Nama Lencana</h3>
+        <p id="badge-unlock-desc" style="color:#94a3b8; font-size:0.88rem; margin:0 0 22px; line-height:1.5; position:relative; z-index:2; opacity:0; transform:translateY(8px);">Deskripsi lencana</p>
+        <button type="button" id="badge-unlock-close-btn" style="background:linear-gradient(135deg,#3b82f6,#2563eb); color:#fff; border:none; padding:12px 32px; border-radius:10px; font-size:0.95rem; font-weight:600; cursor:pointer; width:100%; position:relative; z-index:2; opacity:0;">Lanjutkan Belajar</button>
       </div>
     `;
     document.body.appendChild(overlay);
   }
 
   function spawnConfetti(container) {
-    const colors = ['#f59e0b', '#3b82f6', '#10b981', '#ec4899', '#a855f7'];
+    const colors = ['#f59e0b', '#3b82f6', '#10b981', '#ec4899', '#a855f7', '#fbbf24'];
     container.innerHTML = '';
-    for (let i = 0; i < 24; i++) {
+    for (let i = 0; i < 36; i++) {
       const piece = document.createElement('div');
-      piece.className = 'confetti-piece';
-      piece.style.left = Math.random() * 100 + '%';
-      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-      piece.style.animationDelay = (Math.random() * 0.4) + 's';
-      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      const isStrip = Math.random() > 0.6;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const size = isStrip ? '4px' : (6 + Math.random() * 5) + 'px';
+      piece.style.cssText = `position:absolute; top:-16px; left:${Math.random() * 100}%; width:${size}; height:${isStrip ? (9 + Math.random() * 8) + 'px' : size}; background:${color}; border-radius:${isStrip ? '2px' : (Math.random() > 0.5 ? '50%' : '2px')};`;
+      const fallDuration = 1.3 + Math.random() * 1.1;
+      const delay = Math.random() * 0.4;
+      const drift = (Math.random() - 0.5) * 100;
+      const rotation = 300 + Math.random() * 360;
+      piece.animate([
+        { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+        { transform: `translate(${drift}px, 360px) rotate(${rotation}deg)`, opacity: 0 }
+      ], { duration: fallDuration * 1000, delay: delay * 1000, easing: 'cubic-bezier(0.4,0,0.6,1)', fill: 'forwards' });
       container.appendChild(piece);
+    }
+  }
+
+  function burstParticles(originEl) {
+    const rect = originEl.getBoundingClientRect();
+    const colors = ['#f59e0b', '#fbbf24', '#fff'];
+    for (let i = 0; i < 14; i++) {
+      const p = document.createElement('div');
+      const angle = (i / 14) * Math.PI * 2;
+      const dist = 55 + Math.random() * 45;
+      const tx = Math.cos(angle) * dist;
+      const ty = Math.sin(angle) * dist;
+      p.style.cssText = `position:fixed; left:${rect.left + rect.width / 2}px; top:${rect.top + rect.height / 2}px; width:6px; height:6px; border-radius:50%; background:${colors[Math.floor(Math.random() * colors.length)]}; z-index:10000; pointer-events:none;`;
+      document.body.appendChild(p);
+      p.animate([
+        { transform: 'translate(0,0) scale(1)', opacity: 1 },
+        { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
+      ], { duration: 550 + Math.random() * 250, easing: 'cubic-bezier(0.2,0.8,0.3,1)', fill: 'forwards' });
+      setTimeout(() => p.remove(), 900);
     }
   }
 
@@ -76,22 +97,84 @@ window.EAH_Badge = (function () {
     const descEl = document.getElementById('badge-unlock-desc');
     const closeBtn = document.getElementById('badge-unlock-close-btn');
     const confettiLayer = document.getElementById('badge-confetti-layer');
+    const glow1 = document.getElementById('badge-glow-1');
+    const glow2 = document.getElementById('badge-glow-2');
 
     if (!overlay) return;
+
+    const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     iconEl.textContent = badge.icon_emoji;
     nameEl.textContent = badge.badge_name;
     descEl.textContent = badge.badge_description;
 
+    card.style.transform = 'scale(0.4) rotate(-8deg)';
+    card.style.opacity = '0';
+    iconEl.style.transform = 'scale(0)';
+    nameEl.style.opacity = '0';
+    nameEl.style.transform = 'translateY(8px)';
+    descEl.style.opacity = '0';
+    descEl.style.transform = 'translateY(8px)';
+    closeBtn.style.opacity = '0';
+    glow1.style.opacity = '0';
+    glow2.style.opacity = '0';
+
     overlay.style.display = 'flex';
-    spawnConfetti(confettiLayer);
+
+    if (!reducedMotion) spawnConfetti(confettiLayer);
 
     requestAnimationFrame(() => {
-      card.style.transform = 'scale(1)';
+      card.style.transition = reducedMotion ? 'opacity 0.2s ease' : 'transform 0.65s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease';
+      card.style.transform = 'scale(1) rotate(0deg)';
       card.style.opacity = '1';
     });
 
+    setTimeout(() => {
+      glow1.style.transition = 'opacity 0.3s ease';
+      glow1.style.opacity = '1';
+      glow2.style.transition = 'opacity 0.3s ease';
+      glow2.style.opacity = '1';
+
+      if (!reducedMotion) {
+        glow1.animate([
+          { transform: 'scale(0.8)', opacity: 0.7 },
+          { transform: 'scale(1.3)', opacity: 0.3 },
+          { transform: 'scale(0.8)', opacity: 0.7 }
+        ], { duration: 2000, iterations: Infinity, easing: 'ease-in-out' });
+        glow2.animate([
+          { transform: 'scale(1)', opacity: 0.6 },
+          { transform: 'scale(1.5)', opacity: 0 }
+        ], { duration: 1500, iterations: Infinity, easing: 'ease-out' });
+      }
+
+      iconEl.style.transition = reducedMotion ? 'opacity 0.2s ease' : 'transform 0.55s cubic-bezier(0.34,1.75,0.64,1)';
+      iconEl.style.transform = 'scale(1)';
+      iconEl.style.opacity = '1';
+
+      if (!reducedMotion) {
+        setTimeout(() => burstParticles(iconEl), 250);
+      }
+    }, 350);
+
+    setTimeout(() => {
+      nameEl.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      nameEl.style.opacity = '1';
+      nameEl.style.transform = 'translateY(0)';
+    }, 750);
+
+    setTimeout(() => {
+      descEl.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      descEl.style.opacity = '1';
+      descEl.style.transform = 'translateY(0)';
+    }, 900);
+
+    setTimeout(() => {
+      closeBtn.style.transition = 'opacity 0.4s ease';
+      closeBtn.style.opacity = '1';
+    }, 1050);
+
     const closeHandler = () => {
+      card.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
       card.style.transform = 'scale(0.7)';
       card.style.opacity = '0';
       setTimeout(() => {
