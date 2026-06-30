@@ -1116,6 +1116,18 @@
             updatePayload.status = 'completed';
           }
 
+          // Ambil badge yang sudah terbuka SEBELUM upsert (hanya jika akan jadi completed baru)
+          const willTriggerBadgeCheck = isPassed && !alreadyCompleted;
+          let badgesBeforeQuiz = [];
+          if (willTriggerBadgeCheck) {
+            const { data: progressBeforeQuiz } = await supabase
+              .from('user_progress')
+              .select('badges_unlocked')
+              .eq('user_id', currentUser.id)
+              .maybeSingle();
+            badgesBeforeQuiz = progressBeforeQuiz?.badges_unlocked || [];
+          }
+
           // Kirim satu upsert saja — kalau row sudah ada (conflict) akan UPDATE,
           // kalau belum ada akan INSERT. Dengan satu operasi ini, trigger database
           // hanya bisa jalan MAKSIMAL SATU KALI, menghilangkan kemungkinan dobel XP.
@@ -1124,6 +1136,31 @@
             .upsert(updatePayload, { onConflict: 'user_id,material_id' });
 
           if (upsertErr) console.error('Gagal menyimpan hasil kuis:', upsertErr);
+
+          // Cek badge baru SESUDAH upsert (trigger database sudah jalan otomatis),
+          // lalu tampilkan modal langsung di halaman ini
+          if (willTriggerBadgeCheck && !upsertErr) {
+            const { data: progressAfterQuiz } = await supabase
+              .from('user_progress')
+              .select('badges_unlocked')
+              .eq('user_id', currentUser.id)
+              .maybeSingle();
+            const badgesAfterQuiz = progressAfterQuiz?.badges_unlocked || [];
+            const newlyUnlockedFromQuiz = badgesAfterQuiz.filter(key => !badgesBeforeQuiz.includes(key));
+
+            if (newlyUnlockedFromQuiz.length > 0) {
+              const { data: badgeDetails } = await supabase
+                .from('badge_definitions')
+                .select('badge_key, badge_name, badge_description, icon_emoji')
+                .in('badge_key', newlyUnlockedFromQuiz);
+
+              if (badgeDetails && badgeDetails.length > 0 && window.EAH_Badge) {
+                setTimeout(function () {
+                  window.EAH_Badge.celebrate(badgeDetails);
+                }, 1000);
+              }
+            }
+          }
 
           // ANIMASI XP — hanya muncul saat benar-benar lulus DAN
           // belum pernah completed sebelumnya (mencegah animasi dobel
