@@ -228,6 +228,24 @@ document.addEventListener('DOMContentLoaded', async function() {
               </div>
             `;
           }).join('');
+
+          // --- CEK & TAMPILKAN MODAL LENCANA BARU (dari sessionStorage) ---
+          const newBadgeKeysRaw = sessionStorage.getItem('eah_new_badges');
+          if (newBadgeKeysRaw) {
+            sessionStorage.removeItem('eah_new_badges');
+            try {
+              const newBadgeKeys = JSON.parse(newBadgeKeysRaw);
+              const badgesToCelebrate = allBadges.filter(b => newBadgeKeys.includes(b.badge_key));
+
+              if (badgesToCelebrate.length > 0) {
+                setTimeout(() => {
+                  showBadgeUnlockModal(badgesToCelebrate, 0);
+                }, 1800);
+              }
+            } catch (parseErr) {
+              console.error("Gagal parse data lencana baru:", parseErr);
+            }
+          }
         } else {
           badgeContainer.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem; grid-column: 1 / -1;">Belum ada lencana yang tersedia.</p>';
         }
@@ -241,3 +259,56 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.error("Terjadi error sistem:", err);
   }
 });
+
+function spawnConfetti(container) {
+  const colors = ['#f59e0b', '#3b82f6', '#10b981', '#ec4899', '#a855f7'];
+  container.innerHTML = '';
+  for (let i = 0; i < 24; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = (Math.random() * 0.4) + 's';
+    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    container.appendChild(piece);
+  }
+}
+
+function showBadgeUnlockModal(badgeList, index) {
+  if (index >= badgeList.length) return;
+
+  const badge = badgeList[index];
+  const overlay = document.getElementById('badge-unlock-overlay');
+  const card = document.getElementById('badge-unlock-card');
+  const iconEl = document.getElementById('badge-unlock-icon');
+  const nameEl = document.getElementById('badge-unlock-name');
+  const descEl = document.getElementById('badge-unlock-desc');
+  const closeBtn = document.getElementById('badge-unlock-close-btn');
+  const confettiLayer = document.getElementById('badge-confetti-layer');
+
+  if (!overlay) return;
+
+  iconEl.textContent = badge.icon_emoji;
+  nameEl.textContent = badge.badge_name;
+  descEl.textContent = badge.badge_description;
+
+  overlay.style.display = 'flex';
+  spawnConfetti(confettiLayer);
+
+  requestAnimationFrame(() => {
+    card.style.transform = 'scale(1)';
+    card.style.opacity = '1';
+  });
+
+  const closeHandler = () => {
+    card.style.transform = 'scale(0.7)';
+    card.style.opacity = '0';
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      closeBtn.removeEventListener('click', closeHandler);
+      showBadgeUnlockModal(badgeList, index + 1);
+    }, 300);
+  };
+
+  closeBtn.addEventListener('click', closeHandler);
+}

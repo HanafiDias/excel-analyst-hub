@@ -50,6 +50,14 @@ document.addEventListener('DOMContentLoaded', async function() {
       btn.textContent = "Menyimpan XP ke Cloud...";
     }
 
+    // Ambil badge yang sudah terbuka SEBELUM klaim XP
+    const { data: progressBefore } = await supa
+      .from('user_progress')
+      .select('badges_unlocked')
+      .eq('user_id', user.id)
+      .maybeSingle();
+    const badgesBefore = progressBefore?.badges_unlocked || [];
+
     const currentXP = profileData?.total_xp || 0;
     const newXP = currentXP + earnedXP;
 
@@ -63,6 +71,19 @@ document.addEventListener('DOMContentLoaded', async function() {
       .eq('id', user.id);
 
     if (!error) {
+      // Cek badge baru SESUDAH klaim XP (trigger database sudah jalan otomatis)
+      const { data: progressAfter } = await supa
+        .from('user_progress')
+        .select('badges_unlocked')
+        .eq('user_id', user.id)
+        .maybeSingle();
+      const badgesAfter = progressAfter?.badges_unlocked || [];
+      const newlyUnlocked = badgesAfter.filter(key => !badgesBefore.includes(key));
+
+      if (newlyUnlocked.length > 0) {
+        sessionStorage.setItem('eah_new_badges', JSON.stringify(newlyUnlocked));
+      }
+
       alert(`🎉 Selamat! Anda mendapatkan +${earnedXP} XP!`);
       hasDoneQuizToday = true;
       
