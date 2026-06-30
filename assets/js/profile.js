@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
               if (badgesToCelebrate.length > 0) {
                 setTimeout(() => {
-                  showBadgeUnlockModal(badgesToCelebrate, 0);
+                  window.EAH_Badge.celebrate(badgesToCelebrate);
                 }, 1800);
               }
             } catch (parseErr) {
@@ -260,55 +260,3 @@ document.addEventListener('DOMContentLoaded', async function() {
   }
 });
 
-function spawnConfetti(container) {
-  const colors = ['#f59e0b', '#3b82f6', '#10b981', '#ec4899', '#a855f7'];
-  container.innerHTML = '';
-  for (let i = 0; i < 24; i++) {
-    const piece = document.createElement('div');
-    piece.className = 'confetti-piece';
-    piece.style.left = Math.random() * 100 + '%';
-    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-    piece.style.animationDelay = (Math.random() * 0.4) + 's';
-    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-    container.appendChild(piece);
-  }
-}
-
-function showBadgeUnlockModal(badgeList, index) {
-  if (index >= badgeList.length) return;
-
-  const badge = badgeList[index];
-  const overlay = document.getElementById('badge-unlock-overlay');
-  const card = document.getElementById('badge-unlock-card');
-  const iconEl = document.getElementById('badge-unlock-icon');
-  const nameEl = document.getElementById('badge-unlock-name');
-  const descEl = document.getElementById('badge-unlock-desc');
-  const closeBtn = document.getElementById('badge-unlock-close-btn');
-  const confettiLayer = document.getElementById('badge-confetti-layer');
-
-  if (!overlay) return;
-
-  iconEl.textContent = badge.icon_emoji;
-  nameEl.textContent = badge.badge_name;
-  descEl.textContent = badge.badge_description;
-
-  overlay.style.display = 'flex';
-  spawnConfetti(confettiLayer);
-
-  requestAnimationFrame(() => {
-    card.style.transform = 'scale(1)';
-    card.style.opacity = '1';
-  });
-
-  const closeHandler = () => {
-    card.style.transform = 'scale(0.7)';
-    card.style.opacity = '0';
-    setTimeout(() => {
-      overlay.style.display = 'none';
-      closeBtn.removeEventListener('click', closeHandler);
-      showBadgeUnlockModal(badgeList, index + 1);
-    }, 300);
-  };
-
-  closeBtn.addEventListener('click', closeHandler);
-}

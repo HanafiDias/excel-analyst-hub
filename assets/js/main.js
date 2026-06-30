@@ -1,3 +1,120 @@
+// ==========================================
+// SISTEM MODAL LENCANA PENCAPAIAN (GLOBAL)
+// Bisa dipanggil dari halaman manapun yang load main.js
+// ==========================================
+window.EAH_Badge = (function () {
+  let injected = false;
+
+  function injectModalHTML() {
+    if (injected) return;
+    injected = true;
+
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes badgeBounce {
+        0% { transform: scale(0); }
+        60% { transform: scale(1.3); }
+        100% { transform: scale(1); }
+      }
+      @keyframes confettiFall {
+        0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(280px) rotate(360deg); opacity: 0; }
+      }
+      .confetti-piece {
+        position: absolute;
+        top: 0;
+        width: 8px;
+        height: 8px;
+        animation: confettiFall 1.6s ease-in forwards;
+      }
+      @media (max-width: 480px) {
+        #badge-unlock-card { padding: 24px 18px; }
+        #badge-unlock-icon { font-size: 3.2rem; }
+        #badge-unlock-name { font-size: 1.2rem; }
+      }
+    `;
+    document.head.appendChild(style);
+
+    const overlay = document.createElement('div');
+    overlay.id = 'badge-unlock-overlay';
+    overlay.style.cssText = 'display:none; position:fixed; inset:0; background:rgba(15,23,42,0.75); z-index:9999; align-items:center; justify-content:center; padding:20px;';
+    overlay.innerHTML = `
+      <div id="badge-unlock-card" style="background:linear-gradient(160deg, #1e293b, #0f172a); border:1px solid rgba(59,130,246,0.4); border-radius:20px; max-width:380px; width:100%; padding:32px 24px; text-align:center; position:relative; overflow:hidden; transform:scale(0.7); opacity:0; transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;">
+        <div id="badge-confetti-layer" style="position:absolute; inset:0; pointer-events:none; overflow:hidden;"></div>
+        <p style="color:#f59e0b; font-size:0.8rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin:0 0 8px;">Lencana Baru Terbuka!</p>
+        <div id="badge-unlock-icon" style="font-size:4rem; margin:12px 0; display:inline-block; animation:badgeBounce 0.8s ease 0.3s both;">🏆</div>
+        <h3 id="badge-unlock-name" style="color:#fff; font-size:1.4rem; font-weight:700; margin:8px 0 6px;">Nama Lencana</h3>
+        <p id="badge-unlock-desc" style="color:#94a3b8; font-size:0.9rem; margin:0 0 24px; line-height:1.5;">Deskripsi lencana</p>
+        <button type="button" id="badge-unlock-close-btn" style="background:linear-gradient(135deg,#3b82f6,#2563eb); color:#fff; border:none; padding:12px 32px; border-radius:10px; font-size:0.95rem; font-weight:600; cursor:pointer; width:100%;">Lanjutkan Belajar</button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+  }
+
+  function spawnConfetti(container) {
+    const colors = ['#f59e0b', '#3b82f6', '#10b981', '#ec4899', '#a855f7'];
+    container.innerHTML = '';
+    for (let i = 0; i < 24; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random() * 100 + '%';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.animationDelay = (Math.random() * 0.4) + 's';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      container.appendChild(piece);
+    }
+  }
+
+  function showQueue(badgeList, index) {
+    if (index >= badgeList.length) return;
+
+    const badge = badgeList[index];
+    const overlay = document.getElementById('badge-unlock-overlay');
+    const card = document.getElementById('badge-unlock-card');
+    const iconEl = document.getElementById('badge-unlock-icon');
+    const nameEl = document.getElementById('badge-unlock-name');
+    const descEl = document.getElementById('badge-unlock-desc');
+    const closeBtn = document.getElementById('badge-unlock-close-btn');
+    const confettiLayer = document.getElementById('badge-confetti-layer');
+
+    if (!overlay) return;
+
+    iconEl.textContent = badge.icon_emoji;
+    nameEl.textContent = badge.badge_name;
+    descEl.textContent = badge.badge_description;
+
+    overlay.style.display = 'flex';
+    spawnConfetti(confettiLayer);
+
+    requestAnimationFrame(() => {
+      card.style.transform = 'scale(1)';
+      card.style.opacity = '1';
+    });
+
+    const closeHandler = () => {
+      card.style.transform = 'scale(0.7)';
+      card.style.opacity = '0';
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        closeBtn.removeEventListener('click', closeHandler);
+        showQueue(badgeList, index + 1);
+      }, 300);
+    };
+
+    closeBtn.addEventListener('click', closeHandler);
+  }
+
+  // Fungsi publik: panggil ini untuk menampilkan modal lencana baru
+  // badgeList: array of { badge_key, badge_name, badge_description, icon_emoji }
+  function celebrate(badgeList) {
+    if (!badgeList || badgeList.length === 0) return;
+    injectModalHTML();
+    showQueue(badgeList, 0);
+  }
+
+  return { celebrate: celebrate };
+})();
+
 /* ============================================
    EXCEL ANALYST HUB — SHARED UTILITIES
    main.js: Nav detection, mobile menu, stat counters,
