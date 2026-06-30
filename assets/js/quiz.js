@@ -80,8 +80,13 @@ document.addEventListener('DOMContentLoaded', async function() {
       const badgesAfter = progressAfter?.badges_unlocked || [];
       const newlyUnlocked = badgesAfter.filter(key => !badgesBefore.includes(key));
 
+      let badgesToCelebrate = [];
       if (newlyUnlocked.length > 0) {
-        sessionStorage.setItem('eah_new_badges', JSON.stringify(newlyUnlocked));
+        const { data: badgeDetails } = await supa
+          .from('badge_definitions')
+          .select('badge_key, badge_name, badge_description, icon_emoji')
+          .in('badge_key', newlyUnlocked);
+        badgesToCelebrate = badgeDetails || [];
       }
 
       alert(`🎉 Selamat! Anda mendapatkan +${earnedXP} XP!`);
@@ -93,8 +98,15 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
       if (quizStatusText) quizStatusText.textContent = "Selesai (Kembali besok untuk XP baru!)";
       
-      // Redirect ke profil agar user bisa melihat progres XP-nya naik
-      window.location.href = "profile.html"; 
+      if (badgesToCelebrate.length > 0 && window.EAH_Badge) {
+        window.EAH_Badge.celebrate(badgesToCelebrate);
+        setTimeout(() => {
+          window.location.href = "profile.html";
+        }, badgesToCelebrate.length * 3500);
+      } else {
+        // Redirect ke profil agar user bisa melihat progres XP-nya naik
+        window.location.href = "profile.html"; 
+      }
     } else {
       console.error("Gagal menyimpan XP:", error);
       alert("Terjadi kesalahan saat menyimpan XP ke Cloud.");
