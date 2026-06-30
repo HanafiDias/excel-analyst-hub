@@ -149,10 +149,74 @@
           <!-- Output side -->
           <div>
             <div id="formula-output" role="region" aria-live="polite" aria-label="Hasil formula">
-              <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--space-8);text-align:center;">
+
+              <!-- State: Placeholder -->
+              <div id="fg-placeholder" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--space-8);text-align:center;">
                 <div style="font-size:32px;margin-bottom:var(--space-3);" aria-hidden="true">⟨ƒ⟩</div>
                 <p style="color:var(--text-muted);font-size:0.9rem;">Deskripsikan kebutuhanmu di atas dan klik Buat Formula. Formula, penjelasan sintaks, dan contoh kerja akan muncul di sini.</p>
               </div>
+
+              <!-- State: Loading -->
+              <div id="fg-loading" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--space-8);text-align:center;">
+                <div style="display:inline-block;width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:fg-spin 0.8s linear infinite;margin-bottom:var(--space-3);"></div>
+                <p id="fg-loading-text" style="color:var(--text-muted);font-size:0.9rem;">Mencari formula terbaik...</p>
+              </div>
+
+              <!-- State: Result -->
+              <div id="fg-result" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;">
+                <!-- Header -->
+                <div style="padding:var(--space-4) var(--space-5);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);flex-wrap:wrap;">
+                  <div style="display:flex;align-items:center;gap:var(--space-2);">
+                    <span style="color:var(--success);">✅</span>
+                    <span id="fg-name" style="font-family:var(--font-display);font-weight:700;font-size:1rem;color:var(--text);"></span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:var(--space-2);">
+                    <span id="fg-source" style="font-size:0.65rem;font-weight:600;padding:2px 8px;border-radius:999px;"></span>
+                    <span id="fg-difficulty" style="font-size:0.65rem;font-weight:600;padding:2px 8px;border-radius:999px;background:rgba(79,142,247,0.1);color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;"></span>
+                  </div>
+                </div>
+                <!-- Body -->
+                <div style="padding:var(--space-5);">
+                  <!-- Formula -->
+                  <div style="margin-bottom:var(--space-4);">
+                    <p style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:var(--space-2);">Formula Excel</p>
+                    <div style="display:flex;align-items:center;gap:var(--space-2);background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:var(--space-3) var(--space-4);">
+                      <code id="fg-formula" style="font-family:var(--font-mono);font-size:0.9rem;color:var(--accent);flex:1;word-break:break-all;"></code>
+                      <button id="fg-copy-btn" onclick="fgCopy()" style="flex-shrink:0;background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.2);border-radius:var(--radius-sm);padding:4px 10px;color:var(--accent);font-size:0.75rem;font-weight:600;cursor:pointer;transition:all 0.2s ease;">Salin</button>
+                    </div>
+                  </div>
+                  <!-- Syntax -->
+                  <div style="margin-bottom:var(--space-4);">
+                    <p style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:var(--space-2);">📖 Penjelasan Sintaks</p>
+                    <div id="fg-syntax" style="background:var(--surface-2);border-radius:var(--radius);padding:var(--space-3) var(--space-4);font-size:0.85rem;color:var(--text);line-height:1.8;white-space:pre-line;"></div>
+                  </div>
+                  <!-- Case -->
+                  <div style="margin-bottom:var(--space-4);">
+                    <p style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:var(--space-2);">💼 Contoh Kasus</p>
+                    <p id="fg-case" style="font-size:0.875rem;color:var(--text);margin:0;background:var(--surface-2);border-radius:var(--radius);padding:var(--space-3) var(--space-4);"></p>
+                  </div>
+                  <!-- Example -->
+                  <div style="margin-bottom:var(--space-4);">
+                    <p style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:var(--space-2);">📝 Contoh Formula Kerja</p>
+                    <div style="background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.2);border-radius:var(--radius);padding:var(--space-3) var(--space-4);">
+                      <code id="fg-example" style="font-family:var(--font-mono);font-size:0.85rem;color:var(--success);word-break:break-all;display:block;"></code>
+                    </div>
+                  </div>
+                  <!-- Alternative -->
+                  <div id="fg-alt-wrap" style="display:none;margin-bottom:var(--space-4);">
+                    <p style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:var(--space-2);">⚡ Formula Alternatif</p>
+                    <div style="background:rgba(124,58,237,0.05);border:1px solid rgba(124,58,237,0.2);border-radius:var(--radius);padding:var(--space-3) var(--space-4);">
+                      <code id="fg-alt" style="font-family:var(--font-mono);font-size:0.85rem;color:var(--accent-2);display:block;margin-bottom:4px;"></code>
+                      <p id="fg-alt-label" style="font-size:0.78rem;color:var(--text-muted);margin:0;"></p>
+                    </div>
+                  </div>
+                  <!-- Actions -->
+                  <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;">
+                    <button onclick="fgReset()" style="font-size:0.78rem;padding:6px 14px;border-radius:var(--radius-sm);background:transparent;border:1px solid var(--border);color:var(--text-muted);cursor:pointer;font-weight:600;transition:all 0.2s ease;">↩ Reset</button>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -900,24 +964,10 @@
 </script>
 
   <script src="assets/js/quiz.js"></script>
-
-
-  <script>
-    // Wire up suggestion buttons
-    document.addEventListener('DOMContentLoaded', function () {
-      document.querySelectorAll('.suggestion-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          var queryInput = document.getElementById('formula-query');
-          var categorySelect = document.getElementById('formula-category');
-          if (queryInput) queryInput.value = btn.dataset.query || '';
-          if (categorySelect && btn.dataset.category) categorySelect.value = btn.dataset.category;
-          // Trigger form submit
-          var form = document.getElementById('formula-form');
-          if (form) form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-        });
-      });
-    });
-  </script>
+  <script src="assets/js/formula-gen.js" defer></script>
+  <style>
+    @keyframes fg-spin { to { transform: rotate(360deg); } }
+  </style>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
