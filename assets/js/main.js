@@ -49,9 +49,9 @@ window.EAH_Badge = (function () {
   function spawnConfetti(container) {
     const colors = ['#f59e0b', '#3b82f6', '#10b981', '#ec4899', '#a855f7', '#fbbf24'];
     container.innerHTML = '';
-    for (let i = 0; i < 36; i++) {
+    for (let i = 0; i < 60; i++) {
       const piece = document.createElement('div');
-      const isStrip = Math.random() > 0.6;
+      const isStrip = Math.random() > 0.3;
       const color = colors[Math.floor(Math.random() * colors.length)];
       const size = isStrip ? '4px' : (6 + Math.random() * 5) + 'px';
       piece.style.cssText = `position:absolute; top:-16px; left:${Math.random() * 100}%; width:${size}; height:${isStrip ? (9 + Math.random() * 8) + 'px' : size}; background:${color}; border-radius:${isStrip ? '2px' : (Math.random() > 0.5 ? '50%' : '2px')};`;
