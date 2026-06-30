@@ -10,11 +10,11 @@
 
   /* ------------------------------------------
      CONFIG — ganti dengan nilai aslimu
+     CATATAN: GEMINI_KEY sudah dipindah ke Vercel
+     environment variable, dipanggil lewat /api/gemini-proxy
   ------------------------------------------ */
   var SUPABASE_URL = 'https://laowissohsnhfsbiwcpd.supabase.co';
   var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxhb3dpc3NvaHNuaGZzYml3Y3BkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NTY2NzYsImV4cCI6MjA5NjQzMjY3Nn0.mke2iExUiAxxOzmo2PLJx2MlmhORs6ZbqbLy1PquSyE';
-  var GEMINI_KEY = 'GANTI_GEMINI_API_KEY';
-
   var currentFormula = '';
 
   /* ------------------------------------------
@@ -96,17 +96,11 @@
       + '  "difficulty": "beginner atau intermediate atau advanced"\n'
       + '}';
 
-    var res = await fetch(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + GEMINI_KEY,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.2, maxOutputTokens: 1024 }
-        })
-      }
-    );
+    var res = await fetch('/api/gemini-proxy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: prompt })
+    });
 
     if (!res.ok) return null;
     var data = await res.json();
