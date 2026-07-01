@@ -21,10 +21,14 @@
      LAYER 1 HELPER: ekstrak keyword dari input
   ------------------------------------------ */
   function extractKeywords(text) {
-    var stopwords = ['yang', 'di', 'ke', 'dari', 'dan', 'atau', 'untuk', 'dengan', 'pada',
-      'ini', 'itu', 'agar', 'bisa', 'cara', 'saya', 'aku', 'mau', 'ingin', 'tolong', 'bantu',
-      'gimana', 'bagaimana', 'berdasarkan', 'berdasar', 'sesuai', 'pakai', 'menggunakan',
-      'data', 'nilai', 'kolom', 'baris', 'tabel', 'excel', 'rumus', 'formula', 'ingin', 'mau'];
+    var stopwords = ['yang','di','ke','dari','dan','atau','untuk','dengan','pada',
+      'ini','itu','agar','bisa','cara','saya','aku','mau','ingin','tolong','bantu',
+      'gimana','bagaimana','berdasarkan','berdasar','sesuai','pakai','menggunakan',
+      'data','nilai','kolom','baris','tabel','excel','rumus','formula','ingin','mau',
+      'buatkan','buat','tolong','bantu','menghitung','hitung','adalah','dalam',
+      'sebuah','setiap','semua','beberapa','dapat','akan','sudah','telah','juga',
+      'saat','ketika','jika','kalau','apabila','supaya','sehingga','karena','sebab',
+      'oleh','oleh karena','seperti','misal','misalnya','contoh','total','jumlah'];
     return text.toLowerCase()
       .replace(/[^a-z0-9\s]/g, ' ')
       .split(/\s+/)
@@ -32,8 +36,52 @@
   }
 
   /* ------------------------------------------
-     LAYER 1: Query Supabase formula_library
+     WEIGHTED SCORING:
+     - exact match dengan nama formula = 3 poin
+     - match dengan keyword spesifik   = 2 poin
+     - match dengan tag umum           = 1 poin
+     - minimum skor 3 untuk valid match (di bawah itu, fallback ke Gemini)
   ------------------------------------------ */
+  var MIN_MATCH_SCORE = 3;
+
+  /* ------------------------------------------
+     HELPER: pecah frasa jadi array token kata
+  ------------------------------------------ */
+  function tokenize(str) {
+    return str.toLowerCase()
+      .replace(/[^a-z0-9\s]/g, ' ')
+      .split(/\s+/)
+      .filter(function(w){ return w.length > 0; });
+  }
+
+  /* ------------------------------------------
+     HELPER: hitung berapa token dari phraseTokens
+     yang exact-match dengan salah satu queryKeyword
+  ------------------------------------------ */
+  function countTokenMatches(phraseTokens, queryKeywords) {
+    return phraseTokens.filter(function(pt) {
+      return queryKeywords.indexOf(pt) !== -1;
+    }).length;
+  }
+
+  /* ------------------------------------------
+     HELPER: skor satu keyword/tag entry terhadap
+     query keywords. Skor proporsional:
+     semua token match → skor penuh
+     sebagian match → skor proporsional
+     0 match → 0
+  ------------------------------------------ */
+  function scorePhraseAgainstKeywords(phrase, queryKeywords, maxScore) {
+    var phraseTokens = tokenize(phrase);
+    if (phraseTokens.length === 0) return 0;
+    var matchCount = countTokenMatches(phraseTokens, queryKeywords);
+    if (matchCount === 0) return 0;
+    // Proporsional: match semua token = maxScore penuh
+    // match sebagian = maxScore * (matchCount/phraseTokens.length)
+    // tapi hanya dianggap valid jika matchCount >= 1
+    return maxScore * (matchCount / phraseTokens.length);
+  }
+
   async function querySupabase(userQuery, category) {
     var keywords = extractKeywords(userQuery);
     if (keywords.length === 0) return null;
@@ -55,23 +103,39 @@
     var allFormulas = await res.json();
     if (!Array.isArray(allFormulas) || allFormulas.length === 0) return null;
 
-    var scored = allFormulas.map(function (f) {
-      var allKeys = [].concat(
-        Array.isArray(f.keywords) ? f.keywords : [],
-        Array.isArray(f.tags) ? f.tags : [],
-        [f.formula_name.toLowerCase()]
-      );
-      var score = keywords.reduce(function (acc, kw) {
-        var hit = allKeys.some(function (k) {
-          return k.includes(kw) || kw.includes(k);
-        });
-        return acc + (hit ? 1 : 0);
-      }, 0);
+    var scored = allFormulas.map(function(f) {
+      var nameLower = f.formula_name.toLowerCase();
+      var nameClean = nameLower.replace(/[^a-z0-9\s]/g, ' ').trim();
+      var specificKeys = Array.isArray(f.keywords) ? f.keywords : [];
+      var genericTags = Array.isArray(f.tags) ? f.tags : [];
+
+      var score = 0;
+
+      // --- 1. Exact match nama formula (skor 3 per keyword yang cocok) ---
+      keywords.forEach(function(kw) {
+        var nameTokens = tokenize(nameClean);
+        if (nameTokens.indexOf(kw) !== -1) {
+          score += 3;
+        }
+      });
+
+      // --- 2. Match keyword spesifik (token-based, proporsional, max 2 per frasa) ---
+      specificKeys.forEach(function(phrase) {
+        var s = scorePhraseAgainstKeywords(phrase, keywords, 2);
+        score += s;
+      });
+
+      // --- 3. Match tag umum (token-based, proporsional, max 1 per frasa) ---
+      genericTags.forEach(function(tag) {
+        var s = scorePhraseAgainstKeywords(tag, keywords, 1);
+        score += s;
+      });
+
       return Object.assign({}, f, { _score: score });
-    }).filter(function (f) { return f._score > 0; });
+    }).filter(function(f){ return f._score >= MIN_MATCH_SCORE; });
 
     if (scored.length === 0) return null;
-    scored.sort(function (a, b) { return b._score - a._score; });
+    scored.sort(function(a, b){ return b._score - a._score; });
     return scored[0];
   }
 
