@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -27,13 +27,14 @@ export default async function handler(req, res) {
     );
 
     if (!geminiRes.ok) {
-      return res.status(geminiRes.status).json({ error: 'Gemini API error' });
+      const errText = await geminiRes.text();
+      return res.status(geminiRes.status).json({ error: 'Gemini API error', detail: errText });
     }
 
     const data = await geminiRes.json();
     return res.status(200).json(data);
 
   } catch (err) {
-    return res.status(500).json({ error: 'Internal proxy error' });
+    return res.status(500).json({ error: 'Internal proxy error', detail: err.message });
   }
-}
+};
