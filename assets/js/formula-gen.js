@@ -90,7 +90,7 @@
     if (category && category !== 'all') {
       url += '&category=eq.' + encodeURIComponent(category);
     }
-    url += '&limit=50';
+    url += '&limit=200';
 
     var res = await fetch(url, {
       headers: {
