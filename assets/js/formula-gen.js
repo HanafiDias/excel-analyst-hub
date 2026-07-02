@@ -15,20 +15,21 @@
   ------------------------------------------ */
   var SUPABASE_URL = 'https://laowissohsnhfsbiwcpd.supabase.co';
   var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxhb3dpc3NvaHNuaGZzYml3Y3BkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NTY2NzYsImV4cCI6MjA5NjQzMjY3Nn0.mke2iExUiAxxOzmo2PLJx2MlmhORs6ZbqbLy1PquSyE';
+  var GEMINI_KEY = 'GANTI_GEMINI_API_KEY';
   var currentFormula = '';
 
   /* ------------------------------------------
      LAYER 1 HELPER: ekstrak keyword dari input
   ------------------------------------------ */
   function extractKeywords(text) {
-    var stopwords = ['yang','di','ke','dari','dan','atau','untuk','dengan','pada',
-      'ini','itu','agar','bisa','cara','saya','aku','mau','ingin','tolong','bantu',
-      'gimana','bagaimana','berdasarkan','berdasar','sesuai','pakai','menggunakan',
-      'data','nilai','kolom','baris','tabel','excel','rumus','formula','ingin','mau',
-      'buatkan','buat','tolong','bantu','menghitung','hitung','adalah','dalam',
-      'sebuah','setiap','semua','beberapa','dapat','akan','sudah','telah','juga',
-      'saat','ketika','jika','kalau','apabila','supaya','sehingga','karena','sebab',
-      'oleh','oleh karena','seperti','misal','misalnya','contoh','total','jumlah'];
+    var stopwords = ['yang', 'di', 'ke', 'dari', 'dan', 'atau', 'untuk', 'dengan', 'pada',
+      'ini', 'itu', 'agar', 'bisa', 'cara', 'saya', 'aku', 'mau', 'ingin', 'tolong', 'bantu',
+      'gimana', 'bagaimana', 'berdasarkan', 'berdasar', 'sesuai', 'pakai', 'menggunakan',
+      'data', 'nilai', 'kolom', 'baris', 'tabel', 'excel', 'rumus', 'formula', 'ingin', 'mau',
+      'buatkan', 'buat', 'tolong', 'bantu', 'menghitung', 'hitung', 'adalah', 'dalam',
+      'sebuah', 'setiap', 'semua', 'beberapa', 'dapat', 'akan', 'sudah', 'telah', 'juga',
+      'saat', 'ketika', 'jika', 'kalau', 'apabila', 'supaya', 'sehingga', 'karena', 'sebab',
+      'oleh', 'oleh karena', 'seperti', 'misal', 'misalnya', 'contoh', 'total', 'jumlah'];
     return text.toLowerCase()
       .replace(/[^a-z0-9\s]/g, ' ')
       .split(/\s+/)
@@ -51,7 +52,7 @@
     return str.toLowerCase()
       .replace(/[^a-z0-9\s]/g, ' ')
       .split(/\s+/)
-      .filter(function(w){ return w.length > 0; });
+      .filter(function (w) { return w.length > 0; });
   }
 
   /* ------------------------------------------
@@ -59,7 +60,7 @@
      yang exact-match dengan salah satu queryKeyword
   ------------------------------------------ */
   function countTokenMatches(phraseTokens, queryKeywords) {
-    return phraseTokens.filter(function(pt) {
+    return phraseTokens.filter(function (pt) {
       return queryKeywords.indexOf(pt) !== -1;
     }).length;
   }
@@ -103,7 +104,7 @@
     var allFormulas = await res.json();
     if (!Array.isArray(allFormulas) || allFormulas.length === 0) return null;
 
-    var scored = allFormulas.map(function(f) {
+    var scored = allFormulas.map(function (f) {
       var nameLower = f.formula_name.toLowerCase();
       var nameClean = nameLower.replace(/[^a-z0-9\s]/g, ' ').trim();
       var specificKeys = Array.isArray(f.keywords) ? f.keywords : [];
@@ -112,7 +113,7 @@
       var score = 0;
 
       // --- 1. Exact match nama formula (skor 3 per keyword yang cocok) ---
-      keywords.forEach(function(kw) {
+      keywords.forEach(function (kw) {
         var nameTokens = tokenize(nameClean);
         if (nameTokens.indexOf(kw) !== -1) {
           score += 3;
@@ -120,22 +121,22 @@
       });
 
       // --- 2. Match keyword spesifik (token-based, proporsional, max 2 per frasa) ---
-      specificKeys.forEach(function(phrase) {
+      specificKeys.forEach(function (phrase) {
         var s = scorePhraseAgainstKeywords(phrase, keywords, 2);
         score += s;
       });
 
       // --- 3. Match tag umum (token-based, proporsional, max 1 per frasa) ---
-      genericTags.forEach(function(tag) {
+      genericTags.forEach(function (tag) {
         var s = scorePhraseAgainstKeywords(tag, keywords, 1);
         score += s;
       });
 
       return Object.assign({}, f, { _score: score });
-    }).filter(function(f){ return f._score >= MIN_MATCH_SCORE; });
+    }).filter(function (f) { return f._score >= MIN_MATCH_SCORE; });
 
     if (scored.length === 0) return null;
-    scored.sort(function(a, b){ return b._score - a._score; });
+    scored.sort(function (a, b) { return b._score - a._score; });
     return scored[0];
   }
 
@@ -160,10 +161,13 @@
       + '  "difficulty": "beginner atau intermediate atau advanced"\n'
       + '}';
 
-    var res = await fetch('https://excelanalysthub.vercel.app/api/gemini-proxy?t=' + Date.now(), {
+    var res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + GEMINI_KEY, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt: prompt })
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.2, maxOutputTokens: 1024 }
+      })
     });
 
     if (!res.ok) return null;
