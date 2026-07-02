@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <script>
-    (function() {
-      try {
-        var t = localStorage.getItem('eah_theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', t);
-      } catch(e) {}
-    })();
+    (function () { try { var t = localStorage.getItem('eah_theme') || 'dark'; document.documentElement.setAttribute('data-theme', t); } catch (e) { } })();
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,458 +11,1024 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png" />
-  <title>Portofolio — Excel Analyst Hub</title>
-  <meta name="description" content="Contoh proyek Excel yang dibuat dengan keahlian yang diajarkan di Excel Analyst Hub — dashboard, analisis PivotTable, alat otomasi, dan laporan keuangan." />
+  <title id="page-title">Studi Kasus — Excel Analyst Hub</title>
+  <meta name="description" id="page-meta-desc" content="Studi kasus Excel dunia nyata dari Excel Analyst Hub." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/components.css" />
-  
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
-  <script src="assets/js/session.js"></script>
+  <script src="assets/js/session.js" defer></script>
+  <style>
+    * {
+      box-sizing: border-box
+    }
+
+    .case-hero {
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+      padding: var(--space-6) 0
+    }
+
+    .case-body {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 var(--space-4) var(--space-8)
+    }
+
+    /* ── Section headings ── */
+    .sec {
+      margin-top: var(--space-7)
+    }
+
+    .sec-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin: 0 0 14px;
+      padding-bottom: 8px;
+      border-bottom: .5px solid var(--border)
+    }
+
+    .body-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin: 0 0 10px
+    }
+
+    .divider {
+      height: .5px;
+      background: var(--border);
+      margin: var(--space-6) 0
+    }
+
+    /* ── Hook ── */
+    .hook-box {
+      background: var(--bg-success);
+      border-left: 3px solid var(--border-success);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 16px;
+      margin-bottom: var(--space-5)
+    }
+
+    .hook-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-success);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin: 0 0 5px
+    }
+
+    .hook-text {
+      font-size: 14px;
+      color: var(--text-primary);
+      margin: 0;
+      line-height: 1.65
+    }
+
+    /* ── Story steps ── */
+    .story-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0
+    }
+
+    .st {
+      display: flex;
+      gap: 12px;
+      align-items: stretch
+    }
+
+    .st-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 28px;
+      flex-shrink: 0
+    }
+
+    .st-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--bg-accent);
+      color: var(--text-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+      flex-shrink: 0
+    }
+
+    .st-line {
+      width: 1.5px;
+      flex: 1;
+      min-height: 8px;
+      margin-top: 3px;
+      background: var(--border)
+    }
+
+    .st-body {
+      flex: 1;
+      padding-bottom: 16px
+    }
+
+    .st-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin: 0 0 3px
+    }
+
+    .st-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin: 0
+    }
+
+    /* ── Before/After toggle ── */
+    .ba-toggle {
+      display: flex;
+      border: .5px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      width: fit-content;
+      margin-bottom: 14px
+    }
+
+    .ba-btn {
+      padding: 7px 18px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      transition: background .15s, color .15s
+    }
+
+    .ba-btn.active {
+      background: var(--surface-2);
+      color: var(--text-primary)
+    }
+
+    .ba-panel {
+      display: none
+    }
+
+    .ba-panel.active {
+      display: block
+    }
+
+    .tbl-wrap {
+      overflow-x: auto
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      min-width: 400px
+    }
+
+    .data-table th,
+    .data-table td {
+      border: .5px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+      color: var(--text-secondary)
+    }
+
+    .data-table th {
+      background: var(--surface-1);
+      color: var(--text-primary);
+      font-weight: 500
+    }
+
+    .ba-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      line-height: 1.5;
+      font-style: italic
+    }
+
+    /* ── Formula why callout ── */
+    .why-box {
+      background: var(--surface-1);
+      border: .5px solid var(--border);
+      border-left: 3px solid var(--border-accent);
+      border-radius: 0 8px 8px 0;
+      padding: 11px 14px;
+      margin: 10px 0 8px
+    }
+
+    .why-label {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--text-accent);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      margin: 0 0 4px
+    }
+
+    .why-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.55
+    }
+
+    .formula-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin: 14px 0 4px
+    }
+
+    .code-block {
+      background: #161b22;
+      color: #d4d4d4;
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      line-height: 1.65;
+      overflow-x: auto;
+      border: .5px solid rgba(255, 255, 255, 0.06);
+      white-space: pre;
+      margin: 0 0 14px
+    }
+
+    /* ── Jebakan umum ── */
+    .trap {
+      background: var(--surface-2);
+      border: .5px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 10px
+    }
+
+    .trap-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px
+    }
+
+    .trap-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--bg-danger);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 11px;
+      color: var(--text-danger)
+    }
+
+    .trap-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin: 0
+    }
+
+    .trap-cause {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0 0 8px
+    }
+
+    .trap-fix {
+      font-size: 12px;
+      background: var(--bg-success);
+      color: var(--text-success);
+      border-radius: 6px;
+      padding: 7px 10px;
+      margin: 0;
+      line-height: 1.5
+    }
+
+    /* ── Impact ── */
+    .impact-block {
+      border-radius: 0 10px 10px 0;
+      padding: var(--space-5);
+      border-left: 4px solid #3b82f6;
+      background: var(--surface-2);
+      margin-top: 10px
+    }
+
+    .impact-desc {
+      font-size: 14px;
+      color: var(--text-primary);
+      line-height: 1.7;
+      margin: 0 0 var(--space-4)
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+      gap: var(--space-3)
+    }
+
+    .metric-card {
+      background: var(--surface);
+      padding: var(--space-4);
+      border-radius: 8px;
+      border: .5px solid var(--border);
+      border-left: 4px solid #3b82f6
+    }
+
+    .metric-value {
+      font-size: 1.9rem;
+      font-weight: 700;
+      margin: 0 0 6px;
+      line-height: 1
+    }
+
+    .metric-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.45
+    }
+
+    /* ── Checklist ── */
+    .cl-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: .5px solid var(--border);
+      cursor: pointer
+    }
+
+    .cl-item:last-child {
+      border: none
+    }
+
+    .cl-box {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      border: 1.5px solid var(--border-strong);
+      flex-shrink: 0;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .15s, border-color .15s
+    }
+
+    .cl-box.on {
+      background: var(--fill-success);
+      border-color: var(--fill-success)
+    }
+
+    .cl-check {
+      font-size: 11px;
+      color: #fff;
+      display: none
+    }
+
+    .cl-box.on .cl-check {
+      display: block
+    }
+
+    .cl-txt {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      user-select: none
+    }
+
+    .cl-txt.done {
+      text-decoration: line-through;
+      color: var(--text-muted)
+    }
+
+    .prog-wrap {
+      background: var(--surface-1);
+      border-radius: 99px;
+      height: 5px;
+      margin-top: 12px;
+      overflow: hidden
+    }
+
+    .prog-bar {
+      height: 100%;
+      border-radius: 99px;
+      background: var(--fill-success);
+      transition: width .3s
+    }
+
+    .prog-lbl {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 5px
+    }
+
+    /* ── Quiz ── */
+    .qcard {
+      background: var(--surface-2);
+      border: .5px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 10px
+    }
+
+    .qq {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin: 0 0 10px
+    }
+
+    .qopts {
+      display: flex;
+      flex-direction: column;
+      gap: 7px
+    }
+
+    .qopt {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--surface-1);
+      border: .5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 9px 11px;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text-secondary);
+      transition: border-color .15s
+    }
+
+    .qopt:hover {
+      border-color: var(--border-strong)
+    }
+
+    .qopt.ok {
+      background: var(--bg-success);
+      border-color: var(--border-success);
+      color: var(--text-success);
+      cursor: default;
+      pointer-events: none
+    }
+
+    .qopt.no {
+      background: var(--bg-danger);
+      border-color: var(--border-danger);
+      color: var(--text-danger);
+      cursor: default;
+      pointer-events: none
+    }
+
+    .qopt.off {
+      cursor: default;
+      pointer-events: none
+    }
+
+    .ocircle {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-strong);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 500
+    }
+
+    .qfb {
+      font-size: 12px;
+      margin-top: 8px;
+      padding: 8px 10px;
+      border-radius: var(--radius);
+      display: none;
+      line-height: 1.45
+    }
+
+    .qfb.show {
+      display: block
+    }
+
+    .qfb.ok {
+      background: var(--bg-success);
+      color: var(--text-success)
+    }
+
+    .qfb.no {
+      background: var(--bg-danger);
+      color: var(--text-danger)
+    }
+
+    /* ── Challenges ── */
+    .ch {
+      border-left: 3px solid var(--border-strong);
+      padding: 10px 14px;
+      margin-bottom: 10px;
+      background: var(--surface-2);
+      border-radius: 0 8px 8px 0
+    }
+
+    .ch-level {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      margin: 0 0 4px
+    }
+
+    .ch-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin: 0 0 5px
+    }
+
+    .ch-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0
+    }
+
+    /* ── Skill tags ── */
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px
+    }
+
+    .skill-tag {
+      font-size: 12px;
+      padding: 4px 11px;
+      border-radius: 20px;
+      background: var(--bg-accent);
+      color: var(--text-accent);
+      border: .5px solid var(--border-accent)
+    }
+
+    /* ── Download CTA ── */
+    .dl-cta {
+      border-top: .5px solid var(--border);
+      padding-top: var(--space-5);
+      margin-top: var(--space-6);
+      text-align: center
+    }
+
+    .dl-cta h4 {
+      color: var(--text-primary);
+      margin: 0 0 var(--space-3);
+      font-size: 1rem
+    }
+
+    /* ── States ── */
+    .state-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 50vh;
+      text-align: center;
+      color: var(--text-muted);
+      gap: var(--space-3)
+    }
+
+    .state-container h2 {
+      color: var(--text-primary);
+      margin: 0
+    }
+
+    .state-container p {
+      margin: 0
+    }
+
+    .spinner {
+      animation: spin 1s linear infinite;
+      font-size: 2.5rem;
+      display: inline-block
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    /* ── Responsive ── */
+    @media(max-width:640px) {
+      .case-body {
+        padding: 0 var(--space-3) var(--space-6)
+      }
+
+      .metric-value {
+        font-size: 1.5rem
+      }
+
+      .ba-btn {
+        padding: 6px 12px;
+        font-size: 11px
+      }
+    }
+  </style>
 </head>
+
 <body class="page-body">
 
   <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
 
-  <!-- ============ NAVIGATION ============ -->
   <nav class="nav" role="navigation" aria-label="Navigasi utama">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo" aria-label="Excel Analyst Hub beranda" style="transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-        <div class="logo-icon" aria-hidden="true" style="box-shadow: 0 0 10px rgba(59,130,246,0.5);"><img src="assets/img/logo-navbar.png" alt="" style="width:100%;height:100%;object-fit:contain;padding:4px;" /></div>
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon" aria-hidden="true"><img src="assets/img/logo-navbar.png" alt=""
+            style="width:100%;height:100%;object-fit:contain;padding:4px;" /></div>
         Excel Analyst Hub
       </a>
-      
-      <div class="nav-links">
-        <a href="index.html" class="nav-item">Beranda</a>
-        <a href="learn.html" class="nav-item">Belajar</a>
-        <a href="tools.html" class="nav-item">Tools</a>
-        <a href="portfolio.html" class="nav-item">Portofolio</a>
-      </div>
-      
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="learn.html">Belajar</a></li>
+        <li><a href="portfolio.html" class="active">Portofolio</a></li>
+        <li><a href="tools.html">Tools</a></li>
+      </ul>
       <div class="nav-right">
-        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
-        <a href="login.html" class="btn-sm btn-nav-premium" id="nav-auth-btn" style="padding: 0.45rem 1rem; border-radius: 50px; font-weight: 600; letter-spacing: 0.3px;">
-          Masuk / Profil
-        </a>
-        <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
-          <span></span><span></span><span></span>
-        </button>
+        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang"
+          title="Mode terang">☀️</button>
+        <a href="login.html" class="btn-sm btn-nav-premium" id="nav-auth-btn"
+          style="padding:.45rem 1rem;border-radius:50px;font-weight:600;letter-spacing:.3px;">Masuk / Profil</a>
+        <button class="hamburger" aria-label="Buka menu" aria-expanded="false"
+          aria-controls="mobile-menu"><span></span><span></span><span></span></button>
       </div>
     </div>
   </nav>
-
   <div class="nav-menu-mobile" id="mobile-menu" role="navigation" aria-label="Navigasi mobile">
     <a href="index.html">Beranda</a>
     <a href="learn.html">Belajar</a>
-    <a href="tools.html">Tools</a>
     <a href="portfolio.html">Portofolio</a>
-    <div style="height:1px; background:var(--border); margin: 8px 0;"></div> 
-    <a href="login.html" class="btn-nav-premium" id="mobile-auth-btn" style="text-align:center; border-radius: 8px; margin-top: 8px;">Masuk / Profil</a>
+    <a href="tools.html">Tools</a>
+    <div style="height:1px;background:var(--border);margin:8px 0;"></div>
+    <a href="login.html" class="btn-nav-premium" id="mobile-auth-btn"
+      style="text-align:center;border-radius:8px;margin-top:8px;">Masuk / Profil</a>
   </div>
 
-  <main id="main-content" class="container fade-in-section">
+  <main id="main-content">
 
-
-
-  <header class="page-header" style="padding-top: var(--space-6); padding-bottom: var(--space-5);">
-    <div class="container">
-      <span class="badge" style="background: rgba(59, 130, 246, 0.1); color: var(--accent); margin-bottom: var(--space-3); display: inline-block;">Professional Showcase</span>
-      <h1 style="margin-top: 0; margin-bottom: var(--space-2); font-size: 2.5rem; line-height: 1.2;">Portofolio Data</h1>
-      <p class="text-muted text-lg" style="max-width: 800px; margin: 0; font-size: 1.1rem; line-height: 1.6;">
-        Kumpulan studi kasus dunia nyata yang menunjukkan bagaimana saya mengubah data mentah menjadi wawasan bisnis yang dapat ditindaklanjuti (actionable insights).
-      </p>
-    </div>
-  </header>
-
-    <div class="container section-sm">
-
-
-
-      <div class="card" style="margin-bottom: var(--space-6); padding: var(--space-5); border-top: 4px solid var(--accent); box-shadow: 0 8px 30px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: var(--space-4);">
-        
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
-          <div>
-            <span class="badge" style="background: rgba(59, 130, 246, 0.1); color: var(--accent); margin-bottom: 8px; display: inline-block;">Logistics &amp; Inventory</span>
-            <h2 style="margin: 0; font-size: 1.5rem;">Optimasi Stok &amp; Distribusi Agen Ritel</h2>
-          </div>
-          <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
-        </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: var(--space-4);">
-          <div>
-            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">
-              Sebuah bisnis agen ritel lokal (distribusi produk harian, alas kaki, dan agen gas LPG) kesulitan melacak perputaran barang. Sering terjadi penumpukan stok mati di gudang, sementara barang yang cepat laku (fast-moving) justru sering kehabisan stok.
-            </p>
-            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Solusi Analitik</h4>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0;">
-              Membangun Dasbor Manajemen Inventaris yang mampu menghitung <em>Inventory Turnover Ratio</em> secara otomatis, serta memberikan peringatan visual saat stok produk utama mencapai batas minimum (Reorder Point).
-            </p>
-          </div>
-
-          <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border);">
-            <h4 style="margin: 0 0 var(--space-3) 0; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px;">Spesifikasi Teknis</h4>
-            <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">
-              <li><strong>Pembersihan Data:</strong> Power Query (Unpivoting data vendor, membersihkan format tanggal yang rusak).</li>
-              <li><strong>Pemodelan:</strong> Relasi tabel dengan <code>INDEX-MATCH</code> dan <code>XLOOKUP</code>.</li>
-              <li><strong>Otomasi:</strong> Conditional Formatting dinamis untuk status stok.</li>
-              <li><strong>Visualisasi:</strong> Slicer interaktif dan Pivot Chart untuk pantauan mingguan.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div style="border-top: 1px solid var(--border); padding-top: var(--space-4); display: flex; gap: var(--space-3); flex-wrap: wrap;">
-          <a href="portfolio-case-retail.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px;">
-            📄 Baca Analisis Lengkap
-          </a>
-          <a href="assets/datasets/Case_Study_Retail_Optimization.xlsx" download class="btn-primary btn-sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">📥 Unduh File Excel (.xlsx)</a>
-        </div>
-      </div>
-
-      <div class="card" style="margin-bottom: var(--space-6); padding: var(--space-5); border-top: 4px solid #10b981; box-shadow: 0 8px 30px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: var(--space-4);">
-        
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
-          <div>
-            <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981; margin-bottom: 8px; display: inline-block;">Sales &amp; Financial</span>
-            <h2 style="margin: 0; font-size: 1.5rem;">Analisis Performa Penjualan Multi-Region</h2>
-          </div>
-          <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
-        </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: var(--space-4);">
-          <div>
-            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">
-              Manajemen kesulitan mengidentifikasi profitabilitas bersih dari berbagai wilayah operasional karena data transaksi tersebar di banyak file Excel yang berbeda-beda setiap bulannya.
-            </p>
-            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Solusi Analitik</h4>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0;">
-              Mengonsolidasi seluruh file menggunakan Get &amp; Transform Data, lalu membangun Dasbor Eksekutif yang memungkinkan manajemen memfilter performa gross margin per wilayah dan per kuartal secara instan.
-            </p>
-          </div>
-
-          <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border);">
-            <h4 style="margin: 0 0 var(--space-3) 0; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px;">Spesifikasi Teknis</h4>
-            <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">
-              <li><strong>Data Pipeline:</strong> Power Query (Append Queries dari folder terpisah).</li>
-              <li><strong>Kalkulasi Kompleks:</strong> <code>SUMIFS</code> bersarang dan fungsi agregasi dinamis.</li>
-              <li><strong>Pemodelan:</strong> Data-Ink ratio optimization untuk tampilan dasbor yang bersih tanpa clutter.</li>
-              <li><strong>Visualisasi:</strong> Dynamic Timeline &amp; Bar Charts bersusun.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div style="border-top: 1px solid var(--border); padding-top: var(--space-4); display: flex; gap: var(--space-3); flex-wrap: wrap;">
-          <a href="portfolio-case-sales.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px; text-decoration: none;">
-            📄 Baca Analisis Lengkap
-          </a>
-          <a href="assets/datasets/Case_Study_Sales_Region.xlsx" download class="btn-primary btn-sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">📥 Unduh File Excel (.xlsx)</a>
-        </div>
-      </div>
-
-      <div class="card" style="margin-bottom: var(--space-6); padding: var(--space-5); border-top: 4px solid #8b5cf6; box-shadow: 0 8px 30px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: var(--space-4);">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
-          <div>
-            <span class="badge" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6; margin-bottom: 8px; display: inline-block;">HR &amp; Operations</span>
-            <h2 style="margin: 0; font-size: 1.5rem;">Otomatisasi Laporan Kehadiran &amp; Kalkulasi Lembur</h2>
-          </div>
-          <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
-        </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: var(--space-4);">
-          <div>
-            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">HRD menghabiskan waktu berhari-hari setiap akhir bulan untuk merekap data mesin absensi (fingerprint) dan menghitung upah lembur karyawan yang aturannya cukup kompleks.</p>
-            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Solusi Analitik</h4>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0;">Membuat sistem template Excel cerdas yang otomatis mengubah data log mesin mentah menjadi laporan kehadiran bulanan, lengkap dengan kalkulasi denda keterlambatan dan bonus lembur.</p>
-          </div>
-          <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border);">
-            <h4 style="margin: 0 0 var(--space-3) 0; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px;">Spesifikasi Teknis</h4>
-            <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">
-              <li><strong>Time Intelligence:</strong> Fungsi Waktu (HOUR, MINUTE, TIMEVALUE).</li>
-              <li><strong>Logika Kompleks:</strong> Nested IF, AND, OR untuk aturan shift.</li>
-              <li><strong>Keamanan Data:</strong> Data Validation &amp; Sheet Protection.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div style="border-top: 1px solid var(--border); padding-top: var(--space-4); display: flex; gap: var(--space-3); flex-wrap: wrap;">
-          <a href="portfolio-case-hr.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px; text-decoration: none;">
-            📄 Baca Analisis Lengkap
-          </a>
-          <a href="assets/datasets/Case_Study_HR_Overtime.xlsx" download class="btn-primary btn-sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">📥 Unduh File Excel (.xlsx)</a>
-        </div>
-      </div>
-
-      <!-- ============ CASE STUDY 4: AUDIT & RECONCILIATION ============ -->
-      <div class="card" style="margin-bottom: var(--space-6); padding: var(--space-5); border-top: 4px solid #f59e0b; box-shadow: 0 8px 30px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: var(--space-4);">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
-          <div>
-            <span class="badge" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; margin-bottom: 8px; display: inline-block;">Audit &amp; Reconciliation</span>
-            <h2 style="margin: 0; font-size: 1.5rem;">Rekonsiliasi Pembayaran Digital (QRIS, Shopee, Tokopedia)</h2>
-          </div>
-          <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: var(--space-4);">
-          <div>
-            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">Banyaknya jalur pembayaran digital (QRIS, Virtual Account Tokopedia, ShopeePay) membuat tim keuangan kesulitan melacak selisih pencatatan antara sistem kasir (POS) internal dengan uang yang benar-benar masuk ke rekening bank (Settlement).</p>
-            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Solusi Analitik</h4>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0;">Membangun mesin rekonsiliasi otomatis menggunakan Power Query (Merge Queries) untuk mendeteksi transaksi yang "hilang", selisih potongan biaya admin, dan pembayaran ganda dalam hitungan detik.</p>
-          </div>
-          <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border);">
-            <h4 style="margin: 0 0 var(--space-3) 0; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px;">Spesifikasi Teknis</h4>
-            <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">
-              <li><strong>Data Blending:</strong> Left/Anti-Join via Power Query.</li>
-              <li><strong>Lookup Engine:</strong> <code>XLOOKUP</code> multi-kriteria untuk ID Transaksi.</li>
-              <li><strong>Error Tracking:</strong> Conditional Formatting untuk menandai selisih (Discrepancy).</li>
-            </ul>
-          </div>
-        </div>
-        <div style="border-top: 1px solid var(--border); padding-top: var(--space-4); display: flex; gap: var(--space-3); flex-wrap: wrap;">
-          <a href="portfolio-case-recon.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px; text-decoration: none;">📄 Baca Analisis Lengkap</a>
-          <a href="assets/datasets/Case_Study_Payment_Reconciliation.xlsx" download class="btn-primary btn-sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">📥 Unduh File Excel (.xlsx)</a>
-        </div>
-      </div>
-
-      <!-- ============ CASE STUDY 5: BANKING & CREDIT RISK ============ -->
-      <div class="card" style="margin-bottom: var(--space-6); padding: var(--space-5); border-top: 4px solid #0ea5e9; box-shadow: 0 8px 30px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: var(--space-4);">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
-          <div>
-            <span class="badge" style="background: rgba(14, 165, 233, 0.1); color: #0ea5e9; margin-bottom: 8px; display: inline-block;">Banking &amp; Credit Risk</span>
-            <h2 style="margin: 0; font-size: 1.5rem;">Pemodelan Evaluasi Risiko Kredit (Credit Scoring)</h2>
-          </div>
-          <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: var(--space-4);">
-          <div>
-            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">Institusi finansial regional lambat dalam memutuskan persetujuan kredit nasabah karena analis harus mengecek riwayat pendapatan, tanggungan, dan rasio hutang secara manual, sehingga kalah cepat dari kompetitor.</p>
-            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Solusi Analitik</h4>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0;">Menciptakan "Scoring Matrix" interaktif. Admin hanya perlu memasukkan data dasar, dan Excel akan otomatis menghitung <em>Debt-to-Income Ratio</em> (DTI) serta memberikan rekomendasi status kelayakan kredit (Approve/Reject).</p>
-          </div>
-          <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border);">
-            <h4 style="margin: 0 0 var(--space-3) 0; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px;">Spesifikasi Teknis</h4>
-            <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">
-              <li><strong>Logical Framework:</strong> <code>IFS</code> bersarang untuk bobot risiko (Low/Medium/High).</li>
-              <li><strong>Financial Function:</strong> Menggunakan <code>PMT</code> untuk simulasi cicilan maksimal.</li>
-              <li><strong>UI/UX:</strong> Dropdown Data Validation yang saling bergantung (Dependent Dropdown).</li>
-            </ul>
-          </div>
-        </div>
-        <div style="border-top: 1px solid var(--border); padding-top: var(--space-4); display: flex; gap: var(--space-3); flex-wrap: wrap;">
-          <a href="portfolio-case-credit.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px; text-decoration: none;">📄 Baca Analisis Lengkap</a>
-          <a href="assets/datasets/Case_Study_Credit_Scoring.xlsx" download class="btn-primary btn-sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">📥 Unduh File Excel (.xlsx)</a>
-        </div>
-      </div>
-
-      <!-- ============ CASE STUDY 6: MARKETING & CRM ============ -->
-      <div class="card" style="margin-bottom: var(--space-6); padding: var(--space-5); border-top: 4px solid #ec4899; box-shadow: 0 8px 30px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: var(--space-4);">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
-          <div>
-            <span class="badge" style="background: rgba(236, 72, 153, 0.1); color: #ec4899; margin-bottom: 8px; display: inline-block;">Marketing &amp; CRM</span>
-            <h2 style="margin: 0; font-size: 1.5rem;">Segmentasi Pelanggan RFM (Recency, Frequency, Monetary)</h2>
-          </div>
-          <span style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;">Update: Mei 2026</span>
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: var(--space-4);">
-          <div>
-            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Tantangan Bisnis</h4>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0 0 var(--space-3) 0;">Biaya promosi (diskon/voucher) membengkak karena dibagikan secara merata ke semua pelanggan. Bisnis butuh cara mengidentifikasi siapa "Pelanggan Sultan" dan siapa pelanggan yang "Berisiko Pindah ke Kompetitor".</p>
-            <h4 style="margin: 0 0 var(--space-2) 0; color: var(--text);">Solusi Analitik</h4>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0;">Menerapkan analisis RFM standar industri untuk memberi skor (1-5) pada setiap pelanggan berdasarkan transaksi terakhir, frekuensi belanja, dan total uang yang dihabiskan.</p>
-          </div>
-          <div style="background: var(--surface-2); padding: var(--space-4); border-radius: 8px; border: 1px solid var(--border);">
-            <h4 style="margin: 0 0 var(--space-3) 0; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px;">Spesifikasi Teknis</h4>
-            <ul style="margin: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;">
-              <li><strong>Statistical Functions:</strong> <code>PERCENTILE.INC</code> untuk membagi kuartil pelanggan.</li>
-              <li><strong>Advanced Charting:</strong> Bubble Chart (Kuadran Segmentasi).</li>
-              <li><strong>Dynamic Array:</strong> Menggunakan <code>FILTER</code> dan <code>SORT</code> untuk memisahkan daftar pelanggan VIP secara otomatis.</li>
-            </ul>
-          </div>
-        </div>
-        <div style="border-top: 1px solid var(--border); padding-top: var(--space-4); display: flex; gap: var(--space-3); flex-wrap: wrap;">
-          <a href="portfolio-case-rfm.html" class="btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: 5px; text-decoration: none;">📄 Baca Analisis Lengkap</a>
-          <a href="assets/datasets/Case_Study_RFM_Marketing.xlsx" download class="btn-primary btn-sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">📥 Unduh File Excel (.xlsx)</a>
-        </div>
-      </div>
-
+    <div class="state-container" id="state-loading">
+      <span class="spinner">⚙️</span>
+      <p>Memuat studi kasus...</p>
     </div>
 
-  <section id="practice-lab" class="section" style="background: var(--surface-2); border-top: 1px solid var(--border); margin-top: var(--space-6); padding-top: var(--space-6);">
-    <div class="container">
-
-      <div class="text-center" style="margin-bottom: var(--space-5);">
-        <span class="badge" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">Interactive Practice</span>
-        <h2 style="margin: var(--space-2) 0 0 0;">🧠 Zona Latihan Mandiri</h2>
-        <p class="text-muted" style="max-width: 600px; margin: var(--space-2) auto 0 auto; font-size: 0.95rem;">
-          Jangan cuma membaca! Pilih skenario kasus di bawah ini, uji logika analis datamu, lalu buka "Lihat Solusi" untuk mencocokkan jawaban.
-        </p>
-      </div>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4); max-width: 900px; margin: 0 auto;">
-
-        <!-- SOAL 1: Mencegah Input Tanggal Kadaluarsa (Pemula) -->
-        <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
-          <div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
-              <span style="color: #10b981; font-weight: bold;">Level: Pemula</span>
-              <span style="color: var(--text-muted);">Topik: Data Validation</span>
-            </div>
-            <h4 style="margin: 0 0 var(--space-2) 0;">Mencegah Input Tanggal Kadaluarsa</h4>
-            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0;">
-              Anda membuat formulir absensi harian di Excel. Bagaimana cara memastikan admin (pengguna file) tidak bisa tidak sengaja mengetik atau memasukkan tanggal di masa lalu (misalnya tanggal kemarin)?
-            </p>
-          </div>
-          <div style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-3);">
-            <button class="btn-ghost btn-sm" style="width: 100%; text-align: center;" onclick="var s = this.nextElementSibling; s.style.display = s.style.display === 'none' ? 'block' : 'none';">💡 Lihat Solusi &amp; Rumus</button>
-            <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
-              <strong>Jawaban:</strong> Gunakan Data Validation tipe Custom/Date.<br>
-              <span style="color: var(--text-muted); font-size: 0.8rem;">Masuk ke <em>Data Validation</em> &gt; Allow: Date &gt; Data: Greater than or equal to &gt; Ketik <code>=TODAY()</code>. Excel akan otomatis menolak semua tanggal sebelum hari ini.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- SOAL 2: Kasus Spasi Hantu (Menengah) -->
-        <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
-          <div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
-              <span style="color: var(--accent); font-weight: bold;">Level: Menengah</span>
-              <span style="color: var(--text-muted);">Topik: Pembersihan Data</span>
-            </div>
-            <h4 style="margin: 0 0 var(--space-2) 0;">Kasus Spasi Hantu pada ID Produk</h4>
-            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0;">
-              Data penjualan dari cabang gagal di-VLOOKUP karena beberapa kode produk memiliki spasi tak terlihat di awal atau akhir teks (misal: <code>" PROD-01 "</code>). Fungsi apa yang harus disisipkan di kolom pembantu untuk membersihkannya secara massal?
-            </p>
-          </div>
-          <div style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-3);">
-            <button class="btn-ghost btn-sm" style="width: 100%; text-align: center;" onclick="var s = this.nextElementSibling; s.style.display = s.style.display === 'none' ? 'block' : 'none';">💡 Lihat Solusi &amp; Rumus</button>
-            <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
-              <strong>Jawaban:</strong> Gunakan fungsi <code>=TRIM()</code>.<br>
-              <span style="color: var(--text-muted); font-size: 0.8rem;">Contoh: <code>=TRIM(A2)</code> akan menghapus semua spasi di awal/akhir teks dan menyisakan satu spasi antar kata.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- SOAL 3: Limitasi Arah Pencarian (Menengah) -->
-        <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
-          <div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
-              <span style="color: var(--accent); font-weight: bold;">Level: Menengah</span>
-              <span style="color: var(--text-muted);">Topik: Pencarian Data (Lookup)</span>
-            </div>
-            <h4 style="margin: 0 0 var(--space-2) 0;">Limitasi Arah Pencarian</h4>
-            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0;">
-              Anda diminta mencari "Nama Karyawan" berdasarkan "ID Karyawan". Namun di database mentah, kolom "ID Karyawan" berada di paling kanan (Kolom F), sedangkan "Nama Karyawan" ada di Kolom A. Mengapa VLOOKUP standar akan gagal, dan apa solusinya?
-            </p>
-          </div>
-          <div style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-3);">
-            <button class="btn-ghost btn-sm" style="width: 100%; text-align: center;" onclick="var s = this.nextElementSibling; s.style.display = s.style.display === 'none' ? 'block' : 'none';">💡 Lihat Solusi &amp; Rumus</button>
-            <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
-              <strong>Jawaban:</strong> VLOOKUP hanya bisa mencari data dari kiri ke kanan.<br>
-              <span style="color: var(--text-muted); font-size: 0.8rem;">Solusi: Gunakan kombinasi <code>=INDEX(A:A, MATCH(ID, F:F, 0))</code> atau fungsi modern <code>=XLOOKUP()</code> yang bisa mencari ke segala arah.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- SOAL 4: PivotTable Dynamic Range (Menengah) -->
-        <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
-          <div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
-              <span style="color: var(--accent); font-weight: bold;">Level: Menengah</span>
-              <span style="color: var(--text-muted);">Topik: PivotTable Dinamis</span>
-            </div>
-            <h4 style="margin: 0 0 var(--space-2) 0;">Data Baru Tidak Terbaca Pivot</h4>
-            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0;">
-              Setiap bulan, Anda menambahkan baris data transaksi baru di bagian bawah tabel sumber. Namun saat Anda menekan "Refresh" pada PivotTable, data bulan baru tersebut tidak muncul di laporan. Apa langkah krusial yang terlewat saat pembuatan awal?
-            </p>
-          </div>
-          <div style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-3);">
-            <button class="btn-ghost btn-sm" style="width: 100%; text-align: center;" onclick="var s = this.nextElementSibling; s.style.display = s.style.display === 'none' ? 'block' : 'none';">💡 Lihat Solusi</button>
-            <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
-              <strong>Jawaban:</strong> Rentang data sumber masih statis (misal: A1:D100).<br>
-              <span style="color: var(--text-muted); font-size: 0.8rem;">Solusi: Sebelum membuat PivotTable, ubah selalu data sumber Anda menjadi "Official Excel Table" dengan menekan <code>Ctrl + T</code>. Rentang tabel akan otomatis memanjang saat ada baris baru.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- SOAL 5: Kalkulasi Komisi Sales Berjenjang (Lanjutan) -->
-        <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
-          <div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
-              <span style="color: #ef4444; font-weight: bold;">Level: Lanjutan</span>
-              <span style="color: var(--text-muted);">Topik: Logika Bisnis</span>
-            </div>
-            <h4 style="margin: 0 0 var(--space-2) 0;">Kalkulasi Komisi Sales Berjenjang</h4>
-            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0;">
-              Perusahaan menetapkan aturan: Jika penjualan Sales mencapai &gt; Rp 50 Juta, komisi 10%. Jika antara Rp 20 Juta - Rp 50 Juta, komisi 5%. Di bawah itu, komisi 0%. Struktur fungsi logika apa yang paling efisien digunakan jika menggunakan Excel modern?
-            </p>
-          </div>
-          <div style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-3);">
-            <button class="btn-ghost btn-sm" style="width: 100%; text-align: center;" onclick="var s = this.nextElementSibling; s.style.display = s.style.display === 'none' ? 'block' : 'none';">💡 Lihat Solusi &amp; Rumus</button>
-            <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
-              <strong>Jawaban:</strong> Gunakan fungsi <code>=IFS()</code>.<br>
-              <span style="color: var(--text-muted); font-size: 0.8rem;">Struktur: <code>=IFS(A2&gt;50000000, A2*10%, A2&gt;=20000000, A2*5%, TRUE, 0)</code>. Fungsi IFS mengevaluasi kondisi secara berurutan tanpa perlu kurung berlapis-lapis.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- SOAL 6: Power Query Unpivot (Lanjutan) -->
-        <div class="card" style="padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; justify-content: space-between;">
-          <div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: 0.8rem;">
-              <span style="color: #ef4444; font-weight: bold;">Level: Lanjutan</span>
-              <span style="color: var(--text-muted);">Topik: Power Query (Transformasi)</span>
-            </div>
-            <h4 style="margin: 0 0 var(--space-2) 0;">Merapikan Tabel "Menyamping"</h4>
-            <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0;">
-              Anda menerima laporan penjualan di mana nama bulan (Januari, Februari, Maret) dijadikan sebagai judul kolom yang melebar ke kanan (Format Cross-Tabular). Fitur apa di Power Query yang digunakan untuk "menumpuknya" menjadi data flat (vertikal) agar bisa di-Pivot?
-            </p>
-          </div>
-          <div style="margin-top: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-3);">
-            <button class="btn-ghost btn-sm" style="width: 100%; text-align: center;" onclick="var s = this.nextElementSibling; s.style.display = s.style.display === 'none' ? 'block' : 'none';">💡 Lihat Solusi</button>
-            <div style="display: none; margin-top: var(--space-2); padding: var(--space-3); background: var(--surface-2); border-radius: 6px; font-size: 0.85rem; border-left: 3px solid #10b981;">
-              <strong>Jawaban:</strong> Gunakan fitur <strong>Unpivot Columns</strong>.<br>
-              <span style="color: var(--text-muted); font-size: 0.8rem;">Caranya: Blok kolom identitas (misal: Nama Produk), klik kanan, lalu pilih <em>"Unpivot Other Columns"</em>. Data menyamping akan langsung tersusun rapi ke bawah (Attribute &amp; Value).</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
+    <div class="state-container" id="state-not-found" style="display:none;">
+      <span style="font-size:3rem;">🔍</span>
+      <h2>Studi Kasus Tidak Ditemukan</h2>
+      <p>ID yang diminta tidak ada dalam database.</p>
+      <a href="portfolio.html" class="btn-primary" style="margin-top:var(--space-2);">← Kembali ke Portofolio</a>
     </div>
-  </section>
+
+    <div class="state-container" id="state-error" style="display:none;">
+      <span style="font-size:3rem;">⚠️</span>
+      <h2>Gagal Memuat Data</h2>
+      <p id="error-msg">Terjadi kesalahan saat menghubungi database.</p>
+      <a href="portfolio.html" class="btn-ghost" style="margin-top:var(--space-2);">← Kembali ke Portofolio</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="case-hero" id="case-hero" style="display:none;">
+      <div class="container" style="max-width:820px;">
+        <a href="portfolio.html" class="btn-ghost btn-sm"
+          style="margin-bottom:var(--space-4);display:inline-flex;align-items:center;gap:5px;">← Kembali ke
+          Portofolio</a>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--space-3);" id="hero-badges"></div>
+        <h1 id="hero-title"
+          style="margin:0 0 var(--space-3);font-size:2.1rem;line-height:1.3;color:var(--text-primary);"></h1>
+        <p id="hero-subtitle"
+          style="color:var(--text-muted);font-size:1.05rem;line-height:1.65;margin:0 0 var(--space-3);"></p>
+        <div id="hero-meta"
+          style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--text-muted);"></div>
+      </div>
+    </section>
+
+    <!-- BODY -->
+    <div class="case-body" id="case-content" style="display:none;"></div>
 
   </main>
 
-  <!-- ============ FOOTER ============ -->
   <footer class="footer" role="contentinfo">
     <div class="container">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);padding:var(--space-8) 0;">
-
+      <div
+        style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);padding:var(--space-8) 0;">
         <a href="index.html" class="nav-logo">
-          <div class="logo-icon" aria-hidden="true"><img src="assets/img/logo-navbar.png" alt="" style="width:100%;height:100%;object-fit:contain;padding:4px;" /></div>
+          <div class="logo-icon" aria-hidden="true"><img src="assets/img/logo-navbar.png" alt=""
+              style="width:100%;height:100%;object-fit:contain;padding:4px;" /></div>
           Excel Analyst Hub
         </a>
-
         <nav aria-label="Footer" style="display:flex;gap:var(--space-5);flex-wrap:wrap;">
-          <a href="learn.html" style="font-size:0.875rem;color:var(--text-muted);text-decoration:none;">Jalur Belajar</a>
-          <a href="tools.html" style="font-size:0.875rem;color:var(--text-muted);text-decoration:none;">Tools</a>
-          <a href="portfolio.html" style="font-size:0.875rem;color:var(--text-muted);text-decoration:none;">Portofolio</a>
-          <a href="pricing.html" style="font-size:0.875rem;color:var(--text-muted);text-decoration:none;">Harga</a>
+          <a href="learn.html" style="font-size:.875rem;color:var(--text-muted);text-decoration:none;">Jalur Belajar</a>
+          <a href="tools.html" style="font-size:.875rem;color:var(--text-muted);text-decoration:none;">Tools</a>
+          <a href="portfolio.html"
+            style="font-size:.875rem;color:var(--text-muted);text-decoration:none;">Portofolio</a>
         </nav>
-
       </div>
-
-      <div style="border-top:1px solid var(--border);padding:var(--space-5) 0;text-align:center;">
-        <p style="font-size:0.8rem;color:var(--text-muted);margin:0;">© 2026 Excel Analyst Hub — Belajar Excel untuk karir data analyst Indonesia.</p>
+      <div style="border-top:.5px solid var(--border);padding:var(--space-5) 0;text-align:center;">
+        <p style="font-size:.8rem;color:var(--text-muted);margin:0;">© 2026 Excel Analyst Hub — Belajar Excel untuk
+          karir data analyst Indonesia.</p>
       </div>
     </div>
   </footer>
 
   <script src="assets/js/main.js"></script>
+  <script>
+    (async function () {
+      // ── Supabase init ──
+      let sb;
+      if (window.supaClient) { sb = window.supaClient; }
+      else if (window.supabase) {
+        sb = window.supabase.createClient(
+          'https://laowissohsnhfsbiwcpd.supabase.co',
+          'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC'
+        );
+      } else { showError('Supabase library belum dimuat.'); return; }
 
+      // ── URL param ──
+      const id = new URLSearchParams(window.location.search).get('id') || '';
+      if (!id) { window.location.href = 'portfolio.html'; return; }
+
+      // ── Fetch ──
+      const { data: d, error: e } = await sb
+        .from('portfolio_cases')
+        .select('*')
+        .eq('id', id)
+        .eq('is_published', true)
+        .single();
+
+      hide('state-loading');
+      if (e || !d) {
+        if (e && e.code === 'PGRST116') show('state-not-found');
+        else showError(e ? e.message : 'Data tidak ditemukan.');
+        return;
+      }
+
+      render(d);
+      show('case-hero');
+      show('case-content');
+
+      // ════════════════════════════════════════
+      function show(id) { const el = document.getElementById(id); if (el) el.style.display = ''; }
+      function hide(id) { const el = document.getElementById(id); if (el) el.style.display = 'none'; }
+      function showError(msg) { hide('state-loading'); document.getElementById('error-msg').textContent = msg; show('state-error'); }
+      function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+      function j(v) { return Array.isArray(v) ? v : (typeof v === 'string' ? JSON.parse(v || '[]') : v || []); }
+      function jo(v) { return (typeof v === 'object' && !Array.isArray(v) && v !== null) ? v : (typeof v === 'string' ? JSON.parse(v || '{}') : {}); }
+
+      function render(d) {
+        // meta
+        document.getElementById('page-title').textContent = d.title + ' — Excel Analyst Hub';
+        document.getElementById('page-meta-desc').setAttribute('content', d.subtitle);
+
+        // hero badges
+        const diffColor = { beginner: 'var(--text-success)', intermediate: 'var(--text-accent)', advanced: 'var(--text-danger)' };
+        const diffBg = { beginner: 'var(--bg-success)', intermediate: 'var(--bg-accent)', advanced: 'var(--bg-danger)' };
+        const techTags = (d.tech_tags || []).map(t => `<span class="badge" style="background:var(--surface);border:.5px solid var(--border);color:var(--text-muted);font-size:11px;">${t}</span>`).join('');
+        document.getElementById('hero-badges').innerHTML =
+          `<span class="badge" style="background:${d.badge_bg};color:${d.badge_color};">${d.badge_label}</span>` +
+          `<span class="badge" style="background:${diffBg[d.difficulty] || 'var(--surface)'};color:${diffColor[d.difficulty] || 'var(--text-muted)'};">${d.difficulty}</span>` +
+          techTags;
+
+        document.getElementById('hero-title').textContent = d.title;
+        document.getElementById('hero-subtitle').textContent = d.subtitle;
+        document.getElementById('hero-meta').innerHTML =
+          `<span>🏢 ${d.company_name}</span><span style="opacity:.4">·</span><span>📍 ${d.company_location}</span>`;
+
+        // build content
+        const ac = d.accent_color || '#3b82f6';
+        let html = '';
+
+        // 1. HOOK
+        html += `<div class="hook-box"><p class="hook-label">Masalah nyata</p><p class="hook-text">${d.hook || ''}</p></div>`;
+
+        // 2. STORY STEPS
+        const steps = j(d.story_steps);
+        if (steps.length) {
+          html += `<div class="sec"><p class="sec-label">Perjalanan analisis</p><div class="story-steps">`;
+          steps.forEach((s, i) => {
+            const last = i === steps.length - 1;
+            html += `<div class="st">
+            <div class="st-left">
+              <div class="st-num">${i + 1}</div>
+              ${!last ? '<div class="st-line"></div>' : ''}
+            </div>
+            <div class="st-body">
+              <p class="st-title">${s.title || ''}</p>
+              <p class="st-desc">${s.desc || ''}</p>
+            </div>
+          </div>`;
+          });
+          html += `</div></div>`;
+        }
+
+        // 3. BEFORE / AFTER
+        const before = jo(d.dataset_before);
+        const after = jo(d.dataset_after);
+        if (before.columns || after.columns) {
+          html += `<div class="sec"><p class="sec-label">Data sebelum dan sesudah analisis</p>
+          <div class="ba-toggle">
+            <button class="ba-btn active" onclick="switchBA(this,'ba-before-${id}','ba-after-${id}')">Sebelum — data mentah</button>
+            <button class="ba-btn" onclick="switchBA(this,'ba-after-${id}','ba-before-${id}')">Sesudah — hasil analisis</button>
+          </div>
+          <div class="ba-panel active" id="ba-before-${id}">${buildBATable(before)}</div>
+          <div class="ba-panel" id="ba-after-${id}">${buildBATable(after)}</div>
+          <a class="btn-primary" href="${d.download_file}" download style="display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:13px;">
+            📥 Unduh File Excel (.xlsx)
+          </a>
+        </div>`;
+        }
+
+        // 4. FORMULAS
+        const formulas = j(d.formulas);
+        if (formulas.length) {
+          html += `<div class="sec"><p class="sec-label">Formula utama</p>`;
+          formulas.forEach(f => {
+            if (f.why) html += `<div class="why-box"><p class="why-label">💡 Kenapa ${f.label || 'formula ini'}?</p><p class="why-text">${f.why}</p></div>`;
+            if (f.label) html += `<p class="formula-label">${f.label}</p>`;
+            if (f.code) html += `<pre class="code-block">${esc(f.code)}</pre>`;
+          });
+          html += `</div>`;
+        }
+
+        // 5. COMMON MISTAKES
+        const mistakes = j(d.common_mistakes);
+        if (mistakes.length) {
+          html += `<div class="sec"><p class="sec-label">Jebakan umum + cara fix</p>`;
+          mistakes.forEach((m, i) => {
+            html += `<div class="trap">
+            <div class="trap-head">
+              <div class="trap-icon">✕</div>
+              <p class="trap-title">${m.title || ''}</p>
+            </div>
+            <p class="trap-cause">${m.cause || ''}</p>
+            <p class="trap-fix">✓ Fix: ${m.fix || ''}</p>
+          </div>`;
+          });
+          html += `</div>`;
+        }
+
+        // 6. IMPACT
+        const impact = jo(d.impact);
+        if (impact.metrics) {
+          html += `<div class="sec"><p class="sec-label">Dampak bisnis</p>
+          <div class="impact-block" style="border-left-color:${ac}">
+            ${impact.description ? `<p class="impact-desc">${impact.description}</p>` : ''}
+            <div class="metrics-grid">
+              ${(impact.metrics || []).map(m => `
+                <div class="metric-card" style="border-left-color:${m.color || ac}">
+                  <div class="metric-value" style="color:${m.color || ac}">${m.value || ''}</div>
+                  <p class="metric-label">${m.label || ''}</p>
+                </div>`).join('')}
+            </div>
+          </div>
+        </div>`;
+        }
+
+        html += `<div class="divider"></div>`;
+
+        // 7. CHECKLIST
+        const cl = j(d.checklist);
+        if (cl.length) {
+          const clId = 'cl_' + id.replace(/-/g, '_');
+          html += `<div class="sec"><p class="sec-label">Checklist langkah analisis</p>
+          <div id="${clId}">
+            ${cl.map((step, i) => `
+              <div class="cl-item" onclick="chk(this,'${clId}')">
+                <div class="cl-box"><span class="cl-check">✓</span></div>
+                <span class="cl-txt">${step}</span>
+              </div>`).join('')}
+          </div>
+          <div class="prog-wrap"><div class="prog-bar" id="${clId}_pb" style="width:0%"></div></div>
+          <p class="prog-lbl" id="${clId}_lbl">0 dari ${cl.length} langkah selesai</p>
+        </div>`;
+        }
+
+        // 8. QUIZ
+        const quiz = j(d.quiz);
+        if (quiz.length) {
+          html += `<div class="sec"><p class="sec-label">Mini quiz</p>`;
+          quiz.forEach((q, qi) => {
+            const qid = `q_${id.replace(/-/g, '_')}_${qi}`;
+            html += `<div class="qcard" id="${qid}">
+            <p class="qq">${qi + 1}. ${q.question || ''}</p>
+            <div class="qopts">
+              ${(q.options || []).map(o => `
+                <div class="qopt" onclick="ans(this,'${qid}',${o.correct},'${(o.explanation || '').replace(/'/g, "\\'")}')">
+                  <div class="ocircle">${o.label || ''}</div>
+                  ${o.text || ''}
+                </div>`).join('')}
+            </div>
+            <div class="qfb" id="${qid}_fb"></div>
+          </div>`;
+          });
+          html += `</div>`;
+        }
+
+        // 9. CHALLENGES
+        const challenges = j(d.challenges);
+        if (challenges.length) {
+          const chColors = { intermediate: '#f59e0b', advanced: '#ef4444' };
+          html += `<div class="sec"><p class="sec-label">Tantangan lanjutan</p>`;
+          challenges.forEach(c => {
+            const cc = chColors[c.level] || 'var(--border-strong)';
+            html += `<div class="ch" style="border-left-color:${cc}">
+            <p class="ch-level" style="color:${cc}">${c.level || ''}</p>
+            <p class="ch-title">${c.title || ''}</p>
+            <p class="ch-desc">${c.desc || ''}</p>
+          </div>`;
+          });
+          html += `</div>`;
+        }
+
+        // 10. SKILL TAGS
+        const skills = d.skill_tags || [];
+        if (skills.length) {
+          html += `<div class="sec"><p class="sec-label">Skill yang kamu latih</p>
+          <div class="skill-tags">
+            ${skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
+          </div>
+        </div>`;
+        }
+
+        // Download (bottom)
+        html += `<div class="dl-cta">
+        <h4>Lihat &amp; Unduh File Proyek</h4>
+        <a href="${d.download_file}" download class="btn-primary" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;">
+          📥 Unduh File Excel (.xlsx)
+        </a>
+      </div>`;
+
+        document.getElementById('case-content').innerHTML = html;
+      }
+
+      // ── Build table untuk before/after ──
+      function buildBATable(data) {
+        if (!data || !data.columns) return '<p class="ba-note">Data tidak tersedia.</p>';
+        let t = `<div class="tbl-wrap"><table class="data-table"><thead><tr>`;
+        data.columns.forEach(c => { t += `<th>${c}</th>`; });
+        t += `</tr></thead><tbody>`;
+        (data.rows || []).forEach(row => {
+          t += `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`;
+        });
+        t += `</tbody></table></div>`;
+        if (data.note) t += `<p class="ba-note">${data.note}</p>`;
+        return t;
+      }
+
+    })(); // end async IIFE
+
+    // ── Global handlers (dipanggil dari onclick inline) ──
+    function switchBA(btn, showId, hideId) {
+      document.querySelectorAll('.ba-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const s = document.getElementById(showId);
+      const h = document.getElementById(hideId);
+      if (s) s.classList.add('active');
+      if (h) h.classList.remove('active');
+    }
+
+    function chk(item, clId) {
+      const box = item.querySelector('.cl-box');
+      const txt = item.querySelector('.cl-txt');
+      const on = box.classList.toggle('on');
+      txt.classList.toggle('done', on);
+      const wrap = document.getElementById(clId);
+      const total = wrap.querySelectorAll('.cl-item').length;
+      const done = wrap.querySelectorAll('.cl-box.on').length;
+      const pct = Math.round(done / total * 100);
+      document.getElementById(clId + '_pb').style.width = pct + '%';
+      document.getElementById(clId + '_lbl').textContent = done + ' dari ' + total + ' langkah selesai';
+    }
+
+    function ans(opt, qid, correct, explanation) {
+      const card = document.getElementById(qid);
+      card.querySelectorAll('.qopt').forEach(o => o.classList.add('off'));
+      opt.classList.add(correct ? 'ok' : 'no');
+      const fb = document.getElementById(qid + '_fb');
+      fb.textContent = (correct ? '✓ ' : '✗ ') + explanation;
+      fb.className = 'qfb show ' + (correct ? 'ok' : 'no');
+    }
+  </script>
 
 </body>
+
 </html>
