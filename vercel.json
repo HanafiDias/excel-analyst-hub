@@ -1,1 +1,0 @@
-{"version": 2, "functions": {"api/gemini-proxy.js": {"runtime": "@vercel/node@3"}}}
