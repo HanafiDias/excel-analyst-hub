@@ -15,7 +15,6 @@
   ------------------------------------------ */
   var SUPABASE_URL = 'https://laowissohsnhfsbiwcpd.supabase.co';
   var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxhb3dpc3NvaHNuaGZzYml3Y3BkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NTY2NzYsImV4cCI6MjA5NjQzMjY3Nn0.mke2iExUiAxxOzmo2PLJx2MlmhORs6ZbqbLy1PquSyE';
-  var GEMINI_KEY = 'GANTI_GEMINI_API_KEY';
   var currentFormula = '';
 
   /* ------------------------------------------
@@ -143,52 +142,7 @@
   /* ------------------------------------------
      LAYER 2: Gemini API fallback
   ------------------------------------------ */
-  async function queryGemini(userQuery, category) {
-    var categoryHint = (category && category !== 'all')
-      ? 'Fokus pada kategori formula Excel: ' + category + '.'
-      : '';
-
-    var prompt = 'Kamu adalah ahli Microsoft Excel. User meminta bantuan formula untuk: "' + userQuery + '". ' + categoryHint + '\n'
-      + 'Balas HANYA dalam format JSON berikut, tanpa teks lain, tanpa markdown, tanpa komentar:\n'
-      + '{\n'
-      + '  "formula_name": "nama formula utama",\n'
-      + '  "formula": "=FORMULA(argumen1, argumen2)",\n'
-      + '  "syntax_explanation": "• argumen1 = penjelasan\\n• argumen2 = penjelasan",\n'
-      + '  "example_case": "deskripsi kasus nyata penggunaan formula ini dalam konteks pekerjaan",\n'
-      + '  "example_formula": "=FORMULA(contoh, nyata)",\n'
-      + '  "alternative_formula": "=FORMULA_ALTERNATIF() atau null jika tidak ada",\n'
-      + '  "alternative_label": "penjelasan singkat kenapa pakai alternatif ini atau null",\n'
-      + '  "difficulty": "beginner atau intermediate atau advanced"\n'
-      + '}';
-
-    var res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + GEMINI_KEY, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.2, maxOutputTokens: 1024 }
-      })
-    });
-
-    if (!res.ok) return null;
-    var data = await res.json();
-    var raw = (data &&
-      data.candidates &&
-      data.candidates[0] &&
-      data.candidates[0].content &&
-      data.candidates[0].content.parts &&
-      data.candidates[0].content.parts[0] &&
-      data.candidates[0].content.parts[0].text) || '';
-
-    var clean = raw.replace(/```json|```/g, '').trim();
-    try {
-      var parsed = JSON.parse(clean);
-      parsed._source = 'ai';
-      return parsed;
-    } catch (e) {
-      return null;
-    }
-  }
+  // AI fallback removed — database-only mode
 
   /* ------------------------------------------
      UI: Show / Hide states
@@ -365,19 +319,7 @@
         console.warn('Supabase lookup gagal:', err);
       }
 
-      // LAYER 2: Gemini fallback
-      showLoading('Tidak ada di library, menghubungi AI...');
-      try {
-        var aiResult = await queryGemini(query, category);
-        if (aiResult) {
-          renderResult(aiResult, 'ai');
-          return;
-        }
-      } catch (err) {
-        console.warn('Gemini fallback gagal:', err);
-      }
-
-      showError('Formula tidak ditemukan. Coba deskripsikan dengan kata yang berbeda.');
+      showError('Formula belum tersedia di library kami. Coba gunakan kata kunci yang lebih spesifik, contoh: "vlookup", "sumif", "iferror", atau nama formula Excel yang kamu tahu.');
     });
 
   });
