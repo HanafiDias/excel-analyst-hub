@@ -160,7 +160,7 @@
       + '  "difficulty": "beginner atau intermediate atau advanced"\n'
       + '}';
 
-    var res = await fetch('/api/gemini-proxy', {
+    var res = await fetch('https://excelanalysthub.vercel.app/api/gemini-proxy', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ prompt: prompt })
