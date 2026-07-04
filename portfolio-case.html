@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <script>
+        (function () { try { var t = localStorage.getItem('eah_theme') || 'dark'; document.documentElement.setAttribute('data-theme', t); } catch (e) { } })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png" />
+    <title id="page-title">Studi Kasus — Excel Analyst Hub</title>
+    <meta name="description" id="page-meta-desc" content="Studi kasus Excel dunia nyata dari Excel Analyst Hub." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/components.css" />
+
+    <!-- Supabase CDN dulu, baru config global -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/supabase-config.js"></script>
+    <script src="assets/js/session.js" defer></script>
+
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        .case-hero {
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+            padding: var(--space-6) 0
+        }
+
+        .case-body {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 0 var(--space-4) var(--space-8)
+        }
+
+        .sec {
+            margin-top: var(--space-7)
+        }
+
+        .sec-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin: 0 0 14px;
+            padding-bottom: 8px;
+            border-bottom: .5px solid var(--border)
+        }
+
+        .divider {
+            height: .5px;
+            background: var(--border);
+            margin: var(--space-6) 0
+        }
+
+        /* Hook */
+        .hook-box {
+            background: var(--bg-success);
+            border-left: 3px solid var(--border-success);
+            border-radius: 0 8px 8px 0;
+            padding: 14px 16px;
+            margin-bottom: var(--space-5)
+        }
+
+        .hook-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-success);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin: 0 0 5px
+        }
+
+        .hook-text {
+            font-size: 14px;
+            color: var(--text-primary);
+            margin: 0;
+            line-height: 1.65
+        }
+
+        /* Story steps */
+        .story-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0
+        }
+
+        .st {
+            display: flex;
+            gap: 12px;
+            align-items: stretch
+        }
+
+        .st-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 28px;
+            flex-shrink: 0
+        }
+
+        .st-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--bg-accent);
+            color: var(--text-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 500;
+            flex-shrink: 0
+        }
+
+        .st-line {
+            width: 1.5px;
+            flex: 1;
+            min-height: 8px;
+            margin-top: 3px;
+            background: var(--border)
+        }
+
+        .st-body {
+            flex: 1;
+            padding-bottom: 16px
+        }
+
+        .st-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin: 0 0 3px
+        }
+
+        .st-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin: 0
+        }
+
+        /* Before/After */
+        .ba-toggle {
+            display: flex;
+            border: .5px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            width: fit-content;
+            margin-bottom: 14px
+        }
+
+        .ba-btn {
+            padding: 7px 18px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            transition: background .15s, color .15s
+        }
+
+        .ba-btn.active {
+            background: var(--surface-2);
+            color: var(--text-primary)
+        }
+
+        .ba-panel {
+            display: none
+        }
+
+        .ba-panel.active {
+            display: block
+        }
+
+        .tbl-wrap {
+            overflow-x: auto
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            min-width: 400px
+        }
+
+        .data-table th,
+        .data-table td {
+            border: .5px solid var(--border);
+            padding: 8px 10px;
+            text-align: left;
+            color: var(--text-secondary)
+        }
+
+        .data-table th {
+            background: var(--surface-1);
+            color: var(--text-primary);
+            font-weight: 500
+        }
+
+        .ba-note {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            line-height: 1.5;
+            font-style: italic
+        }
+
+        /* Formula */
+        .why-box {
+            background: var(--surface-1);
+            border: .5px solid var(--border);
+            border-left: 3px solid var(--border-accent);
+            border-radius: 0 8px 8px 0;
+            padding: 11px 14px;
+            margin: 10px 0 8px
+        }
+
+        .why-label {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-accent);
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            margin: 0 0 4px
+        }
+
+        .why-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.55
+        }
+
+        .formula-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin: 14px 0 4px
+        }
+
+        .code-block {
+            background: #161b22;
+            color: #d4d4d4;
+            padding: 14px 16px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 12px;
+            line-height: 1.65;
+            overflow-x: auto;
+            border: .5px solid rgba(255, 255, 255, 0.06);
+            white-space: pre;
+            margin: 0 0 14px
+        }
+
+        /* Traps */
+        .trap {
+            background: var(--surface-2);
+            border: .5px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 10px
+        }
+
+        .trap-head {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px
+        }
+
+        .trap-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--bg-danger);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 11px;
+            color: var(--text-danger)
+        }
+
+        .trap-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin: 0
+        }
+
+        .trap-cause {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0 0 8px
+        }
+
+        .trap-fix {
+            font-size: 12px;
+            background: var(--bg-success);
+            color: var(--text-success);
+            border-radius: 6px;
+            padding: 7px 10px;
+            margin: 0;
+            line-height: 1.5
+        }
+
+        /* Impact */
+        .impact-block {
+            border-radius: 0 10px 10px 0;
+            padding: var(--space-5);
+            border-left: 4px solid #3b82f6;
+            background: var(--surface-2);
+            margin-top: 10px
+        }
+
+        .impact-desc {
+            font-size: 14px;
+            color: var(--text-primary);
+            line-height: 1.7;
+            margin: 0 0 var(--space-4)
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+            gap: var(--space-3)
+        }
+
+        .metric-card {
+            background: var(--surface);
+            padding: var(--space-4);
+            border-radius: 8px;
+            border: .5px solid var(--border);
+            border-left: 4px solid #3b82f6
+        }
+
+        .metric-value {
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin: 0 0 6px;
+            line-height: 1
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.45
+        }
+
+        /* Checklist */
+        .cl-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 9px 0;
+            border-bottom: .5px solid var(--border);
+            cursor: pointer
+        }
+
+        .cl-item:last-child {
+            border: none
+        }
+
+        .cl-box {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            border: 1.5px solid var(--border-strong);
+            flex-shrink: 0;
+            margin-top: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .15s, border-color .15s
+        }
+
+        .cl-box.on {
+            background: var(--fill-success);
+            border-color: var(--fill-success)
+        }
+
+        .cl-check {
+            font-size: 11px;
+            color: #fff;
+            display: none
+        }
+
+        .cl-box.on .cl-check {
+            display: block
+        }
+
+        .cl-txt {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            user-select: none
+        }
+
+        .cl-txt.done {
+            text-decoration: line-through;
+            color: var(--text-muted)
+        }
+
+        .prog-wrap {
+            background: var(--surface-1);
+            border-radius: 99px;
+            height: 5px;
+            margin-top: 12px;
+            overflow: hidden
+        }
+
+        .prog-bar {
+            height: 100%;
+            border-radius: 99px;
+            background: var(--fill-success);
+            transition: width .3s
+        }
+
+        .prog-lbl {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 5px
+        }
+
+        /* Quiz */
+        .qcard {
+            background: var(--surface-2);
+            border: .5px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 10px
+        }
+
+        .qq {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin: 0 0 10px
+        }
+
+        .qopts {
+            display: flex;
+            flex-direction: column;
+            gap: 7px
+        }
+
+        .qopt {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            background: var(--surface-1);
+            border: .5px solid var(--border);
+            border-radius: var(--radius);
+            padding: 9px 11px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text-secondary);
+            transition: border-color .15s
+        }
+
+        .qopt:hover {
+            border-color: var(--border-strong)
+        }
+
+        .qopt.ok {
+            background: var(--bg-success);
+            border-color: var(--border-success);
+            color: var(--text-success);
+            cursor: default;
+            pointer-events: none
+        }
+
+        .qopt.no {
+            background: var(--bg-danger);
+            border-color: var(--border-danger);
+            color: var(--text-danger);
+            cursor: default;
+            pointer-events: none
+        }
+
+        .qopt.off {
+            cursor: default;
+            pointer-events: none
+        }
+
+        .ocircle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1.5px solid var(--border-strong);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 500
+        }
+
+        .qfb {
+            font-size: 12px;
+            margin-top: 8px;
+            padding: 8px 10px;
+            border-radius: var(--radius);
+            display: none;
+            line-height: 1.45
+        }
+
+        .qfb.show {
+            display: block
+        }
+
+        .qfb.ok {
+            background: var(--bg-success);
+            color: var(--text-success)
+        }
+
+        .qfb.no {
+            background: var(--bg-danger);
+            color: var(--text-danger)
+        }
+
+        /* Challenges */
+        .ch {
+            border-left: 3px solid var(--border-strong);
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            background: var(--surface-2);
+            border-radius: 0 8px 8px 0
+        }
+
+        .ch-level {
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            margin: 0 0 4px
+        }
+
+        .ch-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin: 0 0 5px
+        }
+
+        .ch-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0
+        }
+
+        /* Skill tags */
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 10px
+        }
+
+        .skill-tag {
+            font-size: 12px;
+            padding: 4px 11px;
+            border-radius: 20px;
+            background: var(--bg-accent);
+            color: var(--text-accent);
+            border: .5px solid var(--border-accent)
+        }
+
+        /* Download CTA */
+        .dl-cta {
+            border-top: .5px solid var(--border);
+            padding-top: var(--space-5);
+            margin-top: var(--space-6);
+            text-align: center
+        }
+
+        .dl-cta h4 {
+            color: var(--text-primary);
+            margin: 0 0 var(--space-3);
+            font-size: 1rem
+        }
+
+        /* States */
+        .state-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 50vh;
+            text-align: center;
+            color: var(--text-muted);
+            gap: var(--space-3)
+        }
+
+        .state-container h2 {
+            color: var(--text-primary);
+            margin: 0
+        }
+
+        .state-container p {
+            margin: 0
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite;
+            font-size: 2.5rem;
+            display: inline-block
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        @media(max-width:640px) {
+            .case-body {
+                padding: 0 var(--space-3) var(--space-6)
+            }
+
+            .metric-value {
+                font-size: 1.5rem
+            }
+
+            .ba-btn {
+                padding: 6px 12px;
+                font-size: 11px
+            }
+        }
+    </style>
+</head>
+
+<body class="page-body">
+
+    <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+    <nav class="nav" role="navigation" aria-label="Navigasi utama">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon" aria-hidden="true"><img src="assets/img/logo-navbar.png" alt=""
+                        style="width:100%;height:100%;object-fit:contain;padding:4px;" /></div>
+                Excel Analyst Hub
+            </a>
+            <ul class="nav-links" role="list">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="learn.html">Belajar</a></li>
+                <li><a href="portfolio.html" class="active">Portofolio</a></li>
+                <li><a href="tools.html">Tools</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang"
+                    title="Mode terang">☀️</button>
+                <a href="login.html" class="btn-sm btn-nav-premium" id="nav-auth-btn"
+                    style="padding:.45rem 1rem;border-radius:50px;font-weight:600;letter-spacing:.3px;">Masuk /
+                    Profil</a>
+                <button class="hamburger" aria-label="Buka menu" aria-expanded="false"
+                    aria-controls="mobile-menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-menu-mobile" id="mobile-menu" role="navigation" aria-label="Navigasi mobile">
+        <a href="index.html">Beranda</a>
+        <a href="learn.html">Belajar</a>
+        <a href="portfolio.html">Portofolio</a>
+        <a href="tools.html">Tools</a>
+        <div style="height:1px;background:var(--border);margin:8px 0;"></div>
+        <a href="login.html" class="btn-nav-premium" id="mobile-auth-btn"
+            style="text-align:center;border-radius:8px;margin-top:8px;">Masuk / Profil</a>
+    </div>
+
+    <main id="main-content">
+
+        <div class="state-container" id="state-loading">
+            <span class="spinner">⚙️</span>
+            <p>Memuat studi kasus...</p>
+        </div>
+
+        <div class="state-container" id="state-not-found" style="display:none;">
+            <span style="font-size:3rem;">🔍</span>
+            <h2>Studi Kasus Tidak Ditemukan</h2>
+            <p>ID yang diminta tidak ada dalam database.</p>
+            <a href="portfolio.html" class="btn-primary" style="margin-top:var(--space-2);">← Kembali ke Portofolio</a>
+        </div>
+
+        <div class="state-container" id="state-error" style="display:none;">
+            <span style="font-size:3rem;">⚠️</span>
+            <h2>Gagal Memuat Data</h2>
+            <p id="error-msg">Terjadi kesalahan saat menghubungi database.</p>
+            <a href="portfolio.html" class="btn-ghost" style="margin-top:var(--space-2);">← Kembali ke Portofolio</a>
+        </div>
+
+        <section class="case-hero" id="case-hero" style="display:none;">
+            <div class="container" style="max-width:820px;">
+                <a href="portfolio.html" class="btn-ghost btn-sm"
+                    style="margin-bottom:var(--space-4);display:inline-flex;align-items:center;gap:5px;">← Kembali ke
+                    Portofolio</a>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--space-3);" id="hero-badges"></div>
+                <h1 id="hero-title"
+                    style="margin:0 0 var(--space-3);font-size:2.1rem;line-height:1.3;color:var(--text-primary);"></h1>
+                <p id="hero-subtitle"
+                    style="color:var(--text-muted);font-size:1.05rem;line-height:1.65;margin:0 0 var(--space-3);"></p>
+                <div id="hero-meta"
+                    style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--text-muted);">
+                </div>
+            </div>
+        </section>
+
+        <div class="case-body" id="case-content" style="display:none;"></div>
+
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div
+                style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);padding:var(--space-8) 0;">
+                <a href="index.html" class="nav-logo">
+                    <div class="logo-icon" aria-hidden="true"><img src="assets/img/logo-navbar.png" alt=""
+                            style="width:100%;height:100%;object-fit:contain;padding:4px;" /></div>
+                    Excel Analyst Hub
+                </a>
+                <nav aria-label="Footer" style="display:flex;gap:var(--space-5);flex-wrap:wrap;">
+                    <a href="learn.html" style="font-size:.875rem;color:var(--text-muted);text-decoration:none;">Jalur
+                        Belajar</a>
+                    <a href="tools.html"
+                        style="font-size:.875rem;color:var(--text-muted);text-decoration:none;">Tools</a>
+                    <a href="portfolio.html"
+                        style="font-size:.875rem;color:var(--text-muted);text-decoration:none;">Portofolio</a>
+                </nav>
+            </div>
+            <div style="border-top:.5px solid var(--border);padding:var(--space-5) 0;text-align:center;">
+                <p style="font-size:.8rem;color:var(--text-muted);margin:0;">© 2026 Excel Analyst Hub — Belajar Excel
+                    untuk karir data analyst Indonesia.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        // ── Global handlers (dipanggil dari onclick di HTML yang di-render JS) ──
+        function switchBA(btn, showId, hideId) {
+            document.querySelectorAll('.ba-btn').forEach(function (b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            var s = document.getElementById(showId);
+            var h = document.getElementById(hideId);
+            if (s) s.classList.add('active');
+            if (h) h.classList.remove('active');
+        }
+
+        function chk(item, clId) {
+            var box = item.querySelector('.cl-box');
+            var txt = item.querySelector('.cl-txt');
+            var on = box.classList.toggle('on');
+            txt.classList.toggle('done', on);
+            var wrap = document.getElementById(clId);
+            var total = wrap.querySelectorAll('.cl-item').length;
+            var done = wrap.querySelectorAll('.cl-box.on').length;
+            document.getElementById(clId + '_pb').style.width = Math.round(done / total * 100) + '%';
+            document.getElementById(clId + '_lbl').textContent = done + ' dari ' + total + ' langkah selesai';
+        }
+
+        function ans(opt, qid, correct, explanation) {
+            document.getElementById(qid).querySelectorAll('.qopt').forEach(function (o) { o.classList.add('off'); });
+            opt.classList.add(correct ? 'ok' : 'no');
+            var fb = document.getElementById(qid + '_fb');
+            fb.textContent = (correct ? '✓ ' : '✗ ') + explanation;
+            fb.className = 'qfb show ' + (correct ? 'ok' : 'no');
+        }
+
+        // ── Main logic — tunggu DOM siap ──
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Pakai window.supaClient dari supabase-config.js (sudah di-init di <head>)
+            var sb = window.supaClient;
+            if (!sb) {
+                showError('Koneksi Supabase gagal. Pastikan supabase-config.js termuat.');
+                return;
+            }
+
+            var caseId = new URLSearchParams(window.location.search).get('id') || '';
+            if (!caseId) { window.location.href = 'portfolio.html'; return; }
+
+            sb.from('portfolio_cases')
+                .select('*')
+                .eq('id', caseId)
+                .eq('is_published', true)
+                .single()
+                .then(function (res) {
+                    hide('state-loading');
+                    if (res.error || !res.data) {
+                        if (res.error && res.error.code === 'PGRST116') show('state-not-found');
+                        else showError(res.error ? res.error.message : 'Data tidak ditemukan.');
+                        return;
+                    }
+                    renderCase(res.data, caseId);
+                    show('case-hero');
+                    show('case-content');
+                })
+                .catch(function (err) {
+                    hide('state-loading');
+                    showError(err.message || 'Gagal menghubungi database.');
+                });
+
+            // ── DOM helpers ──
+            function show(elId) { var el = document.getElementById(elId); if (el) el.style.display = ''; }
+            function hide(elId) { var el = document.getElementById(elId); if (el) el.style.display = 'none'; }
+            function showError(msg) { hide('state-loading'); document.getElementById('error-msg').textContent = msg; show('state-error'); }
+            function escHtml(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+            function parseArr(v) {
+                if (Array.isArray(v)) return v;
+                if (typeof v === 'string') { try { return JSON.parse(v); } catch (e) { return []; } }
+                return v || [];
+            }
+            function parseObj(v) {
+                if (v && typeof v === 'object' && !Array.isArray(v)) return v;
+                if (typeof v === 'string') { try { return JSON.parse(v); } catch (e) { return {}; } }
+                return {};
+            }
+
+            // ── Render seluruh halaman ──
+            function renderCase(d, caseId) {
+                document.getElementById('page-title').textContent = d.title + ' — Excel Analyst Hub';
+                document.getElementById('page-meta-desc').setAttribute('content', d.subtitle);
+
+                var diffColor = { beginner: 'var(--text-success)', intermediate: 'var(--text-accent)', advanced: 'var(--text-danger)' };
+                var diffBg = { beginner: 'var(--bg-success)', intermediate: 'var(--bg-accent)', advanced: 'var(--bg-danger)' };
+
+                document.getElementById('hero-badges').innerHTML =
+                    '<span class="badge" style="background:' + d.badge_bg + ';color:' + d.badge_color + ';">' + d.badge_label + '</span>' +
+                    '<span class="badge" style="background:' + (diffBg[d.difficulty] || 'var(--surface)') + ';color:' + (diffColor[d.difficulty] || 'var(--text-muted)') + ';">' + d.difficulty + '</span>' +
+                    (d.tech_tags || []).map(function (t) {
+                        return '<span class="badge" style="background:var(--surface);border:.5px solid var(--border);color:var(--text-muted);font-size:11px;">' + t + '</span>';
+                    }).join('');
+
+                document.getElementById('hero-title').textContent = d.title;
+                document.getElementById('hero-subtitle').textContent = d.subtitle;
+                document.getElementById('hero-meta').innerHTML =
+                    '<span>🏢 ' + d.company_name + '</span><span style="opacity:.4">·</span><span>📍 ' + d.company_location + '</span>';
+
+                var ac = d.accent_color || '#3b82f6';
+                var sid = caseId.replace(/-/g, '_');
+                var html = '';
+
+                // 1. HOOK
+                html += '<div class="hook-box">' +
+                    '<p class="hook-label">Masalah nyata</p>' +
+                    '<p class="hook-text">' + (d.hook || '') + '</p>' +
+                    '</div>';
+
+                // 2. STORY STEPS
+                var steps = parseArr(d.story_steps);
+                if (steps.length) {
+                    html += '<div class="sec"><p class="sec-label">Perjalanan analisis</p><div class="story-steps">';
+                    steps.forEach(function (s, i) {
+                        html += '<div class="st">' +
+                            '<div class="st-left">' +
+                            '<div class="st-num">' + (i + 1) + '</div>' +
+                            (i < steps.length - 1 ? '<div class="st-line"></div>' : '') +
+                            '</div>' +
+                            '<div class="st-body">' +
+                            '<p class="st-title">' + (s.title || '') + '</p>' +
+                            '<p class="st-desc">' + (s.desc || '') + '</p>' +
+                            '</div>' +
+                            '</div>';
+                    });
+                    html += '</div></div>';
+                }
+
+                // 3. BEFORE / AFTER
+                var before = parseObj(d.dataset_before);
+                var after = parseObj(d.dataset_after);
+                if (before.columns || after.columns) {
+                    var bId = 'ba_b_' + sid;
+                    var aId = 'ba_a_' + sid;
+                    html += '<div class="sec"><p class="sec-label">Data sebelum dan sesudah analisis</p>' +
+                        '<div class="ba-toggle">' +
+                        '<button class="ba-btn active" onclick="switchBA(this,\'' + bId + '\',\'' + aId + '\')">Sebelum — data mentah</button>' +
+                        '<button class="ba-btn" onclick="switchBA(this,\'' + aId + '\',\'' + bId + '\')">Sesudah — hasil analisis</button>' +
+                        '</div>' +
+                        '<div class="ba-panel active" id="' + bId + '">' + buildTable(before) + '</div>' +
+                        '<div class="ba-panel" id="' + aId + '">' + buildTable(after) + '</div>' +
+                        '<a class="btn-primary" href="' + d.download_file + '" download style="display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:13px;">📥 Unduh File Excel (.xlsx)</a>' +
+                        '</div>';
+                }
+
+                // 4. FORMULAS
+                var formulas = parseArr(d.formulas);
+                if (formulas.length) {
+                    html += '<div class="sec"><p class="sec-label">Formula utama</p>';
+                    formulas.forEach(function (f) {
+                        if (f.why) html += '<div class="why-box"><p class="why-label">💡 Kenapa ' + (f.label || 'formula ini') + '?</p><p class="why-text">' + f.why + '</p></div>';
+                        if (f.label) html += '<p class="formula-label">' + f.label + '</p>';
+                        if (f.code) html += '<pre class="code-block">' + escHtml(f.code) + '</pre>';
+                    });
+                    html += '</div>';
+                }
+
+                // 5. COMMON MISTAKES
+                var mistakes = parseArr(d.common_mistakes);
+                if (mistakes.length) {
+                    html += '<div class="sec"><p class="sec-label">Jebakan umum + cara fix</p>';
+                    mistakes.forEach(function (m) {
+                        html += '<div class="trap">' +
+                            '<div class="trap-head"><div class="trap-icon">✕</div><p class="trap-title">' + (m.title || '') + '</p></div>' +
+                            '<p class="trap-cause">' + (m.cause || '') + '</p>' +
+                            '<p class="trap-fix">✓ Fix: ' + (m.fix || '') + '</p>' +
+                            '</div>';
+                    });
+                    html += '</div>';
+                }
+
+                // 6. IMPACT
+                var impact = parseObj(d.impact);
+                if (impact.metrics) {
+                    html += '<div class="sec"><p class="sec-label">Dampak bisnis</p>' +
+                        '<div class="impact-block" style="border-left-color:' + ac + '">' +
+                        (impact.description ? '<p class="impact-desc">' + impact.description + '</p>' : '') +
+                        '<div class="metrics-grid">' +
+                        (impact.metrics || []).map(function (m) {
+                            return '<div class="metric-card" style="border-left-color:' + (m.color || ac) + '">' +
+                                '<div class="metric-value" style="color:' + (m.color || ac) + '">' + (m.value || '') + '</div>' +
+                                '<p class="metric-label">' + (m.label || '') + '</p>' +
+                                '</div>';
+                        }).join('') +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                }
+
+                html += '<div class="divider"></div>';
+
+                // 7. CHECKLIST
+                var cl = parseArr(d.checklist);
+                var clId = 'cl_' + sid;
+                if (cl.length) {
+                    html += '<div class="sec"><p class="sec-label">Checklist langkah analisis</p>' +
+                        '<div id="' + clId + '">' +
+                        cl.map(function (step) {
+                            return '<div class="cl-item" onclick="chk(this,\'' + clId + '\')">' +
+                                '<div class="cl-box"><span class="cl-check">✓</span></div>' +
+                                '<span class="cl-txt">' + step + '</span>' +
+                                '</div>';
+                        }).join('') +
+                        '</div>' +
+                        '<div class="prog-wrap"><div class="prog-bar" id="' + clId + '_pb" style="width:0%"></div></div>' +
+                        '<p class="prog-lbl" id="' + clId + '_lbl">0 dari ' + cl.length + ' langkah selesai</p>' +
+                        '</div>';
+                }
+
+                // 8. QUIZ
+                var quiz = parseArr(d.quiz);
+                if (quiz.length) {
+                    html += '<div class="sec"><p class="sec-label">Mini quiz</p>';
+                    quiz.forEach(function (q, qi) {
+                        var qid = 'q_' + sid + '_' + qi;
+                        html += '<div class="qcard" id="' + qid + '">' +
+                            '<p class="qq">' + (qi + 1) + '. ' + (q.question || '') + '</p>' +
+                            '<div class="qopts">' +
+                            (q.options || []).map(function (o) {
+                                var expl = (o.explanation || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+                                return '<div class="qopt" onclick="ans(this,\'' + qid + '\',' + (o.correct ? 'true' : 'false') + ',\'' + expl + '\')">' +
+                                    '<div class="ocircle">' + (o.label || '') + '</div>' + (o.text || '') +
+                                    '</div>';
+                            }).join('') +
+                            '</div>' +
+                            '<div class="qfb" id="' + qid + '_fb"></div>' +
+                            '</div>';
+                    });
+                    html += '</div>';
+                }
+
+                // 9. CHALLENGES
+                var challenges = parseArr(d.challenges);
+                if (challenges.length) {
+                    var chColors = { intermediate: '#f59e0b', advanced: '#ef4444' };
+                    html += '<div class="sec"><p class="sec-label">Tantangan lanjutan</p>';
+                    challenges.forEach(function (c) {
+                        var cc = chColors[c.level] || 'var(--border-strong)';
+                        html += '<div class="ch" style="border-left-color:' + cc + '">' +
+                            '<p class="ch-level" style="color:' + cc + '">' + (c.level || '') + '</p>' +
+                            '<p class="ch-title">' + (c.title || '') + '</p>' +
+                            '<p class="ch-desc">' + (c.desc || '') + '</p>' +
+                            '</div>';
+                    });
+                    html += '</div>';
+                }
+
+                // 10. SKILL TAGS
+                var skills = d.skill_tags || [];
+                if (skills.length) {
+                    html += '<div class="sec"><p class="sec-label">Skill yang kamu latih</p>' +
+                        '<div class="skill-tags">' +
+                        skills.map(function (s) { return '<span class="skill-tag">' + s + '</span>'; }).join('') +
+                        '</div>' +
+                        '</div>';
+                }
+
+                // Download CTA bawah
+                html += '<div class="dl-cta">' +
+                    '<h4>Lihat &amp; Unduh File Proyek</h4>' +
+                    '<a href="' + d.download_file + '" download class="btn-primary" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;">📥 Unduh File Excel (.xlsx)</a>' +
+                    '</div>';
+
+                document.getElementById('case-content').innerHTML = html;
+            }
+
+            // ── Build tabel before/after ──
+            function buildTable(data) {
+                if (!data || !data.columns) return '<p class="ba-note">Data tidak tersedia.</p>';
+                var t = '<div class="tbl-wrap"><table class="data-table"><thead><tr>';
+                data.columns.forEach(function (c) { t += '<th>' + c + '</th>'; });
+                t += '</tr></thead><tbody>';
+                (data.rows || []).forEach(function (row) {
+                    t += '<tr>' + row.map(function (cell) { return '<td>' + cell + '</td>'; }).join('') + '</tr>';
+                });
+                t += '</tbody></table></div>';
+                if (data.note) t += '<p class="ba-note">' + data.note + '</p>';
+                return t;
+            }
+
+        }); // end DOMContentLoaded
+    </script>
+
+</body>
+
+</html>

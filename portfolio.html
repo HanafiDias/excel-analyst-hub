@@ -11,639 +11,184 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png" />
-  <title id="page-title">Studi Kasus — Excel Analyst Hub</title>
-  <meta name="description" id="page-meta-desc" content="Studi kasus Excel dunia nyata dari Excel Analyst Hub." />
+  <title>Portofolio — Excel Analyst Hub</title>
+  <meta name="description"
+    content="Kumpulan studi kasus Excel dunia nyata — dashboard, analisis data, otomasi, dan laporan keuangan dari Excel Analyst Hub." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/components.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-config.js"></script>
   <script src="assets/js/session.js" defer></script>
   <style>
-    * {
-      box-sizing: border-box
-    }
-
-    .case-hero {
-      background: var(--surface-2);
-      border-bottom: 1px solid var(--border);
-      padding: var(--space-6) 0
-    }
-
-    .case-body {
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 0 var(--space-4) var(--space-8)
-    }
-
-    /* ── Section headings ── */
-    .sec {
-      margin-top: var(--space-7)
-    }
-
-    .sec-label {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      margin: 0 0 14px;
-      padding-bottom: 8px;
-      border-bottom: .5px solid var(--border)
-    }
-
-    .body-text {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.75;
-      margin: 0 0 10px
-    }
-
-    .divider {
-      height: .5px;
-      background: var(--border);
-      margin: var(--space-6) 0
-    }
-
-    /* ── Hook ── */
-    .hook-box {
-      background: var(--bg-success);
-      border-left: 3px solid var(--border-success);
-      border-radius: 0 8px 8px 0;
-      padding: 14px 16px;
-      margin-bottom: var(--space-5)
-    }
-
-    .hook-label {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--text-success);
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      margin: 0 0 5px
-    }
-
-    .hook-text {
-      font-size: 14px;
-      color: var(--text-primary);
-      margin: 0;
-      line-height: 1.65
-    }
-
-    /* ── Story steps ── */
-    .story-steps {
+    /* Filter bar */
+    .filter-bar {
       display: flex;
-      flex-direction: column;
-      gap: 0
-    }
-
-    .st {
-      display: flex;
-      gap: 12px;
-      align-items: stretch
-    }
-
-    .st-left {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 28px;
-      flex-shrink: 0
-    }
-
-    .st-num {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: var(--bg-accent);
-      color: var(--text-accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: 500;
-      flex-shrink: 0
-    }
-
-    .st-line {
-      width: 1.5px;
-      flex: 1;
-      min-height: 8px;
-      margin-top: 3px;
-      background: var(--border)
-    }
-
-    .st-body {
-      flex: 1;
-      padding-bottom: 16px
-    }
-
-    .st-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin: 0 0 3px
-    }
-
-    .st-desc {
-      font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.65;
-      margin: 0
-    }
-
-    /* ── Before/After toggle ── */
-    .ba-toggle {
-      display: flex;
-      border: .5px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      width: fit-content;
-      margin-bottom: 14px
-    }
-
-    .ba-btn {
-      padding: 7px 18px;
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      transition: background .15s, color .15s
-    }
-
-    .ba-btn.active {
-      background: var(--surface-2);
-      color: var(--text-primary)
-    }
-
-    .ba-panel {
-      display: none
-    }
-
-    .ba-panel.active {
-      display: block
-    }
-
-    .tbl-wrap {
-      overflow-x: auto
-    }
-
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-      min-width: 400px
-    }
-
-    .data-table th,
-    .data-table td {
-      border: .5px solid var(--border);
-      padding: 8px 10px;
-      text-align: left;
-      color: var(--text-secondary)
-    }
-
-    .data-table th {
-      background: var(--surface-1);
-      color: var(--text-primary);
-      font-weight: 500
-    }
-
-    .ba-note {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 8px;
-      line-height: 1.5;
-      font-style: italic
-    }
-
-    /* ── Formula why callout ── */
-    .why-box {
-      background: var(--surface-1);
-      border: .5px solid var(--border);
-      border-left: 3px solid var(--border-accent);
-      border-radius: 0 8px 8px 0;
-      padding: 11px 14px;
-      margin: 10px 0 8px
-    }
-
-    .why-label {
-      font-size: 10px;
-      font-weight: 500;
-      color: var(--text-accent);
-      text-transform: uppercase;
-      letter-spacing: .07em;
-      margin: 0 0 4px
-    }
-
-    .why-text {
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin: 0;
-      line-height: 1.55
-    }
-
-    .formula-label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin: 14px 0 4px
-    }
-
-    .code-block {
-      background: #161b22;
-      color: #d4d4d4;
-      padding: 14px 16px;
-      border-radius: 8px;
-      font-family: 'Fira Code', monospace;
-      font-size: 12px;
-      line-height: 1.65;
-      overflow-x: auto;
-      border: .5px solid rgba(255, 255, 255, 0.06);
-      white-space: pre;
-      margin: 0 0 14px
-    }
-
-    /* ── Jebakan umum ── */
-    .trap {
-      background: var(--surface-2);
-      border: .5px solid var(--border);
-      border-radius: 10px;
-      padding: 14px;
-      margin-bottom: 10px
-    }
-
-    .trap-head {
-      display: flex;
-      align-items: center;
       gap: 8px;
-      margin-bottom: 8px
+      flex-wrap: wrap;
+      margin-bottom: var(--space-5);
     }
 
-    .trap-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--bg-danger);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: 11px;
-      color: var(--text-danger)
-    }
-
-    .trap-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin: 0
-    }
-
-    .trap-cause {
-      font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin: 0 0 8px
-    }
-
-    .trap-fix {
+    .filter-btn {
       font-size: 12px;
-      background: var(--bg-success);
-      color: var(--text-success);
-      border-radius: 6px;
-      padding: 7px 10px;
-      margin: 0;
-      line-height: 1.5
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: .5px solid var(--border);
+      background: var(--surface-1);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all .15s;
     }
 
-    /* ── Impact ── */
-    .impact-block {
-      border-radius: 0 10px 10px 0;
-      padding: var(--space-5);
-      border-left: 4px solid #3b82f6;
-      background: var(--surface-2);
-      margin-top: 10px
-    }
-
-    .impact-desc {
-      font-size: 14px;
+    .filter-btn:hover {
+      border-color: var(--border-strong);
       color: var(--text-primary);
-      line-height: 1.7;
-      margin: 0 0 var(--space-4)
     }
 
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
-      gap: var(--space-3)
+    .filter-btn.active {
+      background: var(--bg-accent);
+      border-color: var(--border-accent);
+      color: var(--text-accent);
     }
 
-    .metric-card {
+    /* Case card */
+    .case-card {
+      margin-bottom: var(--space-5);
+      padding: var(--space-5);
+      border-top: 4px solid var(--accent);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
       background: var(--surface);
+      border-radius: 12px;
+      border: .5px solid var(--border);
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .case-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .card-body {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+      gap: var(--space-4);
+    }
+
+    .card-desc h4 {
+      margin: 0 0 var(--space-2);
+      color: var(--text-primary);
+      font-size: .95rem;
+    }
+
+    .card-desc p {
+      color: var(--text-muted);
+      font-size: .9rem;
+      line-height: 1.6;
+      margin: 0 0 var(--space-3);
+    }
+
+    .card-desc p:last-child {
+      margin: 0;
+    }
+
+    .spec-box {
+      background: var(--surface-2);
       padding: var(--space-4);
       border-radius: 8px;
       border: .5px solid var(--border);
-      border-left: 4px solid #3b82f6
     }
 
-    .metric-value {
-      font-size: 1.9rem;
-      font-weight: 700;
-      margin: 0 0 6px;
-      line-height: 1
-    }
-
-    .metric-label {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin: 0;
-      line-height: 1.45
-    }
-
-    /* ── Checklist ── */
-    .cl-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 9px 0;
+    .spec-box h4 {
+      margin: 0 0 var(--space-3);
+      color: var(--text-primary);
+      font-size: .9rem;
       border-bottom: .5px solid var(--border);
-      cursor: pointer
+      padding-bottom: 8px;
     }
 
-    .cl-item:last-child {
-      border: none
-    }
-
-    .cl-box {
-      width: 18px;
-      height: 18px;
-      border-radius: 4px;
-      border: 1.5px solid var(--border-strong);
-      flex-shrink: 0;
-      margin-top: 1px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background .15s, border-color .15s
-    }
-
-    .cl-box.on {
-      background: var(--fill-success);
-      border-color: var(--fill-success)
-    }
-
-    .cl-check {
-      font-size: 11px;
-      color: #fff;
-      display: none
-    }
-
-    .cl-box.on .cl-check {
-      display: block
-    }
-
-    .cl-txt {
-      font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.5;
-      user-select: none
-    }
-
-    .cl-txt.done {
-      text-decoration: line-through;
-      color: var(--text-muted)
-    }
-
-    .prog-wrap {
-      background: var(--surface-1);
-      border-radius: 99px;
-      height: 5px;
-      margin-top: 12px;
-      overflow: hidden
-    }
-
-    .prog-bar {
-      height: 100%;
-      border-radius: 99px;
-      background: var(--fill-success);
-      transition: width .3s
-    }
-
-    .prog-lbl {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 5px
-    }
-
-    /* ── Quiz ── */
-    .qcard {
-      background: var(--surface-2);
-      border: .5px solid var(--border);
-      border-radius: 10px;
-      padding: 14px;
-      margin-bottom: 10px
-    }
-
-    .qq {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin: 0 0 10px
-    }
-
-    .qopts {
-      display: flex;
-      flex-direction: column;
-      gap: 7px
-    }
-
-    .qopt {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      background: var(--surface-1);
-      border: .5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 9px 11px;
-      cursor: pointer;
-      font-size: 13px;
-      color: var(--text-secondary);
-      transition: border-color .15s
-    }
-
-    .qopt:hover {
-      border-color: var(--border-strong)
-    }
-
-    .qopt.ok {
-      background: var(--bg-success);
-      border-color: var(--border-success);
-      color: var(--text-success);
-      cursor: default;
-      pointer-events: none
-    }
-
-    .qopt.no {
-      background: var(--bg-danger);
-      border-color: var(--border-danger);
-      color: var(--text-danger);
-      cursor: default;
-      pointer-events: none
-    }
-
-    .qopt.off {
-      cursor: default;
-      pointer-events: none
-    }
-
-    .ocircle {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      border: 1.5px solid var(--border-strong);
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 500
-    }
-
-    .qfb {
-      font-size: 12px;
-      margin-top: 8px;
-      padding: 8px 10px;
-      border-radius: var(--radius);
-      display: none;
-      line-height: 1.45
-    }
-
-    .qfb.show {
-      display: block
-    }
-
-    .qfb.ok {
-      background: var(--bg-success);
-      color: var(--text-success)
-    }
-
-    .qfb.no {
-      background: var(--bg-danger);
-      color: var(--text-danger)
-    }
-
-    /* ── Challenges ── */
-    .ch {
-      border-left: 3px solid var(--border-strong);
-      padding: 10px 14px;
-      margin-bottom: 10px;
-      background: var(--surface-2);
-      border-radius: 0 8px 8px 0
-    }
-
-    .ch-level {
-      font-size: 10px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: .07em;
-      margin: 0 0 4px
-    }
-
-    .ch-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin: 0 0 5px
-    }
-
-    .ch-desc {
-      font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin: 0
-    }
-
-    /* ── Skill tags ── */
-    .skill-tags {
+    .spec-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
-      margin-top: 10px
+      gap: 6px;
     }
 
-    .skill-tag {
-      font-size: 12px;
-      padding: 4px 11px;
+    .spec-tag {
+      font-size: 11px;
+      padding: 3px 10px;
       border-radius: 20px;
-      background: var(--bg-accent);
-      color: var(--text-accent);
-      border: .5px solid var(--border-accent)
-    }
-
-    /* ── Download CTA ── */
-    .dl-cta {
-      border-top: .5px solid var(--border);
-      padding-top: var(--space-5);
-      margin-top: var(--space-6);
-      text-align: center
-    }
-
-    .dl-cta h4 {
-      color: var(--text-primary);
-      margin: 0 0 var(--space-3);
-      font-size: 1rem
-    }
-
-    /* ── States ── */
-    .state-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 50vh;
-      text-align: center;
+      background: var(--surface);
+      border: .5px solid var(--border);
       color: var(--text-muted);
-      gap: var(--space-3)
+      font-family: monospace;
     }
 
-    .state-container h2 {
+    .diff-badge {
+      font-size: 11px;
+      padding: 2px 9px;
+      border-radius: 20px;
+      font-weight: 500;
+      margin-left: 6px;
+    }
+
+    .card-footer {
+      border-top: .5px solid var(--border);
+      padding-top: var(--space-4);
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* Loading skeleton */
+    .skeleton-card {
+      margin-bottom: var(--space-5);
+      padding: var(--space-5);
+      background: var(--surface-2);
+      border-radius: 12px;
+      border: .5px solid var(--border);
+      animation: pulse 1.5s infinite;
+    }
+
+    .skel-line {
+      background: var(--surface-1);
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .5
+      }
+    }
+
+    /* Empty / error state */
+    .state-box {
+      text-align: center;
+      padding: var(--space-8) var(--space-4);
+      color: var(--text-muted);
+    }
+
+    .state-box h3 {
       color: var(--text-primary);
-      margin: 0
-    }
-
-    .state-container p {
-      margin: 0
-    }
-
-    .spinner {
-      animation: spin 1s linear infinite;
-      font-size: 2.5rem;
-      display: inline-block
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg)
-      }
-    }
-
-    /* ── Responsive ── */
-    @media(max-width:640px) {
-      .case-body {
-        padding: 0 var(--space-3) var(--space-6)
-      }
-
-      .metric-value {
-        font-size: 1.5rem
-      }
-
-      .ba-btn {
-        padding: 6px 12px;
-        font-size: 11px
-      }
+      margin: 0 0 var(--space-2);
     }
   </style>
 </head>
@@ -659,12 +204,12 @@
             style="width:100%;height:100%;object-fit:contain;padding:4px;" /></div>
         Excel Analyst Hub
       </a>
-      <ul class="nav-links" role="list">
-        <li><a href="index.html">Beranda</a></li>
-        <li><a href="learn.html">Belajar</a></li>
-        <li><a href="portfolio.html" class="active">Portofolio</a></li>
-        <li><a href="tools.html">Tools</a></li>
-      </ul>
+      <div class="nav-links">
+        <a href="index.html" class="nav-item">Beranda</a>
+        <a href="learn.html" class="nav-item">Belajar</a>
+        <a href="tools.html" class="nav-item">Tools</a>
+        <a href="portfolio.html" class="nav-item active">Portofolio</a>
+      </div>
       <div class="nav-right">
         <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang"
           title="Mode terang">☀️</button>
@@ -678,53 +223,69 @@
   <div class="nav-menu-mobile" id="mobile-menu" role="navigation" aria-label="Navigasi mobile">
     <a href="index.html">Beranda</a>
     <a href="learn.html">Belajar</a>
-    <a href="portfolio.html">Portofolio</a>
     <a href="tools.html">Tools</a>
+    <a href="portfolio.html">Portofolio</a>
     <div style="height:1px;background:var(--border);margin:8px 0;"></div>
     <a href="login.html" class="btn-nav-premium" id="mobile-auth-btn"
       style="text-align:center;border-radius:8px;margin-top:8px;">Masuk / Profil</a>
   </div>
 
-  <main id="main-content">
+  <main id="main-content" class="container fade-in-section">
 
-    <div class="state-container" id="state-loading">
-      <span class="spinner">⚙️</span>
-      <p>Memuat studi kasus...</p>
-    </div>
-
-    <div class="state-container" id="state-not-found" style="display:none;">
-      <span style="font-size:3rem;">🔍</span>
-      <h2>Studi Kasus Tidak Ditemukan</h2>
-      <p>ID yang diminta tidak ada dalam database.</p>
-      <a href="portfolio.html" class="btn-primary" style="margin-top:var(--space-2);">← Kembali ke Portofolio</a>
-    </div>
-
-    <div class="state-container" id="state-error" style="display:none;">
-      <span style="font-size:3rem;">⚠️</span>
-      <h2>Gagal Memuat Data</h2>
-      <p id="error-msg">Terjadi kesalahan saat menghubungi database.</p>
-      <a href="portfolio.html" class="btn-ghost" style="margin-top:var(--space-2);">← Kembali ke Portofolio</a>
-    </div>
-
-    <!-- HERO -->
-    <section class="case-hero" id="case-hero" style="display:none;">
-      <div class="container" style="max-width:820px;">
-        <a href="portfolio.html" class="btn-ghost btn-sm"
-          style="margin-bottom:var(--space-4);display:inline-flex;align-items:center;gap:5px;">← Kembali ke
-          Portofolio</a>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--space-3);" id="hero-badges"></div>
-        <h1 id="hero-title"
-          style="margin:0 0 var(--space-3);font-size:2.1rem;line-height:1.3;color:var(--text-primary);"></h1>
-        <p id="hero-subtitle"
-          style="color:var(--text-muted);font-size:1.05rem;line-height:1.65;margin:0 0 var(--space-3);"></p>
-        <div id="hero-meta"
-          style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--text-muted);"></div>
+    <header class="page-header" style="padding-top:var(--space-6);padding-bottom:var(--space-5);">
+      <div class="container">
+        <span class="badge"
+          style="background:rgba(59,130,246,0.1);color:var(--accent);margin-bottom:var(--space-3);display:inline-block;">Professional
+          Showcase</span>
+        <h1 style="margin-top:0;margin-bottom:var(--space-2);font-size:2.5rem;line-height:1.2;">Portofolio Data</h1>
+        <p class="text-muted text-lg" style="max-width:800px;margin:0;font-size:1.1rem;line-height:1.6;">
+          Kumpulan studi kasus dunia nyata yang menunjukkan bagaimana mengubah data mentah menjadi wawasan bisnis yang
+          dapat ditindaklanjuti.
+        </p>
       </div>
-    </section>
+    </header>
 
-    <!-- BODY -->
-    <div class="case-body" id="case-content" style="display:none;"></div>
+    <div class="container section-sm">
 
+      <!-- Filter bar -->
+      <div class="filter-bar" id="filter-bar" style="display:none;">
+        <button class="filter-btn active" onclick="filterCases('all',this)">Semua</button>
+        <button class="filter-btn" onclick="filterCases('beginner',this)">Beginner</button>
+        <button class="filter-btn" onclick="filterCases('intermediate',this)">Intermediate</button>
+        <button class="filter-btn" onclick="filterCases('advanced',this)">Advanced</button>
+      </div>
+
+      <!-- Case list -->
+      <div id="cases-container">
+        <!-- Skeleton loading -->
+        <div class="skeleton-card" id="skel-1">
+          <div class="skel-line" style="height:14px;width:120px;"></div>
+          <div class="skel-line" style="height:22px;width:60%;"></div>
+          <div class="skel-line" style="height:14px;width:90%;"></div>
+          <div class="skel-line" style="height:14px;width:75%;"></div>
+        </div>
+        <div class="skeleton-card" id="skel-2">
+          <div class="skel-line" style="height:14px;width:100px;"></div>
+          <div class="skel-line" style="height:22px;width:55%;"></div>
+          <div class="skel-line" style="height:14px;width:85%;"></div>
+          <div class="skel-line" style="height:14px;width:70%;"></div>
+        </div>
+        <div class="skeleton-card" id="skel-3">
+          <div class="skel-line" style="height:14px;width:110px;"></div>
+          <div class="skel-line" style="height:22px;width:65%;"></div>
+          <div class="skel-line" style="height:14px;width:80%;"></div>
+          <div class="skel-line" style="height:14px;width:65%;"></div>
+        </div>
+      </div>
+
+      <!-- Error state -->
+      <div class="state-box" id="state-error" style="display:none;">
+        <span style="font-size:3rem;">⚠️</span>
+        <h3>Gagal memuat portofolio</h3>
+        <p id="error-msg">Terjadi kesalahan saat menghubungi database.</p>
+      </div>
+
+    </div>
   </main>
 
   <footer class="footer" role="contentinfo">
@@ -741,9 +302,10 @@
           <a href="tools.html" style="font-size:.875rem;color:var(--text-muted);text-decoration:none;">Tools</a>
           <a href="portfolio.html"
             style="font-size:.875rem;color:var(--text-muted);text-decoration:none;">Portofolio</a>
+          <a href="pricing.html" style="font-size:.875rem;color:var(--text-muted);text-decoration:none;">Harga</a>
         </nav>
       </div>
-      <div style="border-top:.5px solid var(--border);padding:var(--space-5) 0;text-align:center;">
+      <div style="border-top:1px solid var(--border);padding:var(--space-5) 0;text-align:center;">
         <p style="font-size:.8rem;color:var(--text-muted);margin:0;">© 2026 Excel Analyst Hub — Belajar Excel untuk
           karir data analyst Indonesia.</p>
       </div>
@@ -752,281 +314,115 @@
 
   <script src="assets/js/main.js"></script>
   <script>
-    (async function () {
-      // ── Supabase init ──
-      let sb;
-      if (window.supaClient) { sb = window.supaClient; }
-      else if (window.supabase) {
-        sb = window.supabase.createClient(
-          'https://laowissohsnhfsbiwcpd.supabase.co',
-          'sb_publishable_Y_DHtQY18OILqZnAqxaZaw_NC0STTLC'
-        );
-      } else { showError('Supabase library belum dimuat.'); return; }
+    // ── Filter handler (global) ──
+    var allCases = [];
+    function filterCases(level, btn) {
+      document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var cards = document.querySelectorAll('.case-card');
+      cards.forEach(function (card) {
+        if (level === 'all' || card.dataset.difficulty === level) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
 
-      // ── URL param ──
-      const id = new URLSearchParams(window.location.search).get('id') || '';
-      if (!id) { window.location.href = 'portfolio.html'; return; }
-
-      // ── Fetch ──
-      const { data: d, error: e } = await sb
-        .from('portfolio_cases')
-        .select('*')
-        .eq('id', id)
-        .eq('is_published', true)
-        .single();
-
-      hide('state-loading');
-      if (e || !d) {
-        if (e && e.code === 'PGRST116') show('state-not-found');
-        else showError(e ? e.message : 'Data tidak ditemukan.');
+    document.addEventListener('DOMContentLoaded', function () {
+      var sb = window.supaClient;
+      if (!sb) {
+        showError('Koneksi Supabase gagal.');
         return;
       }
 
-      render(d);
-      show('case-hero');
-      show('case-content');
-
-      // ════════════════════════════════════════
-      function show(id) { const el = document.getElementById(id); if (el) el.style.display = ''; }
-      function hide(id) { const el = document.getElementById(id); if (el) el.style.display = 'none'; }
-      function showError(msg) { hide('state-loading'); document.getElementById('error-msg').textContent = msg; show('state-error'); }
-      function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-      function j(v) { return Array.isArray(v) ? v : (typeof v === 'string' ? JSON.parse(v || '[]') : v || []); }
-      function jo(v) { return (typeof v === 'object' && !Array.isArray(v) && v !== null) ? v : (typeof v === 'string' ? JSON.parse(v || '{}') : {}); }
-
-      function render(d) {
-        // meta
-        document.getElementById('page-title').textContent = d.title + ' — Excel Analyst Hub';
-        document.getElementById('page-meta-desc').setAttribute('content', d.subtitle);
-
-        // hero badges
-        const diffColor = { beginner: 'var(--text-success)', intermediate: 'var(--text-accent)', advanced: 'var(--text-danger)' };
-        const diffBg = { beginner: 'var(--bg-success)', intermediate: 'var(--bg-accent)', advanced: 'var(--bg-danger)' };
-        const techTags = (d.tech_tags || []).map(t => `<span class="badge" style="background:var(--surface);border:.5px solid var(--border);color:var(--text-muted);font-size:11px;">${t}</span>`).join('');
-        document.getElementById('hero-badges').innerHTML =
-          `<span class="badge" style="background:${d.badge_bg};color:${d.badge_color};">${d.badge_label}</span>` +
-          `<span class="badge" style="background:${diffBg[d.difficulty] || 'var(--surface)'};color:${diffColor[d.difficulty] || 'var(--text-muted)'};">${d.difficulty}</span>` +
-          techTags;
-
-        document.getElementById('hero-title').textContent = d.title;
-        document.getElementById('hero-subtitle').textContent = d.subtitle;
-        document.getElementById('hero-meta').innerHTML =
-          `<span>🏢 ${d.company_name}</span><span style="opacity:.4">·</span><span>📍 ${d.company_location}</span>`;
-
-        // build content
-        const ac = d.accent_color || '#3b82f6';
-        let html = '';
-
-        // 1. HOOK
-        html += `<div class="hook-box"><p class="hook-label">Masalah nyata</p><p class="hook-text">${d.hook || ''}</p></div>`;
-
-        // 2. STORY STEPS
-        const steps = j(d.story_steps);
-        if (steps.length) {
-          html += `<div class="sec"><p class="sec-label">Perjalanan analisis</p><div class="story-steps">`;
-          steps.forEach((s, i) => {
-            const last = i === steps.length - 1;
-            html += `<div class="st">
-            <div class="st-left">
-              <div class="st-num">${i + 1}</div>
-              ${!last ? '<div class="st-line"></div>' : ''}
-            </div>
-            <div class="st-body">
-              <p class="st-title">${s.title || ''}</p>
-              <p class="st-desc">${s.desc || ''}</p>
-            </div>
-          </div>`;
+      sb.from('portfolio_cases')
+        .select('id, title, subtitle, badge_label, badge_color, badge_bg, accent_color, difficulty, industry, tech_tags, skill_tags, download_file, order_index')
+        .eq('is_published', true)
+        .order('order_index', { ascending: true })
+        .then(function (res) {
+          // Hapus skeleton
+          ['skel-1', 'skel-2', 'skel-3'].forEach(function (id) {
+            var el = document.getElementById(id);
+            if (el) el.remove();
           });
-          html += `</div></div>`;
-        }
 
-        // 3. BEFORE / AFTER
-        const before = jo(d.dataset_before);
-        const after = jo(d.dataset_after);
-        if (before.columns || after.columns) {
-          html += `<div class="sec"><p class="sec-label">Data sebelum dan sesudah analisis</p>
-          <div class="ba-toggle">
-            <button class="ba-btn active" onclick="switchBA(this,'ba-before-${id}','ba-after-${id}')">Sebelum — data mentah</button>
-            <button class="ba-btn" onclick="switchBA(this,'ba-after-${id}','ba-before-${id}')">Sesudah — hasil analisis</button>
-          </div>
-          <div class="ba-panel active" id="ba-before-${id}">${buildBATable(before)}</div>
-          <div class="ba-panel" id="ba-after-${id}">${buildBATable(after)}</div>
-          <a class="btn-primary" href="${d.download_file}" download style="display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:13px;">
-            📥 Unduh File Excel (.xlsx)
-          </a>
-        </div>`;
-        }
+          if (res.error) { showError(res.error.message); return; }
+          if (!res.data || res.data.length === 0) {
+            showError('Belum ada studi kasus yang dipublikasikan.');
+            return;
+          }
 
-        // 4. FORMULAS
-        const formulas = j(d.formulas);
-        if (formulas.length) {
-          html += `<div class="sec"><p class="sec-label">Formula utama</p>`;
-          formulas.forEach(f => {
-            if (f.why) html += `<div class="why-box"><p class="why-label">💡 Kenapa ${f.label || 'formula ini'}?</p><p class="why-text">${f.why}</p></div>`;
-            if (f.label) html += `<p class="formula-label">${f.label}</p>`;
-            if (f.code) html += `<pre class="code-block">${esc(f.code)}</pre>`;
-          });
-          html += `</div>`;
-        }
+          allCases = res.data;
 
-        // 5. COMMON MISTAKES
-        const mistakes = j(d.common_mistakes);
-        if (mistakes.length) {
-          html += `<div class="sec"><p class="sec-label">Jebakan umum + cara fix</p>`;
-          mistakes.forEach((m, i) => {
-            html += `<div class="trap">
-            <div class="trap-head">
-              <div class="trap-icon">✕</div>
-              <p class="trap-title">${m.title || ''}</p>
-            </div>
-            <p class="trap-cause">${m.cause || ''}</p>
-            <p class="trap-fix">✓ Fix: ${m.fix || ''}</p>
-          </div>`;
-          });
-          html += `</div>`;
-        }
+          // Tampilkan filter bar
+          document.getElementById('filter-bar').style.display = 'flex';
 
-        // 6. IMPACT
-        const impact = jo(d.impact);
-        if (impact.metrics) {
-          html += `<div class="sec"><p class="sec-label">Dampak bisnis</p>
-          <div class="impact-block" style="border-left-color:${ac}">
-            ${impact.description ? `<p class="impact-desc">${impact.description}</p>` : ''}
-            <div class="metrics-grid">
-              ${(impact.metrics || []).map(m => `
-                <div class="metric-card" style="border-left-color:${m.color || ac}">
-                  <div class="metric-value" style="color:${m.color || ac}">${m.value || ''}</div>
-                  <p class="metric-label">${m.label || ''}</p>
-                </div>`).join('')}
-            </div>
-          </div>
-        </div>`;
-        }
-
-        html += `<div class="divider"></div>`;
-
-        // 7. CHECKLIST
-        const cl = j(d.checklist);
-        if (cl.length) {
-          const clId = 'cl_' + id.replace(/-/g, '_');
-          html += `<div class="sec"><p class="sec-label">Checklist langkah analisis</p>
-          <div id="${clId}">
-            ${cl.map((step, i) => `
-              <div class="cl-item" onclick="chk(this,'${clId}')">
-                <div class="cl-box"><span class="cl-check">✓</span></div>
-                <span class="cl-txt">${step}</span>
-              </div>`).join('')}
-          </div>
-          <div class="prog-wrap"><div class="prog-bar" id="${clId}_pb" style="width:0%"></div></div>
-          <p class="prog-lbl" id="${clId}_lbl">0 dari ${cl.length} langkah selesai</p>
-        </div>`;
-        }
-
-        // 8. QUIZ
-        const quiz = j(d.quiz);
-        if (quiz.length) {
-          html += `<div class="sec"><p class="sec-label">Mini quiz</p>`;
-          quiz.forEach((q, qi) => {
-            const qid = `q_${id.replace(/-/g, '_')}_${qi}`;
-            html += `<div class="qcard" id="${qid}">
-            <p class="qq">${qi + 1}. ${q.question || ''}</p>
-            <div class="qopts">
-              ${(q.options || []).map(o => `
-                <div class="qopt" onclick="ans(this,'${qid}',${o.correct},'${(o.explanation || '').replace(/'/g, "\\'")}')">
-                  <div class="ocircle">${o.label || ''}</div>
-                  ${o.text || ''}
-                </div>`).join('')}
-            </div>
-            <div class="qfb" id="${qid}_fb"></div>
-          </div>`;
-          });
-          html += `</div>`;
-        }
-
-        // 9. CHALLENGES
-        const challenges = j(d.challenges);
-        if (challenges.length) {
-          const chColors = { intermediate: '#f59e0b', advanced: '#ef4444' };
-          html += `<div class="sec"><p class="sec-label">Tantangan lanjutan</p>`;
-          challenges.forEach(c => {
-            const cc = chColors[c.level] || 'var(--border-strong)';
-            html += `<div class="ch" style="border-left-color:${cc}">
-            <p class="ch-level" style="color:${cc}">${c.level || ''}</p>
-            <p class="ch-title">${c.title || ''}</p>
-            <p class="ch-desc">${c.desc || ''}</p>
-          </div>`;
-          });
-          html += `</div>`;
-        }
-
-        // 10. SKILL TAGS
-        const skills = d.skill_tags || [];
-        if (skills.length) {
-          html += `<div class="sec"><p class="sec-label">Skill yang kamu latih</p>
-          <div class="skill-tags">
-            ${skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
-          </div>
-        </div>`;
-        }
-
-        // Download (bottom)
-        html += `<div class="dl-cta">
-        <h4>Lihat &amp; Unduh File Proyek</h4>
-        <a href="${d.download_file}" download class="btn-primary" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;">
-          📥 Unduh File Excel (.xlsx)
-        </a>
-      </div>`;
-
-        document.getElementById('case-content').innerHTML = html;
-      }
-
-      // ── Build table untuk before/after ──
-      function buildBATable(data) {
-        if (!data || !data.columns) return '<p class="ba-note">Data tidak tersedia.</p>';
-        let t = `<div class="tbl-wrap"><table class="data-table"><thead><tr>`;
-        data.columns.forEach(c => { t += `<th>${c}</th>`; });
-        t += `</tr></thead><tbody>`;
-        (data.rows || []).forEach(row => {
-          t += `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`;
+          // Render semua card
+          var container = document.getElementById('cases-container');
+          container.innerHTML = res.data.map(function (d) {
+            return buildCard(d);
+          }).join('');
+        })
+        .catch(function (err) {
+          showError(err.message || 'Gagal menghubungi database.');
         });
-        t += `</tbody></table></div>`;
-        if (data.note) t += `<p class="ba-note">${data.note}</p>`;
-        return t;
+
+      function showError(msg) {
+        ['skel-1', 'skel-2', 'skel-3'].forEach(function (id) {
+          var el = document.getElementById(id); if (el) el.remove();
+        });
+        document.getElementById('error-msg').textContent = msg;
+        document.getElementById('state-error').style.display = 'block';
       }
 
-    })(); // end async IIFE
+      function buildCard(d) {
+        var diffColor = { beginner: '#10b981', intermediate: '#3b82f6', advanced: '#ef4444' };
+        var diffBg = { beginner: 'rgba(16,185,129,0.1)', intermediate: 'rgba(59,130,246,0.1)', advanced: 'rgba(239,68,68,0.1)' };
+        var diffLabel = { beginner: 'Beginner', intermediate: 'Intermediate', advanced: 'Advanced' };
 
-    // ── Global handlers (dipanggil dari onclick inline) ──
-    function switchBA(btn, showId, hideId) {
-      document.querySelectorAll('.ba-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const s = document.getElementById(showId);
-      const h = document.getElementById(hideId);
-      if (s) s.classList.add('active');
-      if (h) h.classList.remove('active');
-    }
+        var techList = (d.tech_tags || []).map(function (t) {
+          return '<span class="spec-tag">' + t + '</span>';
+        }).join('');
 
-    function chk(item, clId) {
-      const box = item.querySelector('.cl-box');
-      const txt = item.querySelector('.cl-txt');
-      const on = box.classList.toggle('on');
-      txt.classList.toggle('done', on);
-      const wrap = document.getElementById(clId);
-      const total = wrap.querySelectorAll('.cl-item').length;
-      const done = wrap.querySelectorAll('.cl-box.on').length;
-      const pct = Math.round(done / total * 100);
-      document.getElementById(clId + '_pb').style.width = pct + '%';
-      document.getElementById(clId + '_lbl').textContent = done + ' dari ' + total + ' langkah selesai';
-    }
+        var skillList = (d.skill_tags || []).slice(0, 4).map(function (s) {
+          return '<span class="spec-tag">' + s + '</span>';
+        }).join('');
 
-    function ans(opt, qid, correct, explanation) {
-      const card = document.getElementById(qid);
-      card.querySelectorAll('.qopt').forEach(o => o.classList.add('off'));
-      opt.classList.add(correct ? 'ok' : 'no');
-      const fb = document.getElementById(qid + '_fb');
-      fb.textContent = (correct ? '✓ ' : '✗ ') + explanation;
-      fb.className = 'qfb show ' + (correct ? 'ok' : 'no');
-    }
+        return '<div class="case-card" data-difficulty="' + (d.difficulty || '') + '" style="border-top-color:' + (d.accent_color || 'var(--accent)') + '">' +
+
+          // Top: badge + judul + tanggal
+          '<div class="card-top">' +
+          '<div>' +
+          '<span class="badge" style="background:' + (d.badge_bg || 'rgba(59,130,246,0.1)') + ';color:' + (d.badge_color || 'var(--accent)') + ';margin-bottom:8px;display:inline-block;">' + (d.badge_label || '') + '</span>' +
+          (d.difficulty ? '<span class="diff-badge" style="background:' + (diffBg[d.difficulty] || 'var(--surface)') + ';color:' + (diffColor[d.difficulty] || 'var(--text-muted)') + ';">' + (diffLabel[d.difficulty] || d.difficulty) + '</span>' : '') +
+          '<h2 style="margin:6px 0 0;font-size:1.4rem;">' + (d.title || '') + '</h2>' +
+          '</div>' +
+          '<span style="color:var(--text-muted);font-size:.85rem;font-family:monospace;white-space:nowrap;">' + (d.industry || '') + '</span>' +
+          '</div>' +
+
+          // Body: deskripsi + spesifikasi teknis
+          '<div class="card-body">' +
+          '<div class="card-desc">' +
+          '<h4>Tantangan Bisnis</h4>' +
+          '<p>' + (d.subtitle || '') + '</p>' +
+          '</div>' +
+          '<div class="spec-box">' +
+          '<h4>Tools &amp; Formula</h4>' +
+          '<div class="spec-tags">' + (techList || skillList || '<span style="color:var(--text-muted);font-size:12px;">-</span>') + '</div>' +
+          '</div>' +
+          '</div>' +
+
+          // Footer: tombol
+          '<div class="card-footer">' +
+          '<a href="portfolio-case.html?id=' + d.id + '" class="btn-ghost btn-sm" style="display:inline-flex;align-items:center;gap:5px;">📄 Baca Analisis Lengkap</a>' +
+          '<a href="' + (d.download_file || '#') + '" download class="btn-primary btn-sm" style="text-decoration:none;display:inline-flex;align-items:center;gap:5px;">📥 Unduh File Excel (.xlsx)</a>' +
+          '</div>' +
+
+          '</div>';
+      }
+
+    }); // end DOMContentLoaded
   </script>
 
 </body>
