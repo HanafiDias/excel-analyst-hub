@@ -37,7 +37,9 @@
       <a href="index.html" class="nav-logo" aria-label="Excel Analyst Hub beranda"
         style="transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'"
         onmouseout="this.style.transform='scale(1)'">
-        <div class="logo-icon" aria-hidden="true" style="box-shadow: 0 0 10px rgba(59,130,246,0.5);"><img src="assets/img/logo-navbar.png" alt="" style="width:100%;height:100%;object-fit:contain;padding:4px;" /></div>
+        <div class="logo-icon" aria-hidden="true" style="box-shadow: 0 0 10px rgba(59,130,246,0.5);"><img
+            src="assets/img/logo-navbar.png" alt="" style="width:100%;height:100%;object-fit:contain;padding:4px;" />
+        </div>
         Excel Analyst Hub
       </a>
 
@@ -675,24 +677,29 @@
   <!-- ============ FOOTER ============ -->
   <footer class="footer" role="contentinfo">
     <div class="container">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);padding:var(--space-8) 0;">
+      <div
+        style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);padding:var(--space-8) 0;">
 
         <a href="index.html" class="nav-logo">
-          <div class="logo-icon" aria-hidden="true"><img src="assets/img/logo-navbar.png" alt="" style="width:100%;height:100%;object-fit:contain;padding:4px;" /></div>
+          <div class="logo-icon" aria-hidden="true"><img src="assets/img/logo-navbar.png" alt=""
+              style="width:100%;height:100%;object-fit:contain;padding:4px;" /></div>
           Excel Analyst Hub
         </a>
 
         <nav aria-label="Footer" style="display:flex;gap:var(--space-5);flex-wrap:wrap;">
-          <a href="learn.html" style="font-size:0.875rem;color:var(--text-muted);text-decoration:none;">Jalur Belajar</a>
+          <a href="learn.html" style="font-size:0.875rem;color:var(--text-muted);text-decoration:none;">Jalur
+            Belajar</a>
           <a href="tools.html" style="font-size:0.875rem;color:var(--text-muted);text-decoration:none;">Tools</a>
-          <a href="portfolio.html" style="font-size:0.875rem;color:var(--text-muted);text-decoration:none;">Portofolio</a>
+          <a href="portfolio.html"
+            style="font-size:0.875rem;color:var(--text-muted);text-decoration:none;">Portofolio</a>
           <a href="pricing.html" style="font-size:0.875rem;color:var(--text-muted);text-decoration:none;">Harga</a>
         </nav>
 
       </div>
 
       <div style="border-top:1px solid var(--border);padding:var(--space-5) 0;text-align:center;">
-        <p style="font-size:0.8rem;color:var(--text-muted);margin:0;">© 2026 Excel Analyst Hub — Belajar Excel untuk karir data analyst Indonesia.</p>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin:0;">© 2026 Excel Analyst Hub — Belajar Excel untuk
+          karir data analyst Indonesia.</p>
       </div>
     </div>
   </footer>
@@ -720,6 +727,19 @@
         let currentQuestionIndex = 0;
         let userAnswers = {};
         let currentMaterialId = null;
+
+        // Mengacak urutan array (Fisher-Yates) supaya opsi jawaban tidak
+        // selalu tampil di posisi yang sama (mis. jawaban benar selalu di "B").
+        // Aman dipakai di sini karena validasi jawaban dicek lewat flag
+        // is_correct pada tiap opsi, bukan berdasarkan posisi/index tampil.
+        function shuffleArray(arr) {
+          const a = [...arr];
+          for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+          }
+          return a;
+        }
 
         async function checkSession() {
           const { data: { session } } = await supabase.auth.getSession();
@@ -961,10 +981,10 @@
               .single();
             currentQuiz.xp_reward = matData ? matData.xp_reward : 20;
 
-            // Fetch Questions
+            // Fetch Questions beserta opsi jawaban dari tabel ternormalisasi
             const { data: questions, error: qqErr } = await supabase
               .from('quiz_questions')
-              .select('*')
+              .select('*, quiz_question_options(id, option_text, is_correct)')
               .eq('quiz_id', currentQuiz.id)
               .order('order_index', { ascending: true });
 
@@ -972,7 +992,12 @@
               alert('Pertanyaan kuis belum tersedia.');
               return;
             }
-            currentQuestions = questions;
+            // Acak urutan opsi jawaban tiap soal setiap kali kuis dibuka,
+            // supaya posisi jawaban benar tidak bisa ditebak dari pola.
+            currentQuestions = questions.map(q => ({
+              ...q,
+              options: shuffleArray(q.quiz_question_options)
+            }));
 
             resetModalUI();
             renderQuestion();
@@ -988,7 +1013,7 @@
           optionsContainer.innerHTML = '';
           const savedAnswer = userAnswers[currentQuestionIndex];
 
-          q.options.forEach((opt, idx) => {
+          q.options.forEach((opt) => {
             const label = document.createElement('label');
             label.style.display = 'flex';
             label.style.gap = '10px';
@@ -1002,15 +1027,15 @@
             const radio = document.createElement('input');
             radio.type = 'radio';
             radio.name = `quiz-q-${currentQuestionIndex}`;
-            radio.value = opt;
-            if (savedAnswer === opt) radio.checked = true;
+            radio.value = opt.id;
+            if (savedAnswer === opt.id) radio.checked = true;
 
             radio.addEventListener('change', () => {
-              userAnswers[currentQuestionIndex] = opt;
+              userAnswers[currentQuestionIndex] = opt.id;
             });
 
             label.appendChild(radio);
-            const textNode = document.createTextNode(opt);
+            const textNode = document.createTextNode(opt.option_text);
             label.appendChild(textNode);
 
             label.onmouseover = () => { if (!radio.checked) label.style.background = 'var(--surface-2)'; };
@@ -1049,16 +1074,18 @@
           let reviewHTML = `<div style="display:flex; flex-direction:column; gap:20px; margin-top:20px;">`;
 
           currentQuestions.forEach((q, idx) => {
-            const userAns = userAnswers[idx];
-            const isCorrect = userAns === q.correct_answer;
+            const selectedOptionId = userAnswers[idx];
+            const selectedOption = q.options.find(o => o.id === selectedOptionId);
+            const correctOption = q.options.find(o => o.is_correct);
+            const isCorrect = !!selectedOption && selectedOption.is_correct;
             if (isCorrect) correctCount++;
 
             const icon = isCorrect ? '✅' : '❌';
             reviewHTML += `
             <div style="border: 1px solid var(--border); border-radius: 6px; padding: 15px; background: var(--surface-2);">
               <div style="font-weight:600; margin-bottom:8px;">${idx + 1}. ${q.question_text}</div>
-              <div style="font-size:0.9rem; margin-bottom:5px;">Jawabanmu: <strong>${userAns}</strong> ${icon}</div>
-              ${!isCorrect ? `<div style="font-size:0.9rem; color:var(--success); margin-bottom:5px;">Jawaban Benar: <strong>${q.correct_answer}</strong></div>` : ''}
+              <div style="font-size:0.9rem; margin-bottom:5px;">Jawabanmu: <strong>${selectedOption ? selectedOption.option_text : '-'}</strong> ${icon}</div>
+              ${!isCorrect ? `<div style="font-size:0.9rem; color:var(--success); margin-bottom:5px;">Jawaban Benar: <strong>${correctOption ? correctOption.option_text : '-'}</strong></div>` : ''}
               <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding-top:8px; border-top:1px solid var(--border);">
                 <em>Pembahasan: ${q.explanation}</em>
               </div>
