@@ -284,19 +284,6 @@
           });
           contentArea.innerHTML = htmlParts.join('\n');
 
-          // Inject "Sudah selesai membaca?" banner after content
-          const bannerSlug = new URLSearchParams(window.location.search).get('slug');
-          const backHref = bannerSlug ? 'learn.html#material-' + bannerSlug : 'learn.html';
-          const finishBanner = document.createElement('div');
-          finishBanner.style.cssText = 'margin: var(--space-8) 0; padding: var(--space-6) var(--space-8); background: var(--surface-2); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap;';
-          finishBanner.innerHTML = `
-            <div>
-              <p style="font-weight:600; margin:0 0 4px; color:var(--text-primary);">Sudah selesai membaca?</p>
-              <p style="margin:0; font-size:0.875rem; color:var(--text-muted);">Kembali ke menu untuk mengerjakan kuis dan menyimpan progres.</p>
-            </div>
-            <a href="${backHref}" class="btn-primary" style="white-space:nowrap;">← Kembali ke Jalur Belajar</a>
-          `;
-          contentArea.appendChild(finishBanner);
         } else if (contentArea) {
           contentArea.innerHTML = '<p style="color:var(--text-muted); padding: var(--space-6) 0;">Konten materi belum tersedia.</p>';
         }

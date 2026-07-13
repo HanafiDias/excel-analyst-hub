@@ -1171,12 +1171,14 @@ window.EAH_Badge = (function () {
       navContainer.style.flexWrap = 'wrap';
       navContainer.style.gap = '15px';
 
+      const _slug = new URLSearchParams(window.location.search).get('slug');
+      const _backHref = _slug ? 'learn.html#material-' + _slug : 'learn.html';
       navContainer.innerHTML = `
           <div>
               <h4 style="margin:0 0 5px 0;">Sudah selesai membaca?</h4>
               <p style="margin:0; font-size:0.9rem; color:var(--text-muted);">Kembali ke menu untuk mengerjakan kuis dan menyimpan progres.</p>
           </div>
-          <a href="learn.html" class="btn-primary" style="text-decoration:none;">⬅ Kembali ke Jalur Belajar</a>
+          <a href="${_backHref}" class="btn-primary" style="text-decoration:none;">← Kembali ke Jalur Belajar</a>
       `;
 
       // Cari tempat teraman untuk menempelkan navigasi
