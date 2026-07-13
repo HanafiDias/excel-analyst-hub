@@ -92,7 +92,7 @@
 
         <!-- Prev / Next Nav -->
         <nav class="topic-nav" aria-label="Navigasi topik">
-          <a href="learn.html" class="topic-nav-item">
+          <a href="learn.html" class="topic-nav-item" id="back-to-learn">
             <span class="topic-nav-direction">← Kembali</span>
             <span class="topic-nav-title">Jalur Belajar</span>
           </a>
@@ -422,6 +422,19 @@
       }
 
     });
+  </script>
+
+  <script>
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('slug');
+      if (slug) {
+        const backBtn = document.getElementById('back-to-learn');
+        if (backBtn) {
+          backBtn.href = 'learn.html#material-' + slug;
+        }
+      }
+    })();
   </script>
 </body>
 

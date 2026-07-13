@@ -780,7 +780,7 @@
             else if (item.level === 'expert') { badgeClass = 'expert'; displayLevel = 'Expert'; }
 
             const cardHTML = `
-            <div class="topic-card" data-material-id="${item.id}" data-topic-id="${item.slug}" data-level="${item.level}">
+            <div class="topic-card" id="material-${item.slug}" data-material-id="${item.id}" data-topic-id="${item.slug}" data-level="${item.level}">
               <div class="topic-card-title">${item.title}</div>
               <div class="topic-card-badge"><span class="badge badge-${badgeClass}"
 
@@ -809,6 +809,20 @@
           });
 
           await loadUserProgress();
+
+          // Auto-scroll to material if hash is present in URL
+          const hash = window.location.hash;
+          if (hash && hash.startsWith('#material-')) {
+            const targetSlug = hash.replace('#material-', '');
+            const targetEl = document.getElementById('material-' + targetSlug);
+            if (targetEl) {
+              setTimeout(() => {
+                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                targetEl.style.outline = '2px solid #3b82f6';
+                setTimeout(() => { targetEl.style.outline = ''; }, 2000);
+              }, 300);
+            }
+          }
         }
 
         // Definisi total materi per level (sesuai kurikulum final)
