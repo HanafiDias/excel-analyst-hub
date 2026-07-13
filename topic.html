@@ -429,10 +429,10 @@
       const params = new URLSearchParams(window.location.search);
       const slug = params.get('slug');
       if (slug) {
-        const backBtn = document.getElementById('back-to-learn');
-        if (backBtn) {
-          backBtn.href = 'learn.html#material-' + slug;
-        }
+        const allBackBtns = document.querySelectorAll('a[href="learn.html"]');
+        allBackBtns.forEach(btn => {
+          btn.href = 'learn.html#material-' + slug;
+        });
       }
     })();
   </script>
