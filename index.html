@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <script>
-    (function() {
+    (function () {
       try {
         var t = localStorage.getItem('eah_theme') || 'dark';
         document.documentElement.setAttribute('data-theme', t);
-      } catch(e) {}
+      } catch (e) { }
     })();
   </script>
   <meta charset="UTF-8" />
@@ -16,9 +17,11 @@
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png" />
   <title>Excel Analyst Hub — Kuasai Excel & Data Analytics untuk Karir yang Lebih Baik</title>
-  <meta name="description" content="Platform belajar Excel all-in-one untuk semua level — dari pemula hingga siap kerja. Kuasai VLOOKUP, PivotTable, Power Query, dan SQL dengan latihan langsung." />
+  <meta name="description"
+    content="Platform belajar Excel all-in-one untuk semua level — dari pemula hingga siap kerja. Kuasai VLOOKUP, PivotTable, Power Query, dan SQL dengan latihan langsung." />
   <meta property="og:title" content="Excel Analyst Hub — Kuasai Excel & Data Analytics untuk Karir yang Lebih Baik" />
-  <meta property="og:description" content="Platform belajar Excel berfokus karir untuk calon data analyst Indonesia. Dari dasar hingga dashboard lanjutan." />
+  <meta property="og:description"
+    content="Platform belajar Excel berfokus karir untuk calon data analyst Indonesia. Dari dasar hingga dashboard lanjutan." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://hanafidias.github.io/excel-analyst-hub/assets/img/logo-512.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,32 +32,40 @@
   <script src="assets/js/session.js" defer></script>
   <style>
     /* 1. Transisi Dasar - Sangat Mulus (Gaya Apple/Stripe) */
-    .card, .tools-teaser {
+    .card,
+    .tools-teaser {
       transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
-      position: relative; /* Wajib untuk ruang efek kilap */
+      position: relative;
+      /* Wajib untuk ruang efek kilap */
       z-index: 1;
     }
 
     /* 2. Efek Kilap Kaca (Premium Shimmer) */
-    .card::before, .tools-teaser::before {
+    .card::before,
+    .tools-teaser::before {
       content: "";
       position: absolute;
-      top: 0; left: -100%;
-      width: 50%; height: 100%;
-      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0) 100%);
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.06) 50%, rgba(255, 255, 255, 0) 100%);
       transform: skewX(-25deg);
       z-index: 2;
-      pointer-events: none; /* Agar klik tidak terhalang */
+      pointer-events: none;
+      /* Agar klik tidak terhalang */
     }
 
     /* Saat Hover, cahaya menyapu ke kanan */
-    .card:hover::before, .tools-teaser:hover::before {
+    .card:hover::before,
+    .tools-teaser:hover::before {
       left: 200%;
       transition: all 0.8s ease-in-out;
     }
 
     /* 3. Magnetic Lift untuk Semua Kartu Biasa */
-    .card:hover, .tools-teaser:hover {
+    .card:hover,
+    .tools-teaser:hover {
       transform: translateY(-8px) scale(1.02) !important;
       border-color: rgba(79, 142, 247, 0.6) !important;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 0 20px rgba(79, 142, 247, 0.15) !important;
@@ -63,9 +74,20 @@
 
     /* 4. Efek Napas (Breathing Glow) untuk Kartu Unggulan Saat Diam */
     @keyframes premiumPulse {
-      0%   { box-shadow: 0 5px 15px rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); }
-      50%  { box-shadow: 0 8px 30px rgba(245, 158, 11, 0.25); border-color: rgba(245, 158, 11, 0.8); }
-      100% { box-shadow: 0 5px 15px rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); }
+      0% {
+        box-shadow: 0 5px 15px rgba(245, 158, 11, 0.1);
+        border-color: rgba(245, 158, 11, 0.3);
+      }
+
+      50% {
+        box-shadow: 0 8px 30px rgba(245, 158, 11, 0.25);
+        border-color: rgba(245, 158, 11, 0.8);
+      }
+
+      100% {
+        box-shadow: 0 5px 15px rgba(245, 158, 11, 0.1);
+        border-color: rgba(245, 158, 11, 0.3);
+      }
     }
 
     .highlight-card {
@@ -74,13 +96,14 @@
 
     /* 5. Hover pada Kartu Unggulan (Menimpa animasi napas) */
     .highlight-card:hover {
-      animation: none !important; 
+      animation: none !important;
       transform: translateY(-8px) scale(1.02) !important;
       border-color: var(--warning) !important;
       box-shadow: 0 25px 50px rgba(245, 158, 11, 0.25), 0 0 30px rgba(245, 158, 11, 0.15) !important;
     }
   </style>
 </head>
+
 <body class="page-body">
 
   <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
@@ -88,23 +111,45 @@
   <!-- ============ NAVIGATION ============ -->
   <nav class="nav" role="navigation" aria-label="Navigasi utama">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo" aria-label="Excel Analyst Hub beranda" style="transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-        <div class="logo-icon" aria-hidden="true" style="box-shadow: 0 0 10px rgba(59,130,246,0.5);"><img src="assets/img/logo-navbar.png" alt="" style="width:100%;height:100%;object-fit:contain;padding:4px;" /></div>
+      <a href="index.html" class="nav-logo" aria-label="Excel Analyst Hub beranda"
+        style="transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'"
+        onmouseout="this.style.transform='scale(1)'">
+        <div class="logo-icon" aria-hidden="true" style="box-shadow: 0 0 10px rgba(59,130,246,0.5);"><img
+            src="assets/img/logo-navbar.png" alt="" style="width:100%;height:100%;object-fit:contain;padding:4px;" />
+        </div>
         Excel Analyst Hub
       </a>
-      
+
       <div class="nav-links">
         <a href="index.html" class="nav-item">Beranda</a>
         <a href="learn.html" class="nav-item">Belajar</a>
         <a href="tools.html" class="nav-item">Tools</a>
         <a href="portfolio.html" class="nav-item">Portofolio</a>
       </div>
-      
+
       <div class="nav-right">
-        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
-        <a href="login.html" class="btn-sm btn-nav-premium" id="nav-auth-btn" style="padding: 0.45rem 1rem; border-radius: 50px; font-weight: 600; letter-spacing: 0.3px;">
+        <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang"
+          title="Mode terang">☀️</button>
+        <a href="login.html" class="btn-sm btn-nav-premium" id="nav-auth-btn"
+          style="padding: 0.45rem 1rem; border-radius: 50px; font-weight: 600; letter-spacing: 0.3px;">
           Masuk / Profil
         </a>
+        <script>
+          (function () {
+            var stored = localStorage.getItem('sb-laowissohsnhfsbiwcpd-auth-token');
+            if (stored) {
+              try {
+                var s = JSON.parse(stored);
+                if (s && s.access_token) {
+                  var btn = document.getElementById('nav-auth-btn');
+                  if (btn) { btn.href = 'profile.html'; btn.textContent = 'Dashboard Profil'; }
+                  var mBtn = document.getElementById('mobile-auth-btn');
+                  if (mBtn) { mBtn.href = 'profile.html'; mBtn.textContent = 'Dashboard Profil'; }
+                }
+              } catch (e) { }
+            }
+          })();
+        </script>
         <button class="hamburger" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
           <span></span><span></span><span></span>
         </button>
@@ -117,8 +162,9 @@
     <a href="learn.html">Belajar</a>
     <a href="tools.html">Tools</a>
     <a href="portfolio.html">Portofolio</a>
-    <div style="height:1px; background:var(--border); margin: 8px 0;"></div> 
-    <a href="login.html" class="btn-nav-premium" id="mobile-auth-btn" style="text-align:center; border-radius: 8px; margin-top: 8px;">Masuk / Profil</a>
+    <div style="height:1px; background:var(--border); margin: 8px 0;"></div>
+    <a href="login.html" class="btn-nav-premium" id="mobile-auth-btn"
+      style="text-align:center; border-radius: 8px; margin-top: 8px;">Masuk / Profil</a>
   </div>
 
 
@@ -136,10 +182,12 @@
           <span style="color: var(--primary);">Untuk Karir yang Lebih Baik</span>
         </h1>
         <p class="hero-sub animate-hero delay-2" style="max-width: 700px; margin-bottom: 1.2rem;">
-          Platform LMS premium tempat teori berubah menjadi keahlian siap kerja. Selesaikan materi praktis berstandar industri, kumpulkan XP, buka pencapaian, dan bangun portofolio data kelas dunia.
+          Platform LMS premium tempat teori berubah menjadi keahlian siap kerja. Selesaikan materi praktis berstandar
+          industri, kumpulkan XP, buka pencapaian, dan bangun portofolio data kelas dunia.
         </p>
         <div class="animate-hero delay-3" style="margin-bottom: 2.5rem;">
-          <span style="font-style: italic; color: #10b981; font-weight: 600; font-size: 1.15rem; letter-spacing: 0.5px; background: rgba(16, 185, 129, 0.08); padding: 6px 16px; border-radius: 50px; border: 1px solid rgba(16, 185, 129, 0.2); display: inline-block;">
+          <span
+            style="font-style: italic; color: #10b981; font-weight: 600; font-size: 1.15rem; letter-spacing: 0.5px; background: rgba(16, 185, 129, 0.08); padding: 6px 16px; border-radius: 50px; border: 1px solid rgba(16, 185, 129, 0.2); display: inline-block;">
             "Learning shouldn't be boring; it should be rewarding."
           </span>
         </div>
@@ -181,31 +229,38 @@
           <div class="card value-card fade-in delay-1">
             <div class="card-icon card-icon-accent" aria-hidden="true">🎯</div>
             <h3>Kurikulum Berfokus Karir</h3>
-            <p>Dirancang berdasarkan studi kasus riil yang benar-benar diuji oleh perusahaan dalam perekrutan Data Analyst. Kuasai VLOOKUP, INDEX-MATCH, hingga Power Query dari hari pertama.</p>
+            <p>Dirancang berdasarkan studi kasus riil yang benar-benar diuji oleh perusahaan dalam perekrutan Data
+              Analyst. Kuasai VLOOKUP, INDEX-MATCH, hingga Power Query dari hari pertama.</p>
           </div>
           <div class="card value-card fade-in delay-2">
             <div class="card-icon card-icon-accent" aria-hidden="true">⚙️</div>
             <h3>Latihan Interaktif</h3>
-            <p>Selamat tinggal tutorial statis yang membosankan. Jalani proses belajar interaktif yang hidup: bangun data acak dengan Dataset Generator, pahami sintaks dengan Formula Generator, dan pantau kenaikan level Anda.</p>
+            <p>Selamat tinggal tutorial statis yang membosankan. Jalani proses belajar interaktif yang hidup: bangun
+              data acak dengan Dataset Generator, pahami sintaks dengan Formula Generator, dan pantau kenaikan level
+              Anda.</p>
           </div>
           <div class="card value-card fade-in delay-3">
             <div class="card-icon card-icon-accent" aria-hidden="true">📄</div>
             <h3>Template Siap Pakai</h3>
-            <p>Unduh dan kerjakan file kerja nyata industri (Laporan Keuangan, HR Overtime Tracker, hingga Sales Dashboard). Bangun portofolio data Anda sendiri yang diakui oleh para profesional.</p>
+            <p>Unduh dan kerjakan file kerja nyata industri (Laporan Keuangan, HR Overtime Tracker, hingga Sales
+              Dashboard). Bangun portofolio data Anda sendiri yang diakui oleh para profesional.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ============ LEARNING PATH PREVIEW ============ -->
-    <section class="section" id="paths" aria-label="Pratinjau jalur belajar" style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+    <section class="section" id="paths" aria-label="Pratinjau jalur belajar"
+      style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
       <div class="container">
         <div class="section-header fade-in">
           <h2>Kurikulum Terstruktur. Belajar Tanpa Bingung.</h2>
-          <p>Tiga jalur, satu jalan yang jelas. Setiap materi dirancang berurutan—tanpa asumsi dasar yang melompat, tanpa ada langkah esensial yang terlewat.</p>
+          <p>Tiga jalur, satu jalan yang jelas. Setiap materi dirancang berurutan—tanpa asumsi dasar yang melompat,
+            tanpa ada langkah esensial yang terlewat.</p>
         </div>
         <div class="grid-3">
-          <div class="card track-card fade-in delay-1" style="display: flex; flex-direction: column; border-radius: 12px; background: var(--surface); overflow: hidden; border: 1px solid var(--border);">
+          <div class="card track-card fade-in delay-1"
+            style="display: flex; flex-direction: column; border-radius: 12px; background: var(--surface); overflow: hidden; border: 1px solid var(--border);">
             <div class="track-card-header">
               <div>
                 <h3>Jalur Pemula</h3>
@@ -218,14 +273,18 @@
               <div class="track-topic-item">Formula Dasar: SUM, AVERAGE, COUNT</div>
               <div class="track-topic-item">Pemformatan Sel & Grafik Dasar</div>
             </div>
-            <div class="track-meta" style="margin-bottom: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--surface-2);">
+            <div class="track-meta"
+              style="margin-bottom: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--surface-2);">
               <span>📚 5 topik</span>
               <span>⏱️ ~3 jam</span>
             </div>
-            <a href="learn.html#beginner" class="btn-ghost btn-sm" style="display: block; width: 100%; text-align: center; border: 1px solid var(--border);">Mulai Jalur Pemula ↗</a>
+            <a href="learn.html#beginner" class="btn-ghost btn-sm"
+              style="display: block; width: 100%; text-align: center; border: 1px solid var(--border);">Mulai Jalur
+              Pemula ↗</a>
           </div>
 
-          <div class="card track-card highlight-card fade-in delay-2" style="display: flex; flex-direction: column; border-radius: 12px; background: var(--surface); overflow: hidden;">
+          <div class="card track-card highlight-card fade-in delay-2"
+            style="display: flex; flex-direction: column; border-radius: 12px; background: var(--surface); overflow: hidden;">
             <div class="track-card-header">
               <div>
                 <h3>Jalur Menengah</h3>
@@ -238,14 +297,17 @@
               <div class="track-topic-item">Dasar-Dasar PivotTable</div>
               <div class="track-topic-item">SUMIF, COUNTIF, Data Cleaning</div>
             </div>
-            <div class="track-meta" style="margin-bottom: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--surface-2);">
+            <div class="track-meta"
+              style="margin-bottom: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--surface-2);">
               <span>📚 6 topik</span>
               <span>⏱️ ~5 jam</span>
             </div>
-            <a href="learn.html#intermediate" class="btn-primary btn-sm" style="display: block; width: 100%; text-align: center;">Mulai Jalur Menengah ↗</a>
+            <a href="learn.html#intermediate" class="btn-primary btn-sm"
+              style="display: block; width: 100%; text-align: center;">Mulai Jalur Menengah ↗</a>
           </div>
 
-          <div class="card track-card fade-in delay-3" style="display: flex; flex-direction: column; border-radius: 12px; background: var(--surface); overflow: hidden; border: 1px solid var(--border);">
+          <div class="card track-card fade-in delay-3"
+            style="display: flex; flex-direction: column; border-radius: 12px; background: var(--surface); overflow: hidden; border: 1px solid var(--border);">
             <div class="track-card-header">
               <div>
                 <h3>Jalur Lanjutan</h3>
@@ -258,11 +320,14 @@
               <div class="track-topic-item">Power Query Fundamental</div>
               <div class="track-topic-item">Dashboard Interaktif Lengkap</div>
             </div>
-            <div class="track-meta" style="margin-bottom: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--surface-2);">
+            <div class="track-meta"
+              style="margin-bottom: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--surface-2);">
               <span>📚 6 topik</span>
               <span>⏱️ ~7 jam</span>
             </div>
-            <a href="learn.html#advanced" class="btn-ghost btn-sm" style="display: block; width: 100%; text-align: center; border: 1px solid var(--border);">Mulai Jalur Lanjutan ↗</a>
+            <a href="learn.html#advanced" class="btn-ghost btn-sm"
+              style="display: block; width: 100%; text-align: center; border: 1px solid var(--border);">Mulai Jalur
+              Lanjutan ↗</a>
           </div>
         </div>
       </div>
@@ -284,7 +349,9 @@
               <span class="badge badge-beginner">Pemula</span>
             </div>
             <h3 style="margin-bottom:var(--space-2);">Excel Shortcut Trainer</h3>
-            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Latih semua shortcut keyboard Excel yang wajib dikuasai analis data. Latihan interaktif dengan sistem kartu flashcard untuk mempercepat produktivitasmu.</p>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Latih semua shortcut
+              keyboard Excel yang wajib dikuasai analis data. Latihan interaktif dengan sistem kartu flashcard untuk
+              mempercepat produktivitasmu.</p>
             <a href="tools/shortcut.html" class="btn-ghost btn-sm" id="tool-shortcut">Coba Tools ↗</a>
           </div>
 
@@ -295,7 +362,9 @@
               <span class="badge badge-intermediate">Menengah</span>
             </div>
             <h3 style="margin-bottom:var(--space-2);">Excel Formula Trainer</h3>
-            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Kuasai VLOOKUP, SUMIF, INDEX-MATCH, dan puluhan formula penting lainnya lewat latihan soal nyata. Ideal untuk persiapan wawancara kerja data analyst.</p>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Kuasai VLOOKUP, SUMIF,
+              INDEX-MATCH, dan puluhan formula penting lainnya lewat latihan soal nyata. Ideal untuk persiapan wawancara
+              kerja data analyst.</p>
             <a href="tools/formula.html" class="btn-ghost btn-sm" id="tool-formula">Coba Tools ↗</a>
           </div>
 
@@ -306,7 +375,9 @@
               <span class="badge badge-intermediate">Menengah</span>
             </div>
             <h3 style="margin-bottom:var(--space-2);">Excel Data Cleaning Guide</h3>
-            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Panduan lengkap membersihkan data kotor di Excel — TRIM, CLEAN, hapus duplikat, perbaiki format tanggal, dan split kolom. Keahlian nomor satu yang dicari perusahaan.</p>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Panduan lengkap
+              membersihkan data kotor di Excel — TRIM, CLEAN, hapus duplikat, perbaiki format tanggal, dan split kolom.
+              Keahlian nomor satu yang dicari perusahaan.</p>
             <a href="tools/cleaning.html" class="btn-ghost btn-sm" id="tool-cleaning">Coba Tools ↗</a>
           </div>
 
@@ -317,7 +388,9 @@
               <span class="badge badge-intermediate">Menengah</span>
             </div>
             <h3 style="margin-bottom:var(--space-2);">Excel Pivot Table Guide</h3>
-            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Kuasai PivotTable dari nol hingga membuat laporan interaktif profesional. Pelajari filter, grouping, calculated field, dan slicer untuk dashboard yang impresif.</p>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Kuasai PivotTable dari
+              nol hingga membuat laporan interaktif profesional. Pelajari filter, grouping, calculated field, dan slicer
+              untuk dashboard yang impresif.</p>
             <a href="tools/pivot.html" class="btn-ghost btn-sm" id="tool-pivot">Coba Tools ↗</a>
           </div>
 
@@ -328,15 +401,19 @@
               <span class="badge badge-advanced">Lanjutan</span>
             </div>
             <h3 style="margin-bottom:var(--space-2);">SQL Trainer</h3>
-            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Latihan SQL interaktif untuk data analyst — SELECT, JOIN, GROUP BY, subquery, dan window functions. Lengkapi kemampuan Excel-mu dengan SQL untuk analisis database skala besar.</p>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Latihan SQL interaktif
+              untuk data analyst — SELECT, JOIN, GROUP BY, subquery, dan window functions. Lengkapi kemampuan Excel-mu
+              dengan SQL untuk analisis database skala besar.</p>
             <a href="tools/sql.html" class="btn-ghost btn-sm" id="tool-sql">Coba Tools ↗</a>
           </div>
 
           <!-- CTA card -->
-          <div class="card value-card fade-in delay-3" style="border-top:3px solid var(--border);background:var(--surface-2);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+          <div class="card value-card fade-in delay-3"
+            style="border-top:3px solid var(--border);background:var(--surface-2);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
             <div style="font-size:2rem;margin-bottom:var(--space-3);">🚀</div>
             <h3 style="margin-bottom:var(--space-2);">Lihat Semua Jalur Belajar</h3>
-            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Combine tools interaktif ini dengan jalur belajar terstruktur kami untuk hasil maksimal.</p>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-4);">Combine tools interaktif
+              ini dengan jalur belajar terstruktur kami untuk hasil maksimal.</p>
             <a href="learn.html" class="btn-ghost btn-sm" id="cta-all-tools">Lihat Jalur Belajar →</a>
           </div>
 
@@ -345,50 +422,71 @@
     </section>
 
     <!-- ============ TOOLS TEASER ============ -->
-    <section class="section" id="tools-teaser" aria-label="Pratinjau tools interaktif" style="background:var(--bg-color);">
+    <section class="section" id="tools-teaser" aria-label="Pratinjau tools interaktif"
+      style="background:var(--bg-color);">
       <div class="container">
         <div class="flex-between" style="margin-bottom:var(--space-8);flex-wrap:wrap;gap:var(--space-4);">
           <div class="section-header fade-in" style="margin-bottom:0;">
             <h2>Bukan Sekadar Teori — Senjata Interaktif</h2>
             <p>Berhenti membayangkan data. Langsung hasilkan dan praktikkan rumusnya di platform yang sama.</p>
           </div>
-          <a href="tools.html" class="btn-ghost fade-in" style="border: 1px solid var(--border);">Lihat Semua Tools ↗</a>
+          <a href="tools.html" class="btn-ghost fade-in" style="border: 1px solid var(--border);">Lihat Semua Tools
+            ↗</a>
         </div>
 
         <div class="grid-2 fade-in">
-          <div class="tools-teaser highlight-card" style="display: flex; flex-direction: column; border-radius: 12px; background: var(--surface); overflow: hidden;">
-            <div style="padding:var(--space-5) var(--space-6);border-bottom:1px solid var(--border); background: rgba(245,158,11,0.05);">
+          <div class="tools-teaser highlight-card"
+            style="display: flex; flex-direction: column; border-radius: 12px; background: var(--surface); overflow: hidden;">
+            <div
+              style="padding:var(--space-5) var(--space-6);border-bottom:1px solid var(--border); background: rgba(245,158,11,0.05);">
               <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3);">
                 <span style="font-size: 1.5rem;">🚀</span>
                 <h3 style="margin:0;font-size:1.1rem; color: var(--warning);">AI Dataset Generator</h3>
               </div>
-              <p style="font-size:0.85rem;color:var(--text);margin:0; font-weight: 500; line-height: 1.5;">Satu-satunya simulator data lokal. Hasilkan hingga 10.000 baris data dummy (Data Kotor & Relasional) hanya dalam 1 detik.</p>
+              <p style="font-size:0.85rem;color:var(--text);margin:0; font-weight: 500; line-height: 1.5;">Satu-satunya
+                simulator data lokal. Hasilkan hingga 10.000 baris data dummy (Data Kotor & Relasional) hanya dalam 1
+                detik.</p>
             </div>
             <div style="padding:var(--space-5) var(--space-6);background:var(--surface-2); flex-grow: 1;">
-              <div class="mock-input">🗃️ "Buatkan 10.000 baris data penjualan toko dengan Metode Pembayaran dan Harga Modal (COGS)."</div>
-              <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:var(--space-2);text-transform:uppercase;letter-spacing:0.06em;">Status Eksekusi</div>
-              <div class="mock-output" style="color: #10b981; font-weight: bold; background: rgba(16,185,129,0.1); border-color: #10b981;">✓ 10.000 Baris Berhasil Diunduh (.CSV)</div>
+              <div class="mock-input">🗃️ "Buatkan 10.000 baris data penjualan toko dengan Metode Pembayaran dan Harga
+                Modal (COGS)."</div>
+              <div
+                style="font-size:0.72rem;color:var(--text-muted);margin-bottom:var(--space-2);text-transform:uppercase;letter-spacing:0.06em;">
+                Status Eksekusi</div>
+              <div class="mock-output"
+                style="color: #10b981; font-weight: bold; background: rgba(16,185,129,0.1); border-color: #10b981;">✓
+                10.000 Baris Berhasil Diunduh (.CSV)</div>
             </div>
-            <div style="padding:var(--space-4) var(--space-6);border-top:1px solid var(--border); background: var(--surface);">
-              <a href="tools.html#dataset-generator" class="btn-primary btn-sm" style="display: block; width: 100%; text-align: center;">Coba Generator Data ↗</a>
+            <div
+              style="padding:var(--space-4) var(--space-6);border-top:1px solid var(--border); background: var(--surface);">
+              <a href="tools.html#dataset-generator" class="btn-primary btn-sm"
+                style="display: block; width: 100%; text-align: center;">Coba Generator Data ↗</a>
             </div>
           </div>
 
-          <div class="tools-teaser" style="display: flex; flex-direction: column; border-radius: 12px; background: var(--surface); overflow: hidden; border: 1px solid var(--border);">
+          <div class="tools-teaser"
+            style="display: flex; flex-direction: column; border-radius: 12px; background: var(--surface); overflow: hidden; border: 1px solid var(--border);">
             <div style="padding:var(--space-5) var(--space-6);border-bottom:1px solid var(--border);">
               <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3);">
                 <span style="font-size: 1.5rem;">🧠</span>
                 <h3 style="margin:0;font-size:1rem;">Formula Generator</h3>
               </div>
-              <p style="font-size:0.85rem;color:var(--text-muted);margin:0; line-height: 1.5;">Deskripsikan logikamu menggunakan bahasa manusia biasa — AI kami akan meracik formula Excel yang tepat beserta penjelasannya.</p>
+              <p style="font-size:0.85rem;color:var(--text-muted);margin:0; line-height: 1.5;">Deskripsikan logikamu
+                menggunakan bahasa manusia biasa — AI kami akan meracik formula Excel yang tepat beserta penjelasannya.
+              </p>
             </div>
             <div style="padding:var(--space-5) var(--space-6);background:var(--surface-2); flex-grow: 1;">
               <div class="mock-input">📝 "Jumlahkan penjualan di B, tapi hanya untuk yang berstatus Lunas di C."</div>
-              <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:var(--space-2);text-transform:uppercase;letter-spacing:0.06em;">Formula yang Dihasilkan</div>
+              <div
+                style="font-size:0.72rem;color:var(--text-muted);margin-bottom:var(--space-2);text-transform:uppercase;letter-spacing:0.06em;">
+                Formula yang Dihasilkan</div>
               <div class="mock-output">=SUMIFS(B:B, C:C, "Lunas")</div>
             </div>
-            <div style="padding:var(--space-4) var(--space-6);border-top:1px solid var(--border); background: var(--surface);">
-              <a href="tools.html#formula-generator" class="btn-ghost btn-sm" style="display: block; width: 100%; text-align: center; border: 1px solid var(--border);">Coba Generator Formula ↗</a>
+            <div
+              style="padding:var(--space-4) var(--space-6);border-top:1px solid var(--border); background: var(--surface);">
+              <a href="tools.html#formula-generator" class="btn-ghost btn-sm"
+                style="display: block; width: 100%; text-align: center; border: 1px solid var(--border);">Coba Generator
+                Formula ↗</a>
             </div>
           </div>
         </div>
@@ -400,7 +498,8 @@
       <div class="container">
         <div class="section-header fade-in">
           <h2>Template gratis — langsung pakai di tempat kerja</h2>
-          <p>File Excel nyata yang dibangun dengan formula yang diajarkan di sini. Bukan contoh mainan — file siap produksi yang benar-benar dipakai analis.</p>
+          <p>File Excel nyata yang dibangun dengan formula yang diajarkan di sini. Bukan contoh mainan — file siap
+            produksi yang benar-benar dipakai analis.</p>
         </div>
         <div class="grid-3">
 
@@ -408,7 +507,9 @@
             <div class="template-thumb" aria-hidden="true">📊</div>
             <div style="padding:var(--space-5);">
               <h3 style="font-size:1rem;margin-bottom:var(--space-2);">Sales Dashboard</h3>
-              <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-3);line-height:1.65;">Laporan penjualan bulanan dengan breakdown regional, grafik dinamis, dan pelacakan KPI otomatis. Menggunakan SUMIF, PivotTable, dan conditional formatting.</p>
+              <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-3);line-height:1.65;">
+                Laporan penjualan bulanan dengan breakdown regional, grafik dinamis, dan pelacakan KPI otomatis.
+                Menggunakan SUMIF, PivotTable, dan conditional formatting.</p>
               <div class="tag-group">
                 <span class="tag">Dashboard</span>
                 <span class="tag">PivotTable</span>
@@ -416,7 +517,8 @@
               </div>
             </div>
             <div class="card-footer">
-              <a href="assets/downloads/Sales_Dashboard_PT_Nusantara.xlsx" download="Sales_Dashboard_PT_Nusantara.xlsx" class="btn-ghost btn-sm" aria-label="Unduh template Sales Dashboard PT Nusantara">Unduh Gratis</a>
+              <a href="assets/downloads/Sales_Dashboard_PT_Nusantara.xlsx" download="Sales_Dashboard_PT_Nusantara.xlsx"
+                class="btn-ghost btn-sm" aria-label="Unduh template Sales Dashboard PT Nusantara">Unduh Gratis</a>
             </div>
           </div>
 
@@ -424,7 +526,9 @@
             <div class="template-thumb" aria-hidden="true">👥</div>
             <div style="padding:var(--space-5);">
               <h3 style="font-size:1rem;margin-bottom:var(--space-2);">HR Attendance Tracker</h3>
-              <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-3);line-height:1.65;">Pelacak kehadiran karyawan bulanan dengan notifikasi otomatis untuk keterlambatan dan izin. Conditional formatting, COUNTIF, dan ringkasan statistik sudah tersedia.</p>
+              <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-3);line-height:1.65;">
+                Pelacak kehadiran karyawan bulanan dengan notifikasi otomatis untuk keterlambatan dan izin. Conditional
+                formatting, COUNTIF, dan ringkasan statistik sudah tersedia.</p>
               <div class="tag-group">
                 <span class="tag">HR</span>
                 <span class="tag">Otomasi</span>
@@ -432,7 +536,9 @@
               </div>
             </div>
             <div class="card-footer">
-              <a href="assets/downloads/HR_Attendance_Tracker_PT_Maju_Bersama.xlsx" download="HR_Attendance_Tracker_PT_Maju_Bersama.xlsx" class="btn-ghost btn-sm" aria-label="Unduh template HR Attendance Tracker PT Maju Bersama">Unduh Gratis</a>
+              <a href="assets/downloads/HR_Attendance_Tracker_PT_Maju_Bersama.xlsx"
+                download="HR_Attendance_Tracker_PT_Maju_Bersama.xlsx" class="btn-ghost btn-sm"
+                aria-label="Unduh template HR Attendance Tracker PT Maju Bersama">Unduh Gratis</a>
             </div>
           </div>
 
@@ -440,7 +546,9 @@
             <div class="template-thumb" aria-hidden="true">💰</div>
             <div style="padding:var(--space-5);">
               <h3 style="font-size:1rem;margin-bottom:var(--space-2);">Template Laporan Keuangan</h3>
-              <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-3);line-height:1.65;">P&L bulanan dengan analisis varians otomatis vs anggaran, total bergulir, dan pemformatan satu klik untuk presentasi manajemen. Menggunakan formula lanjutan dan named ranges.</p>
+              <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:var(--space-3);line-height:1.65;">P&L
+                bulanan dengan analisis varians otomatis vs anggaran, total bergulir, dan pemformatan satu klik untuk
+                presentasi manajemen. Menggunakan formula lanjutan dan named ranges.</p>
               <div class="tag-group">
                 <span class="tag">Keuangan</span>
                 <span class="tag">Laporan</span>
@@ -448,7 +556,9 @@
               </div>
             </div>
             <div class="card-footer">
-              <a href="assets/downloads/Template_Laporan_Keuangan_PL_2024.xlsx" download="Template_Laporan_Keuangan_PL_2024.xlsx" class="btn-ghost btn-sm" aria-label="Unduh Template Laporan Keuangan PL 2024">Unduh Gratis</a>
+              <a href="assets/downloads/Template_Laporan_Keuangan_PL_2024.xlsx"
+                download="Template_Laporan_Keuangan_PL_2024.xlsx" class="btn-ghost btn-sm"
+                aria-label="Unduh Template Laporan Keuangan PL 2024">Unduh Gratis</a>
             </div>
           </div>
 
@@ -462,7 +572,8 @@
         <div class="fade-in">
           <h2 style="margin-bottom:var(--space-3);">Siap memulai?</h2>
           <p style="color:var(--text-muted);max-width:480px;margin:0 auto var(--space-6);">
-            Pilih jalurmu, kuasai topik demi topik, dan gunakan tools untuk memperkuat apa yang kamu pelajari. Tidak perlu mendaftar.
+            Pilih jalurmu, kuasai topik demi topik, dan gunakan tools untuk memperkuat apa yang kamu pelajari. Tidak
+            perlu mendaftar.
           </p>
           <div class="btn-group" style="justify-content:center;">
             <a href="register.html" class="btn-primary" id="cta-band-learn">Mulai Petualangan →</a>
@@ -475,31 +586,99 @@
   </main>
 
   <!-- ============ FOOTER ============ -->
-  <footer class="footer" role="contentinfo">
+  <footer class="footer" role="contentinfo"
+    style="background:linear-gradient(160deg, #0f172a 0%, #1e1b4b 60%, #0f1f3d 100%); margin-top: 0;">
     <div class="container">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);padding:var(--space-8) 0;">
 
-        <a href="index.html" class="nav-logo">
-          <div class="logo-icon" aria-hidden="true"><img src="assets/img/logo-navbar.png" alt="" style="width:100%;height:100%;object-fit:contain;padding:4px;" /></div>
-          Excel Analyst Hub
-        </a>
+      <div id="footer-grid" style="display:grid; grid-template-columns:1.6fr 1fr 1fr; gap:36px; padding:40px 0 28px;">
 
-        <nav aria-label="Footer" style="display:flex;gap:var(--space-5);flex-wrap:wrap;">
-          <a href="learn.html" style="font-size:0.875rem;color:var(--text-muted);text-decoration:none;">Jalur Belajar</a>
-          <a href="tools.html" style="font-size:0.875rem;color:var(--text-muted);text-decoration:none;">Tools</a>
-          <a href="portfolio.html" style="font-size:0.875rem;color:var(--text-muted);text-decoration:none;">Portofolio</a>
-          <a href="pricing.html" style="font-size:0.875rem;color:var(--text-muted);text-decoration:none;">Harga</a>
-        </nav>
+        <div id="footer-brand-col">
+          <a href="index.html" class="nav-logo"
+            style="margin-bottom:14px; display:inline-flex; text-decoration:none; color:#f1f5f9;">
+            <div class="logo-icon" aria-hidden="true"><img src="assets/img/logo-navbar.png" alt=""
+                style="width:100%;height:100%;object-fit:contain;padding:4px;" /></div>
+            Excel Analyst Hub
+          </a>
+          <p style="font-size:0.8rem; color:#64748b; line-height:1.7; margin:0 0 20px; max-width:220px;">Platform
+            belajar Excel dan data analytics untuk karir data analyst Indonesia.</p>
+          <div id="footer-cta-card"
+            style="background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(139,92,246,0.15)); border:0.5px solid rgba(139,92,246,0.3); border-radius:8px; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+            <div>
+              <p style="font-size:0.75rem; font-weight:600; color:#e2e8f0; margin:0 0 2px;">Siap mulai karir data
+                analyst?</p>
+              <p style="font-size:0.7rem; color:#64748b; margin:0;">Akses penuh mulai Rp 10.000/bulan.</p>
+            </div>
+            <a href="register.html"
+              style="background:linear-gradient(135deg,#3b82f6,#8b5cf6); padding:8px 14px; border-radius:7px; font-size:0.75rem; font-weight:600; color:white; text-decoration:none; white-space:nowrap;">Daftar
+              →</a>
+          </div>
+        </div>
+
+        <div>
+          <p
+            style="font-size:0.7rem; font-weight:600; color:#334155; letter-spacing:0.08em; text-transform:uppercase; margin:0 0 14px;">
+            Platform</p>
+          <nav aria-label="Footer platform" style="display:flex; flex-direction:column; gap:10px;">
+            <a href="learn.html" style="font-size:0.8rem; color:#64748b; text-decoration:none;">Jalur Belajar</a>
+            <a href="tools.html" style="font-size:0.8rem; color:#64748b; text-decoration:none;">Tools Interaktif</a>
+            <a href="portfolio.html" style="font-size:0.8rem; color:#64748b; text-decoration:none;">Portofolio</a>
+            <a href="pricing.html" style="font-size:0.8rem; color:#64748b; text-decoration:none;">Harga</a>
+          </nav>
+        </div>
+
+        <div id="footer-mulai-col">
+          <p
+            style="font-size:0.7rem; font-weight:600; color:#334155; letter-spacing:0.08em; text-transform:uppercase; margin:0 0 14px;">
+            Mulai</p>
+          <nav aria-label="Footer mulai" style="display:flex; flex-direction:column; gap:10px;">
+            <a href="register.html" style="font-size:0.8rem; color:#64748b; text-decoration:none;">Daftar Akun</a>
+            <a href="login.html" style="font-size:0.8rem; color:#64748b; text-decoration:none;">Masuk</a>
+          </nav>
+        </div>
 
       </div>
 
-      <div style="border-top:1px solid var(--border);padding:var(--space-5) 0;text-align:center;">
-        <p style="font-size:0.8rem;color:var(--text-muted);margin:0;">© 2026 Excel Analyst Hub — Belajar Excel untuk karir data analyst Indonesia.</p>
+      <script>
+        (function () {
+          try {
+            var stored = localStorage.getItem('sb-laowissohsnhfsbiwcpd-auth-token');
+            if (stored) {
+              var s = JSON.parse(stored);
+              if (s && s.access_token) {
+                var grid = document.getElementById('footer-grid');
+                var ctaCard = document.getElementById('footer-cta-card');
+                var mulaiCol = document.getElementById('footer-mulai-col');
+
+                if (grid) grid.style.gridTemplateColumns = '1.2fr 1fr 1fr';
+                if (ctaCard) ctaCard.style.display = 'none';
+                if (mulaiCol) {
+                  mulaiCol.querySelector('p').textContent = 'Akun Saya';
+                  mulaiCol.querySelector('nav').innerHTML =
+                    '<a href="profile.html" style="font-size:0.8rem;color:#64748b;text-decoration:none;">Dashboard Profil</a>' +
+                    '<a href="learn.html" style="font-size:0.8rem;color:#64748b;text-decoration:none;">Lanjut Belajar</a>' +
+                    '<a href="tools.html" style="font-size:0.8rem;color:#64748b;text-decoration:none;">Tools Interaktif</a>';
+                }
+              }
+            }
+          } catch (e) { }
+        })();
+      </script>
+
+      <div style="height:0.5px; background:rgba(255,255,255,0.06);"></div>
+
+      <div
+        style="padding:16px 0 28px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+        <p style="font-size:0.7rem; color:#64748b; margin:0;">© 2026 Excel Analyst Hub — Belajar Excel untuk karir data
+          analyst Indonesia.</p>
+        <p style="font-size:0.7rem; color:#64748b; margin:0; font-style:italic;">"Learning shouldn't be boring; it
+          should be rewarding."</p>
       </div>
+
     </div>
   </footer>
 
   <script src="assets/js/main.js"></script>
 
 </body>
+
 </html>
