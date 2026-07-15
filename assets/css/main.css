@@ -3,8 +3,6 @@
    main.css: Variables, Reset, Typography, Layout, Animations
    ============================================ */
 
-/* --- Google Fonts --- */
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap&font-display=swap');
 
 /* --- CSS Variables (Dark mode = default) --- */
 :root,
@@ -58,6 +56,44 @@
   --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
   --shadow-accent: 0 4px 24px rgba(79,142,247,0.15);
   --shadow-hover: 0 8px 32px rgba(0,0,0,0.5);
+
+  /* === EAH REDESIGN VARIABLES === */
+  --eah-bg-base: #0a0f1e;
+  --eah-bg-mid: #0f172a;
+  --eah-bg-deep: #1a0a2e;
+  --eah-glass-bg: rgba(255, 255, 255, 0.04);
+  --eah-glass-border: rgba(255, 255, 255, 0.10);
+  --eah-glass-border-accent: rgba(99, 102, 241, 0.25);
+  --eah-glow-purple: rgba(99, 102, 241, 0.18);
+  --eah-glow-blue: rgba(59, 130, 246, 0.12);
+  --eah-kicker-bg: rgba(99, 102, 241, 0.15);
+  --eah-kicker-border: rgba(99, 102, 241, 0.30);
+  --eah-kicker-text: #818cf8;
+  --eah-heading-primary: #f1f5f9;
+  --eah-heading-secondary: #e2e8f0;
+  --eah-text-body: #94a3b8;
+  --eah-text-muted: #64748b;
+  --eah-text-very-muted: #475569;
+  --eah-gradient-text-from: #818cf8;
+  --eah-gradient-text-to: #38bdf8;
+  --eah-stat-bg: rgba(255, 255, 255, 0.04);
+  --eah-stat-border: rgba(255, 255, 255, 0.08);
+  --eah-btn-primary-from: #4f46e5;
+  --eah-btn-primary-to: #3b82f6;
+  --eah-btn-secondary-bg: rgba(255, 255, 255, 0.06);
+  --eah-btn-secondary-border: rgba(255, 255, 255, 0.15);
+  --eah-btn-secondary-text: #e2e8f0;
+  --eah-pain-bg: rgba(239, 68, 68, 0.06);
+  --eah-pain-border: rgba(239, 68, 68, 0.20);
+  --eah-pain-icon: #f87171;
+  --eah-pain-title: #fca5a5;
+  --eah-gain-bg: rgba(16, 185, 129, 0.06);
+  --eah-gain-border: rgba(16, 185, 129, 0.20);
+  --eah-gain-icon: #34d399;
+  --eah-gain-title: #6ee7b7;
+  --eah-divider: rgba(255, 255, 255, 0.10);
+  --eah-tagline-color: #818cf8;
+  --eah-pricing-border: rgba(99, 102, 241, 0.25);
 
   /* Transitions */
   --transition: 200ms ease;
@@ -693,4 +729,300 @@ input:focus, select:focus, textarea:focus {
 html, body {
     color-scheme: dark !important;
     background-color: var(--bg) !important;
+}
+
+/* ============================================
+   EAH REDESIGN — Section classes
+   (Hero, Pain→Gain, Pricing CTA)
+============================================ */
+
+.eah-section-wrap {
+  position: relative;
+}
+
+.eah-section-wrap::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 700px;
+  height: 500px;
+  background: radial-gradient(ellipse, var(--eah-glow-purple) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.eah-glass-card {
+  background: var(--eah-glass-bg);
+  border: 0.5px solid var(--eah-glass-border);
+  border-radius: var(--radius-lg);
+  position: relative;
+  z-index: 1;
+}
+
+.eah-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--eah-kicker-bg);
+  border: 0.5px solid var(--eah-kicker-border);
+  border-radius: var(--radius-pill);
+  padding: 5px 14px;
+  margin-bottom: 1.25rem;
+}
+
+.eah-kicker span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--eah-kicker-text);
+}
+
+.eah-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--eah-heading-primary);
+  line-height: 1.25;
+  margin: 0 0 1rem;
+  max-width: 580px;
+}
+
+.eah-hero-title .gradient-text {
+  background: linear-gradient(90deg, var(--eah-gradient-text-from), var(--eah-gradient-text-to));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.eah-hero-sub {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--eah-text-body);
+  line-height: 1.75;
+  margin: 0 0 0.5rem;
+  max-width: 500px;
+}
+
+.eah-tagline {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--eah-tagline-color);
+  font-style: italic;
+  margin: 0 0 1.75rem;
+}
+
+.eah-hero-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+.eah-btn-primary {
+  font-family: var(--font-body);
+  background: linear-gradient(135deg, var(--eah-btn-primary-from), var(--eah-btn-primary-to));
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.eah-btn-primary:hover { opacity: 0.9; }
+
+.eah-btn-secondary {
+  font-family: var(--font-body);
+  background: var(--eah-btn-secondary-bg);
+  color: var(--eah-btn-secondary-text);
+  border: 0.5px solid var(--eah-btn-secondary-border);
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.eah-btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+.eah-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.eah-stat-card {
+  background: var(--eah-stat-bg);
+  border: 0.5px solid var(--eah-stat-border);
+  border-radius: var(--radius-md);
+  padding: 14px 12px;
+}
+
+.eah-stat-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--eah-heading-primary);
+  margin: 0 0 3px;
+  display: block;
+}
+
+.eah-stat-label {
+  font-size: 11px;
+  color: var(--eah-text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.eah-section-label-sm {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--eah-text-very-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 6px;
+}
+
+.eah-section-heading {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--eah-heading-secondary);
+  margin: 0 0 1.5rem;
+}
+
+.eah-pain-gain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.eah-pain-card {
+  background: var(--eah-pain-bg);
+  border: 0.5px solid var(--eah-pain-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.eah-pain-card i,
+.eah-pain-card svg {
+  font-size: 20px;
+  color: var(--eah-pain-icon);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.eah-pain-card .card-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--eah-pain-title);
+  margin: 0 0 5px;
+}
+
+.eah-pain-card .card-desc {
+  font-size: 12px;
+  color: var(--eah-pain-icon);
+  margin: 0;
+  opacity: 0.7;
+  line-height: 1.5;
+}
+
+.eah-gain-card {
+  background: var(--eah-gain-bg);
+  border: 0.5px solid var(--eah-gain-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.eah-gain-card i,
+.eah-gain-card svg {
+  font-size: 20px;
+  color: var(--eah-gain-icon);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.eah-gain-card .card-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--eah-gain-title);
+  margin: 0 0 5px;
+}
+
+.eah-gain-card .card-desc {
+  font-size: 12px;
+  color: var(--eah-gain-icon);
+  margin: 0;
+  opacity: 0.7;
+  line-height: 1.5;
+}
+
+.eah-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 1.5rem 0;
+}
+
+.eah-divider::before,
+.eah-divider::after {
+  content: '';
+  flex: 1;
+  height: 0.5px;
+  background: var(--eah-divider);
+}
+
+.eah-divider span {
+  font-size: 12px;
+  color: var(--eah-text-very-muted);
+  white-space: nowrap;
+  padding: 0 4px;
+}
+
+.eah-pricing-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.eah-pricing-cta .pricing-label {
+  font-size: 12px;
+  color: var(--eah-text-muted);
+  margin: 0 0 4px;
+}
+
+.eah-pricing-cta .pricing-amount {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--eah-heading-primary);
+  margin: 0 0 4px;
+}
+
+.eah-pricing-cta .pricing-desc {
+  font-size: 12px;
+  color: var(--eah-text-muted);
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .eah-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .eah-pain-gain-grid { grid-template-columns: 1fr; }
+  .eah-hero-buttons { flex-direction: column; }
+  .eah-btn-primary,
+  .eah-btn-secondary { width: 100%; justify-content: center; text-align: center; }
+  .eah-pricing-cta { flex-direction: column; align-items: flex-start; }
+  .eah-pricing-cta .eah-btn-primary { width: 100%; justify-content: center; }
 }

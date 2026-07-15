@@ -501,6 +501,13 @@
                 setTimeout(() => { targetEl.style.outline = ''; }, 2000);
               }, 300);
             }
+          } else if (hash && ['#beginner', '#intermediate', '#advanced', '#expert'].includes(hash)) {
+            const targetSection = document.querySelector(hash);
+            if (targetSection) {
+              setTimeout(() => {
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }, 300);
+            }
           }
         }
 
