@@ -21,6 +21,7 @@
     content="Kuasai Excel langkah demi langkah. Tiga jalur keahlian dari pemula hingga lanjutan — masing-masing dengan konten nyata, pelacak kemajuan, dan latihan praktis." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/components.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -77,25 +78,28 @@
   <main id="main-content" class="container fade-in-section">
 
     <!-- ============ PAGE HERO ============ -->
-    <header class="page-header" style="padding-top: var(--space-6); padding-bottom: var(--space-5);">
+    <header class="page-header eah-section-wrap" style="padding-top:var(--space-8); padding-bottom:var(--space-6);">
       <div class="container">
-        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: var(--space-3);">
-          <span class="badge"
-            style="background: rgba(16, 185, 129, 0.1); color: #10b981; display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">3
-            Jalur Kurikulum</span>
-          <span style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">16 Total Topik</span>
-        </div>
-        <h1 style="margin-top: 0; margin-bottom: var(--space-2); font-size: 2.5rem; line-height: 1.2;">Jalur Belajar
-          Excel Analyst</h1>
-        <p class="text-muted text-lg" style="max-width: 800px; margin: 0; font-size: 1.1rem; line-height: 1.6;">
-          Tiga kurikulum terstruktur dari dasar hingga lanjutan, dirancang khusus untuk pengembangan keahlian nyata di
-          dunia kerja. Klik topik untuk mulai — kemajuanmu akan tersimpan secara otomatis.
-        </p>
-        <div
-          style="display: inline-block; margin-top: 1.5rem; padding: 0.6rem 1.2rem; background: rgba(16, 185, 129, 0.08); border-radius: 50px; border: 1px solid rgba(16, 185, 129, 0.2);">
-          <span style="font-style: italic; color: #10b981; font-weight: 500; font-size: 0.95rem;">
-            "Learning shouldn't be boring; it should be rewarding."
-          </span>
+        <div class="eah-glass-card" style="padding:clamp(1.5rem, 4vw, 2.5rem);">
+
+          <div class="eah-kicker" style="margin-bottom:var(--space-5);">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--eah-kicker-text);" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>4 Jalur Kurikulum · 25 Materi · Dari Pemula ke Expert</span>
+          </div>
+
+          <h1 style="font-family:var(--font-display); color:var(--eah-heading-primary); margin:0 0 var(--space-3); font-size:clamp(1.75rem, 4vw, 2.5rem); font-weight:700; line-height:1.25;">
+            Jalur Belajar <span style="background:linear-gradient(90deg, var(--eah-gradient-text-from), var(--eah-gradient-text-to)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Excel Analyst</span>
+          </h1>
+
+          <p style="font-family:var(--font-body); color:var(--eah-text-body); max-width:600px; margin:0 0 var(--space-5); font-size:1rem; line-height:1.75;">
+            Empat jalur terstruktur dari dasar hingga expert — dirancang untuk pengembangan keahlian nyata di dunia kerja. Klik topik untuk mulai, kemajuanmu tersimpan otomatis.
+          </p>
+
+          <div style="display:inline-flex; align-items:center; gap:8px; background:var(--eah-kicker-bg); border:0.5px solid var(--eah-kicker-border); border-radius:50px; padding:6px 14px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--eah-kicker-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span style="font-family:var(--font-body); font-style:italic; color:var(--eah-kicker-text); font-size:0.85rem;">"Learning shouldn't be boring; it should be rewarding."</span>
+          </div>
+
         </div>
       </div>
     </header>
@@ -245,106 +249,103 @@
 
       <!-- ====== TOOLS & TRAINER SECTION ====== -->
       <div class="track-section fade-in delay-3" id="tools-trainers" style="margin-top:var(--space-8);">
-        <div style="margin-bottom:var(--space-6);">
-          <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2);">
-            <span class="badge"
-              style="background:linear-gradient(135deg,var(--accent),var(--accent-2,#7c3aed));color:#fff;border:none;">⚡
-              Tools & Trainer</span>
+        <div class="track-section-header" style="cursor:default;">
+          <div class="track-section-title">
+            <div class="eah-kicker" style="margin-bottom:0;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--eah-kicker-text);" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span>Tools &amp; Trainer</span>
+            </div>
           </div>
-          <h2 style="margin-bottom:var(--space-2);">Tools Interaktif Kami</h2>
-          <p style="font-size:0.875rem;color:var(--text-muted);">Trainer dan panduan langsung yang melengkapi jalur
-            belajar ini. Gunakan selagi kamu belajar untuk mempercepat pemahaman.</p>
+        </div>
+        <div style="padding:var(--space-5) var(--space-6) var(--space-2);">
+          <h2 style="font-family:var(--font-display); color:var(--eah-heading-primary); margin:0 0 var(--space-2);">Tools Interaktif Kami</h2>
+          <p style="font-family:var(--font-body); font-size:0.875rem; color:var(--eah-text-body);">Trainer dan panduan langsung yang melengkapi jalur belajar ini. Gunakan selagi kamu belajar untuk mempercepat pemahaman.</p>
         </div>
 
-        <div class="topics-grid">
+        <div class="topics-grid" style="padding:0 var(--space-6) var(--space-6); display:flex; flex-direction:column; gap:var(--space-3);">
 
           <!-- Excel Shortcut Trainer -->
-          <div class="topic-card" style="border-left:3px solid var(--accent);">
-            <div class="topic-card-title">⌨️ Excel Shortcut Trainer</div>
+          <div class="topic-card">
+            <div class="topic-card-title" style="display:flex; align-items:center; gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--eah-kicker-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"/></svg>
+              Excel Shortcut Trainer
+            </div>
             <div class="topic-card-badge"><span class="badge badge-beginner">Pemula</span></div>
-            <div class="topic-card-desc">Latih semua shortcut keyboard Excel yang wajib dikuasai analis data. Sistem
-              kartu flashcard interaktif — pilih kategori, jawab, dan ulangi sampai otomatis.</div>
+            <div class="topic-card-desc">Latih semua shortcut keyboard Excel yang wajib dikuasai analis data. Sistem kartu flashcard interaktif — pilih kategori, jawab, dan ulangi sampai otomatis.</div>
             <div class="topic-card-footer">
               <div style="display:flex;align-items:center;gap:var(--space-3);">
                 <span class="duration">Latihan mandiri</span>
-                <span class="topic-status" data-status="not-started" style="color:var(--accent);">⚡ External Tool</span>
+                <span class="topic-status" style="color:var(--eah-kicker-text); border-color:var(--eah-kicker-border); background:var(--eah-kicker-bg);">⚡ External Tool</span>
               </div>
-              <div style="display:flex;gap:var(--space-2);">
-                <a href="https://hanafidias.github.io/excel-shortcut-for-data-analyst" class="btn-primary btn-sm"
-                  target="_blank" rel="noopener noreferrer">Mulai Belajar →</a>
-              </div>
+              <a href="https://hanafidias.github.io/excel-shortcut-for-data-analyst" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Mulai Belajar →</a>
             </div>
           </div>
 
           <!-- Excel Formula Trainer -->
-          <div class="topic-card" style="border-left:3px solid var(--accent);">
-            <div class="topic-card-title">ƒ Excel Formula Trainer</div>
+          <div class="topic-card">
+            <div class="topic-card-title" style="display:flex; align-items:center; gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--eah-kicker-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h7"/><path d="M15 15l5 5M20 15l-5 5"/></svg>
+              Excel Formula Trainer
+            </div>
             <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
-            <div class="topic-card-desc">Kuasai VLOOKUP, SUMIF, INDEX-MATCH, dan puluhan formula penting lainnya lewat
-              latihan soal nyata. Ideal untuk persiapan wawancara kerja data analyst.</div>
+            <div class="topic-card-desc">Kuasai VLOOKUP, SUMIF, INDEX-MATCH, dan puluhan formula penting lainnya lewat latihan soal nyata. Ideal untuk persiapan wawancara kerja data analyst.</div>
             <div class="topic-card-footer">
               <div style="display:flex;align-items:center;gap:var(--space-3);">
                 <span class="duration">Latihan mandiri</span>
-                <span class="topic-status" data-status="not-started" style="color:var(--accent);">⚡ External Tool</span>
+                <span class="topic-status" style="color:var(--eah-kicker-text); border-color:var(--eah-kicker-border); background:var(--eah-kicker-bg);">⚡ External Tool</span>
               </div>
-              <div style="display:flex;gap:var(--space-2);">
-                <a href="https://hanafidias.github.io/excel-formula-trainer" class="btn-primary btn-sm" target="_blank"
-                  rel="noopener noreferrer">Mulai Belajar →</a>
-              </div>
+              <a href="https://hanafidias.github.io/excel-formula-trainer" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Mulai Belajar →</a>
             </div>
           </div>
 
           <!-- Excel Data Cleaning Guide -->
-          <div class="topic-card" style="border-left:3px solid var(--accent);">
-            <div class="topic-card-title">🧹 Excel Data Cleaning Guide</div>
+          <div class="topic-card">
+            <div class="topic-card-title" style="display:flex; align-items:center; gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--eah-kicker-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3h18v4H3z"/><path d="M3 10h18v4H3z"/><path d="M3 17h18v4H3z"/><path d="M9 5v14M15 5v14"/></svg>
+              Excel Data Cleaning Guide
+            </div>
             <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
-            <div class="topic-card-desc">Panduan lengkap membersihkan data kotor di Excel — TRIM, CLEAN, hapus duplikat,
-              perbaiki format tanggal, dan split kolom. Keahlian nomor satu yang dicari perusahaan.</div>
+            <div class="topic-card-desc">Panduan lengkap membersihkan data kotor di Excel — TRIM, CLEAN, hapus duplikat, perbaiki format tanggal, dan split kolom. Keahlian nomor satu yang dicari perusahaan.</div>
             <div class="topic-card-footer">
               <div style="display:flex;align-items:center;gap:var(--space-3);">
                 <span class="duration">Panduan interaktif</span>
-                <span class="topic-status" data-status="not-started" style="color:var(--accent);">⚡ External Tool</span>
+                <span class="topic-status" style="color:var(--eah-kicker-text); border-color:var(--eah-kicker-border); background:var(--eah-kicker-bg);">⚡ External Tool</span>
               </div>
-              <div style="display:flex;gap:var(--space-2);">
-                <a href="https://hanafidias.github.io/excel-data-cleaning-guide/" class="btn-primary btn-sm"
-                  target="_blank" rel="noopener noreferrer">Mulai Belajar →</a>
-              </div>
+              <a href="https://hanafidias.github.io/excel-data-cleaning-guide/" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Mulai Belajar →</a>
             </div>
           </div>
 
           <!-- Excel Pivot Table Guide -->
-          <div class="topic-card" style="border-left:3px solid var(--accent);">
-            <div class="topic-card-title">📊 Excel Pivot Table Guide</div>
+          <div class="topic-card">
+            <div class="topic-card-title" style="display:flex; align-items:center; gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--eah-kicker-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              Excel Pivot Table Guide
+            </div>
             <div class="topic-card-badge"><span class="badge badge-intermediate">Menengah</span></div>
-            <div class="topic-card-desc">Kuasai PivotTable dari nol hingga membuat laporan interaktif profesional.
-              Pelajari filter, grouping, calculated field, dan slicer untuk dashboard yang impresif.</div>
+            <div class="topic-card-desc">Kuasai PivotTable dari nol hingga membuat laporan interaktif profesional. Pelajari filter, grouping, calculated field, dan slicer untuk dashboard yang impresif.</div>
             <div class="topic-card-footer">
               <div style="display:flex;align-items:center;gap:var(--space-3);">
                 <span class="duration">Panduan interaktif</span>
-                <span class="topic-status" data-status="not-started" style="color:var(--accent);">⚡ External Tool</span>
+                <span class="topic-status" style="color:var(--eah-kicker-text); border-color:var(--eah-kicker-border); background:var(--eah-kicker-bg);">⚡ External Tool</span>
               </div>
-              <div style="display:flex;gap:var(--space-2);">
-                <a href="https://hanafidias.github.io/excel-pivot-table-guide/" class="btn-primary btn-sm"
-                  target="_blank" rel="noopener noreferrer">Mulai Belajar →</a>
-              </div>
+              <a href="https://hanafidias.github.io/excel-pivot-table-guide/" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Mulai Belajar →</a>
             </div>
           </div>
 
           <!-- SQL Trainer -->
-          <div class="topic-card" style="border-left:3px solid var(--accent);">
-            <div class="topic-card-title">🗃️ SQL Trainer</div>
+          <div class="topic-card">
+            <div class="topic-card-title" style="display:flex; align-items:center; gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--eah-kicker-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+              SQL Trainer
+            </div>
             <div class="topic-card-badge"><span class="badge badge-advanced">Lanjutan</span></div>
-            <div class="topic-card-desc">Latihan SQL interaktif untuk data analyst — SELECT, JOIN, GROUP BY, subquery,
-              dan window functions. Lengkapi kemampuan Excel-mu dengan SQL untuk analisis database skala besar.</div>
+            <div class="topic-card-desc">Latihan SQL interaktif untuk data analyst — SELECT, JOIN, GROUP BY, subquery, dan window functions. Lengkapi kemampuan Excel-mu dengan SQL untuk analisis database skala besar.</div>
             <div class="topic-card-footer">
               <div style="display:flex;align-items:center;gap:var(--space-3);">
                 <span class="duration">Latihan mandiri</span>
-                <span class="topic-status" data-status="not-started" style="color:var(--accent);">⚡ External Tool</span>
+                <span class="topic-status" style="color:var(--eah-kicker-text); border-color:var(--eah-kicker-border); background:var(--eah-kicker-bg);">⚡ External Tool</span>
               </div>
-              <div style="display:flex;gap:var(--space-2);">
-                <a href="https://hanafidias.github.io/sql-trainer/" class="btn-primary btn-sm" target="_blank"
-                  rel="noopener noreferrer">Mulai Belajar →</a>
-              </div>
+              <a href="https://hanafidias.github.io/sql-trainer/" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Mulai Belajar →</a>
             </div>
           </div>
 
@@ -359,25 +360,32 @@
   <footer class="footer" role="contentinfo" style="border-top: 1px solid var(--border); margin-top: var(--space-12);">
     <div class="container">
 
-      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--space-6); padding:var(--space-8) 0 var(--space-5);">
+      <div
+        style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--space-6); padding:var(--space-8) 0 var(--space-5);">
 
         <a href="index.html" class="nav-logo" style="text-decoration:none;">
-          <div class="logo-icon" aria-hidden="true"><img src="assets/img/logo-navbar.png" alt="" style="width:100%;height:100%;object-fit:contain;padding:4px;" /></div>
+          <div class="logo-icon" aria-hidden="true"><img src="assets/img/logo-navbar.png" alt=""
+              style="width:100%;height:100%;object-fit:contain;padding:4px;" /></div>
           Excel Analyst Hub
         </a>
 
         <nav aria-label="Footer navigasi" style="display:flex; gap:var(--space-5); flex-wrap:wrap;">
-          <a href="learn.html" style="font-size:0.85rem; color:var(--text-muted); text-decoration:none;">Jalur Belajar</a>
+          <a href="learn.html" style="font-size:0.85rem; color:var(--text-muted); text-decoration:none;">Jalur
+            Belajar</a>
           <a href="tools.html" style="font-size:0.85rem; color:var(--text-muted); text-decoration:none;">Tools</a>
-          <a href="portfolio.html" style="font-size:0.85rem; color:var(--text-muted); text-decoration:none;">Portofolio</a>
+          <a href="portfolio.html"
+            style="font-size:0.85rem; color:var(--text-muted); text-decoration:none;">Portofolio</a>
           <a href="profile.html" style="font-size:0.85rem; color:var(--text-muted); text-decoration:none;">Profil</a>
         </nav>
 
       </div>
 
-      <div style="border-top:1px solid var(--border); padding:var(--space-4) 0 var(--space-6); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
-        <p style="font-size:0.75rem; color:var(--text-muted); margin:0;">© 2026 Excel Analyst Hub — Belajar Excel untuk karir data analyst Indonesia.</p>
-        <p style="font-size:0.75rem; color:var(--text-muted); margin:0; font-style:italic;">"Learning shouldn't be boring; it should be rewarding."</p>
+      <div
+        style="border-top:1px solid var(--border); padding:var(--space-4) 0 var(--space-6); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+        <p style="font-size:0.75rem; color:var(--text-muted); margin:0;">© 2026 Excel Analyst Hub — Belajar Excel untuk
+          karir data analyst Indonesia.</p>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin:0; font-style:italic;">"Learning shouldn't be
+          boring; it should be rewarding."</p>
       </div>
 
     </div>
