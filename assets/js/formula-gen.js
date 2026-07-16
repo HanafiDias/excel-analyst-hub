@@ -1,17 +1,16 @@
 /* ============================================
    EXCEL ANALYST HUB — FORMULA GENERATOR v2.0
-   formula-gen.js: Two-layer engine
-   Layer 1: Supabase rule-based lookup (instant, free)
-   Layer 2: Google Gemini API fallback (AI-powered)
+   formula-gen.js: Database-only lookup engine
+   Source: Supabase formula_library table (up to 200 rows)
+   Note: Gemini AI fallback and Vercel proxy were removed
+         after GCP key exposure incident. Now purely DB-based.
    ============================================ */
 
 (function () {
   'use strict';
 
   /* ------------------------------------------
-     CONFIG — ganti dengan nilai aslimu
-     CATATAN: GEMINI_KEY sudah dipindah ke Vercel
-     environment variable, dipanggil lewat /api/gemini-proxy
+     CONFIG
   ------------------------------------------ */
   var SUPABASE_URL = 'https://laowissohsnhfsbiwcpd.supabase.co';
   var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxhb3dpc3NvaHNuaGZzYml3Y3BkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NTY2NzYsImV4cCI6MjA5NjQzMjY3Nn0.mke2iExUiAxxOzmo2PLJx2MlmhORs6ZbqbLy1PquSyE';
