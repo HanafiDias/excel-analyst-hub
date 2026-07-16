@@ -102,22 +102,61 @@
 
 /* --- Light Mode Variables --- */
 [data-theme="light"] {
-  --bg: #ffffff;
-  --surface: #f5f5f5;
-  --surface-2: #ebebeb;
-  --border: #ddd;
-  --accent: #2563eb;
+  /* Base */
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+  --border: #e2e8f0;
+  --accent: #4f46e5;
   --accent-2: #7c3aed;
-  --text: #1a1a2e;
-  --text-muted: #4a4a5a;
+  --text: #0f172a;
+  --text-muted: #64748b;
   --success: #16a34a;
   --warning: #d97706;
   --danger: #dc2626;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-  --shadow: 0 4px 16px rgba(0,0,0,0.1);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
-  --shadow-accent: 0 4px 24px rgba(37,99,235,0.15);
-  --shadow-hover: 0 8px 32px rgba(0,0,0,0.15);
+  --shadow: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+  --shadow-accent: 0 4px 24px rgba(79,70,229,0.15);
+  --shadow-hover: 0 8px 32px rgba(0,0,0,0.12);
+
+  /* EAH redesign — light mode overrides */
+  --eah-bg-base: #f8fafc;
+  --eah-bg-mid: #f1f5f9;
+  --eah-bg-deep: #e8effe;
+  --eah-glass-bg: rgba(255, 255, 255, 0.80);
+  --eah-glass-border: rgba(0, 0, 0, 0.08);
+  --eah-glass-border-accent: rgba(79, 70, 229, 0.20);
+  --eah-glow-purple: rgba(99, 102, 241, 0.08);
+  --eah-glow-blue: rgba(59, 130, 246, 0.06);
+  --eah-kicker-bg: rgba(79, 70, 229, 0.08);
+  --eah-kicker-border: rgba(79, 70, 229, 0.20);
+  --eah-kicker-text: #4f46e5;
+  --eah-heading-primary: #0f172a;
+  --eah-heading-secondary: #1e293b;
+  --eah-text-body: #475569;
+  --eah-text-muted: #64748b;
+  --eah-text-very-muted: #94a3b8;
+  --eah-gradient-text-from: #4f46e5;
+  --eah-gradient-text-to: #0ea5e9;
+  --eah-stat-bg: rgba(0, 0, 0, 0.03);
+  --eah-stat-border: rgba(0, 0, 0, 0.08);
+  --eah-btn-primary-from: #4f46e5;
+  --eah-btn-primary-to: #3b82f6;
+  --eah-btn-secondary-bg: rgba(0, 0, 0, 0.04);
+  --eah-btn-secondary-border: rgba(0, 0, 0, 0.12);
+  --eah-btn-secondary-text: #1e293b;
+  --eah-pain-bg: rgba(239, 68, 68, 0.05);
+  --eah-pain-border: rgba(239, 68, 68, 0.15);
+  --eah-pain-icon: #dc2626;
+  --eah-pain-title: #b91c1c;
+  --eah-gain-bg: rgba(16, 185, 129, 0.05);
+  --eah-gain-border: rgba(16, 185, 129, 0.15);
+  --eah-gain-icon: #059669;
+  --eah-gain-title: #047857;
+  --eah-divider: rgba(0, 0, 0, 0.08);
+  --eah-tagline-color: #4f46e5;
+  --eah-pricing-border: rgba(79, 70, 229, 0.20);
 }
 
 
@@ -244,11 +283,12 @@ code, .formula, kbd {
 }
 
 .section {
-  padding: var(--space-20) 0;
+  padding: var(--space-12) 0;
+  overflow: visible;
 }
 
 .section-sm {
-  padding: var(--space-12) 0;
+  padding: var(--space-8) 0;
 }
 
 .section-header {
@@ -738,6 +778,7 @@ html, body {
 
 .eah-section-wrap {
   position: relative;
+  overflow: visible;
 }
 
 .eah-section-wrap::before {
@@ -760,6 +801,46 @@ html, body {
   border-radius: var(--radius-lg);
   position: relative;
   z-index: 1;
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.4s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+  will-change: transform;
+}
+
+.eah-glass-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--eah-glass-border-accent);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.2),
+    0 20px 48px rgba(99, 102, 241, 0.18),
+    0 0 0 0.5px rgba(99, 102, 241, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="light"] .eah-glass-card:hover {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.08),
+    0 20px 48px rgba(79, 70, 229, 0.12),
+    0 0 0 0.5px rgba(79, 70, 229, 0.2);
+}
+
+.eah-glass-card:active {
+  transform: translateY(-4px) scale(1.01);
+  transition-duration: 0.1s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eah-glass-card {
+    transition: border-color 0.2s ease, background 0.2s ease;
+    will-change: auto;
+  }
+  .eah-glass-card:hover {
+    transform: none;
+  }
 }
 
 .eah-kicker {
@@ -1025,4 +1106,61 @@ html, body {
   .eah-btn-secondary { width: 100%; justify-content: center; text-align: center; }
   .eah-pricing-cta { flex-direction: column; align-items: flex-start; }
   .eah-pricing-cta .eah-btn-primary { width: 100%; justify-content: center; }
+}
+
+/* --- FAQ --- */
+.eah-faq-item {
+  background: var(--eah-glass-bg);
+  border: 0.5px solid var(--eah-glass-border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.eah-faq-item[open] {
+  border-color: var(--eah-glass-border-accent);
+}
+
+.eah-faq-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--eah-heading-primary);
+  user-select: none;
+}
+
+.eah-faq-summary::-webkit-details-marker { display: none; }
+
+.eah-faq-summary:hover {
+  color: var(--eah-kicker-text);
+}
+
+.eah-faq-chevron {
+  flex-shrink: 0;
+  color: var(--eah-text-muted);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.eah-faq-item[open] .eah-faq-chevron {
+  transform: rotate(180deg);
+}
+
+.eah-faq-body {
+  padding: 0 var(--space-5) var(--space-4);
+  border-top: 0.5px solid var(--eah-glass-border);
+}
+
+.eah-faq-body p {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--eah-text-body);
+  line-height: 1.75;
+  margin: var(--space-3) 0 0;
 }
