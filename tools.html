@@ -44,6 +44,10 @@
       
       <div class="nav-right">
         <button class="theme-toggle" id="theme-toggle-nav" aria-label="Aktifkan mode terang" title="Mode terang">☀️</button>
+        <button id="theme-toggle-btn" aria-label="Toggle tema gelap/terang" title="Ganti tema" style="background:rgba(255,255,255,0.06); border:0.5px solid rgba(255,255,255,0.15); color:var(--text-primary); width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.2s ease; flex-shrink:0;">
+          <svg id="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg id="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
         <a href="login.html" class="btn-sm btn-nav-premium" id="nav-auth-btn" style="padding: 0.45rem 1rem; border-radius: 50px; font-weight: 600; letter-spacing: 0.3px;">
           Masuk / Profil
         </a>
@@ -1253,5 +1257,32 @@
   });
   </script>
 
+  <script>
+    (function() {
+      var btn = document.getElementById('theme-toggle-btn');
+      var moon = document.getElementById('theme-icon-moon');
+      var sun = document.getElementById('theme-icon-sun');
+      var html = document.documentElement;
+      if (localStorage.getItem('eah_theme') === 'light') {
+        moon.style.display = 'none';
+        sun.style.display = 'block';
+      }
+      if (btn) {
+        btn.addEventListener('click', function() {
+          if (html.getAttribute('data-theme') === 'light') {
+            html.removeAttribute('data-theme');
+            localStorage.setItem('eah_theme', 'dark');
+            moon.style.display = 'block';
+            sun.style.display = 'none';
+          } else {
+            html.setAttribute('data-theme', 'light');
+            localStorage.setItem('eah_theme', 'light');
+            moon.style.display = 'none';
+            sun.style.display = 'block';
+          }
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
