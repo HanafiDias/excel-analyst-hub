@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png" />
+    <title>Excel Data Cleaning Guide</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300;1,600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <a href="../../index.html" style="position: fixed; top: 20px; left: 20px; z-index: 9999; background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.2s ease; font-family: sans-serif; font-size: 14px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.borderColor='#3b82f6';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='#334155';">
+    <span aria-hidden="true">🔙</span> Kembali ke Hub
+  </a>
+    <div class="wrap">
+
+        <!-- HEADER -->
+        <header>
+            <div class="hd-inner">
+                <div>
+                    <div class="hd-pill">🧹 Excel Data Cleaning Guide</div>
+                    <h1>Bersihkan Data<br>dengan <em>Excel</em></h1>
+                    <p class="hd-sub">Panduan lengkap membersihkan data kotor di dunia kerja — dari duplikat hingga
+                        missing values. Disertai demo interaktif dan quiz.</p>
+                    <p class="hd-pill2">Created by Hanafi</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- STATS ROW -->
+        <div class="stats-row">
+            <div class="stat-chip">
+                <span class="stat-num" id="doneCount">0</span>
+                <span class="stat-label"><strong>/ <span id="totalCount">0</span> Teknik</strong>dikuasai</span>
+            </div>
+            <div class="stat-chip">
+                <span class="stat-num" id="catCount">6</span>
+                <span class="stat-label"><strong>Kategori</strong>topik</span>
+            </div>
+            <div class="prog-wrap">
+                <span class="prog-label">Progress</span>
+                <div class="prog-bar">
+                    <div class="prog-bar-fill" id="progFill"></div>
+                </div>
+                <span class="prog-label" id="progPct">0%</span>
+            </div>
+        </div>
+
+        <!-- LAYOUT -->
+        <div class="layout">
+
+            <!-- SIDEBAR -->
+            <nav class="sidebar">
+                <div class="sb-grp">
+                    <div class="sb-hd">Kategori</div>
+                    <button class="sb-btn active" onclick="setFilter('all',this)"><span class="sb-icon">🗂️</span>Semua
+                        Teknik<span class="sb-cnt" id="sc-all">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('duplicate',this)"><span class="sb-icon">🔁</span>Data
+                        Duplikat<span class="sb-cnt" id="sc-duplicate">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('text',this)"><span class="sb-icon">✍️</span>Pembersihan
+                        Teks<span class="sb-cnt" id="sc-text">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('structure',this)"><span class="sb-icon">📐</span>Struktur
+                        Data<span class="sb-cnt" id="sc-structure">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('missing',this)"><span class="sb-icon">❓</span>Data
+                        Kosong<span class="sb-cnt" id="sc-missing">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('validation',this)"><span class="sb-icon">✅</span>Validasi
+                        Data<span class="sb-cnt" id="sc-validation">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('format',this)"><span class="sb-icon">🎨</span>Format &
+                        Tipe Data<span class="sb-cnt" id="sc-format">0</span></button>
+                </div>
+                <div class="sb-sep"></div>
+                <div class="sb-grp">
+                    <div class="sb-hd">Filter</div>
+                    <button class="sb-btn" onclick="setFilter('done',this)"><span class="sb-icon">✅</span>Sudah
+                        Dikuasai<span class="sb-cnt" id="sc-done">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('essential',this)"><span class="sb-icon">🔥</span>Wajib
+                        Tahu<span class="sb-cnt" id="sc-essential">0</span></button>
+                </div>
+            </nav>
+
+            <!-- MAIN -->
+            <main class="main">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('learn',this)">📘 Belajar</button>
+                    <button class="tab-btn" onclick="switchTab('demo',this)">🧪 Demo Interaktif</button>
+                    <button class="tab-btn" onclick="switchTab('quiz',this)">🎯 Quiz</button>
+                    <button class="tab-btn" onclick="switchTab('cheatsheet',this)">📋 Cheat Sheet</button>
+                </div>
+
+                <!-- LEARN TAB -->
+                <div id="tab-learn">
+                    <div class="sec-hd">
+                        <div class="sec-title" id="sectionTitle">🗂️ Semua Teknik</div>
+                        <div class="search-box">
+                            <span style="color:var(--text-dim)">🔍</span>
+                            <input type="text" placeholder="Cari teknik..." oninput="doSearch(this.value)">
+                        </div>
+                    </div>
+                    <div class="tech-grid" id="techGrid"></div>
+                </div>
+
+                <!-- DEMO TAB -->
+                <div id="tab-demo" style="display:none">
+                    <div class="sec-hd">
+                        <div class="sec-title">🧪 Demo Interaktif</div>
+                    </div>
+
+                    <!-- DEMO 1: Remove Duplicates -->
+                    <div class="demo-wrap">
+                        <div class="demo-header">
+                            <div>
+                                <div class="demo-title">🔁 Demo: Remove Duplicates</div>
+                                <div class="demo-sub">Klik tombol untuk simulasi pembersihan duplikat</div>
+                            </div>
+                        </div>
+                        <div class="demo-body">
+                            <div class="step-indicator" id="siDup">
+                                <div class="si-step active">
+                                    <div class="si-dot">1</div>
+                                    <div class="si-label">Data Asli</div>
+                                </div>
+                                <div class="si-step">
+                                    <div class="si-dot">2</div>
+                                    <div class="si-label">Tandai Duplikat</div>
+                                </div>
+                                <div class="si-step">
+                                    <div class="si-dot">3</div>
+                                    <div class="si-label">Hapus Duplikat</div>
+                                </div>
+                            </div>
+                            <div class="table-editor" id="demoDupTable"></div>
+                            <div class="demo-controls">
+                                <button class="dc-btn primary" id="btnMarkDup" onclick="demoDup(1)">🔍 Tandai
+                                    Duplikat</button>
+                                <button class="dc-btn danger" id="btnRemDup" onclick="demoDup(2)" disabled>🗑️ Hapus
+                                    Duplikat</button>
+                                <button class="dc-btn secondary" onclick="demoDup(0)">↺ Reset</button>
+                            </div>
+                            <div class="demo-result" id="resDup"></div>
+                        </div>
+                    </div>
+
+                    <!-- DEMO 2: Text Cleaning -->
+                    <div class="demo-wrap">
+                        <div class="demo-header">
+                            <div>
+                                <div class="demo-title">✍️ Demo: Pembersihan Teks</div>
+                                <div class="demo-sub">TRIM, PROPER, SUBSTITUTE diterapkan secara bertahap</div>
+                            </div>
+                        </div>
+                        <div class="demo-body">
+                            <div class="step-indicator" id="siText">
+                                <div class="si-step active">
+                                    <div class="si-dot">1</div>
+                                    <div class="si-label">Data Kotor</div>
+                                </div>
+                                <div class="si-step">
+                                    <div class="si-dot">2</div>
+                                    <div class="si-label">TRIM Spasi</div>
+                                </div>
+                                <div class="si-step">
+                                    <div class="si-dot">3</div>
+                                    <div class="si-label">PROPER + Fix</div>
+                                </div>
+                            </div>
+                            <div class="table-editor" id="demoTextTable"></div>
+                            <div class="demo-controls">
+                                <button class="dc-btn primary" id="btnTrim" onclick="demoText(1)">🧹 TRIM Spasi</button>
+                                <button class="dc-btn primary" id="btnProper" onclick="demoText(2)" disabled>🔤 PROPER +
+                                    Fix</button>
+                                <button class="dc-btn secondary" onclick="demoText(0)">↺ Reset</button>
+                            </div>
+                            <div class="demo-result" id="resText"></div>
+                        </div>
+                    </div>
+
+                    <!-- DEMO 3: Missing Data -->
+                    <div class="demo-wrap">
+                        <div class="demo-header">
+                            <div>
+                                <div class="demo-title">❓ Demo: Handling Missing Data</div>
+                                <div class="demo-sub">Identifikasi dan tangani nilai kosong</div>
+                            </div>
+                        </div>
+                        <div class="demo-body">
+                            <div class="step-indicator" id="siMiss">
+                                <div class="si-step active">
+                                    <div class="si-dot">1</div>
+                                    <div class="si-label">Data Kosong</div>
+                                </div>
+                                <div class="si-step">
+                                    <div class="si-dot">2</div>
+                                    <div class="si-label">Highlight</div>
+                                </div>
+                                <div class="si-step">
+                                    <div class="si-dot">3</div>
+                                    <div class="si-label">Fill/Remove</div>
+                                </div>
+                            </div>
+                            <div class="table-editor" id="demoMissTable"></div>
+                            <div class="demo-controls">
+                                <button class="dc-btn primary" id="btnHighMiss" onclick="demoMiss(1)">🔦 Highlight
+                                    Kosong</button>
+                                <button class="dc-btn primary" id="btnFillMiss" onclick="demoMiss(2)" disabled>✏️ Isi
+                                    dengan "N/A"</button>
+                                <button class="dc-btn secondary" onclick="demoMiss(0)">↺ Reset</button>
+                            </div>
+                            <div class="demo-result" id="resMiss"></div>
+                        </div>
+                    </div>
+
+                    <!-- DEMO 4: Flash Fill -->
+                    <div class="demo-wrap">
+                        <div class="demo-header">
+                            <div>
+                                <div class="demo-title">⚡ Demo: Flash Fill</div>
+                                <div class="demo-sub">Excel mendeteksi pola dan mengisi otomatis</div>
+                            </div>
+                        </div>
+                        <div class="demo-body">
+                            <div class="table-editor" id="demoFlashTable"></div>
+                            <div class="demo-controls">
+                                <button class="dc-btn primary" onclick="demoFlash()">⚡ Terapkan Flash Fill</button>
+                                <button class="dc-btn secondary" onclick="initDemoFlash()">↺ Reset</button>
+                            </div>
+                            <div class="demo-result" id="resFlash"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- QUIZ TAB -->
+                <div id="tab-quiz" style="display:none">
+                    <div id="quizStart">
+                        <div class="quiz-start">
+                            <div class="qs-card">
+                                <div class="qs-icon">🎯</div>
+                                <h2>Quiz Data Cleaning</h2>
+                                <p>Uji pemahaman teknik membersihkan data. Setiap soal dilengkapi penjelasan untuk
+                                    membantu kamu belajar dari kesalahan.</p>
+                                <div class="qcat-grid">
+                                    <div class="qcat sel" onclick="selQCat('all',this)">
+                                        <div class="qcat-title">🎲 Semua Topik</div>
+                                        <div class="qcat-desc">Campuran semua kategori</div>
+                                    </div>
+                                    <div class="qcat" onclick="selQCat('duplicate',this)">
+                                        <div class="qcat-title">🔁 Duplikat</div>
+                                        <div class="qcat-desc">Remove & detect duplicates</div>
+                                    </div>
+                                    <div class="qcat" onclick="selQCat('text',this)">
+                                        <div class="qcat-title">✍️ Teks</div>
+                                        <div class="qcat-desc">TRIM, PROPER, SUBSTITUTE</div>
+                                    </div>
+                                    <div class="qcat" onclick="selQCat('missing',this)">
+                                        <div class="qcat-title">❓ Missing Data</div>
+                                        <div class="qcat-desc">Kosong, null, handling</div>
+                                    </div>
+                                </div>
+                                <button class="btn-start" onclick="startQuiz()">Mulai Quiz — 10 Soal</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qplay" id="qplay">
+                        <div class="qp-bar"><span class="qp-lbl" id="qpLbl">1/10</span>
+                            <div class="qp-track">
+                                <div class="qp-fill" id="qpFill"></div>
+                            </div><span class="qp-lbl">Skor: <span id="qpScore">0</span></span>
+                        </div>
+                        <div class="qcard">
+                            <div class="qcard-top">
+                                <div class="qcard-type">📝 Pilih Jawaban Yang Benar</div>
+                                <div class="qcard-q" id="qpQ"></div>
+                                <div class="qcard-ctx" id="qpCtx" style="display:none"></div>
+                            </div>
+                            <div class="qcard-opts" id="qpOpts"></div>
+                            <div class="qexp" id="qpExp"></div>
+                            <button class="qnext" id="qpNext" onclick="nextQ()">Soal Berikutnya →</button>
+                        </div>
+                    </div>
+                    <div class="qresult" id="qresult">
+                        <div class="qr-card">
+                            <div class="qr-ring"><svg width="120" height="120" viewBox="0 0 120 120">
+                                    <circle cx="60" cy="60" r="50" fill="none" stroke="#d5d9e8" stroke-width="10" />
+                                    <circle id="qrRing" cx="60" cy="60" r="50" fill="none" stroke="#2a8a7e"
+                                        stroke-width="10" stroke-dasharray="314" stroke-dashoffset="314"
+                                        stroke-linecap="round"
+                                        style="transition:stroke-dashoffset 1s ease;transform:rotate(-90deg);transform-origin:60px 60px" />
+                                </svg>
+                                <div class="qr-txt">
+                                    <div class="qr-pct" id="qrPct">0%</div>
+                                    <div class="qr-sub-lbl">SKOR</div>
+                                </div>
+                            </div>
+                            <div class="qr-title" id="qrTitle"></div>
+                            <div class="qr-msg" id="qrMsg"></div>
+                            <div class="qr-breakdown">
+                                <div class="qr-stat">
+                                    <div class="qr-val" id="qrC" style="color:var(--teal)">0</div>
+                                    <div class="qr-lbl">✅ Benar</div>
+                                </div>
+                                <div class="qr-stat">
+                                    <div class="qr-val" id="qrW" style="color:var(--coral)">0</div>
+                                    <div class="qr-lbl">❌ Salah</div>
+                                </div>
+                                <div class="qr-stat">
+                                    <div class="qr-val" id="qrT" style="color:var(--violet)">0</div>
+                                    <div class="qr-lbl">📝 Total</div>
+                                </div>
+                            </div>
+                            <button class="btn-retry" onclick="startQuiz()">🔄 Coba Lagi</button>
+                            <button class="btn-back2" onclick="backQStart()">← Pilih Kategori Lain</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHEAT SHEET TAB -->
+                <div id="tab-cheatsheet" style="display:none">
+                    <div class="sec-title" style="margin-bottom:20px">📋 Cheat Sheet Data Cleaning</div>
+                    <div class="cs-grid" id="csGrid"></div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../assets/js/tools-auth-guard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      window.EAH_ToolsAuthGuard('../../login.html');
+    });
+  </script>
+</body>
+
+</html>
