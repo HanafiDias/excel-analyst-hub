@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png" />
+    <title>Excel PivotTable Guide</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500;1,700&family=Fira+Code:wght@400;500&family=Mulish:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <a href="../../index.html" style="position: fixed; top: 20px; left: 20px; z-index: 9999; background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.2s ease; font-family: sans-serif; font-size: 14px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.borderColor='#3b82f6';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='#334155';">
+    <span aria-hidden="true">🔙</span> Kembali ke Hub
+  </a>
+    <div class="wrap">
+
+        <!-- HEADER -->
+        <header>
+            <div class="hd-inner">
+                <div>
+                    <div class="hd-eyebrow">📊 Excel PivotTable Guide</div>
+                    <h1>Kuasai <em>PivotTable</em><br>Excel Secara Mendalam</h1>
+                    <p class="hd-desc">Dari membuat pivot pertama hingga calculated fields dan pivot charts. Panduan
+                        paling lengkap dengan simulator interaktif dan quiz.</p>
+                    <p class="hd-eyebrow2">Created by Hanafi</p>
+                </div>
+                <div class="hd-stats">
+                    <div class="stat-pill">
+                        <span class="sp-num" id="masteredNum">0</span>
+                        <div class="sp-txt"><strong>/ <span id="totalNum">0</span> Materi</strong>dikuasai</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- PROGRESS -->
+        <div class="prog-strip">
+            <span class="ps-label">Progress Belajar</span>
+            <div class="ps-bar">
+                <div class="ps-fill" id="psFill"></div>
+            </div>
+            <span class="ps-pct" id="psPct">0%</span>
+        </div>
+
+        <!-- LAYOUT -->
+        <div class="layout">
+
+            <!-- SIDEBAR -->
+            <nav class="sidebar">
+                <div class="sb-sec">
+                    <div class="sb-lbl">Kategori</div>
+                    <button class="sb-btn active" onclick="setFilter('all',this)"><span class="sb-ic">📚</span>Semua
+                        Materi<span class="sb-ct" id="sc-all">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('create',this)"><span class="sb-ic">🏗️</span>Membuat
+                        Pivot<span class="sb-ct" id="sc-create">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('field',this)"><span class="sb-ic">📐</span>Field &
+                        Area<span class="sb-ct" id="sc-field">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('group',this)"><span class="sb-ic">🗂️</span>Grouping
+                        Data<span class="sb-ct" id="sc-group">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('filter',this)"><span class="sb-ic">🔽</span>Filter &
+                        Slicer<span class="sb-ct" id="sc-filter">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('calc',this)"><span class="sb-ic">🧮</span>Calculated
+                        Field<span class="sb-ct" id="sc-calc">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('chart',this)"><span class="sb-ic">📈</span>Pivot
+                        Chart<span class="sb-ct" id="sc-chart">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('advanced',this)"><span class="sb-ic">⚙️</span>Tips
+                        Lanjutan<span class="sb-ct" id="sc-advanced">0</span></button>
+                </div>
+                <div class="sb-sep"></div>
+                <div class="sb-sec">
+                    <div class="sb-lbl">Filter</div>
+                    <button class="sb-btn" onclick="setFilter('mastered',this)"><span class="sb-ic">✅</span>Sudah
+                        Dikuasai<span class="sb-ct" id="sc-mastered">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('essential',this)"><span class="sb-ic">🔥</span>Wajib
+                        Tahu<span class="sb-ct" id="sc-essential">0</span></button>
+                </div>
+            </nav>
+
+            <!-- MAIN -->
+            <main class="main">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('learn',this)">📗 Belajar</button>
+                    <button class="tab-btn" onclick="switchTab('sim',this)">🔬 Pivot Simulator</button>
+                    <button class="tab-btn" onclick="switchTab('quiz',this)">🎯 Quiz</button>
+                    <button class="tab-btn" onclick="switchTab('cheatsheet',this)">📋 Cheat Sheet</button>
+                </div>
+
+                <!-- LEARN TAB -->
+                <div id="tab-learn">
+                    <div class="sec-hd">
+                        <div class="sec-title" id="secTitle">📚 Semua Materi</div>
+                        <div class="srch">
+                            <span style="color:var(--text-dim)">🔍</span>
+                            <input type="text" placeholder="Cari materi..." oninput="doSearch(this.value)">
+                        </div>
+                    </div>
+                    <div class="topic-grid" id="topicGrid"></div>
+                </div>
+
+                <!-- SIMULATOR TAB -->
+                <div id="tab-sim" style="display:none">
+                    <div class="sec-hd">
+                        <div class="sec-title">🔬 Pivot Table Simulator</div>
+                    </div>
+
+                    <!-- PIVOT BUILDER -->
+                    <div class="sim-wrap">
+                        <div class="sim-hd">
+                            <div>
+                                <div class="sim-title">🏗️ Build Your PivotTable</div>
+                                <div class="sim-sub">Drag field ke area Rows/Columns/Values, lalu klik Generate</div>
+                            </div>
+                        </div>
+                        <div class="sim-body">
+                            <!-- LEFT: field config -->
+                            <div>
+                                <div class="sim-panel-title">📦 Available Fields</div>
+                                <div class="field-source" id="fieldSource"></div>
+
+                                <div class="sim-panel-title">🎯 Pivot Areas</div>
+                                <div class="wells">
+                                    <div class="well" id="well-rows" ondragover="allowDrop(event)"
+                                        ondrop="dropField(event,'rows')">
+                                        <div class="well-label">↕ Rows</div>
+                                        <div id="well-rows-items"></div>
+                                    </div>
+                                    <div class="well" id="well-cols" ondragover="allowDrop(event)"
+                                        ondrop="dropField(event,'cols')">
+                                        <div class="well-label">↔ Columns</div>
+                                        <div id="well-cols-items"></div>
+                                    </div>
+                                    <div class="well" id="well-vals" ondragover="allowDrop(event)"
+                                        ondrop="dropField(event,'vals')">
+                                        <div class="well-label">Σ Values</div>
+                                        <div id="well-vals-items"></div>
+                                    </div>
+                                    <div class="well" id="well-filter" ondragover="allowDrop(event)"
+                                        ondrop="dropField(event,'filter')">
+                                        <div class="well-label">▼ Filters</div>
+                                        <div id="well-filter-items"></div>
+                                    </div>
+                                </div>
+
+                                <div class="sim-btns">
+                                    <button class="sim-btn primary" onclick="generatePivot()">▶ Generate Pivot</button>
+                                    <button class="sim-btn ghost" onclick="resetSim()">↺ Reset</button>
+                                </div>
+                                <div id="simMsg" style="margin-top:10px;font-size:13px;color:var(--text-dim);"></div>
+                            </div>
+
+                            <!-- RIGHT: output -->
+                            <div>
+                                <div class="sim-panel-title">📊 Pivot Result</div>
+                                <div class="pivot-output" id="pivotOutput">
+                                    <div class="pivot-empty">
+                                        <div class="pe-icon">📋</div>
+                                        <p>Drag field ke Rows & Values<br>lalu klik Generate Pivot</p>
+                                    </div>
+                                </div>
+
+                                <div class="sim-panel-title" style="margin-top:16px;">📈 Chart Preview</div>
+                                <div id="chartPreview">
+                                    <div class="pivot-empty" style="padding:20px;font-size:12px;">
+                                        <div class="pe-icon" style="font-size:28px;">📊</div>
+                                        <p>Chart akan muncul setelah pivot di-generate</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GROUPING DEMO -->
+                    <div class="sim-wrap">
+                        <div class="sim-hd">
+                            <div>
+                                <div class="sim-title">🗂️ Demo: Grouping Data by Date</div>
+                                <div class="sim-sub">Lihat cara Excel mengelompokkan tanggal ke bulan/kuartal/tahun
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sim-body">
+                            <div>
+                                <div class="sim-panel-title">📅 Data Asli (Tanggal)</div>
+                                <div class="vis-area" style="font-family:var(--mono);font-size:12px;">
+                                    <table class="pv-table" style="min-width:auto">
+                                        <thead>
+                                            <tr>
+                                                <th>Tanggal</th>
+                                                <th>Penjualan</th>
+                                                <th>Produk</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>03/01/2024</td>
+                                                <td>1.200.000</td>
+                                                <td>Laptop</td>
+                                            </tr>
+                                            <tr>
+                                                <td>15/01/2024</td>
+                                                <td>850.000</td>
+                                                <td>Mouse</td>
+                                            </tr>
+                                            <tr>
+                                                <td>22/02/2024</td>
+                                                <td>2.100.000</td>
+                                                <td>Monitor</td>
+                                            </tr>
+                                            <tr>
+                                                <td>07/03/2024</td>
+                                                <td>650.000</td>
+                                                <td>Keyboard</td>
+                                            </tr>
+                                            <tr>
+                                                <td>18/03/2024</td>
+                                                <td>1.900.000</td>
+                                                <td>Laptop</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="sim-panel-title">🎯 Pilih Level Grouping</div>
+                                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+                                    <button class="sim-btn ghost" onclick="showGroup('month')" id="gb-month">📅 Per
+                                        Bulan</button>
+                                    <button class="sim-btn ghost" onclick="showGroup('quarter')" id="gb-quarter">📦 Per
+                                        Kuartal</button>
+                                    <button class="sim-btn ghost" onclick="showGroup('year')" id="gb-year">📆 Per
+                                        Tahun</button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="sim-panel-title">📊 Hasil Setelah Grouping</div>
+                                <div id="groupResult">
+                                    <div class="pivot-empty" style="padding:20px;font-size:12px;">
+                                        <div class="pe-icon" style="font-size:28px;">👆</div>
+                                        <p>Pilih level grouping di kiri</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SLICER DEMO -->
+                    <div class="sim-wrap">
+                        <div class="sim-hd">
+                            <div>
+                                <div class="sim-title">🔽 Demo: Slicer & Filter Interaktif</div>
+                                <div class="sim-sub">Klik tombol untuk filter pivot secara real-time</div>
+                            </div>
+                        </div>
+                        <div class="sim-body">
+                            <div>
+                                <div class="sim-panel-title">🔽 Filter by Department</div>
+                                <div id="slicerBtns" style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;">
+                                </div>
+                                <div class="sim-panel-title">🔽 Filter by Year</div>
+                                <div id="slicerYear" style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;">
+                                </div>
+                                <button class="sim-btn ghost" onclick="clearSlicer()" style="font-size:12px;">✕ Clear
+                                    All Filters</button>
+                            </div>
+                            <div>
+                                <div class="sim-panel-title">📊 Pivot (Filtered)</div>
+                                <div class="pivot-output" id="slicerOutput"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- QUIZ TAB -->
+                <div id="tab-quiz" style="display:none">
+                    <div id="quizStart">
+                        <div class="quiz-start-wrap">
+                            <div class="qs-card">
+                                <div class="qs-icon">🎯</div>
+                                <h2>Quiz PivotTable</h2>
+                                <p>Uji pemahaman kamu tentang PivotTable Excel. Setiap soal dilengkapi penjelasan
+                                    mendalam agar kamu bisa belajar dari setiap jawaban.</p>
+                                <div class="qcat-grid">
+                                    <div class="qcat sel" onclick="selQCat('all',this)">
+                                        <div class="qcat-t">🎲 Semua Topik</div>
+                                        <div class="qcat-d">Campuran semua kategori</div>
+                                    </div>
+                                    <div class="qcat" onclick="selQCat('create',this)">
+                                        <div class="qcat-t">🏗️ Membuat Pivot</div>
+                                        <div class="qcat-d">Setup, layout, area</div>
+                                    </div>
+                                    <div class="qcat" onclick="selQCat('calc',this)">
+                                        <div class="qcat-t">🧮 Calculated Field</div>
+                                        <div class="qcat-d">Formula dalam pivot</div>
+                                    </div>
+                                    <div class="qcat" onclick="selQCat('filter',this)">
+                                        <div class="qcat-t">🔽 Filter & Slicer</div>
+                                        <div class="qcat-d">Slicer, timeline, filter</div>
+                                    </div>
+                                </div>
+                                <button class="btn-start-quiz" onclick="startQuiz()">Mulai Quiz — 10 Soal</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qplay" id="qplay">
+                        <div class="qp-bar">
+                            <span class="qp-lbl" id="qpLbl">1/10</span>
+                            <div class="qp-track">
+                                <div class="qp-fill" id="qpFill2"></div>
+                            </div>
+                            <span class="qp-lbl">Skor: <span id="qpScore">0</span></span>
+                        </div>
+                        <div class="qcard">
+                            <div class="qcard-top">
+                                <div class="qcard-type">📝 Pilih Jawaban Yang Benar</div>
+                                <div class="qcard-q" id="qpQ"></div>
+                                <div class="qcard-ctx" id="qpCtx" style="display:none"></div>
+                            </div>
+                            <div class="qopts" id="qpOpts"></div>
+                            <div class="qexp" id="qpExp"></div>
+                            <button class="qnext" id="qpNext" onclick="nextQ()">Soal Berikutnya →</button>
+                        </div>
+                    </div>
+                    <div class="qresult" id="qresult">
+                        <div class="qr-card">
+                            <div class="qr-ring">
+                                <svg width="120" height="120" viewBox="0 0 120 120">
+                                    <circle cx="60" cy="60" r="50" fill="none" stroke="#ddd7cf" stroke-width="10" />
+                                    <circle id="qrRing" cx="60" cy="60" r="50" fill="none" stroke="#5c3d6e"
+                                        stroke-width="10" stroke-dasharray="314" stroke-dashoffset="314"
+                                        stroke-linecap="round"
+                                        style="transition:stroke-dashoffset 1s ease;transform:rotate(-90deg);transform-origin:60px 60px" />
+                                </svg>
+                                <div class="qr-txt">
+                                    <div class="qr-pct" id="qrPct">0%</div>
+                                    <div class="qr-sub">SKOR</div>
+                                </div>
+                            </div>
+                            <div class="qr-title" id="qrTitle"></div>
+                            <div class="qr-msg" id="qrMsg"></div>
+                            <div class="qr-bd">
+                                <div class="qr-stat">
+                                    <div class="qr-val" id="qrC" style="color:var(--teal)">0</div>
+                                    <div class="qr-lbl">✅ Benar</div>
+                                </div>
+                                <div class="qr-stat">
+                                    <div class="qr-val" id="qrW" style="color:var(--rose)">0</div>
+                                    <div class="qr-lbl">❌ Salah</div>
+                                </div>
+                                <div class="qr-stat">
+                                    <div class="qr-val" id="qrT" style="color:var(--plum)">0</div>
+                                    <div class="qr-lbl">📝 Total</div>
+                                </div>
+                            </div>
+                            <button class="btn-retry" onclick="startQuiz()">🔄 Coba Lagi</button>
+                            <button class="btn-back" onclick="backQStart()">← Ganti Kategori</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHEAT SHEET TAB -->
+                <div id="tab-cheatsheet" style="display:none">
+                    <div class="sec-title" style="margin-bottom:20px">📋 Cheat Sheet PivotTable</div>
+                    <div class="cs-grid" id="csGrid"></div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../assets/js/tools-auth-guard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      window.EAH_ToolsAuthGuard('../../login.html');
+    });
+  </script>
+</body>
+
+</html>

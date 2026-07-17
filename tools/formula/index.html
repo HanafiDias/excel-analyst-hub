@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png" />
+    <title>Excel Formula Trainer</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <a href="../../index.html" style="position: fixed; top: 20px; left: 20px; z-index: 9999; background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.2s ease; font-family: sans-serif; font-size: 14px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.borderColor='#3b82f6';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='#334155';">
+    <span aria-hidden="true">🔙</span> Kembali ke Hub
+  </a>
+    <div class="wrapper">
+
+        <!-- HEADER -->
+        <header>
+            <div class="header-left">
+                <div class="badge">📗 Excel Formula Trainer</div>
+                <h1>Kuasai <em>Formula Excel</em><br>untuk Dunia Kerja</h1>
+                <p class="header-desc">50+ formula penting dengan contoh nyata, latihan soal interaktif, dan quiz. Dari
+                    dasar hingga tingkat lanjut.</p>
+                <br>
+                <p class="badge2">Created by Hanafi</p>
+            </div>
+            <div class="progress-pill">
+                <svg class="prog-ring" viewBox="0 0 44 44">
+                    <circle cx="22" cy="22" r="18" fill="none" stroke="#ddd8cc" stroke-width="4" />
+                    <circle id="ringCircle" cx="22" cy="22" r="18" fill="none" stroke="#5a7a5a" stroke-width="4"
+                        stroke-dasharray="113" stroke-dashoffset="113" stroke-linecap="round"
+                        style="transition:stroke-dashoffset 0.5s ease;transform:rotate(-90deg);transform-origin:center" />
+                </svg>
+                <div>
+                    <div class="prog-label">
+                        <strong><span id="masteredCount">0</span> / <span id="totalFormulas">0</span> Formula</strong>
+                        dikuasai
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- LAYOUT -->
+        <div class="layout">
+
+            <!-- SIDEBAR -->
+            <nav class="sidebar">
+                <div class="sb-section">
+                    <div class="sb-label">Kategori</div>
+                    <button class="sb-btn active" onclick="setFilter('all',this)"><span class="sb-icon">📚</span>Semua
+                        Formula<span class="sb-count" id="sc-all">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('lookup',this)"><span class="sb-icon">🔍</span>Lookup &
+                        Reference<span class="sb-count" id="sc-lookup">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('math',this)"><span class="sb-icon">➕</span>Math &
+                        Statistics<span class="sb-count" id="sc-math">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('text',this)"><span class="sb-icon">✍️</span>Text &
+                        String<span class="sb-count" id="sc-text">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('date',this)"><span class="sb-icon">📅</span>Date &
+                        Time<span class="sb-count" id="sc-date">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('logic',this)"><span class="sb-icon">⚖️</span>Logic &
+                        Kondisi<span class="sb-count" id="sc-logic">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('info',this)"><span class="sb-icon">ℹ️</span>Info &
+                        Error<span class="sb-count" id="sc-info">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('dynamic',this)"><span class="sb-icon">⚡</span>Dynamic
+                        Array<span class="sb-count" id="sc-dynamic">0</span></button>
+                </div>
+                <div class="sb-sep"></div>
+                <div class="sb-section">
+                    <div class="sb-label">Filter</div>
+                    <button class="sb-btn" onclick="setFilter('mastered',this)"><span class="sb-icon">✅</span>Sudah
+                        Dikuasai<span class="sb-count" id="sc-mastered">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('essential',this)"><span class="sb-icon">🔥</span>Wajib
+                        Tahu<span class="sb-count" id="sc-essential">0</span></button>
+                </div>
+            </nav>
+
+            <!-- MAIN -->
+            <main class="main">
+
+                <!-- TABS -->
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('formulas',this)">📗 Belajar Formula</button>
+                    <button class="tab-btn" onclick="switchTab('practice',this)">✏️ Latihan Soal</button>
+                    <button class="tab-btn" onclick="switchTab('quiz',this)">🎯 Quiz</button>
+                    <button class="tab-btn" onclick="switchTab('cheatsheet',this)">📋 Cheat Sheet</button>
+                </div>
+
+                <!-- ══ FORMULAS TAB ══ -->
+                <div id="tab-formulas">
+                    <div class="section-header">
+                        <div class="section-title" id="sectionTitle">📚 Semua Formula</div>
+                        <div class="search-wrap">
+                            <span>🔍</span>
+                            <input type="text" placeholder="Cari formula..." oninput="doSearch(this.value)"
+                                id="searchInput">
+                        </div>
+                    </div>
+                    <div class="formula-grid" id="formulaGrid"></div>
+                </div>
+
+                <!-- ══ PRACTICE TAB ══ -->
+                <div id="tab-practice" style="display:none">
+                    <div class="section-header">
+                        <div class="section-title">✏️ Latihan Soal</div>
+                        <select id="practiceFilter" onchange="renderPractice()"
+                            style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);font-family:var(--body);font-size:13px;cursor:pointer;outline:none">
+                            <option value="all">Semua Kategori</option>
+                            <option value="lookup">Lookup</option>
+                            <option value="math">Math & Statistics</option>
+                            <option value="text">Text</option>
+                            <option value="date">Date</option>
+                            <option value="logic">Logic</option>
+                        </select>
+                    </div>
+                    <div class="practice-grid" id="practiceGrid"></div>
+                </div>
+
+                <!-- ══ QUIZ TAB ══ -->
+                <div id="tab-quiz" style="display:none">
+                    <div id="quizStart">
+                        <div class="quiz-start-card">
+                            <div class="quiz-start-icon">🎯</div>
+                            <h2>Quiz Formula Excel</h2>
+                            <p>Uji pemahaman kamu dengan soal pilihan ganda. Setiap soal ada penjelasan jawabannya agar
+                                kamu bisa langsung belajar dari kesalahan.</p>
+                            <div class="quiz-options-select" id="quizCatOpts">
+                                <div class="qopt-card selected" onclick="selectQuizCat('all',this)">
+                                    <div class="qopt-title">🎲 Semua Kategori</div>
+                                    <div class="qopt-desc">Campuran semua formula</div>
+                                </div>
+                                <div class="qopt-card" onclick="selectQuizCat('lookup',this)">
+                                    <div class="qopt-title">🔍 Lookup</div>
+                                    <div class="qopt-desc">VLOOKUP, XLOOKUP, INDEX MATCH</div>
+                                </div>
+                                <div class="qopt-card" onclick="selectQuizCat('math',this)">
+                                    <div class="qopt-title">➕ Math & Stats</div>
+                                    <div class="qopt-desc">SUMIFS, COUNTIFS, AVERAGEIFS</div>
+                                </div>
+                                <div class="qopt-card" onclick="selectQuizCat('logic',this)">
+                                    <div class="qopt-title">⚖️ Logic</div>
+                                    <div class="qopt-desc">IF, IFS, AND, OR, IFERROR</div>
+                                </div>
+                            </div>
+                            <button class="btn-start-quiz" onclick="startQuiz()">Mulai Quiz — 10 Soal</button>
+                        </div>
+                    </div>
+                    <div class="quiz-play" id="quizPlay">
+                        <div class="qp-header">
+                            <span class="qp-label" id="qpLabel">1 / 10</span>
+                            <div class="qp-progress-track">
+                                <div class="qp-progress-fill" id="qpFill" style="width:10%"></div>
+                            </div>
+                            <span class="qp-label">Skor: <span id="qpScore">0</span></span>
+                        </div>
+                        <div class="qp-card">
+                            <div class="qp-question-area">
+                                <div class="qp-qtype">📝 Pilih Jawaban Yang Benar</div>
+                                <div class="qp-question" id="qpQuestion"></div>
+                                <div class="qp-context" id="qpContext" style="display:none"></div>
+                            </div>
+                            <div class="qp-answers" id="qpAnswers"></div>
+                            <div class="qp-explanation" id="qpExplanation"></div>
+                            <button class="qp-next" id="qpNext" onclick="nextQuestion()">Soal Berikutnya →</button>
+                        </div>
+                    </div>
+                    <div class="quiz-result" id="quizResult">
+                        <div class="result-card">
+                            <div class="result-score-ring">
+                                <svg width="120" height="120" viewBox="0 0 120 120">
+                                    <circle cx="60" cy="60" r="50" fill="none" stroke="#ddd8cc" stroke-width="10" />
+                                    <circle id="resultRing" cx="60" cy="60" r="50" fill="none" stroke="#5a7a5a"
+                                        stroke-width="10" stroke-dasharray="314" stroke-dashoffset="314"
+                                        stroke-linecap="round"
+                                        style="transition:stroke-dashoffset 1s ease;transform:rotate(-90deg);transform-origin:60px 60px" />
+                                </svg>
+                                <div class="result-score-text">
+                                    <div class="result-big" id="resultPct">0%</div>
+                                    <div class="result-small">SKOR</div>
+                                </div>
+                            </div>
+                            <div class="result-title" id="resultTitle">Hasil Quiz</div>
+                            <div class="result-msg" id="resultMsg"></div>
+                            <div class="result-breakdown">
+                                <div class="breakdown-item">
+                                    <div class="breakdown-val" id="resCorrect" style="color:var(--sage)">0</div>
+                                    <div class="breakdown-lbl">✅ Benar</div>
+                                </div>
+                                <div class="breakdown-item">
+                                    <div class="breakdown-val" id="resWrong" style="color:var(--rose)">0</div>
+                                    <div class="breakdown-lbl">❌ Salah</div>
+                                </div>
+                                <div class="breakdown-item">
+                                    <div class="breakdown-val" id="resTotal" style="color:var(--sky)">0</div>
+                                    <div class="breakdown-lbl">📝 Total</div>
+                                </div>
+                            </div>
+                            <button class="btn-retry" onclick="retryQuiz()">🔄 Coba Lagi</button>
+                            <button class="btn-back" onclick="backToQuizStart()">← Pilih Kategori Lain</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ══ CHEAT SHEET TAB ══ -->
+                <div id="tab-cheatsheet" style="display:none">
+                    <div class="section-title" style="margin-bottom:20px">📋 Cheat Sheet Formula Excel</div>
+                    <div class="cs-wrap" id="csGrid"></div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../assets/js/tools-auth-guard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      window.EAH_ToolsAuthGuard('../../login.html');
+    });
+  </script>
+</body>
+
+</html>
