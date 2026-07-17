@@ -1,0 +1,285 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png" />
+    <title>SQL Trainer — Belajar SQL Interaktif</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <a href="../../index.html" style="position: fixed; top: 20px; left: 20px; z-index: 9999; background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.2s ease; font-family: sans-serif; font-size: 14px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.borderColor='#3b82f6';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='#334155';">
+    <span aria-hidden="true">🔙</span> Kembali ke Hub
+  </a>
+    <div class="wrap">
+
+        <header>
+            <div>
+                <div class="hd-badge">▶ SQL Trainer</div>
+                <h1><span class="hl">SQL</span> <span class="hl2">Trainer</span></h1>
+                <p class="hd-sub">Pelajari SQL dari dasar hingga JOIN. Tulis query nyata dan lihat hasilnya langsung di
+                    browser.</p>
+                <p class="hd-badge2">Created by Hanafi</p>
+            </div>
+            <div class="hd-stats">
+                <div class="stat-card"><span class="stat-n" id="learnedN">0</span><span class="stat-l">/ <span
+                            id="totalN">0</span> Dipelajari</span></div>
+                <div class="stat-card"><span class="stat-n" id="pracDoneN">0</span><span class="stat-l">/ <span
+                            id="pracTotalN">0</span> Latihan</span></div>
+            </div>
+        </header>
+
+        <div class="prog-row">
+            <span class="prog-lbl">$ progress</span>
+            <div class="prog-bar">
+                <div class="prog-fill" id="progFill"></div>
+            </div>
+            <span class="prog-pct" id="progPct">0%</span>
+        </div>
+
+        <div class="layout">
+            <nav class="sidebar">
+                <div class="sb-sect">
+                    <div class="sb-hd">-- Materi</div>
+                    <button class="sb-btn active" onclick="setFilter('all',this)"><span
+                            class="sb-ic">📚</span>Semua<span class="sb-tag" id="sc-all">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('basic',this)"><span class="sb-ic">🟢</span>Dasar<span
+                            class="sb-tag" id="sc-basic">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('filter',this)"><span class="sb-ic">🔵</span>Filter<span
+                            class="sb-tag" id="sc-filter">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('agg',this)"><span class="sb-ic">🟣</span>Aggregation<span
+                            class="sb-tag" id="sc-agg">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('join',this)"><span class="sb-ic">🟡</span>JOIN<span
+                            class="sb-tag" id="sc-join">0</span></button>
+                    <button class="sb-btn" onclick="setFilter('adv',this)"><span class="sb-ic">🔴</span>Lanjutan<span
+                            class="sb-tag" id="sc-adv">0</span></button>
+                </div>
+                <div class="sb-sep"></div>
+                <div class="sb-sect">
+                    <div class="sb-hd">-- Filter</div>
+                    <button class="sb-btn" onclick="setFilter('learned',this)"><span
+                            class="sb-ic">✅</span>Dipelajari<span class="sb-tag" id="sc-learned">0</span></button>
+                </div>
+            </nav>
+
+            <main class="main">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('learn',this)">📗 Belajar</button>
+                    <button class="tab-btn" onclick="switchTab('practice',this)">✏️ Latihan</button>
+                    <button class="tab-btn" onclick="switchTab('sim',this)">▶ Simulator</button>
+                    <button class="tab-btn" onclick="switchTab('quiz',this)">🎯 Quiz</button>
+                    <button class="tab-btn" onclick="switchTab('cheatsheet',this)">📋 Cheat Sheet</button>
+                </div>
+
+                <!-- LEARN -->
+                <div id="tab-learn">
+                    <div class="sec-hd">
+                        <div class="sec-title"><span class="dot">▸</span><span id="secTitle">Semua Materi</span></div>
+                        <div class="srch"><span style="color:var(--text-dim);font-family:var(--mono)">/ </span><input
+                                type="text" placeholder="cari materi..." oninput="doSearch(this.value)"></div>
+                    </div>
+                    <div class="learn-grid" id="learnGrid"></div>
+                </div>
+
+                <!-- PRACTICE -->
+                <div id="tab-practice" style="display:none">
+                    <div class="sec-hd">
+                        <div class="sec-title"><span class="dot">▸</span>Latihan Soal</div>
+                        <select id="pracFilter" onchange="renderPractice()"
+                            style="background:var(--surface);border:1px solid var(--border);color:var(--text-mid);padding:6px 11px;border-radius:6px;font-family:var(--mono);font-size:11.5px;cursor:pointer;outline:none;">
+                            <option value="all">Semua</option>
+                            <option value="basic">Dasar</option>
+                            <option value="filter">Filter</option>
+                            <option value="agg">Aggregation</option>
+                            <option value="join">JOIN</option>
+                        </select>
+                    </div>
+                    <div class="practice-grid" id="practiceGrid"></div>
+                </div>
+
+                <!-- SIMULATOR -->
+                <div id="tab-sim" style="display:none">
+                    <div class="sec-hd">
+                        <div class="sec-title"><span class="dot">▸</span>SQL Simulator</div>
+                    </div>
+                    <div class="schema-box">
+                        <div class="schema-lbl">-- Database Schema</div>
+                        <div class="schema-tables" id="schemaView"></div>
+                    </div>
+                    <div class="sim-layout">
+                        <div class="sim-pane">
+                            <div class="sim-pane-hd">
+                                <div class="sim-pane-title">📝 <span>Query Editor</span></div>
+                                <span style="font-family:var(--mono);font-size:9.5px;color:var(--text-dim);">SQL</span>
+                            </div>
+                            <div class="editor-wrap">
+                                <div class="line-nums" id="lineNums">1</div>
+                                <textarea id="queryInput" spellcheck="false"
+                                    placeholder="-- Ketik query SQL&#10;SELECT * FROM users;"></textarea>
+                            </div>
+                            <div class="editor-toolbar">
+                                <button class="run-btn" onclick="runQuery()">▶ Run</button>
+                                <button class="clear-btn" onclick="clearQuery()">✕ Clear</button>
+                                <button class="snip-btn" onclick="loadSnip('SELECT * FROM users')">users</button>
+                                <button class="snip-btn" onclick="loadSnip('SELECT * FROM orders')">orders</button>
+                                <button class="snip-btn" onclick="loadSnip('SELECT * FROM products')">products</button>
+                                <button class="snip-btn"
+                                    onclick="loadSnip('SELECT * FROM departments')">departments</button>
+                            </div>
+                        </div>
+                        <div class="sim-pane">
+                            <div class="sim-pane-hd">
+                                <div class="sim-pane-title">📊 <span>Result</span></div>
+                                <span id="resultMeta"
+                                    style="font-family:var(--mono);font-size:9.5px;color:var(--text-dim);"></span>
+                            </div>
+                            <div class="output-area" id="queryOutput">
+                                <div class="out-empty"><span style="font-size:26px">⌗</span><span>Hasil query muncul di
+                                        sini</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quick-queries">
+                        <div class="schema-lbl" style="margin-bottom:9px;">-- Quick Queries</div>
+                        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                            <button class="snip-btn" style="font-size:11px;padding:5px 11px;"
+                                onclick="loadAndRun('SELECT id, name, age FROM users WHERE age > 25 ORDER BY age DESC')">WHERE
+                                age &gt; 25</button>
+                            <button class="snip-btn" style="font-size:11px;padding:5px 11px;"
+                                onclick="loadAndRun('SELECT dept, COUNT(*) AS total, AVG(salary) AS avg_salary FROM users GROUP BY dept ORDER BY avg_salary DESC')">GROUP
+                                BY dept</button>
+                            <button class="snip-btn" style="font-size:11px;padding:5px 11px;"
+                                onclick="loadAndRun('SELECT u.name, SUM(o.amount) AS total_spend FROM users u INNER JOIN orders o ON u.id = o.user_id GROUP BY u.name ORDER BY total_spend DESC')">JOIN
+                                + SUM</button>
+                            <button class="snip-btn" style="font-size:11px;padding:5px 11px;"
+                                onclick="loadAndRun('SELECT u.name, o.amount, o.status FROM users u LEFT JOIN orders o ON u.id = o.user_id ORDER BY u.name')">LEFT
+                                JOIN</button>
+                            <button class="snip-btn" style="font-size:11px;padding:5px 11px;"
+                                onclick="loadAndRun('SELECT dept, COUNT(*) AS total FROM users GROUP BY dept HAVING COUNT(*) > 2')">HAVING
+                                COUNT &gt; 2</button>
+                            <button class="snip-btn" style="font-size:11px;padding:5px 11px;"
+                                onclick="loadAndRun('SELECT name, salary FROM users WHERE salary > 7500000 ORDER BY salary DESC')">Salary
+                                &gt; 7.5jt</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUIZ -->
+                <div id="tab-quiz" style="display:none">
+                    <div id="quizStart">
+                        <div class="quiz-start-wrap">
+                            <div class="qs-card">
+                                <div class="qs-art">🎯</div>
+                                <h2>SQL Quiz</h2>
+                                <p>Uji pemahaman SQL kamu dengan 10 soal pilihan ganda. Tiap jawaban dilengkapi
+                                    penjelasan mendalam.</p>
+                                <div class="qcat-grid">
+                                    <div class="qcat sel" onclick="selQCat('all',this)">
+                                        <div class="qcat-t">🎲 Semua Topik</div>
+                                        <div class="qcat-d">Campuran semua</div>
+                                    </div>
+                                    <div class="qcat" onclick="selQCat('basic',this)">
+                                        <div class="qcat-t">🟢 SQL Dasar</div>
+                                        <div class="qcat-d">SELECT, ORDER BY</div>
+                                    </div>
+                                    <div class="qcat" onclick="selQCat('filter',this)">
+                                        <div class="qcat-t">🔵 Filter</div>
+                                        <div class="qcat-d">WHERE, LIKE, IN</div>
+                                    </div>
+                                    <div class="qcat" onclick="selQCat('agg',this)">
+                                        <div class="qcat-t">🟣 Aggregation</div>
+                                        <div class="qcat-d">GROUP BY, HAVING</div>
+                                    </div>
+                                    <div class="qcat" onclick="selQCat('join',this)">
+                                        <div class="qcat-t">🟡 JOIN</div>
+                                        <div class="qcat-d">INNER, LEFT JOIN</div>
+                                    </div>
+                                </div>
+                                <button class="btn-start" onclick="startQuiz()">▶ Mulai Quiz — 10 Soal</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qplay" id="qplay">
+                        <div class="qp-bar">
+                            <span class="qp-lbl" id="qpLbl">1/10</span>
+                            <div class="qp-track">
+                                <div class="qp-fill" id="qpFillQ"></div>
+                            </div>
+                            <span class="qp-lbl">score: <span id="qpScore" style="color:var(--green)">0</span></span>
+                        </div>
+                        <div class="qcard">
+                            <div class="qcard-top">
+                                <div class="qcard-type">-- pilihan ganda</div>
+                                <div class="qcard-q" id="qpQ"></div>
+                                <div class="qcard-ctx" id="qpCtx" style="display:none"></div>
+                            </div>
+                            <div class="qopts" id="qpOpts"></div>
+                            <div class="qexp" id="qpExp"></div>
+                            <button class="qnext" id="qpNext" onclick="nextQ()">-- soal berikutnya</button>
+                        </div>
+                    </div>
+                    <div class="qresult" id="qresult">
+                        <div class="qr-card">
+                            <div class="qr-ring">
+                                <svg width="108" height="108" viewBox="0 0 108 108">
+                                    <circle cx="54" cy="54" r="44" fill="none" stroke="#2d3a52" stroke-width="9" />
+                                    <circle id="qrRing" cx="54" cy="54" r="44" fill="none" stroke="#3dd68c"
+                                        stroke-width="9" stroke-dasharray="276" stroke-dashoffset="276"
+                                        stroke-linecap="round"
+                                        style="transition:stroke-dashoffset 1s ease;transform:rotate(-90deg);transform-origin:54px 54px" />
+                                </svg>
+                                <div class="qr-txt">
+                                    <div class="qr-pct" id="qrPct">0%</div>
+                                    <div class="qr-lbl">SCORE</div>
+                                </div>
+                            </div>
+                            <div class="qr-title" id="qrTitle"></div>
+                            <div class="qr-msg" id="qrMsg"></div>
+                            <div class="qr-bd">
+                                <div class="qr-stat">
+                                    <div class="qr-val" id="qrC" style="color:var(--green)">0</div>
+                                    <div class="qr-vl">BENAR</div>
+                                </div>
+                                <div class="qr-stat">
+                                    <div class="qr-val" id="qrW" style="color:var(--rose)">0</div>
+                                    <div class="qr-vl">SALAH</div>
+                                </div>
+                                <div class="qr-stat">
+                                    <div class="qr-val" id="qrT" style="color:var(--blue)">0</div>
+                                    <div class="qr-vl">TOTAL</div>
+                                </div>
+                            </div>
+                            <button class="btn-retry" onclick="startQuiz()">▶ Coba Lagi</button>
+                            <button class="btn-bk" onclick="backQStart()">← Ganti Kategori</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHEAT SHEET -->
+                <div id="tab-cheatsheet" style="display:none">
+                    <div class="sec-title" style="margin-bottom:16px"><span class="dot">▸</span>SQL Cheat Sheet</div>
+                    <div class="cs-grid" id="csGrid"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../../assets/js/tools-auth-guard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.EAH_ToolsAuthGuard('../../login.html');
+        });
+    </script>
+</body>
+
+</html>

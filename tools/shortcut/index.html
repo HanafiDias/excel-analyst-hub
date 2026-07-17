@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png" />
+    <title>Excel Shortcuts — Data Analyst Pro</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+    <a href="../../index.html" aria-label="Kembali ke Excel Analyst Hub"
+        style="position: fixed; top: 20px; left: 20px; z-index: 9999; background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.2s ease; font-family: sans-serif; font-size: 14px;"
+        onmouseover="this.style.transform='translateY(-2px)'; this.style.borderColor='#3b82f6';"
+        onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='#334155';">
+        <span aria-hidden="true">🔙</span> Kembali ke Hub
+    </a>
+    <div class="wrapper">
+
+        <!-- HEADER -->
+        <header>
+            <div class="header-tag">📊 Excel Mastery — Data Analyst Edition</div>
+            <h1>Shortcut <span class="hl">Excel</span><br>untuk <span class="hl2">Data Analyst</span></h1>
+            <p class="header-sub">Pelajari semua shortcut penting yang dipakai profesional setiap hari. Tandai yang
+                sudah kamu kuasai dan uji dirimu dengan Quiz Mode.</p>
+            <br>
+            <p class="header-tag">Created by Hanafi </p>
+        </header>
+
+        <!-- STATS BAR -->
+        <div class="stats-bar">
+            <div class="stat">
+                <span class="stat-val" id="learnedCount">0</span>
+                <span>/ <span id="totalCount">0</span> dikuasai</span>
+            </div>
+            <div class="stat" aria-hidden="true">🎯 Progress belajar</div>
+            <div class="progress-bar-wrap" role="progressbar" aria-label="Progress belajar shortcut" aria-valuemin="0"
+                aria-valuemax="100" aria-valuenow="0" id="progressBarWrap">
+                <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
+            <span class="best-score-chip" id="bestScoreChip" style="display:none;">🏆 Skor terbaik: <strong
+                    id="bestScoreVal">0%</strong></span>
+            <button class="reset-btn" onclick="resetProgress()" aria-label="Reset semua progress hafalan">↺
+                Reset</button>
+            <button class="quiz-btn" onclick="openQuiz()" style="margin-left:0" aria-label="Mulai Quiz Mode">⚡ Quiz
+                Mode</button>
+        </div>
+
+        <!-- LAYOUT -->
+        <div class="layout">
+
+            <!-- SIDEBAR -->
+            <nav class="sidebar">
+                <div class="sidebar-label">Kategori</div>
+                <button class="cat-btn active" onclick="filterCat('all', this)">
+                    <span class="cat-icon">⚡</span> Semua Shortcut
+                    <span class="cat-count" id="cnt-all">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('navigate', this)">
+                    <span class="cat-icon">🧭</span> Navigasi
+                    <span class="cat-count" id="cnt-navigate">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('select', this)">
+                    <span class="cat-icon">✅</span> Seleksi Data
+                    <span class="cat-count" id="cnt-select">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('edit', this)">
+                    <span class="cat-icon">✏️</span> Edit & Format
+                    <span class="cat-count" id="cnt-edit">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('formula', this)">
+                    <span class="cat-icon">📐</span> Formula
+                    <span class="cat-count" id="cnt-formula">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('data', this)">
+                    <span class="cat-icon">📊</span> Data & Analisis
+                    <span class="cat-count" id="cnt-data">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('pivot', this)">
+                    <span class="cat-icon">🔄</span> PivotTable
+                    <span class="cat-count" id="cnt-pivot">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('file', this)">
+                    <span class="cat-icon">💾</span> File & Workbook
+                    <span class="cat-count" id="cnt-file">0</span>
+                </button>
+                <div class="sidebar-sep"></div>
+                <div class="sidebar-label">Filter</div>
+                <button class="cat-btn" onclick="filterCat('learned', this)">
+                    <span class="cat-icon">✅</span> Sudah Dikuasai
+                    <span class="cat-count" id="cnt-learned">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('essential', this)">
+                    <span class="cat-icon">🔥</span> Paling Penting
+                    <span class="cat-count" id="cnt-essential">0</span>
+                </button>
+                <button class="cat-btn" onclick="filterCat('analyst', this)">
+                    <span class="cat-icon">🎓</span> Analyst Specific
+                    <span class="cat-count" id="cnt-analyst">0</span>
+                </button>
+            </nav>
+
+            <!-- MAIN -->
+            <main class="main" id="main-content">
+
+                <!-- TABS -->
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('learn', this)">📚 Belajar</button>
+                    <button class="tab-btn" onclick="switchTab('cheatsheet', this)">📋 Cheat Sheet</button>
+                </div>
+
+                <!-- LEARN TAB -->
+                <div id="tab-learn">
+                    <div class="quiz-banner">
+                        <div class="quiz-info">
+                            <h3>💡 Cara belajar efektif</h3>
+                            <p>Klik kartu → centang "Sudah Hafal" → uji dengan Quiz Mode. Fokus pada tag 🔥
+                                <b>Essential</b> dulu!
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="section-header">
+                        <div class="section-title" id="sectionTitle">⚡ Semua Shortcut</div>
+                        <div class="search-box">
+                            <span>🔍</span>
+                            <input type="text" id="searchInput" placeholder="Cari shortcut..." oninput="filterSearch()"
+                                aria-label="Cari shortcut">
+                        </div>
+                    </div>
+
+                    <div class="shortcuts-grid" id="shortcutsGrid"></div>
+                </div>
+
+                <!-- CHEAT SHEET TAB -->
+                <div id="tab-cheatsheet" style="display:none">
+                    <div class="cheatsheet-grid" id="cheatsheetGrid"></div>
+                </div>
+
+            </main>
+        </div>
+
+        <!-- QUIZ OVERLAY -->
+        <div class="quiz-overlay" id="quizOverlay" role="dialog" aria-modal="true"
+            aria-label="Quiz Mode shortcut Excel">
+            <div class="quiz-modal">
+                <button class="quiz-close" onclick="closeQuiz()" aria-label="Tutup Quiz Mode">✕</button>
+                <div id="quizContent"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../../assets/js/tools-auth-guard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            window.EAH_ToolsAuthGuard('../../login.html');
+        });
+    </script>
+</body>
+
+</html>
