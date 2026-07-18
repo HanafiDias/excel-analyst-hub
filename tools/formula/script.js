@@ -826,6 +826,8 @@
             renderQuestion();
         }
 
+        let currentQuizOptions = [];
+
         function renderQuestion() {
             if (quizIdx >= quizQs.length) { showResult(); return; }
             const q = quizQs[quizIdx];
@@ -838,9 +840,10 @@
             if (q.ctx) { ctx.textContent = q.ctx; ctx.style.display = 'block'; }
             else ctx.style.display = 'none';
             const letters = ['A', 'B', 'C', 'D'];
-            document.getElementById('qpAnswers').innerHTML = q.opts.map((opt, i) => `
+            currentQuizOptions = shuffle(q.opts.map((text, i) => ({ text, correct: i === q.ans })));
+            document.getElementById('qpAnswers').innerHTML = currentQuizOptions.map((o, i) => `
     <button class="qp-opt" onclick="answerQ(${i})">
-      <span class="qp-opt-letter">${letters[i]}</span>${opt}
+      <span class="qp-opt-letter">${letters[i]}</span>${o.text}
     </button>`).join('');
             document.getElementById('qpExplanation').className = 'qp-explanation';
             document.getElementById('qpNext').className = 'qp-next';
@@ -848,10 +851,11 @@
 
         function answerQ(i) {
             const q = quizQs[quizIdx];
+            const correctIdx = currentQuizOptions.findIndex(o => o.correct);
             document.querySelectorAll('.qp-opt').forEach(b => b.disabled = true);
-            document.querySelectorAll('.qp-opt')[i].classList.add(i === q.ans ? 'correct' : 'wrong');
-            if (i !== q.ans) document.querySelectorAll('.qp-opt')[q.ans].classList.add('correct');
-            if (i === q.ans) quizScore++;
+            document.querySelectorAll('.qp-opt')[i].classList.add(i === correctIdx ? 'correct' : 'wrong');
+            if (i !== correctIdx) document.querySelectorAll('.qp-opt')[correctIdx].classList.add('correct');
+            if (i === correctIdx) quizScore++;
             document.getElementById('qpScore').textContent = quizScore;
             document.getElementById('qpExplanation').innerHTML = '💡 ' + q.exp;
             document.getElementById('qpExplanation').className = 'qp-explanation show';
