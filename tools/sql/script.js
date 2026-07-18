@@ -1,4 +1,4 @@
-﻿        // ═══════════════════════════════════════════════════
+        // ═══════════════════════════════════════════════════
         //  DATABASE
         // ═══════════════════════════════════════════════════
         var DB = {
@@ -1156,6 +1156,8 @@
             renderQ();
         }
 
+        var currentQuizOptions = [];
+
         function renderQ() {
             if (quizIdx >= quizQs.length) { showResult(); return; }
             var q = quizQs[quizIdx];
@@ -1168,8 +1170,11 @@
             if (q.ctx) { ctx.textContent = q.ctx; ctx.style.display = "block"; }
             else ctx.style.display = "none";
             var ltrs = ["A", "B", "C", "D"];
-            document.getElementById("qpOpts").innerHTML = q.opts.map(function (o, i) {
-                return '<button class="qopt" onclick="ansQ(' + i + ')"><span class="qopt-l">' + ltrs[i] + "</span>" + o + "</button>";
+            currentQuizOptions = shuffle(q.opts.map(function (text, i) {
+                return { text: text, correct: i === q.ans };
+            }));
+            document.getElementById("qpOpts").innerHTML = currentQuizOptions.map(function (o, i) {
+                return '<button class="qopt" onclick="ansQ(' + i + ')"><span class="qopt-l">' + ltrs[i] + "</span>" + o.text + "</button>";
             }).join("");
             document.getElementById("qpExp").className = "qexp";
             document.getElementById("qpNext").className = "qnext";
@@ -1177,16 +1182,17 @@
 
         function ansQ(i) {
             var q = quizQs[quizIdx];
+            var correctIdx = currentQuizOptions.findIndex(function (o) { return o.correct; });
             document.querySelectorAll(".qopt").forEach(function (b) { b.disabled = true; });
-            document.querySelectorAll(".qopt")[i].classList.add(i === q.ans ? "correct" : "wrong");
-            if (i !== q.ans) document.querySelectorAll(".qopt")[q.ans].classList.add("correct");
-            if (i === q.ans) quizScore++;
+            document.querySelectorAll(".qopt")[i].classList.add(i === correctIdx ? "correct" : "wrong");
+            if (i !== correctIdx) document.querySelectorAll(".qopt")[correctIdx].classList.add("correct");
+            if (i === correctIdx) quizScore++;
             document.getElementById("qpScore").textContent = quizScore;
             document.getElementById("qpExp").innerHTML = "💡 " + q.exp;
             document.getElementById("qpExp").className = "qexp show";
             var nb = document.getElementById("qpNext");
             nb.className = "qnext show";
-            nb.textContent = quizIdx + 1 >= quizQs.length ? "-- lihat hasil" : "-- soal berikutnya";
+            nb.textContent = quizIdx + 1 >= quizQs.length ? "Lihat Hasil →" : "Soal Berikutnya →";
         }
 
         function nextQ() { quizIdx++; renderQ(); }
