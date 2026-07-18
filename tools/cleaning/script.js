@@ -664,6 +664,8 @@
             renderQ();
         }
 
+        let currentQuizOptions = [];
+
         function renderQ() {
             if (quizIdx >= quizQs.length) { showResult(); return; }
             const q = quizQs[quizIdx];
@@ -675,17 +677,19 @@
             const ctx = document.getElementById('qpCtx');
             if (q.ctx) { ctx.textContent = q.ctx; ctx.style.display = 'block'; } else ctx.style.display = 'none';
             const letters = ['A', 'B', 'C', 'D'];
-            document.getElementById('qpOpts').innerHTML = q.opts.map((o, i) => `<button class="qopt" onclick="ansQ(${i})"><span class="qopt-l">${letters[i]}</span>${o}</button>`).join('');
+            currentQuizOptions = shuffle(q.opts.map((text, i) => ({ text, correct: i === q.ans })));
+            document.getElementById('qpOpts').innerHTML = currentQuizOptions.map((o, i) => `<button class="qopt" onclick="ansQ(${i})"><span class="qopt-l">${letters[i]}</span>${o.text}</button>`).join('');
             document.getElementById('qpExp').className = 'qexp';
             document.getElementById('qpNext').className = 'qnext';
         }
 
         function ansQ(i) {
             const q = quizQs[quizIdx];
+            const correctIdx = currentQuizOptions.findIndex(o => o.correct);
             document.querySelectorAll('.qopt').forEach(b => b.disabled = true);
-            document.querySelectorAll('.qopt')[i].classList.add(i === q.ans ? 'correct' : 'wrong');
-            if (i !== q.ans) document.querySelectorAll('.qopt')[q.ans].classList.add('correct');
-            if (i === q.ans) quizScore++;
+            document.querySelectorAll('.qopt')[i].classList.add(i === correctIdx ? 'correct' : 'wrong');
+            if (i !== correctIdx) document.querySelectorAll('.qopt')[correctIdx].classList.add('correct');
+            if (i === correctIdx) quizScore++;
             document.getElementById('qpScore').textContent = quizScore;
             document.getElementById('qpExp').innerHTML = '💡 ' + q.exp;
             document.getElementById('qpExp').className = 'qexp show';
